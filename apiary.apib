@@ -471,7 +471,9 @@ export function setupAuth() {
             + code: 201 (number)
         + data (`Access_Token`)
 
-### Продовження токена сесії [POST /oauth/tokens]
+### Продовження токена сесії [/oauth/tokens]
+#### Tokens [POST]
+
 
 |Властивість |Значення |
 |------------|---------|
@@ -509,7 +511,8 @@ export function setupAuth() {
             + code: 201 (number)
         + data (`Access_Token`)
 
-### Термінація сесії користувача [POST /auth/logout]
+### Термінація сесії користувача [/auth/logout]
+#### Logout [POST]
 
 + Request (application/json)
     + Headers
@@ -519,7 +522,8 @@ export function setupAuth() {
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
 
-### Отримання NONCE [POST /oauth/nonce]
+### Отримання Nonce [/oauth/nonce]
+### Nonce [POST]
 
 Ця точка доступу дозволяє отримати nonce (одноразовий JWT) для активного клієнта системи.
 Поле `client_secret` необхідно передати, якщо тип клієнта = TRUSTED_PIS.
@@ -554,23 +558,49 @@ export function setupAuth() {
 
 ## Group Адміністратування
 
-### Legal Entity [/legal_entities]
-
-ESOZ entity id - ENT-005-009-002
-
-#### GET legal entities [GET /api/v2/legal_entities]
+### Отримати юридичних осіб [/api/v2/legal_entities{?edrpou,legal_entity_id,settlement_id,type,status,nhs_verified,page,page_size}]
+#### Get Legal Entities [GET]
 
 |Властивість |Значення |
 |------------|---------|
-|ESOZ API id|API-005-009-002-0176|
+|ЕСОЗ API ID ||
 |Scope|legal_entity:read|
 |Auth |так|
-|User types|?|
 |?Confluence spec|link|
 
-+ Response 200 (application/json)
++ Parameters
+    + `edrpou`: `341086` (string, optional)
+    + `legal_entity_id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional)
+    + settlement_id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional)
+    + type: MSP (enum, optional)
+        - MSP
+        + Default: MSP
+    + status: ACTIVE (enum, optional)
+        - ACTIVE
+        - CLOSED
+    + `nhs_verified`: false (boolean, optional)
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
 
-#### GET legal entities by id [GET /api/v2/legal_entities/{id}]
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array)
+            + (object)
+                + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+                + include (`Legal_Entity_Response_Public_V2`)
+                + status: ACTIVE (enum, required)
+                    - ACTIVE
+                    - CLOSED
+                    - SUSPENDED
+
+
+### Отримати певну юридичну особу [/api/v2/legal_entities/{id}]
+### Get Legal Entity by Id [GET]
 
 |Властивість |Значення |
 |------------|---------|
