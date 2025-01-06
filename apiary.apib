@@ -978,3 +978,56 @@ ESOZ entity id - ENT-005-006-001
 + expiry_date: `2017-02-28` (string, optional)
 + order_no: fd123443 (string, required) - номер наказу МОЗ
 + order_date: `2017-02-28` (string, required) - дата наказу МОЗ
+
+### Phone
++ type: MOBILE (string, required) - `Dictionary PHONE_TYPE` type of phone Land Line or Mobile. At least one of type must be present. Each type can be represented only once.
++ number: `+380503410870` (string, required) - phone number in format '+38/'
+
+### Email
++ type: PERSONAL, PUBLIC (enum[string], required)
++ email: `email@example.com` (string, required)
+
+### Address
++ type: RESIDENCE (string, required) - `Dictionary ADDRESS_TYPE`. 
++ country: UA (enum[string], required) - `Dictionary COUNTRY`
++ area: Житомирська (string, required) - one of Ukraianian area
++ region: Бердичівський (string, optional) - district of area
++ settlement: Київ (string, required) - city name
++ `settlement_type`: CITY (string, required) - `Dictionary SETTLEMENT_TYPE` - type of settlement as city/town/village etc
++ `settlement_id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - settlement identificator from uaadresses
++ `street_type`: STREET (string, optional) - `Dictionary STREET_TYPE` - type of street as street/road/line etc
++ street: `вул. Ніжинська` (string, optional) - street name
++ building: 15 (string, optional) - number of building
++ apartment: 23 (string, optional) - number of appartment
++ zip: 02090 (string, optional) - system of postal codes
+
+### `edr_data`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ name: Клініка Ноунейм (string, required) - full official name of legal entity also the name to show on public sources [as map, portal etc]
++ short_name: Ноунейм (string, optional) - short name of legal entity
++ public_name: Ноунейм (string, optional)
++ `legal_form`: 140 (string, optional) - `Business form of legal entity received from edr - Use dictionary LEGAL_FORM to show the name`
++ edrpou: 54323454 (string, required) -  Unified Register of Businesses and Organizations
++ kveds (array, required)
+    + (object)
+        + name: `Діяльність лікарняних закладів` (string, required)
+        + code: `86.10` (string, required)
+        + is_primary: true (boolean, required)
++ `registration_address` (`registration_address`, required)
++ state: 1 (number, required)
+
+### `registration_address`
++ zip: `02090`
++ country: `УКРАЇНА`
++ address: `Волинська обл., місто Луцьк ВУЛИЦЯ КОНЯКІНА буд. 14 кв. 144`
++ parts (object)
+    + atu: `Волинська обл., місто Луцьк`
+    + atu_code: `0710100000`
+    + street: `ВУЛИЦЯ КОНЯКІНА`
+    + house_type: `буд.`
+    + house: `14`
+    + building_type: null
+    + building: ``
+    + num_type: `кв.`
+    + num: `144`
+
