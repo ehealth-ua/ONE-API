@@ -312,15 +312,7 @@ However, if you are working with async methods, new job will not be created befo
 
 За замовчуванням, усі колекції впорядквані за зростаючим хронологічним порядком (від минулого до майбутнього).
 
-## Group Автентифікація
-
-### Аутентифікація MIS
-
-### Аутентифікація PIS
-
-### Довірча аутентифікація PIS
-
-### Group Автентифікація MIS
+## Автентифікація
 
 Для середовищ використовуються відповідні точки підключення:
 
@@ -362,7 +354,7 @@ export function setupAuth() {
 }
 ```
 
-#### Створення токена сесії через об'єкт (Login) [GET /auth/login]
+### Створення токена сесії через об'єкт [GET /auth/login]
 
 Влістивість | Значення
 --------|-----
@@ -383,7 +375,7 @@ export function setupAuth() {
             + code: 201 (number)
         + data (`Access_Token`)
 
-#### Створення токена сесії через параметри [GET /sign-in]
+### Створення токена сесії через параметри [GET /sign-in]
 
 Влістивість | Значення
 --------|-----
@@ -471,7 +463,7 @@ export function setupAuth() {
             + code: 201 (number)
         + data (`Access_Token`)
 
-#### Продовження токена сесії [POST /oauth/tokens]
+### Продовження токена сесії [POST /oauth/tokens]
 
 |Властивість |Значення |
 |------------|---------|
@@ -509,7 +501,7 @@ export function setupAuth() {
             + code: 201 (number)
         + data (`Access_Token`)
 
-#### Термінація сесії користувача [POST /auth/logout]
+### Термінація сесії користувача [POST /auth/logout]
 
 + Request (application/json)
     + Headers
@@ -519,7 +511,7 @@ export function setupAuth() {
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
 
-#### Отримання NONCE [POST /oauth/nonce]
+### Отримання NONCE [POST /oauth/nonce]
 
 Ця точка доступу дозволяє отримати nonce (одноразовий JWT) для активного клієнта системи.
 Поле `client_secret` необхідно передати, якщо тип клієнта = TRUSTED_PIS.
@@ -552,40 +544,10 @@ export function setupAuth() {
         + data (object)
            + token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJtaXRocmlsLWxvZ2luIiwiZXhwIjoxNTIzNDM5MjAxLCJpYXQiOjE1MjM0MzgzMDEsImlzcyI6IkVIZWFsdGgiLCJqdGkiOiJlZmUxZjA4ZS1kNGI0LTRjZWYtYTAyYy03OGVhNGExZGRhMjUiLCJuYmYiOjE1MjM0MzgzMDAsIm5vbmNlIjoxMjMsInN1YiI6MTIzLCJ0eXAiOiJhY2Nlc3MifQ.UZ6S92h3nAG-GKY_XUE1Rc6uR_BuqR8ufUJfMhhKtNmt7DkkQlU49qPXjL0LFddVz1E2DXi2a-BQ0FG-DHsTHA' (string, required)
 
-### Group Автентифікація PIS
-
-#### Exchange oAuth Code Grant to Access Token [POST /oauth/tokens]
-
-|Властивість |Значення |
-|------------|---------|
-|ЕСОЗ API ID||
-|?Confluence spec|link|
-
-+ Response 200 (application/json)
-
-### Trembita AUTH [/]
-
-some text explanation
-some text explanation
-some text explanation
-
-### Group Довірча автентифікація
-
-#### Exchange oAuth Code Grant to Access Token [POST /oauth/tokens]
-
-|Властивість |Значення |
-|------------|---------|
-|ESOZ API id|API-005-009-002-0176|
-|Scope|legal_entity:read|
-|Auth |так|
-|User types|?|
-|?Confluence spec|link|
-
-+ Response 200 (application/json)
-
 ## Group Адміністратування
 
 ### Legal Entity [/legal_entities]
+
 ESOZ entity id - ENT-005-009-002
 
 #### GET legal entities [GET /api/v2/legal_entities]
