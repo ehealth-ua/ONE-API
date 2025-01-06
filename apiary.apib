@@ -859,6 +859,94 @@ ESOZ entity id - ENT-005-006-001
 
 ## Responses
 
+## Responses
+### `Response_Collection`
++ meta (Response__Meta, fixed-type)
++ data (array[], fixed-type)
++ paging (Response__Pagination, fixed-type)
+
+### `Response_Collection_V2`
++ meta (Response__Meta, fixed-type)
++ data (array[], fixed-type)
++ paging (`Response__Pagination__V2`, fixed-type)
+
+### `Response_Collection_OK`
++ meta (Response__Meta, fixed-type)
++ data (array[], fixed-type)
+
+### `Response_OK`
++ meta (Response__Meta, fixed-type)
++ data (object, fixed-type)
+
+### `Response__Process_OK`
++ meta (Response__Meta, fixed-type)
+
+### `Response_verification_by_phone`
++ `phone_number`: `+380508887700` (string, required)
+
+### `Response_Error`
++ meta (Response__Meta, fixed-type)
+    + code: 400 (number)
++ error (Response__Error, fixed-type)
+
+### `Response__Meta`
++ code: 200 (number) - HTTP response code.
++ url: https://example.com/resource (string) - URL to requested resource.
++ type (enum) - Type of data that is located in `data` attribute.
+    - object (string) - `data` attribute is a JSON object.
+    - list (string) - `data` attribute is a list.
++ `request_id`: `6617aeec-15e2-4d6f-b9bd-53559c358f97#17810` (string) - [Request ID](https://docs.apimanifest.apiary.io/#introduction/interacting-with-api/request-id). Send it with `X-Request-ID` header.
+
+### `Response__Error`
++ type: type_atom (string) - Atom that represents error type.
++ message: Error description (string) - Human-readable error message. This is for developers, not end-users.
+
+### `Response__Error_DuplicateEntity`
++ type: `object_already_exists` (string) - Atom that represents error type.
++ message: This API already exists (string) - Human-readable error message. This is for developers, not end-users.
+
+### `Response__Error_ValidationFailed`
++ type: validation_failed (string) - type of an error.
++ message: Validation failed. You can find validators description at our API Manifest: https://docs.apimanifest.apiary.io/#introduction/interacting-with-api/errors. (string)
++ invalid (array)
+    + `entry_type`: `json_data_proprty` (string) - Type of error.
+    + entry: $.cvv (string) - JSON Path to an invalid property.
+    + rules (array)
+        + rule: required (string) - String constant that represents validation rule type. List of all types can be found in [API Manifest](https://docs.apimanifest.apiary.io/#introduction/interacting-with-api/errors).
+        + params (array) - Validation Parameters.
+        
+### `Response__Error_ValidationFailed_Extended`
++ `error` (object)
+    + type: validation_failed (string) - type of an error.
+    + message: Validation failed. You can find validators description at our API Manifest: https://docs.apimanifest.apiary.io/#introduction/interacting-with-api/errors. (string)
+    + invalid (array)
+        + (object)
+            + `entry`: `$.cvv` (string, required) - JSON Path to an invalid property.
+            + `entry_type`: `json_data_property` (string, required) - Type of error.
+            + `rules` (array)
+                + (object)
+                    + `description`: `value is not allowed in enum` (string, required) - value of error might be different
+                    + params (object) - Validation Parameters.
+                        + `values` (array)
+                    + `raw_description`: `value is not allowed in enum` (string, required) - value of error might be different
+                    + `rule`: required (string) - String constant that represents validation rule type. List of all types can be found in [API Manifest](https://docs.apimanifest.apiary.io/#introduction/interacting-with-api/errors).
+                            - required
+                            - inclusion
+
+### `Response__Pagination`
++ limit: 20 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50.
++ cursors (object)
+    + `starting_after`: 56c31536a60ad644060041af (string) - A cursor for use in pagination. An object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    + `ending_before`: 56c31536a60ad644060041aa (string) - A cursor for use in pagination. An object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
++ size: 50 (number) - Total number of objects in collection.
++ has_more: false (boolean) - Is this collection have more data to load in the same style as last request loaded it.
+
+### `Response__Pagination__V2`
++ page_number: 2 (number) - Page number.
++ page_size: 50 (number) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
++ total_entries: 1000 (number) - Total number of objects in collection.
++ total_pages: 23 (number) - Total number of pages.
+
 ## `Access_Tokens`
 ### `Access_Token`
 + value: `SnNRdCtvU0tTOENBV2dLRUZwNmIzZz09` (string, required) - OAuth токен доступу
