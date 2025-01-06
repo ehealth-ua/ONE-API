@@ -318,7 +318,7 @@ However, if you are working with async methods, new job will not be created befo
 
 Для середовищ використовуються відповідні точки підключення:
 
-Властиість | Значення
+Влістивість | Значення
 --------|-----
 DEMO    | https://api-demo.ehealth.gov.ua
 PREPROD | https://api-preprod.ehealth.gov.ua
@@ -358,8 +358,9 @@ export function setupAuth() {
 
 #### Створення токена сесії через об'єкт [GET /auth/login]
 
-Властиість | Значення
+Влістивість | Значення
 --------|-----
+|ЕСОЗ API ID||
 |Посилання на документацію|N/A|
 
 + Request (application/json)
@@ -378,8 +379,9 @@ export function setupAuth() {
 
 #### Створення токена сесії через параметри [GET /sign-in]
 
-Властиість | Значення
+Влістивість | Значення
 --------|-----
+|ЕСОЗ API ID||
 |Посилання на документацію|N/A|
 
 + Parameters
@@ -430,6 +432,7 @@ export function setupAuth() {
 
 |Властивість |Значення |
 |------------|---------|
+|ЕСОЗ API ID||
 |?Confluence spec|link|
 
 
@@ -466,6 +469,7 @@ export function setupAuth() {
 
 |Властивість |Значення |
 |------------|---------|
+|ЕСОЗ API ID||
 |?Confluence spec|link|
 
 
@@ -542,16 +546,13 @@ export function setupAuth() {
         + data (object)
            + token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJtaXRocmlsLWxvZ2luIiwiZXhwIjoxNTIzNDM5MjAxLCJpYXQiOjE1MjM0MzgzMDEsImlzcyI6IkVIZWFsdGgiLCJqdGkiOiJlZmUxZjA4ZS1kNGI0LTRjZWYtYTAyYy03OGVhNGExZGRhMjUiLCJuYmYiOjE1MjM0MzgzMDAsIm5vbmNlIjoxMjMsInN1YiI6MTIzLCJ0eXAiOiJhY2Nlc3MifQ.UZ6S92h3nAG-GKY_XUE1Rc6uR_BuqR8ufUJfMhhKtNmt7DkkQlU49qPXjL0LFddVz1E2DXi2a-BQ0FG-DHsTHA' (string, required)
 
-### Автентифікація PIS [/2]
+### Group Автентифікація PIS [/2]
 
 #### Exchange oAuth Code Grant to Access Token [POST /oauth/tokens]
 
 |Властивість |Значення |
 |------------|---------|
-|ESOZ API id|API-005-009-002-0176|
-|Scope|legal_entity:read|
-|Auth |так|
-|User types|?|
+|ЕСОЗ API ID||
 |?Confluence spec|link|
 
 + Response 200 (application/json)
@@ -562,7 +563,7 @@ some text explanation
 some text explanation
 some text explanation
 
-### Довірча автентифікація [/6]
+### Group Довірча автентифікація [/6]
 
 #### Exchange oAuth Code Grant to Access Token [POST /oauth/tokens]
 
