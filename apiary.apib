@@ -3,7 +3,7 @@ HOST: https://api.ehealth.gov.ua
 
 # HTTP API ЕСОЗ
 
-# Загальні положення
+## Загальні положення
 
 Електронна система охорони здоров'я (ЕСОЗ) складається з
 центральної бази даних (ЦБД) та медичних інформаційних
@@ -15,79 +15,60 @@ HOST: https://api.ehealth.gov.ua
 і мають права доступу відповідно до Порядку функціонування
 електронної системи охорони здоров'я.
 
-# API Маніфест ЕСОЗ
+## Маніфест програмного інтерфейсу
 
-Our API is organized around [REST](http://en.wikipedia.org/wiki/Representational_State_Transfer). 
-It has predictable, resource-oriented URLs, and uses HTTP response codes to indicate API errors. 
-We use built-in HTTP features, like HTTP authentication and HTTP verbs, which are understood by off-the-shelf HTTP clients. 
+Наш інтерфейс прикладного програмування (API) організовано
+навколо REST. Він має передбачувані, орієнтовані на
+ресурси URL-адреси та використовує коди відповідей HTTP
+для вказівки на помилки API. Ми використовуємо автентифікацію та дієслова HTTP,
+які розуміють стандартні клієнти HTTP.
 
-### HTTP Verbs
+### Дієслова
 
-As per RESTful design patterns, API implements following HTTP verbs:
+ЕСОЗ API імлементує наступні дієслова згідно RESTful:
 
-- `HEAD` - Can be issued against any resource to get just the HTTP header info.
-- `GET` - Read resources. Should hever change resources on server (idempotency) since most of http proxies and services may reply same request multiple times.
-- `POST` - Create new resources.
-- `PUT` - Replace resources. Idempotent. (Can be used as `insert or update` method, when we want clients to don't care whenever entity is exists in our system.)
-- `PATCH` - Same as `PUT`, but replaces subset of fields instead of full entity. Should never be used as `insert of update` pattern.
-- `DELETE` - Remove resources.
+- `HEAD` - Отримати тільки інформацію в заголовках про ресурс.
+- `GET` - Отримати ресурс (кешовано і ідемподентно). Не може модифікувати облікові дані на сервері.
+- `POST` - Створити новий ресурс.
+- `PUT` - Замінити ресурс (ідемподентно). Використовується коли клієту все одно є чи ні ресурс на сервері.
+- `PATCH` - Змінити ресурс тільки коли ресурс є на сервері.
+- `DELETE` - Видалити ресурс.
 
-### HTTP status codes
+### Коди помилок
 
-HTTP Code | Description
+HTTP код помлки | Опис
 --------- | -----------
-`200` | Everything worked as expected.
-`201` | Created.
-`202` | Accepted.
-`400` | Bad Request. 
-`401` | Unauthorized. No valid API key provided or API key doesn't match project.
-`402` | The parameters were valid but the request failed.
-`403` | Source or destination account is disabled.
-`404` | Not Found. The requested resource doesn't exist.
-`415` | Incorrect ```Content-Type``` HTTP header.
-`422` | Semantic error or similar. For example, value is not included in enum of allowed values.
-`409` | Logical error. For example, odject in current status can not be modified. 
-`429` | Too Many Requests. Rate limit is exceeded.
-`500` `502` `503` `504` | Server Errors. Something went wrong on our end.
+`200` | Все працює як повинно.
+`201` | Створений новий інформаційний об'єкт.
+`202` | Прийнято інформаційний об'єкт.
+`400` | Погано сформований запит 
+`401` | Неавторизовано. Немає валідного API ключа.
+`402` | Параметри були валідні, але запит не вдався.
+`403` | Інформаційний цільовий або джерельний обліковий запис відключено.
+`404` | Інформаційий об'єкт не знайдено. Запитуваний ресурс не існує.
+`415` | Не вірний ```Content-Type``` HTTP заголовок.
+`422` | Семантична помилка або помилка типу. До прикладу, значення поля поза межами допустимих словникових значень його типу.
+`409` | Логічна помилка. До прикладу, об'єкт в поточному статусі не може бути модифікований. 
+`429` | Забагато запитів. Вичерпано кредит на кількість запитів за одиницю часу.
+`500` `502` `503` `504` | Помилка сервера. Щось пішло не так на нашій стороні.
 
-### Field naming
+### Іменування полів
 
 Fields are named in `snake_case` since it's more common for our stack and [20% easier to read](http://ieeexplore.ieee.org/xpl/articleDetails.jsp?tp=&arnumber=5521745).
 
+### Аутентифікація
 
-### Authentication
+ЕСОЗ використовує наступний тьоступеневий механізми аутентифікації:
 
-In general there are many flows that we use:
+1. Токен сесії (oAuth)
+2. Токен застосунку (oAuth)
+3. Токен доступу (JWT)
 
-1. oAuth
-2. JVT
-3. HTTP Basic Token
+#### Токен сесії
 
-#### oAuth Authentification
+#### Токен застосунку
 
-For oAuth flow client access oAuth server and exchanges it's credentials to a oAuth token.
-All requests that require authorization should be made with `Authorization: Bearer :token` header.
-
-##### Scopes Naming
-
-1. Do not create negative scopes (that disallow or turn off some features). Scopes are pure **whitelists**.
-2. Avoid using scopes as status or a role model. They are access rights for a single API resource.
-
-You can look at [Facebook oAuth Scopes List](https://developers.facebook.com/docs/facebook-login/permissions), it's a good example of scopes for a big and complex system.
-
-#### JVT Authentification (mainly Auth0)
-
-For JVT flow client access authorization server and exchanges it's credentials to a oAuth token.
-All requests that require authorization should be made with `Authorization: Token :token` header.
-
-#### Token-Based Authentification (for API-only projects)
-
-To use our service you need to authenticate your application. Authentication to the API is performed via [HTTP Basic Auth](http://en.wikipedia.org/wiki/Basic_access_authentication). Provide your API key as the basic auth username value. You do not need to provide a password. You can manage your API keys in the Dashboard.
-
-```curl
-curl https://example.com/resource \
-   -u WgLodNU5wCdbSw4f:
-```
+#### Токен доступу
 
 ### Request structure
 
@@ -313,9 +294,9 @@ For small files it's appropriate to send base64 encoded file contents as JSON fi
 2. Server provides the link to media storage
 3. User upload file using provided link
 
-## Optional Features
+### Optional Features
 
-### Rate Limits (Throttling)
+#### Rate Limits (Throttling)
 
 We throttle our APIs by default to ensure maximum performance for all developers.
 
@@ -323,12 +304,10 @@ Rate limiting of the API is primarily considered on a per-consumer basis. All yo
 
 Currently free accounts is rate limited to 1000 API calls every 15 minutes, but this value may be adjusted at our discretion.
 
-
 ### Idempotent Requests
 
 From a RESTful service standpoint, for an operation (or service call) to be idempotent, clients can make that same call repeatedly while producing the same result. In other words, making multiple identical requests has the same effect as making a single request.
 However, if you are working with async methods, new job will not be created before previous identical request is not performed.
-
 
 ### Ordering Lists and Collections
 
