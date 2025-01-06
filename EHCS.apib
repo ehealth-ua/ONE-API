@@ -1,0 +1,655 @@
+FORMAT: 1A
+HOST: https://api.ehealth.gov.ua
+
+# HTTP API ЕСОЗ (Електронної системи охорони здоров'я)
+
+# Загальні положення
+
+Електронна система охорони здоров'я (ЕСОЗ) складається з
+центральної бази даних (ЦБД) та медичних інформаційних
+систем (МІС). ЦБД належить державі в особі Національної
+служби здоровʼя України (НСЗУ).
+
+Користувачами ЕСОЗ є фізичні та юридичні особи, які
+зареєстровані в електронній системі охорони здоров'я
+і мають права доступу відповідно до Порядку функціонування
+електронної системи охорони здоров'я.
+
+# API Маніфест ЕСОЗ
+
+Our API is organized around [REST](http://en.wikipedia.org/wiki/Representational_State_Transfer). 
+It has predictable, resource-oriented URLs, and uses HTTP response codes to indicate API errors. 
+We use built-in HTTP features, like HTTP authentication and HTTP verbs, which are understood by off-the-shelf HTTP clients. 
+
+### HTTP Verbs
+
+As per RESTful design patterns, API implements following HTTP verbs:
+
+- `HEAD` - Can be issued against any resource to get just the HTTP header info.
+- `GET` - Read resources. Should hever change resources on server (idempotency) since most of http proxies and services may reply same request multiple times.
+- `POST` - Create new resources.
+- `PUT` - Replace resources. Idempotent. (Can be used as `insert or update` method, when we want clients to don't care whenever entity is exists in our system.)
+- `PATCH` - Same as `PUT`, but replaces subset of fields instead of full entity. Should never be used as `insert of update` pattern.
+- `DELETE` - Remove resources.
+
+### HTTP status codes
+
+HTTP Code | Description
+--------- | -----------
+`200` | Everything worked as expected.
+`201` | Created.
+`202` | Accepted.
+`400` | Bad Request. 
+`401` | Unauthorized. No valid API key provided or API key doesn't match project.
+`402` | The parameters were valid but the request failed.
+`403` | Source or destination account is disabled.
+`404` | Not Found. The requested resource doesn't exist.
+`415` | Incorrect ```Content-Type``` HTTP header.
+`422` | Semantic error or similar. For example, value is not included in enum of allowed values.
+`409` | Logical error. For example, odject in current status can not be modified. 
+`429` | Too Many Requests. Rate limit is exceeded.
+`500` `502` `503` `504` | Server Errors. Something went wrong on our end.
+
+### Field naming
+
+Fields are named in `snake_case` since it's more common for our stack and [20% easier to read](http://ieeexplore.ieee.org/xpl/articleDetails.jsp?tp=&arnumber=5521745).
+
+
+### Authentication
+
+In general there are many flows that we use:
+
+1. oAuth
+2. JVT
+3. HTTP Basic Token
+
+#### oAuth Authentification
+
+For oAuth flow client access oAuth server and exchanges it's credentials to a oAuth token.
+All requests that require authorization should be made with `Authorization: Bearer :token` header.
+
+##### Scopes Naming
+
+1. Do not create negative scopes (that disallow or turn off some features). Scopes are pure **whitelists**.
+2. Avoid using scopes as status or a role model. They are access rights for a single API resource.
+
+You can look at [Facebook oAuth Scopes List](https://developers.facebook.com/docs/facebook-login/permissions), it's a good example of scopes for a big and complex system.
+
+#### JVT Authentification (mainly Auth0)
+
+For JVT flow client access authorization server and exchanges it's credentials to a oAuth token.
+All requests that require authorization should be made with `Authorization: Token :token` header.
+
+#### Token-Based Authentification (for API-only projects)
+
+To use our service you need to authenticate your application. Authentication to the API is performed via [HTTP Basic Auth](http://en.wikipedia.org/wiki/Basic_access_authentication). Provide your API key as the basic auth username value. You do not need to provide a password. You can manage your API keys in the Dashboard.
+
+```curl
+curl https://example.com/resource \
+   -u WgLodNU5wCdbSw4f:
+```
+
+### Request structure
+
+Request consist with a root object that contain resource and metadata as it's childs:
+
+**Request example:**
+
+```json
+{
+  "resource": {
+    "name": "Alex",
+    "surname": "Gray",
+    "email": "me@example.com",
+    "credentials: [
+      {"method": "passsword", "password": "notasecret"}
+    ]
+  },
+  "format_response": true,
+  "redirect_browser": true
+}
+```
+
+### Response structure
+
+Response can consist of 5 root properties:
+
+- `meta` - URL of the requested resource (`url`); requested response type (`type`, may be either `list` or `object`); HTTP status (`code`); idempotency key (`idempotency_key`); request id (`request_id`).
+- `urgent` - Notifications and counters.
+- `errors` - Error description. MUST be present when status code is not 2XX, 3XX. CAN NOT be present when `data` is present.
+- `data` - Requested resource. MUST be present when status code is 2XX, 3XX. CAN NOT be present when `error` is present.
+- `paging` - Pagination data.
+- `sandbox` - Optional data provided by `sandbox` environment, for development purposes.
+
+**Response example:**
+
+```json
+{
+  "meta": {
+    "url": "https://qbill.ly/transactions/",
+    "type": "list",
+    "code": "200",
+    "idempotency_key": "iXXekd88DKqo",
+    "request_id": "qudk48fFlaP"
+  },
+  "urgent": {
+    "notifications": ["Read new emails!"],
+    "unseen_payments": 10
+  },
+  "data": {
+    "type": "resource_name",
+    <...>
+  },
+  "paging": {
+    "limit": 50,
+    "cursors": {
+      "starting_after": "MTAxNTExOTQ1MjAwNzI5NDE=",
+      "ending_before": "NDMyNzQyODI3OTQw"
+    },
+    "has_more": true
+  },
+  "sandbox": {
+    "debug_varibale": "39384",
+    "live": "false"
+  }
+}
+```
+
+### Errors
+
+All errors is returned in JSON format if another `Content-Type` is not specified. This means that your will receive JSON for requests with HTTP 415 code when incorrect `Content-Type` is provided.
+
+#### Error Object Properties
+
+You can find all necessary information about occurred error in a response `error` property. It can have following fields:
+
+Fields | Required | Description
+--------- | ----------- | -----------
+`type` | true | General error type. You should return human-readable error message based on this field as a key. Type descriptions is listed in next section.
+`invalid` | false | Collection of validation errors for your request.
+`invalid[].entry_type` | true | Type of invalid field.
+`invalid[].entry` | false | Name or JSON path to invalid data property.
+`invalid[].rules` | false| Failed rules for invalid property. You can find supported validation rules at [Request Validators](#request-validators) table. Server may optinally skip this field, when validation rules is perefferd to stay secret or hard to extract from validator.
+`invalid[].params` | false| Optional parameters that can be used in a human-readable error message, to make it easier to understand. Usually it contains limit values for failed validator.
+`message` | false | Human readable message for API developer.
+
+**Example error response:**
+
+```json
+{
+    "data": {
+        "error": {
+            "invalid": [
+                {
+                    "entry": "$.type",
+                    "entry_type": "json_data_property",
+                    "rules": [
+                        {
+                            "description": "Value AMB/ not found in the dictionary eHealth/episode_types",
+                            "params": [],
+                            "rule": "invalid"
+                        }
+                    ]
+                }
+            ],
+            "message": "Validation failed. You can find validators description at our API Manifest: http://docs.apimanifest.apiary.io/#introduction/interacting-with-api/errors.",
+            "type": "validation_failed"
+        },
+        "eta": "2019-04-23T09:13:02.415",
+        "status": "failed",
+        "status_code": 422
+    },
+    "meta": {
+        "code": 200,
+        "request_id": "806e0f81-ac97-470e-988f-6391e9abf642#28157",
+        "type": "object",
+        "url": "http://api-medical-events.me.svc.cluster.local/api/jobs/5cbed6e2ed59d30001e54b92"
+    }
+}
+```
+
+#### Error Types
+
+Parameter | Description
+--------- | -----------
+`access_denied` | Authorization not passed
+`forbidden` | User does not have permissions to access the resource
+`content_type_invalid` | Invalid HTTP request `content-type`.
+`validation_failed` | Failed validation on JSON request body or form data. 
+`request_too_large` | Request body was to large to process it.
+`request_conflict`| Request causes logical errors
+`internal error`| Error on the server
+
+#### Error Entry Types
+
+Entry Type | Description
+--------- | -----------
+`json_data_proprty` | JSON document is invalid. `entry` will contain JSON Path to invalid property.
+`form_data_field` | HTTP request field (for `form-data` requests) is invalid. 
+`query_param` | HTTP query parameter is invalid.
+`body` | Mailformed request body.
+`header` | HTTP request header is invalid.
+
+#### Validation Rules
+
+List of possible validation rules:
+
+Rule | Params | Description
+-------------- | ----------- | -----------
+`cast` | `[types]` | The field type should be in `types`.
+`required` | `[]` | The field is required and should not be `nil`.
+`format` | `[patterns]` | The field should match all regular expressions in `patterns` list.
+`inclusion` | `[enum]` | Field value should be in `enum`.
+`invalid`| `[]` | Field value is not valid according to specification
+`exclusion` | `[enum]` | Field value should NOT be in `enum`.
+`subset` | `[set]` | Field value should be subset of `set`.
+`length` | `{min:_, max:_, is:_, exclusive:true|false}` | List or string length should be equal to `is` value, less than `max` and bigger than `min` value. Params is optional, but one of them should always be present. `exclusive` is false by default.
+`number` | `{greater_than:_, less_than:_, greater_than_or_equal_to:_, less_than_or_equal_to:_, multiple_of:_}` | The field value must be a number that is greater than `greater_than` and less than `less_than`.
+`confirmation` | `[]` | The field value of field must match confirmed field (eg. `password_confirmation` should match `password`).
+`acceptance` | `[]` | The field value should be true.
+`email` | `[patterns]` | The field value must be a valid email address respectively to `patterns`.
+`phone_number` | `[patterns]` | The field value must be a valid phone number respectively to `patterns`. *Usually it means that is should be in international format (with `+3`).*
+`card_number` | `[]` | The field value should be a valid Visa or MasterCard card number. (By luhn algoryghm.)
+`metadata` | `[]` | The field must be a [valid metadata object](http://docs.apimanifest.apiary.io/#introduction/optional-features/metadata).
+`unique` | `[]` | The field must be a list with all it's items unique.
+`schemata` | `[]` | JSON Schema specific error core.
+`schema` | `[]` | JSON Schema specific error core.
+`dependency` | `[json_paths]` | Property expects another property to exist.
+`json` | `[]` | The field under validation must be a valid JSON string.
+`authentification_code` | `{resent: true}` | OTP or other authentification code was invalid. User should retry with re-entering it. `resent` property will tel is code was automatically resent upon failed validation.
+`date`, `datetime`, `timestamp` | `[after:_, before:_, after_or_at:_, before_or_at:_]` | Invalid datetime representation.
+`url` | `[patterns]` | Field should contain a valid URL.
+
+### Pagination
+
+You can use next search parameters to operate pagination:
+
+Arguments:
+
+- `page_number` (optional) - A number of a page in the list;
+- `page_size` (optional) -  A limit on the number of objects to be returned, between 1 and 100. Default: 50;
+
+### Content Type
+
+`Content-Type` header should be always `application/json`
+
+### Request ID
+
+Each API request has an associated request identifier. You can find it in ```X-Request-ID``` response header or inside ```meta.request_id``` property of returned JSON.
+
+You can also find request identifiers in the URLs of individual request logs in your Dashboard. If you need to contact us about a specific request, providing the request identifier will ensure the fastest possible resolution.
+
+All Request ID's are prefixed with a human-readable name of server that served your request.
+
+```
+X-Request-ID: flash-99spDSoim3i
+```
+
+### HTTP Redirects
+
+API uses HTTP redirection where appropriate. Clients should assume that any request may result in a redirection. Receiving an HTTP redirection is not an error and clients should follow that redirect. Redirect responses will have a Location header field which contains the URI of the resource to which the client should repeat the requests.
+
+Status codes:
+
+- `301` - Permanent redirection. The URI you used to make the request has been superseded by the one specified in the Location header field. This and all future requests to this resource should be directed to the new URI.
+- `302`, `307` - Temporary redirection. The request should be repeated verbatim to the URI specified in the Location header field but clients should continue to use the original URI for future requests.
+- `303` - The request was successfully performed, the result can be found by the redirect URI.
+Other redirection status codes may be used in accordance with the HTTP 1.1 spec.
+
+### File Uploads
+
+#### For files less than 10 MB
+
+For small files it's appropriate to send base64 encoded file contents as JSON field:
+
+{
+    name: "My Name",
+    image: "sdasdpjoijhwhwe83280u2380wef=="
+}
+
+#### For larger files - Multi-Stage Uploads (Network Transactions)
+
+1. User initiates uploading
+2. Server provides the link to media storage
+3. User upload file using provided link
+
+## Optional Features
+
+### Rate Limits (Throttling)
+
+We throttle our APIs by default to ensure maximum performance for all developers.
+
+Rate limiting of the API is primarily considered on a per-consumer basis. All your projects share a same rate limit, to avoid API-consuming fraud. Rate limits depend on your account type.
+
+Currently free accounts is rate limited to 1000 API calls every 15 minutes, but this value may be adjusted at our discretion.
+
+
+### Idempotent Requests
+
+From a RESTful service standpoint, for an operation (or service call) to be idempotent, clients can make that same call repeatedly while producing the same result. In other words, making multiple identical requests has the same effect as making a single request.
+However, if you are working with async methods, new job will not be created before previous identical request is not performed.
+
+
+### Ordering Lists and Collections
+
+By default, all collections are ordered in ascending chronological order.
+
+## Group Authentification
+
+### MIS AUTH [/1]
+
+#### Exchange oAuth Code Grant to Access Token [POST /oauth/tokens]
+
+|Властивість |Значення |
+|------------|---------|
+|ESOZ API id|API-005-009-002-0176|
+|Scope|legal_entity:read|
+|Auth |так|
+|User types|?|
+|?Confluence spec|link|
+
++ Response 200 (application/json)
+
+### PIS AUTH [/2]
+
+#### Exchange oAuth Code Grant to Access Token [POST /oauth/tokens]
+
+|Властивість |Значення |
+|------------|---------|
+|ESOZ API id|API-005-009-002-0176|
+|Scope|legal_entity:read|
+|Auth |так|
+|User types|?|
+|?Confluence spec|link|
+
++ Response 200 (application/json)
+
+### Trembita AUTH [/]
+some text explanation
+some text explanation
+some text explanation
+
+
+### MIS User AUTH [/4]
+
+#### Exchange oAuth Code Grant to Access Token [POST /oauth/tokens]
+
+|Властивість |Значення |
+|------------|---------|
+|ESOZ API id|API-005-009-002-0176|
+|Scope|legal_entity:read|
+|Auth |так|
+|User types|?|
+|?Confluence spec|link|
+
++ Response 200 (application/json)
+
+### PIS User AUTH [/5]
+
+#### Exchange oAuth Code Grant to Access Token [POST /oauth/tokens]
+
+|Властивість |Значення |
+|------------|---------|
+|ESOZ API id|API-005-009-002-0176|
+|Scope|legal_entity:read|
+|Auth |так|
+|User types|?|
+|?Confluence spec|link|
+
++ Response 200 (application/json)
+
+### Trusted PIS User AUTH [/6]
+
+#### Exchange oAuth Code Grant to Access Token [POST /oauth/tokens]
+
+|Властивість |Значення |
+|------------|---------|
+|ESOZ API id|API-005-009-002-0176|
+|Scope|legal_entity:read|
+|Auth |так|
+|User types|?|
+|?Confluence spec|link|
+
++ Response 200 (application/json)
+
+## Group Administrative data
+
+### Legal Entity [/legal_entities]
+ESOZ entity id - ENT-005-009-002
+
+#### GET legal entities [GET /api/v2/legal_entities]
+
+|Властивість |Значення |
+|------------|---------|
+|ESOZ API id|API-005-009-002-0176|
+|Scope|legal_entity:read|
+|Auth |так|
+|User types|?|
+|?Confluence spec|link|
+
++ Response 200 (application/json)
+
+#### GET legal entities by id [GET /api/v2/legal_entities/{id}]
+
+|Властивість |Значення |
+|------------|---------|
+|ESOZ API id|API-005-009-002-0177|
+|Scope|legal_entity:read|
+|Auth |так|
+|User types|DOCTOR|
+|?Confluence spec|link|
+
++ Parameters
+    + `id`
+
++ Response 200 (application/json)
+
+#### PUT legal entities [PUT /api/v2/legal_entities]
+
+|Властивість |Значення |
+|------------|---------|
+|ESOZ API id|API-005-009-002-0178|
+|Description|text|
+|Scope|legal_entity:write|
+|Auth |так|
+|User types|?|
+|?Confluence spec|link|
+
++ Response 200 (application/json)
+
+#### GET related legal entities [GET /api/legal_entities/{id}/related]
+
+|Властивість |Значення |
+|------------|---------|
+|ESOZ API id|API-005-009-002-0186|
+|Description|text|
+|Scope|related_legal_entities:read|
+|Auth |так|
+|User types|?|
+|?Confluence spec|link|
+
++ Parameters
+    + `id`
+    
++ Response 200 (application/json)
+
+
+### Legal Entity license [/licenses]
+ESOZ entity id - ENT-005-009-003
+
+#### Create license [POST /api/licenses]
+
+|Властивість |Значення |
+|------------|---------|
+|ESOZ API id|API-005-009-003-0188|
+|Description|text|
+|Scope|license:write|
+|Auth |так|
+|User types|?|
+|?Confluence spec|link|
+    
++ Response 200 (application/json)
+
+### Division [/divisions]
+ESOZ entity id - ENT-005-006-001
+
+---
+
+#### GET legal entities [GET /api/v2/legal_entities]
+
+|Властивість |Значення |
+|------------|---------|
+|ESOZ API id|API-005-009-002-0176|
+|Description|text|
+|Scope|legal_entity:read|
+|Auth |так|
+|User types|?|
+|?Confluence spec|link|
+
++ Response 200 (application/json)
+
+
+### Healthcare service [/healthcare_services]
+ESOZ entity id - ENT-005-006-001
+
+#### GET legal entities [GET /api/v2/legal_entities]
+
+|Властивість |Значення |
+|------------|---------|
+|ESOZ API id|API-005-009-002-0176|
+|Description|text|
+|Scope|legal_entity:read|
+|Auth |так|
+|User types|?|
+|?Confluence spec|link|
+
++ Response 200 (application/json)
+
+## Group Patient personal data
+
+### Persons [/Persons]
+
+#### GET  [GET]
+
+|Властивість |Значення |
+|------------|---------|
+|ESOZ API id|API-005-009-002-0176|
+|Scope|legal_entity:read|
+|Auth |так|
+|User types|?|
+|?Confluence spec|link|
+
++ Response 200 (application/json)
+
+### PREpersons [/PREpersons]
+
+#### GET  [GET]
+
+|Властивість |Значення |
+|------------|---------|
+|ESOZ API id|API-005-009-002-0176|
+|Scope|legal_entity:read|
+|Auth |так|
+|User types|?|
+|?Confluence spec|link|
+
++ Response 200 (application/json)
+
+### AUTH met [/AUTH]
+
+#### GET  [GET]
+
+|Властивість |Значення |
+|------------|---------|
+|ESOZ API id|API-005-009-002-0176|
+|Scope|legal_entity:read|
+|Auth |так|
+|User types|?|
+|?Confluence spec|link|
+
++ Response 200 (application/json)
+
+## Group Medical data
+
+### EDP [/edp]
+
+#### GET  [GET]
+
+|Властивість |Значення |
+|------------|---------|
+|ESOZ API id|API-005-009-002-0176|
+|Scope|legal_entity:read|
+|Auth |так|
+|User types|?|
+|?Confluence spec|link|
+
++ Response 200 (application/json)
+
+### DRP [/drp]
+
+#### GET  [GET]
+
+|Властивість |Значення |
+|------------|---------|
+|ESOZ API id|API-005-009-002-0176|
+|Scope|legal_entity:read|
+|Auth |так|
+|User types|?|
+|?Confluence spec|link|
+
++ Response 200 (application/json)
+
+
+## Group Supporting services
+
+### adresses [/adresses]
+
+#### PRODenv GET  [GET]
+
+|Властивість |Значення |
+|------------|---------|
+|ESOZ API id|API-005-009-002-0176|
+|Scope|legal_entity:read|
+|Auth |так|
+|User types|?|
+|?Confluence spec|link|
+
++ Response 200 (application/json)
+
+#### PrePRODenv GET  [GET /1]
+
+|Властивість |Значення |
+|------------|---------|
+|ESOZ API id|API-005-009-002-0176|
+|Scope|legal_entity:read|
+|Auth |так|
+|User types|?|
+|?Confluence spec|link|
+
++ Response 200 (application/json)
+
+#### DEMOenv GET  [GET /2]
+
+|Властивість |Значення |
+|------------|---------|
+|ESOZ API id|API-005-009-002-0176|
+|Scope|legal_entity:read|
+|Auth |так|
+|User types|?|
+|?Confluence spec|link|
+
++ Response 200 (application/json)
+
+### dictionaries [/dictionaries]
+
+#### GET  [GET]
+
+|Властивість |Значення |
+|------------|---------|
+|ESOZ API id|API-005-009-002-0176|
+|Scope|legal_entity:read|
+|Auth |так|
+|User types|?|
+|?Confluence spec|link|
+
++ Response 200 (application/json)
