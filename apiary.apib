@@ -312,8 +312,6 @@ However, if you are working with async methods, new job will not be created befo
 
 За замовчуванням, усі колекції впорядквані за зростаючим хронологічним порядком (від минулого до майбутнього).
 
-## Group Автентифікація
-
 ### Group Автентифікація MIS
 
 Для середовищ використовуються відповідні точки підключення:
@@ -379,7 +377,9 @@ export function setupAuth() {
             + code: 201 (number)
         + data (`Access_Token`)
 
-### Створення токена сесії через параметри [GET /sign-in]
+### Створення токена сесії через параметри [/sign-in]
+
+#### Sign-in [GET]
 
 Влістивість | Значення
 --------|-----
@@ -397,7 +397,9 @@ export function setupAuth() {
 + Response 200 (text/html; charset=UTF-8)
     + Headers
 
-#### Отримання токена доступу [POST /oauth/apps/authorize]
+### Отримання токена доступу [/oauth/apps/authorize]
+
+#### Authorize [POST]
 
 ```
 {
@@ -430,7 +432,9 @@ export function setupAuth() {
         + urgent
             + `redirect_uri`: `http://example.com/my_success_login_page?code=authorization_code-cTdHUE9jN29yWHo0VTAwL3lwSVRoUT09`
 
-#### Отримання токена сесії [POST /oauth/tokens]
+### Отримання токена сесії [/oauth/tokens]
+
+#### Tokens [POST]
 
 |Властивість |Значення |
 |------------|---------|
