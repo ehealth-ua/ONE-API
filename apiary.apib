@@ -942,3 +942,28 @@ ESOZ entity id - ENT-005-006-001
     + `grant_type`: `refresh_token`
     + client_id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Ідентифкатор авторизованого користувача
 
+### `Legal_Entity_Response_Public_V2`
++ `edr` (edr_data, required)
++ edrpou: 32323454 (string, required) - Unified Register of Businesses and Organizations
++ type: PRIMARY_CARE (string, required) - type of legal entity [PRIMARY_CARE/OUTPATIENT/PHARMACY]. MIS can't be created using this WS.
++ residence_address (Address, optional, required) - address where the legal entity is physically located
++ phones (array[`Phone`], required)
++ email: email@example.com (string, required) - email to contact person in charge from legal entity
++ website: `www.msp.com.ua` (string, optional) - legal entity website
++ receiver_funds_code: `12345` (string, optional) - treasury registration code [Код одержувача/розпорядника бюджетних коштів для Казначейства. Вказується за наявності.]
++ beneficiary: `Борисов Борис Борисович` (string, optional) - legal owner of legal entity [нформація про власника ЗОЗ, для ФОП не заповнюється]
++ accreditation (MSP_Accreditation, optional)
++ license (object)
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string)
+    + type: MSP (string, optional) - License type `Dictionary LICENSE_TYPE`
+    + license_number: fd123443 (string, optional)
+    + issued_by: Кваліфікацйна комісія (string)
+    + issued_date: `2017-02-28` (string)
+    + expiry_date: `2017-02-28` (string)
+    + `active_from_date`: `2017-02-28` (string)
+    + what_licensed: реалізація наркотичних засобів (string, optional)
+    + order_no: ВА43234 (string) - номер наказу
++ `archive`(array[`Archive`], optional)
++ public_offer(object, fixed-type, required)
+    + `consent_text`: `Consent text` (string, required)
+    + `consent`: `true` (boolean, required)
