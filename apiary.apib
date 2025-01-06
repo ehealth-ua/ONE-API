@@ -60,9 +60,9 @@ Fields are named in `snake_case` since it's more common for our stack and [20% e
 
 ЕСОЗ використовує наступний тьоступеневий механізми аутентифікації:
 
-1. Токен сесії (oAuth)
-2. Токен застосунку (oAuth)
-3. Токен доступу (JWT)
+1) Токен сесії (oAuth);
+2) Токен застосунку (oAuth);
+3) Токен доступу (JWT).
 
 #### Токен сесії
 
@@ -70,7 +70,23 @@ Fields are named in `snake_case` since it's more common for our stack and [20% e
 
 #### Токен доступу
 
-### Request structure
+### Ідентифікатор запиту
+
+Each API request has an associated request identifier. You can find it in ```X-Request-ID``` response header or inside ```meta.request_id``` property of returned JSON.
+
+You can also find request identifiers in the URLs of individual request logs in your Dashboard. If you need to contact us about a specific request, providing the request identifier will ensure the fastest possible resolution.
+
+All Request ID's are prefixed with a human-readable name of server that served your request.
+
+```
+X-Request-ID: flash-99spDSoim3i
+```
+
+### Тип тіла запиту
+
+`Content-Type` header should be always `application/json`
+
+### Структура запиту
 
 Request consist with a root object that contain resource and metadata as it's childs:
 
@@ -91,7 +107,7 @@ Request consist with a root object that contain resource and metadata as it's ch
 }
 ```
 
-### Response structure
+### Структура відповіді
 
 Response can consist of 5 root properties:
 
@@ -136,11 +152,11 @@ Response can consist of 5 root properties:
 }
 ```
 
-### Errors
+### Помилки
 
 All errors is returned in JSON format if another `Content-Type` is not specified. This means that your will receive JSON for requests with HTTP 415 code when incorrect `Content-Type` is provided.
 
-#### Error Object Properties
+#### Реквізити помилок
 
 You can find all necessary information about occurred error in a response `error` property. It can have following fields:
 
@@ -189,7 +205,7 @@ Fields | Required | Description
 }
 ```
 
-#### Error Types
+#### Типи помилок
 
 Parameter | Description
 --------- | -----------
@@ -201,7 +217,7 @@ Parameter | Description
 `request_conflict`| Request causes logical errors
 `internal error`| Error on the server
 
-#### Error Entry Types
+#### Типи атомарних помилок
 
 Entry Type | Description
 --------- | -----------
@@ -211,9 +227,9 @@ Entry Type | Description
 `body` | Mailformed request body.
 `header` | HTTP request header is invalid.
 
-#### Validation Rules
+#### Правила валідації
 
-List of possible validation rules:
+Повний перелік валідаційних помилок:
 
 Rule | Params | Description
 -------------- | ----------- | -----------
@@ -241,7 +257,7 @@ Rule | Params | Description
 `date`, `datetime`, `timestamp` | `[after:_, before:_, after_or_at:_, before_or_at:_]` | Invalid datetime representation.
 `url` | `[patterns]` | Field should contain a valid URL.
 
-### Pagination
+### Пейджінація
 
 You can use next search parameters to operate pagination:
 
@@ -250,34 +266,19 @@ Arguments:
 - `page_number` (optional) - A number of a page in the list;
 - `page_size` (optional) -  A limit on the number of objects to be returned, between 1 and 100. Default: 50;
 
-### Content Type
 
-`Content-Type` header should be always `application/json`
-
-### Request ID
-
-Each API request has an associated request identifier. You can find it in ```X-Request-ID``` response header or inside ```meta.request_id``` property of returned JSON.
-
-You can also find request identifiers in the URLs of individual request logs in your Dashboard. If you need to contact us about a specific request, providing the request identifier will ensure the fastest possible resolution.
-
-All Request ID's are prefixed with a human-readable name of server that served your request.
-
-```
-X-Request-ID: flash-99spDSoim3i
-```
-
-### HTTP Redirects
+### HTTP редіректи
 
 API uses HTTP redirection where appropriate. Clients should assume that any request may result in a redirection. Receiving an HTTP redirection is not an error and clients should follow that redirect. Redirect responses will have a Location header field which contains the URI of the resource to which the client should repeat the requests.
 
-Status codes:
+Статуси:
 
 - `301` - Permanent redirection. The URI you used to make the request has been superseded by the one specified in the Location header field. This and all future requests to this resource should be directed to the new URI.
 - `302`, `307` - Temporary redirection. The request should be repeated verbatim to the URI specified in the Location header field but clients should continue to use the original URI for future requests.
 - `303` - The request was successfully performed, the result can be found by the redirect URI.
 Other redirection status codes may be used in accordance with the HTTP 1.1 spec.
 
-### File Uploads
+### Завантаження файлів
 
 #### For files less than 10 MB
 
@@ -294,7 +295,7 @@ For small files it's appropriate to send base64 encoded file contents as JSON fi
 2. Server provides the link to media storage
 3. User upload file using provided link
 
-### Optional Features
+### Інша функціональність
 
 #### Rate Limits (Throttling)
 
@@ -313,7 +314,7 @@ However, if you are working with async methods, new job will not be created befo
 
 By default, all collections are ordered in ascending chronological order.
 
-## Group Authentification
+## Group Автентифікація
 
 ### MIS AUTH [/1]
 
@@ -391,7 +392,7 @@ some text explanation
 
 + Response 200 (application/json)
 
-## Group Administrative data
+## Group Адміністратування
 
 ### Legal Entity [/legal_entities]
 ESOZ entity id - ENT-005-009-002
@@ -487,7 +488,6 @@ ESOZ entity id - ENT-005-006-001
 
 + Response 200 (application/json)
 
-
 ### Healthcare service [/healthcare_services]
 ESOZ entity id - ENT-005-006-001
 
@@ -504,7 +504,7 @@ ESOZ entity id - ENT-005-006-001
 
 + Response 200 (application/json)
 
-## Group Patient personal data
+## Group Персональні дані пацієнта
 
 ### Persons [/Persons]
 
@@ -548,7 +548,7 @@ ESOZ entity id - ENT-005-006-001
 
 + Response 200 (application/json)
 
-## Group Medical data
+## Group Медичні дані
 
 ### EDP [/edp]
 
@@ -578,8 +578,7 @@ ESOZ entity id - ENT-005-006-001
 
 + Response 200 (application/json)
 
-
-## Group Supporting services
+## Group Додаткові сервіси
 
 ### adresses [/adresses]
 
