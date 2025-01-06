@@ -393,41 +393,6 @@ export function setupAuth() {
 + Response 200 (text/html; charset=UTF-8)
     + Headers
 
-#### Створення токена сесії [POST /auth/login]
-
-Властиість | Значення
---------|-----
-|Посилання на документацію|N/A|
-
-Приклад запиту:
-
-```
-{
-    "token": {
-        "grant_type": "password",
-        "email": "user@company.com",
-        "client_id": "00000000-0000-0000-0000-000000000000",
-        "scope": "app:authorize"
-    }
-}
-```
-
-+ Request (application/json)
-    + Headers
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-    + Attributes (object)
-        + token (object)
-            + `grant_type`: `password` (string, required) - тип автентифікації для сесії
-            + `email`: `user@company.com` (string) - поштова адреса користувача ЕСОЗ
-            + `client_id`: (string, required) - ідентифікатор МІС
-            + `scope`: `app:authorize' (string, require) - ABAС правило
-
-+ Response 201 (application/json)
-    + Attributes (`Response_OK`)
-        + meta (Response__Meta)
-            + code: 201 (number)
-        + data (`Access_Token`)
-
 #### Отримання токена доступу [POST /oauth/apps/authorize]
 
 ```
