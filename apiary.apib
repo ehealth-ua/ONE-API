@@ -25,7 +25,7 @@ HOST: https://api.ehealth.gov.ua
 
 ### Дієслова
 
-ЕСОЗ API імлементує наступні дієслова згідно RESTful:
+ЕСОЗ API імлементує наступні дієслова згідно REST:
 
 - `HEAD` - Отримати тільки інформацію в заголовках про ресурс.
 - `GET` - Отримати ресурс (кешовано і ідемподентно). Не може модифікувати облікові дані на сервері.
@@ -57,9 +57,9 @@ HTTP код помлки | Опис
 Іменування полів здійснюється в "стилі змії" (BSD). Типовий приклад `snake_case`.
 Мотивація [описана тут](http://ieeexplore.ieee.org/xpl/articleDetails.jsp?tp=&arnumber=5521745).
 
-### Аутентифікація
+### Автентифікація
 
-ЕСОЗ використовує наступний тьоступеневий механізми аутентифікації:
+ЕСОЗ використовує наступний тьоступеневий механізми автентифікації:
 
 1) Токен сесії (oAuth);
 2) Токен застосунку (oAuth);
@@ -83,9 +83,9 @@ X-Request-ID: flash-99spDSoim3i
 
 ### Структура запиту
 
-Request consist with a root object that contain resource and metadata as it's childs:
+Запит складається з кореневого об'єкту, який містить `resource` поле-об'єкт  з метаінформацією в своїх атрибутах.
 
-**Request example:**
+Приклад запиту:
 
 ```json
 {
@@ -93,9 +93,7 @@ Request consist with a root object that contain resource and metadata as it's ch
     "name": "Alex",
     "surname": "Gray",
     "email": "me@example.com",
-    "credentials: [
-      {"method": "passsword", "password": "notasecret"}
-    ]
+    "credentials: [{"method": "passsword", "password": "notasecret"} ]
   },
   "format_response": true,
   "redirect_browser": true
@@ -104,16 +102,16 @@ Request consist with a root object that contain resource and metadata as it's ch
 
 ### Структура відповіді
 
-Response can consist of 5 root properties:
+Відповідь може містить 5 кореневих полів:
 
-- `meta` - URL of the requested resource (`url`); requested response type (`type`, may be either `list` or `object`); HTTP status (`code`); idempotency key (`idempotency_key`); request id (`request_id`).
-- `urgent` - Notifications and counters.
-- `errors` - Error description. MUST be present when status code is not 2XX, 3XX. CAN NOT be present when `data` is present.
-- `data` - Requested resource. MUST be present when status code is 2XX, 3XX. CAN NOT be present when `error` is present.
-- `paging` - Pagination data.
-- `sandbox` - Optional data provided by `sandbox` environment, for development purposes.
+- `meta` - URL посилання запитуваного ресурсу (`url`); Тип запиту `type` може бути `list` чи `object`; HTTP статус `code`; Ключ ідемподентності `idempotency_key` для кешування запитів; ідентифікатор запиту (`request_id`).
+- `urgent` - Повідомлення або лічильники.
+- `errors` - Опис помилки. МУСИТЬ бути присутнім коли статус коди не 2XX або 3XX. НЕ МОЖЕ бути присутнім коли присутнє поле `data`.
+- `data` - Запитуваний ресурс. МУСИТЬ бути присутнім коли статус коди відповідають 2XX або 3XX. НЕ МОЖЕ бути присутнім коли присутнє поле `error`.
+- `paging` - Сторінкування відповідей.
+- `sandbox` - Опційні дані, які надаються в `sandbox` середовищі для виробничих потреб.
 
-**Response example:**
+Приклад відповіді:
 
 ```json
 {
@@ -202,20 +200,20 @@ Fields | Required | Description
 
 #### Типи помилок
 
-Parameter | Description
---------- | -----------
-`access_denied` | Authorization not passed
-`forbidden` | User does not have permissions to access the resource
-`content_type_invalid` | Invalid HTTP request `content-type`.
-`validation_failed` | Failed validation on JSON request body or form data. 
-`request_too_large` | Request body was to large to process it.
-`request_conflict`| Request causes logical errors
-`internal error`| Error on the server
+Параметр | Опис
+-------- | -----------
+`access_denied` | Помилка автоизації.
+`forbidden` | Користувач не має прав доступу до ресурсу.
+`content_type_invalid` | Невалідний HTTP заголовок `content-type`.
+`validation_failed` | Помилка валідації JSON тіла запиту чи форми.
+`request_too_large` | Тіло запиту занадто велике для оброки.
+`request_conflict`| Запит містить логічні помилки.
+`internal error`| Помилка сервера.
 
 #### Типи атомарних помилок
 
-Entry Type | Description
---------- | -----------
+Тип запису | Опис
+---------- | -----------
 `json_data_proprty` | JSON document is invalid. `entry` will contain JSON Path to invalid property.
 `form_data_field` | HTTP request field (for `form-data` requests) is invalid. 
 `query_param` | HTTP query parameter is invalid.
@@ -252,7 +250,7 @@ Rule | Params | Description
 `date`, `datetime`, `timestamp` | `[after:_, before:_, after_or_at:_, before_or_at:_]` | Invalid datetime representation.
 `url` | `[patterns]` | Field should contain a valid URL.
 
-### Пейджінація
+### Сторінкування
 
 You can use next search parameters to operate pagination:
 
@@ -322,7 +320,7 @@ DEMO    | https://api-demo.ehealth.gov.ua
 PREPROD | https://api-preprod.ehealth.gov.ua
 PROD    | https://api.ehealth.gov.ua
 
-Загалом схема аутентифіції, тобто отримання JWT Bearer, є триступеневим розширенням OAuth.
+Загалом схема автентифіції, тобто отримання JWT Bearer, є триступеневим розширенням OAuth.
 Приклад використання у фреймворку K6:
 
 ```
