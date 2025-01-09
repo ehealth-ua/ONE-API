@@ -338,7 +338,7 @@ new job will not be created before previous identical request is not performed.
 
 By default, all collections are ordered in ascending chronological order.
 
-### Group Автентифікація МІС
+### Group MIS Authentication
 
 Different environments are using different hosts in endpoint:
 
@@ -496,7 +496,7 @@ Link to Confluence | N/A
             + code: 201 (number)
         + data (`Access_Token`)
 
-### Продовження токена сесії [/oauth/tokens]
+### Reissuing Session Token [/oauth/tokens]
 
 #### Tokens [POST]
 
@@ -535,7 +535,8 @@ Link to Confluence | N/A
             + code: 201 (number)
         + data (`Access_Token`)
 
-### Завершення сесії користувача [/auth/logout]
+### Terminate Session [/auth/logout]
+
 #### Logout [POST]
 
 + Request (application/json)
@@ -546,7 +547,7 @@ Link to Confluence | N/A
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
 
-### Отримання одноразового токену [/oauth/nonce]
+### Issuing Nonce Token [/oauth/nonce]
 
 ### Nonce [POST]
 
@@ -581,7 +582,7 @@ active client of the system. The `client_secret` field must be passed if the
         + data (object)
            + token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJtaXRocmlsLWxvZ2luIiwiZXhwIjoxNTIzNDM5MjAxLCJpYXQiOjE1MjM0MzgzMDEsImlzcyI6IkVIZWFsdGgiLCJqdGkiOiJlZmUxZjA4ZS1kNGI0LTRjZWYtYTAyYy03OGVhNGExZGRhMjUiLCJuYmYiOjE1MjM0MzgzMDAsIm5vbmNlIjoxMjMsInN1YiI6MTIzLCJ0eXAiOiJhY2Nlc3MifQ.UZ6S92h3nAG-GKY_XUE1Rc6uR_BuqR8ufUJfMhhKtNmt7DkkQlU49qPXjL0LFddVz1E2DXi2a-BQ0FG-DHsTHA' (string, required)
 
-## Group Адміністратування
+## Group Administration
 
 ### Get Legal Entities [/api/v2/legal_entities{?edrpou,legal_entity_id,settlement_id,type,status,nhs_verified,page,page_size}]
 
