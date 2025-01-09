@@ -1,89 +1,84 @@
 FORMAT: 1A
 HOST: https://api.ehealth.gov.ua
 
-# Регламент ЕСОЗ
+# Electronic Healthcare System of Ukraine HTTP API
 
-## Загальні положення
+## General Information
 
-Електронна система охорони здоров'я (ЕСОЗ) складається з
-центральної бази даних (ЦБД) та медичних інформаційних
-систем (МІС). ЦБД належить державі в особі Національної
-служби здоровʼя України (НСЗУ).
+Electronic healthcare system of Ukraine consists of central database and medical information systems (MIS).
+Central database belongs to Ukrainian state, represented by the National Health Service of Ukraine (NHSU).
 
-Користувачами ЕСОЗ є фізичні та юридичні особи, які
-зареєстровані в електронній системі охорони здоров'я
-і мають права доступу відповідно до Порядку функціонування
-електронної системи охорони здоров'я.
+Users of the electronic healthcare system of Ukraine are individuals and
+legal entities who are registered in the electronic health system and
+have access rights in accordance with the Procedure for the Operation of the electronic healthcare system.
 
-## Скорочення, абревіатури і позначення
+## Abbreviations, acronyms, explanations
 
-* ЕСОЗ - Електронна система охорони здоров'я (ESOZ, англ.)
-* НСЗУ - Національна служба здоров'я України (NHSU, англ.)
-* МІС - Медична інформаційна система
-* ПІС - Пацієнтська інформаційна система
-* NHSU - National Healthcare System of Ukraine (НСЗУ, укр.)
+* NHSU - National Healthcare System of Ukraine
 * MIS - Medical Information System
 * PIS - Patient Information System
+* ESOZ - Ukrainian abbriviation of electronic healthcare system
 
-* МУСИТЬ - вимога специфікації (MUST, англ.)
-* МОЖЕ - допустимість в специфікації (MAY, англ.)
-* НЕ МОЖЕ - недопустимість в специфікації (CAN NOT, англ.)
+* MUST - This word mean that the definition is an absolute requirement of the specification.
+* MAY - This word mean that an item is truly optional.
+* CAN NOT - This phrase mean that the definition is an absolute prohibition of the specification.
 
-## Маніфест програмного інтерфейсу
+## Interacting with API
 
-Наш інтерфейс прикладного програмування (API) організовано
-навколо REST. Він має передбачувані, орієнтовані на
-ресурси URL-адреси та використовує коди відповідей HTTP
-для вказівки на помилки API. Ми використовуємо автентифікацію та дієслова HTTP,
-які розуміють стандартні клієнти HTTP.
+Our API is organized around [REST](http://en.wikipedia.org/wiki/Representational_State_Transfer).
+It has predictable, resource-oriented URLs, and uses HTTP response codes to indicate API errors.
+We use built-in HTTP features, like HTTP authentication and HTTP verbs, which are understood by off-the-shelf HTTP clients.
 
-### Дієслова
+### Verbs
 
-ЕСОЗ API імлементує наступні дієслова згідно REST:
+As per RESTful design patterns, API implements following HTTP verbs:
 
-- `HEAD` - Отримати тільки інформацію в заголовках про ресурс.
-- `GET` - Отримати ресурс (кешовано і ідемподентно). Не може модифікувати облікові дані на сервері.
-- `POST` - Створити новий ресурс.
-- `PUT` - Замінити ресурс коли клієту все одно є чи ні ресурс на сервері.
-- `PATCH` - Змінити ресурс тільки коли ресурс є на сервері.
-- `DELETE` - Видалити ресурс.
+- `HEAD` - Can be issued against any resource to get just the HTTP header info.
+- `GET` - Read resources. Should hever change resources on server (idempotency) since most of http proxies and services may reply same request multiple times.
+- `POST` - Create new resources.
+- `PUT` - Replace resources. Idempotent. (Can be used as `insert or update` method, when we want clients to don't care whenever entity is exists in our system.)
+- `PATCH` - Same as `PUT`, but replaces subset of fields instead of full entity. Should never be used as `insert of update` pattern.
+- `DELETE` - Remove resources.
 
-### Коди помилок
+### Status codes
 
-HTTP код помлки | Опис
---------- | -----------
-`200` | Все працює як повинно.
-`201` | Створений новий інформаційний об'єкт.
-`202` | Прийнято інформаційний об'єкт.
-`400` | Погано сформований запит 
-`401` | Неавторизовано. Немає валідного API ключа.
-`402` | Параметри були валідні, але запит не вдався.
-`403` | Інформаційний цільовий або джерельний обліковий запис відключено.
-`404` | Інформаційий об'єкт не знайдено. Запитуваний ресурс не існує.
-`415` | Не вірний ```Content-Type``` HTTP заголовок.
-`422` | Семантична помилка або помилка типу. До прикладу, значення поля поза межами допустимих словникових значень його типу.
-`409` | Логічна помилка. До прикладу, об'єкт в поточному статусі не може бути модифікований. 
-`429` | Забагато запитів. Вичерпано кредит на кількість запитів за одиницю часу.
-`500` `502` `503` `504` | Помилка сервера. Щось пішло не так на нашій стороні.
+Code  | Description
+----- | -----------
+`200` | Everything worked as expected.
+`201` | Created.
+`202` | Accepted.
+`400` | Bad Request. 
+`401` | Unauthorized. No valid API key provided or API key doesn't match project.
+`402` | The parameters were valid but the request failed.
+`403` | Source or destination account is disabled.
+`404` | Not Found. The requested resource doesn't exist.
+`415` | Incorrect ```Content-Type``` HTTP header.
+`422` | Semantic error or similar. For example, value is not included in enum of allowed values.
+`409` | Logical error. For example, odject in current status can not be modified. 
+`429` | Too Many Requests. Rate limit is exceeded.
+`500` `502` `503` `504` | Server Errors. Something went wrong on our end.
 
-### Іменування полів
+### Field naming
 
-Іменування полів здійснюється в "стилі змії" (BSD). Типовий приклад `snake_case`.
-Мотивація [описана тут](http://ieeexplore.ieee.org/xpl/articleDetails.jsp?tp=&arnumber=5521745).
+Fields are named in `snake_case` since it's more common for
+our stack and [20% easier to read](http://ieeexplore.ieee.org/xpl/articleDetails.jsp?tp=&arnumber=5521745).
 
-### Автентифікація
+### Authentication 
 
-ЕСОЗ використовує наступний тьоступеневий механізми автентифікації:
+In general there is 3-phase authentication routine:
 
-1) Токен сесії (oAuth);
-2) Токен застосунку (oAuth);
-3) Токен доступу (JWT).
+1) Issuing Session Token (OAuth);
+2) Issuing Approval Token (ABAC);
+3) Issuing Access Token (JWT).
 
-### Ідентифікатор запиту
+### Request identifier
 
-Each API request has an associated request identifier. You can find it in ```X-Request-ID``` response header or inside ```meta.request_id``` property of returned JSON.
+Each API request has an associated request identifier.
+You can find it in `X-Request-ID` response header or inside `meta.request_id` property of returned JSON.
 
-You can also find request identifiers in the URLs of individual request logs in your Dashboard. If you need to contact us about a specific request, providing the request identifier will ensure the fastest possible resolution.
+You can also find request identifiers in the URLs of individual request logs in your Dashboard.
+If you need to contact us about a specific request, providing the request identifier will
+ensure the fastest possible resolution.
 
 All Request ID's are prefixed with a human-readable name of server that served your request.
 
@@ -91,43 +86,45 @@ All Request ID's are prefixed with a human-readable name of server that served y
 X-Request-ID: flash-99spDSoim3i
 ```
 
-### Тип тіла запиту
+### Content Type
 
 `Content-Type` header should be always `application/json`
 
-### Структура запиту
+### Request structure
 
-Запит складається з кореневого об'єкту, який містить `resource` поле-об'єкт  з метаінформацією в своїх атрибутах.
+Request consist with a root object that contain resource and metadata as it's childs:
 
-Приклад запиту:
-
-```json
+```
 {
   "resource": {
     "name": "Alex",
     "surname": "Gray",
     "email": "me@example.com",
-    "credentials: [{"method": "passsword", "password": "notasecret"} ]
+    "credentials: [
+      {"method": "passsword", "password": "notasecret"}
+    ]
   },
   "format_response": true,
   "redirect_browser": true
 }
 ```
 
-### Структура відповіді
+### Response structure
 
-Відповідь може містить 5 кореневих полів:
+Response can consist of 5 root properties:
 
-- `meta` - URL посилання запитуваного ресурсу (`url`); Тип запиту `type` може бути `list` чи `object`; HTTP статус `code`; Ключ ідемподентності `idempotency_key` для кешування запитів; ідентифікатор запиту (`request_id`).
-- `urgent` - Повідомлення або лічильники.
-- `errors` - Опис помилки. МУСИТЬ бути присутнім коли статус коди не 2XX або 3XX. НЕ МОЖЕ бути присутнім коли присутнє поле `data`.
-- `data` - Запитуваний ресурс. МУСИТЬ бути присутнім коли статус коди відповідають 2XX або 3XX. НЕ МОЖЕ бути присутнім коли присутнє поле `error`.
-- `paging` - Сторінкування відповідей.
-- `sandbox` - Опційні дані, які надаються в `sandbox` середовищі для виробничих потреб.
+* `meta` - contains: 1) URL of the requested resource `url`;
+                     2) requested response type `type`, may be either list or object;
+                     3) HTTP status `code`;
+                     4) idempotency key (`idempotency_key`);
+                     5) request id (`request_id`).
+* `urgent` - Notifications and counters.
+* `errors` - Error description. MUST be present when status code is not 2XX, 3XX. CAN NOT be present when data is present.
+* `data` - Requested resource. MUST be present when status code is 2XX, 3XX. CAN NOT be present when error is present.
+* `paging` - Pagination data.
+* `sandbox` - Optional data provided by sandbox environment, for development purposes.
 
-Приклад відповіді:
-
-```json
+```
 {
   "meta": {
     "url": "https://qbill.ly/transactions/",
@@ -159,11 +156,12 @@ X-Request-ID: flash-99spDSoim3i
 }
 ```
 
-### Помилки
+### Errors
 
-All errors is returned in JSON format if another `Content-Type` is not specified. This means that your will receive JSON for requests with HTTP 415 code when incorrect `Content-Type` is provided.
+All errors is returned in JSON format if another `Content-Type` is not specified.
+This means that your will receive JSON for requests with HTTP 415 code when incorrect `Content-Type` is provided.
 
-#### Реквізити помилок
+#### Error Object Properties
 
 You can find all necessary information about occurred error in a response `error` property. It can have following fields:
 
@@ -177,9 +175,9 @@ Fields | Required | Description
 `invalid[].params` | false| Optional parameters that can be used in a human-readable error message, to make it easier to understand. Usually it contains limit values for failed validator.
 `message` | false | Human readable message for API developer.
 
-**Example error response:**
+Example error response:
 
-```json
+```
 {
     "data": {
         "error": {
@@ -212,17 +210,17 @@ Fields | Required | Description
 }
 ```
 
-#### Типи помилок
+#### Error Types
 
-Параметр | Опис
--------- | -----------
-`access_denied` | Помилка автоизації.
-`forbidden` | Користувач не має прав доступу до ресурсу.
-`content_type_invalid` | Невалідний HTTP заголовок `content-type`.
-`validation_failed` | Помилка валідації JSON тіла запиту чи форми.
-`request_too_large` | Тіло запиту занадто велике для оброки.
-`request_conflict`| Запит містить логічні помилки.
-`internal error`| Помилка сервера.
+Parameter | Description
+--------- | -----------
+`access_denied` | Authorization not passed
+`forbidden` | User does not have permissions to access the resource
+`content_type_invalid` | Invalid HTTP request `content-type`.
+`validation_failed` | Failed validation on JSON request body or form data. 
+`request_too_large` | Request body was to large to process it.
+`request_conflict`| Request causes logical errors
+`internal error`| Error on the server
 
 #### Типи атомарних помилок
 
@@ -234,9 +232,19 @@ Fields | Required | Description
 `body` | Mailformed request body.
 `header` | HTTP request header is invalid.
 
-#### Правила валідації
+#### Error Entry Types
 
-Повний перелік валідаційних помилок:
+Entry Type | Description
+--------- | -----------
+`json_data_proprty` | JSON document is invalid. `entry` will contain JSON Path to invalid property.
+`form_data_field` | HTTP request field (for `form-data` requests) is invalid. 
+`query_param` | HTTP query parameter is invalid.
+`body` | Mailformed request body.
+`header` | HTTP request header is invalid.
+
+#### Validation Rules
+
+List of possible validation rules:
 
 Rule | Params | Description
 -------------- | ----------- | -----------
@@ -264,7 +272,7 @@ Rule | Params | Description
 `date`, `datetime`, `timestamp` | `[after:_, before:_, after_or_at:_, before_or_at:_]` | Invalid datetime representation.
 `url` | `[patterns]` | Field should contain a valid URL.
 
-### Сторінкування
+### Pagination
 
 You can use next search parameters to operate pagination:
 
@@ -273,69 +281,75 @@ Arguments:
 - `page_number` (optional) - A number of a page in the list;
 - `page_size` (optional) -  A limit on the number of objects to be returned, between 1 and 100. Default: 50;
 
-
-### HTTP редіректи
+### HTTP Redirects
 
 API uses HTTP redirection where appropriate. Clients should assume that any request may result in a redirection. Receiving an HTTP redirection is not an error and clients should follow that redirect. Redirect responses will have a Location header field which contains the URI of the resource to which the client should repeat the requests.
 
-Статуси:
+Status codes:
 
 - `301` - Permanent redirection. The URI you used to make the request has been superseded by the one specified in the Location header field. This and all future requests to this resource should be directed to the new URI.
 - `302`, `307` - Temporary redirection. The request should be repeated verbatim to the URI specified in the Location header field but clients should continue to use the original URI for future requests.
 - `303` - The request was successfully performed, the result can be found by the redirect URI.
 Other redirection status codes may be used in accordance with the HTTP 1.1 spec.
 
-### Завантаження файлів
+### File Uploads
 
-#### Для файлів менше 10МБ
+#### For files less than 10 MB
 
-Для малих файлів дозволяється використовувати base64 у якості кодування для JSON полів:
+For small files it's appropriate to send base64 encoded file contents as JSON field:
 
 ```
 {
-    name: "fieldName",
+    name: "My Name",
     image: "sdasdpjoijhwhwe83280u2380wef=="
 }
 ```
 
-#### Для великих файлів
+#### For larger files - Multi-Stage Uploads (Network Transactions)
 
-Багато-становий процес завантаження файлів, який складається з наступних кроків:
+Multi-stage process:
 
-1). Користувая ініціює завантаження;
-2). Сервер надає посилання на медіа сховище для подальшого завантаження;
-3). Користувач завантажує файл використовуючи надане посилання.
+1). User initiates uploading;
+2). Server provides the link to media storage;
+3). User upload file using provided link.
 
-### Інша функціональність
+## Optional Features
 
-#### Обмеження по ємності
+### Rate Limits (Throttling)
 
-Ми обмежуємо запити до API для гарантованого рівномірного розподілення між клієнтами.
-Обмеження пропускної здатності правил мотивоване задля запобігання спаму і неправильного використання системи.
-Поточна конфігурація ЕСОЗ допускає 1000 звернень до HTTP точок підключення за кожні 15 хвилин,
-але це число може змінюватися нашими динамічними політиками.
+We throttle our APIs by default to ensure maximum performance for all developers.
 
-### Ідемподентність запитів
+Rate limiting of the API is primarily considered on a per-consumer basis.
+All your projects share a same rate limit, to avoid API-consuming fraud.
+Rate limits depend on your account type.
 
-From a RESTful service standpoint, for an operation (or service call) to be idempotent, clients can make that same call repeatedly while producing the same result. In other words, making multiple identical requests has the same effect as making a single request.
-However, if you are working with async methods, new job will not be created before previous identical request is not performed.
+Currently free accounts is rate limited to 1000 API calls every 15 minutes,
+but this value may be adjusted at our discretion.
 
-### Впорядковані переліки та колекції
+### Idempotent Requests
 
-За замовчуванням, усі колекції впорядквані за зростаючим хронологічним порядком (від минулого до майбутнього).
+From a RESTful service standpoint, for an operation (or service call) to be idempotent,
+clients can make that same call repeatedly while producing the same result.
+In other words, making multiple identical requests has the same effect as
+making a single request. However, if you are working with async methods,
+new job will not be created before previous identical request is not performed.
+
+### Ordering Lists and Collections
+
+By default, all collections are ordered in ascending chronological order.
 
 ### Group Автентифікація МІС
 
-Для середовищ використовуються відповідні точки підключення:
+Different environments are using different hosts in endpoint:
 
-Влістивість | Значення
---------|-----
-DEMO    | https://api-demo.ehealth.gov.ua
-PREPROD | https://api-preprod.ehealth.gov.ua
-PROD    | https://api.ehealth.gov.ua
+Environmnet | Host
+------------|-----
+DEMO        | https://api-demo.ehealth.gov.ua
+PREPROD     | https://api-preprod.ehealth.gov.ua
+PROD        | https://api.ehealth.gov.ua
 
-Загалом схема автентифіції, тобто отримання JWT Bearer, є триступеневим розширенням OAuth.
-Приклад використання у фреймворку K6:
+In general 3 stage authentication purpose is to get active JWT Bearer which
+can be obtained using the folling example:
 
 ```
 var user      = __ENV.USER;
@@ -366,22 +380,22 @@ export function setupAuth() {
 }
 ```
 
-#### Створення токена сесії через об'єкт [/auth/login]
+#### Create Session Token by Object [/auth/login]
 
 ##### Login [GET]
 
-Влістивість | Значення
---------|-----
-|ЕСОЗ API ID||
-|Посилання на документацію|N/A|
+Key                | Value
+-------------------|-----------
+ESOZ API ID        |
+Link to Confluence | N/A
 
 + Request (application/json)
     + Attributes (object)
         + token (object)
-            + `grant_type`: `password` (string, required) - тип автентифікації для сесії
-            + `email`: `user@company.com` (string) - поштова адреса користувача ЕСОЗ
-            + `client_id`: (string, required) - ідентифікатор МІС
-            + `scope`: `app:authorize' (string, require) - ABAС правило
+            + `grant_type`: `password` (string, required) - authentication type
+            + `email`: `user@company.com` (string) - email address of ESOZ user
+            + `client_id`: (string, required) - MIS identifier
+            + `scope`: `app:authorize' (string, require) - ABAС rule
 
 + Response 201 (application/json)
     + Attributes (`Response_OK`)
@@ -389,14 +403,14 @@ export function setupAuth() {
             + code: 201 (number)
         + data (`Access_Token`)
 
-### Створення токена сесії через параметри [/sign-in]
+### Create Session Token by Params [/sign-in]
 
 #### Sign-in [GET]
 
-Влістивість | Значення
---------|-----
-|ЕСОЗ API ID||
-|Посилання на документацію|N/A|
+Key                | Value
+-------------------|-----------
+ESOZ API ID        |
+Link to Confluence | N/A
 
 + Parameters
     + `client_id`: `6498d88e-97fb-47e2-85a5-99e884f888aa` (string, required) - Medical Service provider ID issued after legal_entity registration. Used to identify the context of the MSP/Pharmacy.
@@ -409,7 +423,7 @@ export function setupAuth() {
 + Response 200 (text/html; charset=UTF-8)
     + Headers
 
-### Отримання токена доступу [/oauth/apps/authorize]
+### Issuing Approval Token [/oauth/apps/authorize]
 
 #### Authorize [POST]
 
@@ -444,15 +458,14 @@ export function setupAuth() {
         + urgent
             + `redirect_uri`: `http://example.com/my_success_login_page?code=authorization_code-cTdHUE9jN29yWHo0VTAwL3lwSVRoUT09`
 
-### Отримання токена сесії [/oauth/tokens]
+### Issuing Access Token [/oauth/tokens]
 
 #### Tokens [POST]
 
-|Властивість |Значення |
-|------------|---------|
-|ЕСОЗ API ID||
-|?Confluence spec|link|
-
+Key                | Value
+-------------------|-----------
+ESOZ API ID        |
+Link to Confluence | N/A
 
 ```
 {
@@ -467,7 +480,7 @@ export function setupAuth() {
 
 + Request (application/json)
     + Headers
-            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     + Attributes (object)
         + token (object)
             + `client_id`: `6498d88e-97fb-47e2-85a5-99e884f888aa` (string, required) - Medical Service provider ID issued after legal_entity registration. Used to identify the context of the MSP/Pharmacy.
@@ -484,14 +497,13 @@ export function setupAuth() {
         + data (`Access_Token`)
 
 ### Продовження токена сесії [/oauth/tokens]
+
 #### Tokens [POST]
 
-
-|Властивість |Значення |
-|------------|---------|
-|ЕСОЗ API ID||
-|?Confluence spec|link|
-
+Key                | Value
+-------------------|-----------
+ESOZ API ID        |
+Link to Confluence | N/A
 
 ```
 {
@@ -538,9 +550,9 @@ export function setupAuth() {
 
 ### Nonce [POST]
 
-Ця точка доступу дозволяє отримати nonce (одноразовий JWT) для активного клієнта системи.
-Поле `client_secret` необхідно передати, якщо тип клієнта = TRUSTED_PIS.
-Приклад закодованого інформаційного повідомлення JWT в полі `token`:
+This access point allows you to get a nonce (one-time JWT) for an
+active client of the system. The `client_secret` field must be passed if the
+`client type` = TRUSTED_PIS. An example of an encoded JWT information message in the token field:
 
 ```
 {
@@ -571,15 +583,16 @@ export function setupAuth() {
 
 ## Group Адміністратування
 
-### Отримати юридичних осіб [/api/v2/legal_entities{?edrpou,legal_entity_id,settlement_id,type,status,nhs_verified,page,page_size}]
-#### Get Legal Entities [GET]
+### Get Legal Entities [/api/v2/legal_entities{?edrpou,legal_entity_id,settlement_id,type,status,nhs_verified,page,page_size}]
 
-|Властивість |Значення |
-|------------|---------|
-|ЕСОЗ API ID ||
-|Scope|legal_entity:read|
-|Auth |так|
-|?Confluence spec|link|
+#### listOrganizations [GET]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        |
+Scope              | legal_entity:read
+Auth               | yes
+Link to Confluence | N/A
 
 + Parameters
     + `edrpou`: `341086` (string, optional)
@@ -612,163 +625,120 @@ export function setupAuth() {
                     - SUSPENDED
 
 
-### Отримати певну юридичну особу [/api/v2/legal_entities/{id}]
-### Get Legal Entity by Id [GET]
+### Get Legal Entity by Id [/api/v2/legal_entities/{id}]
 
-|Властивість |Значення |
-|------------|---------|
-|ESOZ API id|API-005-009-002-0177|
-|Scope|legal_entity:read|
-|Auth |так|
-|User types|DOCTOR|
-|?Confluence spec|link|
+#### getOrganization [GET]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        |
+Scope              | legal_entity:read
+Auth               | yes
+Link to Confluence | N/A
+
++ Parameters
+    + `id`
+
++ Response 200 (application/json)
+
+### Create Legal Entity [/api/v2/legal_entities]
+
+#### createOrganization [PUT]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        |
+Scope              | legal_entity:write
+Auth               | yes
+Link to Confluence | N/A
+
++ Response 200 (application/json)
+
+### Get Related Legal Entities [/api/legal_entities/{id}/related]
+
+#### getRelatedOrganizations [GET]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        |
+Scope              | related_legal_entities:read
+Auth               | yes
+Link to Confluence | N/A
 
 + Parameters
     + `id`
 
 + Response 200 (application/json)
 
-#### PUT legal entities [PUT /api/v2/legal_entities]
+### Create License [/api/licenses]
 
-|Властивість |Значення |
-|------------|---------|
-|ESOZ API id|API-005-009-002-0178|
-|Description|text|
-|Scope|legal_entity:write|
-|Auth |так|
-|User types|?|
-|?Confluence spec|link|
+#### createLicense [POST]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        |
+Scope              | related_legal_entities:read
+Auth               | yes
+Link to Confluence | N/A
 
 + Response 200 (application/json)
 
-#### GET related legal entities [GET /api/legal_entities/{id}/related]
+### Get Organization Divisions [/divisions]
 
-|Властивість |Значення |
-|------------|---------|
-|ESOZ API id|API-005-009-002-0186|
-|Description|text|
-|Scope|related_legal_entities:read|
-|Auth |так|
-|User types|?|
-|?Confluence spec|link|
+### getDivisions [GET]
 
-+ Parameters
-    + `id`
-    
-+ Response 200 (application/json)
-
-
-### Legal Entity license [/licenses]
-ESOZ entity id - ENT-005-009-003
-
-#### Create license [POST /api/licenses]
-
-|Властивість |Значення |
-|------------|---------|
-|ESOZ API id|API-005-009-003-0188|
-|Description|text|
-|Scope|license:write|
-|Auth |так|
-|User types|?|
-|?Confluence spec|link|
-    
-+ Response 200 (application/json)
-
-### Division [/divisions]
 ESOZ entity id - ENT-005-006-001
 
----
+### Get Healthcare Services [/healthcare_services]
 
-#### GET legal entities [GET /api/v2/legal_entities]
+### getServices [GET]
 
-|Властивість |Значення |
-|------------|---------|
-|ESOZ API id|API-005-009-002-0176|
-|Description|text|
-|Scope|legal_entity:read|
-|Auth |так|
-|User types|?|
-|?Confluence spec|link|
-
-+ Response 200 (application/json)
-
-### Healthcare service [/healthcare_services]
 ESOZ entity id - ENT-005-006-001
 
-#### GET legal entities [GET /api/v2/legal_entities]
+## Group Patient Personal Data
 
-|Властивість |Значення |
-|------------|---------|
-|ESOZ API id|API-005-009-002-0176|
-|Description|text|
-|Scope|legal_entity:read|
-|Auth |так|
-|User types|?|
-|?Confluence spec|link|
+### Persons [/persons]
 
-+ Response 200 (application/json)
+#### getPerson [GET]
 
-## Group Персональні дані пацієнта
-
-### Persons [/Persons]
-
-#### GET  [GET]
-
-|Властивість |Значення |
-|------------|---------|
-|ESOZ API id|API-005-009-002-0176|
-|Scope|legal_entity:read|
-|Auth |так|
-|User types|?|
-|?Confluence spec|link|
+Key                | Value
+-------------------|-----------
+ESOZ API ID        |
+Scope              | legal_entity:read
+Auth               | yes
+Link to Confluence | N/A
 
 + Response 200 (application/json)
 
-### PREpersons [/PREpersons]
+### Prepersons [/prepersons]
 
-#### GET  [GET]
+#### getPreperson  [GET]
 
-|Властивість |Значення |
-|------------|---------|
-|ESOZ API id|API-005-009-002-0176|
-|Scope|legal_entity:read|
-|Auth |так|
-|User types|?|
-|?Confluence spec|link|
-
-+ Response 200 (application/json)
-
-### AUTH met [/AUTH]
-
-#### GET  [GET]
-
-|Властивість |Значення |
-|------------|---------|
-|ESOZ API id|API-005-009-002-0176|
-|Scope|legal_entity:read|
-|Auth |так|
-|User types|?|
-|?Confluence spec|link|
+Key                | Value
+-------------------|-----------
+ESOZ API ID        |
+Scope              | legal_entity:read
+Auth               | yes
+Link to Confluence | N/A
 
 + Response 200 (application/json)
 
-## Group Клінічні дані
+## Group Clinical Data
 
-## Group Діагностичні дані
+## Group Diagnostic Data
 
-## Group Медичні дані
+## Group Medical Data
 
 ### EDP [/edp]
 
 #### GET  [GET]
 
-|Властивість |Значення |
-|------------|---------|
-|ESOZ API id|API-005-009-002-0176|
-|Scope|legal_entity:read|
-|Auth |так|
-|User types|?|
-|?Confluence spec|link|
+Key                | Value
+-------------------|-----------
+ESOZ API ID        |
+Scope              | legal_entity:read
+Auth               | yes
+Link to Confluence | N/A
 
 + Response 200 (application/json)
 
@@ -776,67 +746,30 @@ ESOZ entity id - ENT-005-006-001
 
 #### GET  [GET]
 
-|Властивість |Значення |
-|------------|---------|
-|ESOZ API id|API-005-009-002-0176|
-|Scope|legal_entity:read|
-|Auth |так|
-|User types|?|
-|?Confluence spec|link|
+Key                | Value
+-------------------|-----------
+ESOZ API ID        |
+Scope              | legal_entity:read
+Auth               | yes
+Link to Confluence | N/A
 
 + Response 200 (application/json)
 
-## Group Додаткові сервіси
+## Group Additional Services
 
-### adresses [/adresses]
+### Adresses [/adresses]
 
-#### PRODenv GET  [GET]
+#### getAddress [GET]
 
-|Властивість |Значення |
-|------------|---------|
-|ESOZ API id|API-005-009-002-0176|
-|Scope|legal_entity:read|
-|Auth |так|
-|User types|?|
-|?Confluence spec|link|
+### Dictionaries [/dictionaries]
 
-+ Response 200 (application/json)
+#### getDictionary [GET]
 
-#### PrePRODenv GET  [GET /1]
-
-|Властивість |Значення |
-|------------|---------|
-|ESOZ API id|API-005-009-002-0176|
-|Scope|legal_entity:read|
-|Auth |так|
-|User types|?|
-|?Confluence spec|link|
-
-+ Response 200 (application/json)
-
-#### DEMOenv GET  [GET /2]
-
-|Властивість |Значення |
-|------------|---------|
-|ESOZ API id|API-005-009-002-0176|
-|Scope|legal_entity:read|
-|Auth |так|
-|User types|?|
-|?Confluence spec|link|
-
-+ Response 200 (application/json)
-
-### dictionaries [/dictionaries]
-
-#### GET  [GET]
-
-|Властивість |Значення |
-|------------|---------|
-|ESOZ API id|API-005-009-002-0176|
-|Scope|legal_entity:read|
-|Auth |так|
-|User types|?|
-|?Confluence spec|link|
+Key                | Value
+-------------------|-----------
+ESOZ API ID        |
+Auth               | yes
+Link to Confluence | N/A
 
 + Response 200 (application/json)
 
