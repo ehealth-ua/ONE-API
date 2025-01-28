@@ -332,7 +332,7 @@ By default, all collections are ordered in ascending chronological order.
 
 # Group Authentication
 
-## MIS Authentication
+## MIS Authentication [/auth/mis]
 
 Different environments are using different hosts in endpoints:
 
@@ -574,11 +574,9 @@ active client of the system. The `client_secret` field must be passed if the
 
 # Group Administration
 
-## Legal Entities
+## Legal Entities [/admin/legal_entities]
 
-### Get Legal Entities [/api/v2/legal_entities{?edrpou,legal_entity_id,settlement_id,type,status,nhs_verified,page,page_size}]
-
-#### listOrganizations [GET]
+### Get Legal Entities [GET /api/v2/legal_entities{?edrpou,legal_entity_id,settlement_id,type,status,nhs_verified,page,page_size}]
 
 Key                | Value
 -------------------|-----------
@@ -632,9 +630,7 @@ Link to Confluence | N/A
 
 + Response 200 (application/json)
 
-### Create Legal Entity [/api/v2/legal_entities]
-
-#### createOrganization [PUT]
+### Create Legal Entity [PUT /api/v2/legal_entities]
 
 Key                | Value
 -------------------|-----------
@@ -645,9 +641,7 @@ Link to Confluence | N/A
 
 + Response 200 (application/json)
 
-### Get Related Legal Entities [/api/legal_entities/{id}/related]
-
-#### getRelatedOrganizations [GET]
+### Get Related Legal Entities [GET /api/legal_entities/{id}/related]
 
 Key                | Value
 -------------------|-----------
@@ -661,9 +655,7 @@ Link to Confluence | N/A
 
 + Response 200 (application/json)
 
-### Create License [/api/licenses]
-
-#### createLicense [POST]
+### Create License [POST /api/licenses]
 
 Key                | Value
 -------------------|-----------
@@ -675,6 +667,8 @@ Link to Confluence | N/A
 + Response 200 (application/json)
 
 ### Get Organization Divisions [/divisions]
+
++ Response 200 (application/json)
 
 # Group Patient Personal Data
 
