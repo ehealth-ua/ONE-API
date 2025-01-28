@@ -1554,3 +1554,25 @@ Link to Confluence |
     - Default: true
 + inserted_at: `2005-10-30 10:45` (string, required) - timestamp
 + inserted_by: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - user id
+
+## `Licenses`
+
+### `License`
++ type: MSP (enum, required) - License type `Dictionary LICENSE_TYPE`
++ license_number: fd123443 (string, optional)
++ issued_by: Кваліфікацйна комісія (string, required)
++ issued_date: `2022-02-28` (string, required)
++ expiry_date: `2026-02-28` (string, optional)
++ active_from_date: `2022-02-28` (string, required)
++ what_licensed: реалізація наркотичних засобів (string, optional)
++ order_no: ВА43234 (string, optional)
+
+### `crud_licenses_get`
++ id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ include `License`
++ legal_entity_id: `28d9c1be-08f0-403b-aa76-bff228c9904f` (string, required)    
++ is_primary: true (boolean, required)
+
+### `crud_licenses_post`
++ include `License`
++ is_primary: false (boolean, required)
