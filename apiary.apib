@@ -919,7 +919,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 ### Licenses [/admin/licenses]
 
-### Get Licenses [GET /api/licenses]
+### Get Licenses [GET /api/licenses{?id,license_number,type,is_primary,page,page_size}]
 
 Key                | Value
 -------------------|-----------
@@ -927,6 +927,20 @@ ESOZ API ID        | API-005-009-003-0187
 Scope              | license:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570824387/DRAFT+Get+licenses">Get Licenses</a>
+
+Use this end-point to obtain all Licenses of the legal entity.
+
++ Parameters
+    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional)
+    + license_number: `fd12344344` (string, optional)
+    + type: MSP (string, optional) - Dictionary LICENSE_TYPE
+    + is_primary: true (boolean, optional) - primary or additional license flag
+    + `page`: 2 (number) - Page number.
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array[`crud_licenses_get`])
 
 + Response 200 (application/json)
 
@@ -939,6 +953,23 @@ Scope              | license:write
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570758930/DRAFT+Create+license">Create License</a>
 
+This method must be used to create additional licenses for legal entity (`is_primary=false`) in the system.
+
+Primary license must be added with `Create or Update Legal Entity` method.
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
+    + Attributes (`crud_licenses_post`)
+        + `is_primary`: false (boolean, required)
+
++ Response 201 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`crud_licenses_get`)
+
 + Response 200 (application/json)
 
 ### Update License [PATCH /api/licenses]
@@ -950,7 +981,25 @@ Scope              | license:write
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570136425/DRAFT+Update+license">Update License</a>
 
+This method must be used to update additional license (`is_primary=false`) for legal entity in the system.
+
+Primary license must be updated with `Create or Update Legal Entity` method.
+
++ Parameters
+    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
+    + Attributes (`crud_licenses_post`)
+        + is_primary: false (boolean, required)
+
 + Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`crud_licenses_get`)
 
 # Group Medical Events
 
