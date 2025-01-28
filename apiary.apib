@@ -658,7 +658,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 ## Divisions [/admin/divisions]
 
-### Get Legal Entity Divisions [GET /divisions]
+### Get Divisions [GET /api/divisions]
 
 Key                | Value
 -------------------|-----------
@@ -668,6 +668,103 @@ Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570889841/DRAFT+Get+divisions">Get Divisions</a>
 
 + Response 200 (application/json)
+
+### Update Division [PATCH /api/divisions/{id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-006-001-0088
+Scope              | related_legal_entities:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570136296/DRAFT+Update+division">Update Division</a>
+
+This method must be used to update existing division in the system.
+
+Note that different legal entity types can register specific division types and address types accordingly
+More details can be found [here](https://e-health-ua.atlassian.net/wiki/x/GQB7Iw)
+
++ Parameters
+    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+
++ Request (application/json)
+    + Attributes (`crud_division_post`)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`crud_division_get`)
+
+### Create Division [POST /api/divisions]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-006-001-0089
+Scope              | related_legal_entities:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570431096/DRAFT+Create+division">Create Division</a>
+
+This method must be used to create new division in the system.
+
+Note that different legal entity types can register specific division types and address types accordingly
+More details can be found [here](https://e-health-ua.atlassian.net/wiki/x/GQB7Iw)
+
++ Request (application/json)
+    + Attributes (`crud_division_post`)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`crud_division_get`)
+
+### Deactivate Division [PATCH /api/divisions/{id}/actions/deactivate]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-006-001-0090
+Scope              | related_legal_entities:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570922579/DRAFT+Deactivate+division">Deactivate Division</a>
+
++ Parameters
+    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`crud_division_get`)
+
+### Activate Division [PATCH /api/divisions/{id}/actions/activate]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-006-001-0091
+Scope              | related_legal_entities:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570693263/DRAFT+Activate+division">Activate Division</a>
+
++ Parameters
+    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`crud_division_get`)
 
 ### Licenses [/admin/licenses]
 
@@ -862,6 +959,7 @@ Link to Confluence | N/A
 + total_pages: 23 (number) - Total number of pages.
 
 ## `Access_Tokens`
+
 ### `Access_Token`
 + value: `SnNRdCtvU0tTOENBV2dLRUZwNmIzZz09` (string, required) - OAuth токен доступу
 + user_id: `3ff33ced-69dc-415a-b231-c6446898335a` (string, required) - Ідентифікатор користувача
@@ -975,3 +1073,103 @@ Link to Confluence | N/A
     + num_type: `кв.`
     + num: `144`
 
+## `Divisions`
+
+### `Division`
++ name: Бориспільське відділення Клініки Ноунейм (string, required) - the full name of division
++ addresses (array[`Address`], required)
++ phones (array[`Phone`], required)
++ email: email@example.com (string, required) - division's email
++ working_hours (`workinghours`) - optional field, business hours by each day weekly, doesn't make any influence on business process and will be shown on portal and map.
++ type: CLINIC (enum, required) - `Dictionary DIVISION_TYPE`
++ legal_entity_id: `c8aadb87-ecb9-41ca-9ad4-ffdfe1dd89c9` (string, optional)
++ external_id: `3213213` (string, optional)
++ location (Location, optional) - optional field. geographical location, if it's empty, division won't be shown on a map.
+
+### workinghours
++ mon (array, optional)
+    - 08.00,12.00 (array[string])
+    - 14.00,18.00 (array[string])
++ tue (array, optional)
+    - 08.00,12.00 (array[string])
++ wed (array, optional)
+    - 08.00,12.00 (array[string])
++ thu (array, optional)
+    - 08.00,12.00 (array[string])
++ fri (array, optional)
+    - 08.00,12.00 (array[string])
++ sat (array, optional)
++ sun (array, optional)
+
+### `Division_Details`
++ id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ legal_entity_id: `c8aadb87-ecb9-41ca-9ad4-ffdfe1dd89c9` (string, required)
++ include (`Division`)
++ dls_id: `2872985` (string, optional)
++ dls_verified: true (boolean, optional)
+
+### `Division_Declaration`
++ id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ `legal_entity_id`: `c8aadb87-ecb9-41ca-9ad4-ffdfe1dd89c9` (string, required)
++ name: Бориспільське відділення Клініки Ноунейм (string, required) - the full name of division
++ addresses (array[`Address`], required)
++ phones (array[`Phone`], required)
++ email: email@example.com (string, required) - division's email
++ type: clinic (enum, required) - division type
+    - CLINIC
+    - AMBULANT_CLINIC
+    - FAP
++ external_id: `3213213` (string, optional)
++ dls_id: `2872985` (string, optional)
++ dls_verified: true (boolean, optional)
+
+
+### `Division_Details_Cabinet`
++ id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ name: Бориспільське відділення Клініки Ноунейм (string, required) - the full name of division
++ addresses (array[`Address`], required)
++ phones (array[`Phone`], required)
++ email: email@example.com (string, required) - division's email
++ location (Location, optional) - geographical location, if it's empty, division won't be shown on a map.
+
+
+### `Division_Short_List`
++ id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ name: Бориспільське відділення Клініки Ноунейм (string, required)
++ type: clinic (enum, required)
+    - CLINIC
+    - AMBULANT_CLINIC
+    - FAP
++ status: ACTIVE (enum, required)
+    - ACTIVE
+    - INACTIVE
++ dls_id: `2872985` (string, optional)
++ dls_verified: true (boolean, optional)
+
+### `Division_Short`
++ id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ name: Бориспільське відділення Клініки Ноунейм (string, required)
++ `legal_entity_id`: d290f1ee-6c54-4b01-90e6-d701748f0851 (string, required)
++ type: CLINIC (enum, required)
+    - CLINIC
+    - AMBULANT_CLINIC
+    - FAP
++ status: ACTIVE (enum, required)
+    - ACTIVE
+    - INACTIVE
++ mountain_group: false (boolean, optional)
++ dls_id: `2872985` (string, optional)
++ dls_verified: true (boolean, optional)
+
+### `crud_division_post`
++ include `Division`
+
+### `crud_division_get`
++ id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ include `Division`
++ status: ACTIVE (enum, required)
+    - ACTIVE
+    - INACTIVE
++ mountain_group: false (boolean, optional)
++ dls_id: `2872985` (string, optional)
++ dls_verified: true (boolean, optional)
