@@ -638,9 +638,30 @@ Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570562268/DRAFT+Get+Legal+Entity+by+ID+V2">Get Legal Entity by Id</a>
 
 + Parameters
-    + `id`
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
+    + Attributes (`Response__Process_OK`)
+        + data (object)
+            + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+            + include (`Legal_Entity_Response_Public_V2`)
+            + status: ACTIVE (enum, required)
+                - ACTIVE
+                - CLOSED
+                - SUSPENDED
+            + `nhs_verified`: false (boolean, required)
+            + `nhs_reviewed`: false (boolean, required) - flag that shows whether legal entity was reviewed by nhs
+            + nhs_comment: `comment` (string, optional) - nhs's comment
+        + urgent (object, optional)
+            + security (object)
+                + `secret_key`: `secret_key` (string, required)
+                + `client_id`: `client_id` (string, required)
+                + `redirect_uri`: `redirect_uri` (string, required, fixed) - Redirect uri
 
 ### Create or Update Legal Entity [PUT /api/v2/legal_entities]
 
