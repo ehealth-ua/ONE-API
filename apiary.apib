@@ -570,10 +570,10 @@ active client of the system. The `client_secret` field must be passed if the
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        |
+ESOZ API ID        | API-005-009-002-0176
 Scope              | legal_entity:read
 Auth               | yes
-Link to Confluence | N/A
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570824360/DRAFT+Get+Legal+Entities+V2">DRAFT Get Legal Entities V2</a>
 
 + Parameters
     + `edrpou`: `341086` (string, optional)
@@ -610,24 +610,24 @@ Link to Confluence | N/A
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        |
+ESOZ API ID        | API-005-009-002-0177
 Scope              | legal_entity:read
 Auth               | yes
-Link to Confluence | N/A
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570562268/DRAFT+Get+Legal+Entity+by+ID+V2">Get Legal Entity by Id</a>
 
 + Parameters
     + `id`
 
 + Response 200 (application/json)
 
-### Create Legal Entity [PUT /api/v2/legal_entities]
+### Create or Update Legal Entity V2 [PUT /api/v2/legal_entities]
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        |
+ESOZ API ID        | API-005-009-002-0178
 Scope              | legal_entity:write
 Auth               | yes
-Link to Confluence | N/A
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570857172/DRAFT+Create+Update+Legal+Entity+V2">Create or Update Legal Entity V2</a>
 
 + Response 200 (application/json)
 
@@ -635,30 +635,42 @@ Link to Confluence | N/A
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        |
+ESOZ API ID        | API-005-009-002-0186
 Scope              | related_legal_entities:read
 Auth               | yes
-Link to Confluence | N/A
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570922693/DRAFT+Get+legators+Legal+Entities">Get Legators Legal Entities</a>
 
 + Parameters
     + `id`
 
 + Response 200 (application/json)
 
+## Divisionbs [/admin/divisions]
+
+### Get Legal Entity Divisions [GET /divisions]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-006-001-0087
+Scope              | related_legal_entities:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570889841/DRAFT+Get+divisions">Get Divisions</a>
+
++ Response 200 (application/json)
+
+### Licenses [/admin/licenses]
+
 ### Create License [POST /api/licenses]
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        |
+ESOZ API ID        | API-005-009-003-0188
 Scope              | related_legal_entities:read
 Auth               | yes
 Link to Confluence | N/A
 
 + Response 200 (application/json)
 
-### Get Organization Divisions [GET /divisions]
-
-+ Response 200 (application/json)
 
 # Group Medical Events
 
