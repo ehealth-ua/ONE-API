@@ -1,7 +1,7 @@
 FORMAT: 1A
 HOST: https://api.ehealth.gov.ua
 
-# Electronic Healthcare System of Ukraine HTTP API
+# Electronic Healthcare System of Ukraine
 
 Version: 9.5.6
 
@@ -330,7 +330,9 @@ new job will not be created before previous identical request is not performed.
 
 By default, all collections are ordered in ascending chronological order.
 
-### Group MIS Authentication
+# Group Authentication
+
+## MIS Authentication
 
 Different environments are using different hosts in endpoints:
 
@@ -372,9 +374,9 @@ export function setupAuth() {
 }
 ```
 
-#### Create Session Token by Object [/auth/login]
+### Create Session Token by Object [/auth/login]
 
-##### Login [GET]
+#### Login [GET]
 
 Key                | Value
 -------------------|-----------
@@ -574,7 +576,9 @@ active client of the system. The `client_secret` field must be passed if the
         + data (object)
            + token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJtaXRocmlsLWxvZ2luIiwiZXhwIjoxNTIzNDM5MjAxLCJpYXQiOjE1MjM0MzgzMDEsImlzcyI6IkVIZWFsdGgiLCJqdGkiOiJlZmUxZjA4ZS1kNGI0LTRjZWYtYTAyYy03OGVhNGExZGRhMjUiLCJuYmYiOjE1MjM0MzgzMDAsIm5vbmNlIjoxMjMsInN1YiI6MTIzLCJ0eXAiOiJhY2Nlc3MifQ.UZ6S92h3nAG-GKY_XUE1Rc6uR_BuqR8ufUJfMhhKtNmt7DkkQlU49qPXjL0LFddVz1E2DXi2a-BQ0FG-DHsTHA' (string, required)
 
-## Group Administration
+# Group Administration
+
+## Legal Entities
 
 ### Get Legal Entities [/api/v2/legal_entities{?edrpou,legal_entity_id,settlement_id,type,status,nhs_verified,page,page_size}]
 
@@ -618,9 +622,7 @@ Link to Confluence | N/A
                     - SUSPENDED
 
 
-### Get Legal Entity by Id [/api/v2/legal_entities/{id}]
-
-#### getOrganization [GET]
+### Get Legal Entity by Id [GET /api/v2/legal_entities/{id}]
 
 Key                | Value
 -------------------|-----------
@@ -688,7 +690,7 @@ ESOZ entity id - ENT-005-006-001
 
 ESOZ entity id - ENT-005-006-001
 
-## Group Patient Personal Data
+# Group Patient Personal Data
 
 ### Persons [/persons]
 
@@ -716,24 +718,11 @@ Link to Confluence | N/A
 
 + Response 200 (application/json)
 
-## Group Medical Events
+# Group Medical Events
 
-### EDP [/edp]
+## Composition
 
-#### GET  [GET]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        |
-Scope              | legal_entity:read
-Auth               | yes
-Link to Confluence | N/A
-
-+ Response 200 (application/json)
-
-### DRP [/drp]
-
-#### GET  [GET]
+### Create Composition Titile [GET /api/patients/{patient_id}/composition_title]
 
 Key                | Value
 -------------------|-----------
@@ -744,15 +733,37 @@ Link to Confluence | N/A
 
 + Response 200 (application/json)
 
-## Group Additional Services
+### Submit Composition [GET /api/patients/{patient_id}/compositions]
 
-### Adresses [/adresses]
+Key                | Value
+-------------------|-----------
+ESOZ API ID        |
+Scope              | legal_entity:read
+Auth               | yes
+Link to Confluence | N/A
+
+### Get Medication Request Details in Composition Context [/api/persons/{person_id}/compositions/{composition_id}/medication_requests/{id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        |
+Scope              | legal_entity:read
+Auth               | yes
+Link to Confluence | N/A
+
++ Response 200 (application/json)
+
+# Group Additional Services
+
+## Adresses [/adresses]
+
+### Get Address [/adresses]
 
 #### getAddress [GET]
 
-### Dictionaries [/dictionaries]
+## Dictionaries [/dictionaries]
 
-#### getDictionary [GET]
+### getDictionary [GET]
 
 Key                | Value
 -------------------|-----------
