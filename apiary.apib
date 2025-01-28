@@ -724,11 +724,10 @@ Available transition: `nhs_verified` false --> true.
 
 ### Deactivate Legal Entity [PATCH /api/legal_entities/{id}/actions/deactivate]
 
-Use this method to deactivate msp.
-1. Deactivate emploees by legal entity
+Use this method to deactivate MSP:
 
-2. Deactivate legal entity
-Update status on CLOSED
+1). Deactivate emploees by legal entity.
+2). Deactivate legal entity Update status on CLOSED.
 
 + Parameters
     + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
@@ -745,7 +744,6 @@ Update status on CLOSED
         + data (object)
             + include `Legal_Entity_Request_Public_Short`
 
-
 + Response 200 (application/json)
 
 ### Get Related Legal Entities [GET /api/legal_entities/{id}/related]
@@ -757,10 +755,23 @@ Scope              | related_legal_entities:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570922693/DRAFT+Get+legators+Legal+Entities">Get Legators Legal Entities</a>
 
+Use this method to get the list of child legal entities which are related to current legal entity.
+
 + Parameters
-    + `id`
+    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+    + `page`: 2 (number) - Page number.
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 300. Default: 50.
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (array[`Legal_Entity_Related`])
 
 ## Divisions [/admin/divisions]
 
