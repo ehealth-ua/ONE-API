@@ -395,12 +395,18 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
             + code: 201 (number)
         + data (`Access_Token`)
 
-### Create Session Token by Params [GET /sign-in]
+### Create Session Token by Params [GET /sign-in{?client_id,redirect_uri,scope,email,user_data,state}]
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        |
+ESOZ API ID        | N/A
 Link to Confluence | N/A
+
+You MUST redirect your users to this URL to obtain oAuth Code Grant (which is later exchanged to Access Token).
+
+User will see rendered login page, which structure differ by a list of requested scopes and security measures applied by DevOps team.
+
+For security purposes, we will set `X-Frame-Options: deny` header that will disallow opening this page in an iframe.
 
 + Parameters
     + `client_id`: `6498d88e-97fb-47e2-85a5-99e884f888aa` (string, required) - Medical Service provider ID issued after legal_entity registration. Used to identify the context of the MSP/Pharmacy.
