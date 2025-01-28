@@ -597,6 +597,9 @@ Scope              | legal_entity:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570824360/DRAFT+Get+Legal+Entities+V2">DRAFT Get Legal Entities</a>
 
+Use this method to get list of legal entities filtering by parameters.
+List consists of legal entities with parameter `is_active = true`.
+
 + Parameters
     + `edrpou`: `341086` (string, optional)
     + `legal_entity_id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional)
@@ -727,6 +730,11 @@ For changes to take effect employee must confirm the changes.
 
 ### Verify Legal Entity by NHS [PATCH /api/legal_entities/{id}/actions/nhs_verify]
 
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-009-002-0179
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570464009/DRAFT+Verify+Legal+Entity+by+NHS">Verify Legal Entity by NHS</a>
+
 Use this method to verify legal entity by NHS.
 Available transition: `nhs_verified` false --> true.
 
@@ -744,6 +752,11 @@ Available transition: `nhs_verified` false --> true.
             + include `Legal_Entity_Request_Public_Short`
 
 ### Deactivate Legal Entity [PATCH /api/legal_entities/{id}/actions/deactivate]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-009-002-0180
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570824371/DRAFT+Deactivate+Legal+Entity">Deactivate Legal Entity</a>
 
 Use this method to deactivate MSP:
 
