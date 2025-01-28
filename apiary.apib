@@ -677,10 +677,10 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key features and main differences from V1:
 
-* *legal entity types and licenses are created/updated one by one, i.e. one legal entity type and one license are accepted in one call*;
-* *medical_services_providers structure is removed, accreditation and license parameters are moved to the root*;
-* *added EDR integration in order to validate and enrich legal entity data*;
-* *it can be also used to update owner data. In this case `employee_id` should be passed in the payload in the owner block*.
+* legal entity types and licenses are created/updated one by one, i.e. one legal entity type and one license are accepted in one call;
+* medical_services_providers structure is removed, accreditation and license parameters are moved to the root;
+* added EDR integration in order to validate and enrich legal entity data;
+* it can be also used to update owner data. In this case `employee_id` should be passed in the payload in the owner block.
 
 User may accept or decline Invitation.
 For changes to take effect employee must confirm the changes.
@@ -759,7 +759,6 @@ ESOZ API ID        | API-005-009-002-0180
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570824371/DRAFT+Deactivate+Legal+Entity">Deactivate Legal Entity</a>
 
 Use this method to deactivate MSP:
-
 1). Deactivate emploees by legal entity.
 2). Deactivate legal entity Update status on CLOSED.
 
@@ -830,9 +829,8 @@ Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570136296/DRAFT+Update+division">Update Division</a>
 
 This method must be used to update existing division in the system.
-
 Note that different legal entity types can register specific division types and address types accordingly
-More details can be found [here](https://e-health-ua.atlassian.net/wiki/x/GQB7Iw)
+More details can be found [here](https://e-health-ua.atlassian.net/wiki/x/GQB7Iw).
 
 + Parameters
     + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
