@@ -413,9 +413,7 @@ Link to Confluence | N/A
 + Response 200 (text/html; charset=UTF-8)
     + Headers
 
-### Issuing Approval Token [/oauth/apps/authorize]
-
-#### Authorize [POST]
+### Issuing Approval Token [POST /oauth/apps/authorize]
 
 ```
 {
@@ -448,9 +446,7 @@ Link to Confluence | N/A
         + urgent
             + `redirect_uri`: `http://example.com/my_success_login_page?code=authorization_code-cTdHUE9jN29yWHo0VTAwL3lwSVRoUT09`
 
-### Issuing Access Token [/oauth/tokens]
-
-#### Tokens [POST]
+### Issuing Access Token [POST /oauth/tokens]
 
 Key                | Value
 -------------------|-----------
@@ -486,9 +482,7 @@ Link to Confluence | N/A
             + code: 201 (number)
         + data (`Access_Token`)
 
-### Reissuing Session Token [/oauth/tokens]
-
-#### Tokens [POST]
+### Reissuing Session Token [POST /oauth/tokens]
 
 Key                | Value
 -------------------|-----------
@@ -525,9 +519,7 @@ Link to Confluence | N/A
             + code: 201 (number)
         + data (`Access_Token`)
 
-### Terminate Session [/auth/logout]
-
-#### Logout [POST]
+### Terminate Session [POST /auth/logout]
 
 + Request (application/json)
     + Headers
@@ -537,9 +529,7 @@ Link to Confluence | N/A
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
 
-### Issuing Nonce Token [/oauth/nonce]
-
-### Nonce [POST]
+### Issuing Nonce Token [POST /oauth/nonce]
 
 This access point allows you to get a nonce (one-time JWT) for an
 active client of the system. The `client_secret` field must be passed if the
@@ -666,7 +656,7 @@ Link to Confluence | N/A
 
 + Response 200 (application/json)
 
-### Get Organization Divisions [/divisions]
+### Get Organization Divisions [GET /divisions]
 
 + Response 200 (application/json)
 
