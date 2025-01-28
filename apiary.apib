@@ -1458,3 +1458,16 @@ Link to Confluence |
 + number: АА120518 (string, required) - document issue number
 + issued_by: `Рокитнянським РВ ГУ МВС Київської області` (string, optional) - authority which issued the document
 + issued_at: `2017-02-28` (string, optional) - the date when document was issued
+
+### `Legal_Entity_Related`
++ merged_from_legal_entity (object, required)
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - merged_from legal entity id
+    + name: Клініка Ноунейм (string, required) - full official name of legal entity
+    + edrpou: 5432345432 (string, required) -  Unified Register of Businesses and Organizations
++ reason: на підставі наказу №1111 (string, required) - the legit documents which prove the relationship between legal entities
++ reason_date: `2022-02-10` (string, optional) - the legit documents date
++ type: `ACCESSION` (enum, required) - reorganization type, dictionary `LEGAL_ENTITY_REORGANIZATION_TYPES`
++ is_active: true (boolean, required) - whether relationship between legal entities is active
+    - Default: true
++ inserted_at: `2005-10-30 10:45` (string, required) - timestamp
++ inserted_by: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - user id
