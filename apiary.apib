@@ -1094,6 +1094,62 @@ Link to Confluence |
     + `grant_type`: `refresh_token`
     + client_id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Ідентифкатор авторизованого користувача
 
+### `Legal_Entity_Request_Public_Short`
++ name: Клініка Ноунейм (string, required) - full official name of legal entity
++ short_name: Ноунейм (string, optional) - short name of legal entity
++ public_name: Ноунейм (string, optional) - the name to show on public sources
++ type: MSP (string, required) - type of legal entity [MSP/PHARMACY]. MIS can't be created using this WS.
++ `owner_property_type`: STATE (string, required) - `Dictionary OWNER_PROPERTY_TYPE`
++ `legal_form`: 140 (string, required) - `Dictionary LEGAL_FORM`
++ edrpou: 5432345432 (string, required) -  Unified Register of Businesses and Organizations
++ kveds: 86.1 (array, required) - Ukrainian Industry Classification System, there is a check for required kved: 86.10, 86.21, 47.73
++ addresses (array[`Address`], required)
++ phones (array[`Phone`], required)
++ email: email@example.com (string, required) - email to contact person in charge from legal entity
++ website: `www.msp.com.ua` (string, optional) - legal entity website
++ receiver_funds_code: `12345` (string, optional) - treasure code [Код одержувача/розпорядника бюджетних коштів для Казначейства. Вказується за наявності.]
++ beneficiary: `Борисов Борис Борисович` (string, optional) - legal owner of legal entity [нформація про власника ЗОЗ, для ФОП не заповнюється]
++ `medical_service_provider` (MSP)
++ `archive`(array[`Archive`], optional)
++ security (object, fixed-type)
+    + `redirect_uri`: `redirect_uri` (string, required, fixed) - Redirect uri is used in oauth2.0 flow
++ is_active: true (boolean, required)
++ inserted_by: `A65C8369-CE3A-44D6-839B-8856E3DC4CA3` (string, required)
++ inserted_at: `2005-10-30 10:45` (string, required) - timestamp
++ created_by_mis_client_id:  `A65C8369-CE3A-44D6-839B-8856E3DC4CA3` (string, required)
++ updated_at: `1991-08-19T00:00:00.000Z` (string, required)
++ updated_by: `userid` (string, required)
+
+### `Legal_Entity_Request_Public_V2`
++ edrpou: 32323454 (string, required) - Unified Register of Businesses and Organizations
++ type: PRIMARY_CARE (string, required) - type of legal entity
++ residence_address (Address, optional, required) - address where the legal entity is physically located
++ phones (array[`Phone`], required)
++ email: email@example.com (string, required) - email to contact person in charge from legal entity
++ website: `www.msp.com.ua` (string, optional) - legal entity website
++ receiver_funds_code: `12345` (string, optional) - treasury registration code [Код одержувача/розпорядника бюджетних коштів для Казначейства. Вказується за наявності.]
++ beneficiary: `Борисов Борис Борисович` (string, optional) - legal owner of legal entity [нформація про власника ЗОЗ, для ФОП не заповнюється]
++ owner(`Owner_V2`,required)
++ accreditation (MSP_Accreditation, optional)
+- One of
+    + license (object, required)
+        + type: MSP (string, required) - License type `Dictionary LICENSE_TYPE`
+        + license_number: fd123443 (string, optional)
+        + issued_by: Кваліфікацйна комісія (string, required)
+        + issued_date: `2017-02-28` (string, required)
+        + expiry_date: `2017-02-28` (string, optional)
+        + `active_from_date`: `2017-02-28` (string, required)
+        + what_licensed: реалізація наркотичних засобів (string, optional)
+        + order_no: ВА43234 (string, required) - номер наказу
+    + license (object, required)
+        + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ `archive`(array[`Archive`], optional)
++ security (object, required, fixed-type)
+    + `redirect_uri`: `https://example.com` (string, required, fixed) - Redirect uri is used in oauth2.0 flow
++ public_offer(object, fixed-type, required)
+    + `consent_text`: `Consent text` (string, required)
+    + `consent`: `true` (boolean, required)
+
 ### `Legal_Entity_Response_Public_V2`
 + `edr` (edr_data, required)
 + edrpou: 32323454 (string, required) - Unified Register of Businesses and Organizations
@@ -1123,13 +1179,6 @@ Link to Confluence |
 ### `Archive`
 + date: `2017-02-28` (string, required) - the date when paper documents were transferred to archive
 + place: `вул. Грушевського 15` (string, required) - the address of building where paper documents are
-
-### `MSP_Accreditation`
-+ category: SECOND (string, required) - `Dictionary ACCREDITATION_CATEGORY` category of accreditation legal entity. At least one of type must be present. Each type can be represented only once.
-+ issued_date: `2017-02-28` (string, optional) - дата видачі
-+ expiry_date: `2017-02-28` (string, optional)
-+ order_no: fd123443 (string, required) - номер наказу МОЗ
-+ order_date: `2017-02-28` (string, required) - дата наказу МОЗ
 
 ### Phone
 + type: MOBILE (string, required) - `Dictionary PHONE_TYPE` type of phone Land Line or Mobile. At least one of type must be present. Each type can be represented only once.
@@ -1287,3 +1336,114 @@ Link to Confluence |
 ### Location
 + latitude: 30.1233 (number, required)
 + longitude: 50.32423 (number, required)
+
+## `Medical_Service_Providers`
+
+### `crud_msp`
++ `legal_entity_id`: 5432345432 (string, required)
++ accreditation (MSP_Accreditation, optional)
++ licenses (array[`MSP_License`], required)
+
+### `crud_msp_get`
++ include `crud_msp`
+
+### `crud_msp_post`
++ include `crud_msp`
+
+### `crud_msp_patch`
++ accreditation (MSP_Accreditation, optional)
++ licenses (array[`MSP_License`], required)
+
+### `Medical_Service_Provider`
++ name: Клініка Ноунейм (string, required)
++ short_name: Ноунейм (string, required)
++ `legal_form`: 140 (string, required) - `Dictionary LEGAL_FORM`
++ public_name: ЦПМСД №1 (string, optional)
++ edrpou: 5432345432 (string, required)
++ licenses (array[`MSP_License`], required)
++ accreditation (MSP_Accreditation, optional)
++ addresses (array[`Address`], required)
++ phones (array[`Phone`], required)
++ email: `email@example.com` (string, required)
+
+### `MSP_Short`
++ id: d290f1ee-6c54-4b01-90e6-d701748f0851
++ name: Клініка Ноунейм (string, required)
++ short_name: Ноунейм (string, required)
++ `legal_form`: 140 (string, required) - `Dictionary LEGAL_FORM`
++ edrpou: 5432345432 (string, required)
+
+### `MSP_Details`
++ id: d290f1ee-6c54-4b01-90e6-d701748f0851
++ name: Клініка ЦПМСД №1 (string, required)
++ short_name: ЦПМСД №1 (string, required)
++ `legal_form`: 140 (string, required) - `Dictionary LEGAL_FORM`
++ public_name: ЦПМСД №1 (string, optional)
++ edrpou: 5432345432 (string, required)
++ status: `ACTIVE` (enum, required)
+    + ACTIVE
+    + CLOSED
++ email: `email@example.com` (string, required)
++ phones (array[`Phone`], required)
++ addresses (array[`Address`], optional)
+
+### `MSP`
++ licenses (array[`MSP_License`], required)
++ accreditation (MSP_Accreditation, optional)
+
+### `MSP_V2`
++ licenses (array[`MSP_License_V2`], required)
++ accreditation (MSP_Accreditation, optional)
+
+### `MSP_Accreditation`
++ category: SECOND (string, required) - `Dictionary ACCREDITATION_CATEGORY` category of accreditation legal entity. At least one of type must be present. Each type can be represented only once.
++ issued_date: `2017-02-28` (string, optional) - дата видачі
++ expiry_date: `2017-02-28` (string, optional)
++ order_no: fd123443 (string, required) - номер наказу МОЗ
++ order_date: `2017-02-28` (string, required) - дата наказу МОЗ
+
+### `MSP_License`
++ license_number: fd123443 (string, optional)
++ issued_by: Кваліфікацйна комісія (string, required)
++ issued_date: `2017-02-28` (string, required)
++ expiry_date: `2017-02-28` (string, optional)
++ `active_from_date`: `2017-02-28` (string, required)
++ what_licensed: реалізація наркотичних засобів (string, optional)
++ order_no: ВА43234 (string, required) - номер наказу
+
+### `MSP_License_V2`
++ license_number: fd123443 (string, optional)
++ type: MSP (string, required) - License type `Dictionary LICENSE_TYPE`
++ kveds: 86.10 (array, required) - Ukrainian Industry Classification System, there is a check that at least one of required kveds provided for specific license type
++ issued_by: Кваліфікацйна комісія (string, required)
++ issued_date: `2017-02-28` (string, required)
++ expiry_date: `2017-02-28` (string, optional)
++ `active_from_date`: `2017-02-28` (string, required)
++ what_licensed: реалізація наркотичних засобів (string, optional)
++ order_no: ВА43234 (string, required) - номер наказу
+
+### `Bank_Details`
++ MFO: `351005` (string, required) - bank code
++ name: `Публічне акціонерне товариство «УкрСиббанк»` (string, required) - bank name
++ account_number(array, required)
+    + `32009102701026` (string, required) - banks account number
+
+### `Owner_V2`
++ first_name: Петро (string, required)
++ last_name: Іванов (string, required)
++ second_name: Миколайович (string, optional)
++ tax_id: 3015492563 (string, required)
++ employee_id: `229d6b67-fc18-49ca-be96-7468fc4e1745` (string, optional)
++ `no_tax_id`: false (boolean, optional) - true if owner doesn't have tax_id and false otherwise
++ birth_date: `1991-08-19` (string, required)
++ gender: MALE (string, required) - `Dictionary GENDER`
++ email: `email@example.com` (string, required)
++ documents (array[`PartyDocument`], required)
++ phones (array[`Phone`], required)
++ position (string, required): `P6`- `Dictionary POSITION`
+
+### PartyDocument
++ type: PASSPORT (string, required) - `Dictionary DOCUMENT_TYPE`
++ number: АА120518 (string, required) - document issue number
++ issued_by: `Рокитнянським РВ ГУ МВС Київської області` (string, optional) - authority which issued the document
++ issued_at: `2017-02-28` (string, optional) - the date when document was issued
