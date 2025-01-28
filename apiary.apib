@@ -378,8 +378,8 @@ export function setupAuth() {
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        |
-Link to Confluence | N/A
+ESOZ API ID        | API-009-001-001-0323
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571446858/Login">Login</a>
 
 + Request (application/json)
     + Attributes (object)
@@ -446,12 +446,12 @@ Link to Confluence | N/A
         + urgent
             + `redirect_uri`: `http://example.com/my_success_login_page?code=authorization_code-cTdHUE9jN29yWHo0VTAwL3lwSVRoUT09`
 
-### Issuing Access Token [POST /oauth/tokens]
+### Issuing Grant Access Token [POST /oauth/tokens]
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        |
-Link to Confluence | N/A
+ESOZ API ID        | API-009-001-001-0324
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571807257/Exchange+oAuth+Code+Grant+to+Access+Token">Issuing Grant Access Token</a>
 
 ```
 {
@@ -486,8 +486,8 @@ Link to Confluence | N/A
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        |
-Link to Confluence | N/A
+ESOZ API ID        | API-009-001-001-0325
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571315778/Use+Refresh+Token+for+Access+Token+extension">Reissuing Session Token</a>
 
 ```
 {
@@ -521,6 +521,12 @@ Link to Confluence | N/A
 
 ### Terminate Session [POST /auth/logout]
 
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-009-001-001-0326
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18448646240/DRAFT+PIS.+Logout">Logout</a>
+
+
 + Request (application/json)
     + Headers
         Authorization: Bearer c2778f3064753ea70de870a53795f5c9
@@ -530,6 +536,11 @@ Link to Confluence | N/A
     + Attributes (`Response_OK`)
 
 ### Issuing Nonce Token [POST /oauth/nonce]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | N/A
+Link to Confluence | N/A
 
 This access point allows you to get a nonce (one-time JWT) for an
 active client of the system. The `client_secret` field must be passed if the
@@ -660,14 +671,36 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 ### Licenses [/admin/licenses]
 
+### Get Licenses [GET /api/licenses]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-009-003-0187
+Scope              | license:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570824387/DRAFT+Get+licenses">Get Licenses</a>
+
++ Response 200 (application/json)
+
 ### Create License [POST /api/licenses]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-005-009-003-0188
-Scope              | related_legal_entities:read
+Scope              | license:write
 Auth               | yes
-Link to Confluence | N/A
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570758930/DRAFT+Create+license">Create License</a>
+
++ Response 200 (application/json)
+
+### Update License [PATCH /api/licenses]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-009-003-0188
+Scope              | license:write
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570136425/DRAFT+Update+license">Update License</a>
 
 + Response 200 (application/json)
 
