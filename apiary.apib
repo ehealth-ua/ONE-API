@@ -16,14 +16,7 @@ have access rights in accordance with the Procedure for the Operation of the ele
 
 ## Abbreviations, acronyms, explanations
 
-* NHSU - National Healthcare System of Ukraine
-* MIS - Medical Information System
-* PIS - Patient Information System
-* ESOZ - Ukrainian abbriviation of electronic healthcare system
-
-* MUST - This word mean that the definition is an absolute requirement of the specification.
-* MAY - This word mean that an item is truly optional.
-* CAN NOT - This phrase mean that the definition is an absolute prohibition of the specification.
+See <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17536909481">link to Confluence eHealth Glossary page</a>.
 
 ## Interacting with API
 
@@ -374,12 +367,14 @@ export function setupAuth() {
 }
 ```
 
-### Create Session Token by Object [PUT /auth/login]
+### Login [PUT /auth/login]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-009-001-001-0323
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571446858/Login">Login</a>
+
+Create Session Token by Object.
 
 + Request (application/json)
     + Attributes (object)
@@ -395,16 +390,18 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
             + code: 201 (number)
         + data (`Access_Token`)
 
-### Create Session Token by Params [GET /sign-in{?client_id,redirect_uri,scope,email,user_data,state}]
+### Sign-in [GET /sign-in{?client_id,redirect_uri,scope,email,user_data,state}]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | N/A
 Link to Confluence | N/A
 
-You MUST redirect your users to this URL to obtain oAuth Code Grant (which is later exchanged to Access Token).
+Create Session Token by Params. You MUST redirect your users to this URL to obtain OAuth
+Code Grant (which is later exchanged to Access Token).
 
-User will see rendered login page, which structure differ by a list of requested scopes and security measures applied by DevOps team.
+User will see rendered login page, which structure differ by a list of requested
+scopes and security measures applied by DevOps team.
 
 For security purposes, we will set `X-Frame-Options: deny` header that will disallow opening this page in an iframe.
 
@@ -530,7 +527,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
             + code: 201 (number)
         + data (`Access_Token`)
 
-### Terminate Session [POST /auth/logout]
+### Logout [POST /auth/logout]
 
 Key                | Value
 -------------------|-----------
