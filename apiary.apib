@@ -1266,6 +1266,69 @@ Scope              | episode:write
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18023055421/DRAFT+REST+API+Get+Short+Episodes+by+Diagnoses+Groups">Get Short Episodes by Diagnoses Groups</a>
 
+## Compositions [/me/compositions]
+
+### Create Composition Title [GET /api/patients/{patient_id}/composition_title]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        |
+Scope              | legal_entity:read
+Auth               | yes
+Link to Confluence | N/A
+
++ Response 200 (application/json)
+
+### Submit Composition [GET /api/patients/{patient_id}/compositions]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        |
+Scope              | legal_entity:read
+Auth               | yes
+Link to Confluence | N/A
+
++ Response 200 (application/json)
+
+### Get Medication Request From Composition [GET /api/persons/{person_id}/compositions/{composition_id}/medication_requests/{id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        |
+Scope              | legal_entity:read
+Auth               | yes
+Link to Confluence | N/A
+
++ Response 200 (application/json)
+
+# Group Personal Data
+
+## Persons [/personal/persons]
+
+### Get Person [GET]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        |
+Scope              | legal_entity:read
+Auth               | yes
+Link to Confluence | 
+
++ Response 200 (application/json)
+
+## Prepersons [/personal/prepersons]
+
+### Get Preperson  [GET]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | 
+Scope              | legal_entity:read
+Auth               | yes
+Link to Confluence | 
+
++ Response 200 (application/json)
+
 ## Specimen [/me/specimen]
 
 ### Create Specimen [POST /api/patients/{patient_id}/specimens]
@@ -1547,68 +1610,6 @@ http code| processing method | Client recommendations
         + data (`Job`)
 
 
-## Compositions [/me/compositions]
-
-### Create Composition Title [GET /api/patients/{patient_id}/composition_title]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        |
-Scope              | legal_entity:read
-Auth               | yes
-Link to Confluence | N/A
-
-+ Response 200 (application/json)
-
-### Submit Composition [GET /api/patients/{patient_id}/compositions]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        |
-Scope              | legal_entity:read
-Auth               | yes
-Link to Confluence | N/A
-
-+ Response 200 (application/json)
-
-### Get Medication Request From Composition [GET /api/persons/{person_id}/compositions/{composition_id}/medication_requests/{id}]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        |
-Scope              | legal_entity:read
-Auth               | yes
-Link to Confluence | N/A
-
-+ Response 200 (application/json)
-
-# Group Personal Data
-
-## Persons [/personal/persons]
-
-### Get Person [GET]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        |
-Scope              | legal_entity:read
-Auth               | yes
-Link to Confluence | 
-
-+ Response 200 (application/json)
-
-## Prepersons [/personal/prepersons]
-
-### Get Preperson  [GET]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        | 
-Scope              | legal_entity:read
-Auth               | yes
-Link to Confluence | 
-
-+ Response 200 (application/json)
 
 # Data Structures
 
