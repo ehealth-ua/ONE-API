@@ -43,7 +43,7 @@ ENT-012	Condition			ME
 ENT-017	Device				ME
 ENT-019	Diagnostic Report		ME
 ENT-026	Encounter			ME
-ENT-027	Episode Of Care			ME
+ENT-027	Episode Of Care			ME		DONE
 ENT-033	Immunization			ME
 ENT-040	Medication Administration	ME
 ENT-041	Medication Dispense		ME
