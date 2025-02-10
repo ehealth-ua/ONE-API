@@ -587,6 +587,115 @@ active client of the system. The `client_secret` field must be passed if the
 
 # Group Administration
 
+## Divisions [/admin/divisions]
+
+### Get Divisions [GET /api/divisions]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-006-001-0087
+Scope              | related_legal_entities:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570889841/DRAFT+Get+divisions">Get Divisions</a>
+
++ Response 200 (application/json)
+
+### Update Division [PATCH /api/divisions/{id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-006-001-0088
+Scope              | related_legal_entities:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570136296/DRAFT+Update+division">Update Division</a>
+
+This method must be used to update existing division in the system.
+Note that different legal entity types can register specific division types and address types accordingly
+More details can be found [here](https://e-health-ua.atlassian.net/wiki/x/GQB7Iw).
+
++ Parameters
+    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+
++ Request (application/json)
+    + Attributes (`crud_division_post`)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`crud_division_get`)
+
+### Create Division [POST /api/divisions]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-006-001-0089
+Scope              | related_legal_entities:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570431096/DRAFT+Create+division">Create Division</a>
+
+This method must be used to create new division in the system.
+Note that different legal entity types can register specific division types and address types accordingly.
+More details can be found [here](https://e-health-ua.atlassian.net/wiki/x/GQB7Iw).
+
++ Request (application/json)
+    + Attributes (`crud_division_post`)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`crud_division_get`)
+
+### Deactivate Division [PATCH /api/divisions/{id}/actions/deactivate]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-006-001-0090
+Scope              | related_legal_entities:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570922579/DRAFT+Deactivate+division">Deactivate Division</a>
+
++ Parameters
+    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`crud_division_get`)
+
+### Activate Division [PATCH /api/divisions/{id}/actions/activate]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-006-001-0091
+Scope              | related_legal_entities:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570693263/DRAFT+Activate+division">Activate Division</a>
+
++ Parameters
+    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`crud_division_get`)
+
+
 ## Legal Entities [/admin/legal_entities]
 
 ### Get Legal Entities [GET /api/v2/legal_entities{?edrpou,legal_entity_id,settlement_id,type,status,nhs_verified,page,page_size}]
@@ -806,114 +915,6 @@ Use this method to get the list of child legal entities which are related to cur
         + meta (Response__Meta)
             + code: 200 (number)
         + data (array[`Legal_Entity_Related`])
-
-## Divisions [/admin/divisions]
-
-### Get Divisions [GET /api/divisions]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        | API-005-006-001-0087
-Scope              | related_legal_entities:read
-Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570889841/DRAFT+Get+divisions">Get Divisions</a>
-
-+ Response 200 (application/json)
-
-### Update Division [PATCH /api/divisions/{id}]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        | API-005-006-001-0088
-Scope              | related_legal_entities:read
-Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570136296/DRAFT+Update+division">Update Division</a>
-
-This method must be used to update existing division in the system.
-Note that different legal entity types can register specific division types and address types accordingly
-More details can be found [here](https://e-health-ua.atlassian.net/wiki/x/GQB7Iw).
-
-+ Parameters
-    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
-
-+ Request (application/json)
-    + Attributes (`crud_division_post`)
-    + Headers
-        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-        API-key: uXhEczJ56adsfh3Ri9SUkc4en
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (`Response_OK`)
-        + data (`crud_division_get`)
-
-### Create Division [POST /api/divisions]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        | API-005-006-001-0089
-Scope              | related_legal_entities:read
-Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570431096/DRAFT+Create+division">Create Division</a>
-
-This method must be used to create new division in the system.
-Note that different legal entity types can register specific division types and address types accordingly.
-More details can be found [here](https://e-health-ua.atlassian.net/wiki/x/GQB7Iw).
-
-+ Request (application/json)
-    + Attributes (`crud_division_post`)
-    + Headers
-        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-        API-key: uXhEczJ56adsfh3Ri9SUkc4en
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (`Response_OK`)
-        + data (`crud_division_get`)
-
-### Deactivate Division [PATCH /api/divisions/{id}/actions/deactivate]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        | API-005-006-001-0090
-Scope              | related_legal_entities:read
-Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570922579/DRAFT+Deactivate+division">Deactivate Division</a>
-
-+ Parameters
-    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-        API-key: uXhEczJ56adsfh3Ri9SUkc4en
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (`Response_OK`)
-        + data (`crud_division_get`)
-
-### Activate Division [PATCH /api/divisions/{id}/actions/activate]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        | API-005-006-001-0091
-Scope              | related_legal_entities:read
-Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570693263/DRAFT+Activate+division">Activate Division</a>
-
-+ Parameters
-    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-        API-key: uXhEczJ56adsfh3Ri9SUkc4en
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (`Response_OK`)
-        + data (`crud_division_get`)
 
 ### Licenses [/admin/licenses]
 
