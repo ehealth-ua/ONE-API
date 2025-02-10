@@ -1327,7 +1327,7 @@ The structure of PKCS-7 payload of `signed_data` attribute presented with all ot
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
             X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-    + Attributes (`Specimen_Request`)
+    + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
 
 + Response 202 (application/json)
@@ -1335,6 +1335,17 @@ The structure of PKCS-7 payload of `signed_data` attribute presented with all ot
         + meta (Response__Meta)
             + code: 202 (number)
         + data (`Job`)
+
+### Dummy Create Specimen [POST /api/patients/{patient_id}/specimens]
+
+This chapter describes the structure of a single Specimen creation. This is not an actual web-service.
+
++ Request (application/json)
+    + Headers
+        api-key: aFBLVTZ6Z2dON1V
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    + Attributes (`Specimen_Request`)
 
 ### Get Specimen by Search Params [GET /api/patients/{patient_id}/specimens{?type,status,registered_by,collected_from,collected_to,container_identifier,container_type,parent,request,encounter,page,page_size}]
 
@@ -1522,10 +1533,29 @@ http code| processing method | Client recommendations
     
 + Request (application/json)
     + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        api-key: aFBLVTZ6Z2dON1V
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    + Attributes (Specimen_Response)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
 
-            Authorization: Bearer mF_9.B5f-4.1JqM
-            api-key: aFBLVTZ6Z2dON1V
-            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Dummy Cancel Specimen [PATCH /api/patients/{patient_id}/specimens/{id}/actions/cancel/dummy]
+
++ Parameters
+    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
+    + id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique Specimen identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        api-key: aFBLVTZ6Z2dON1V
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     + Attributes (Specimen_Response)
         + `status_reason` (Codeable_Concept, required)
             + coding (array, fixed-type)
@@ -1533,7 +1563,6 @@ http code| processing method | Client recommendations
                     + system: `specimen_cancel_reasons` (string)
                     + code: `default` (string)
         + `status`: `entered_in_error` (string, required)
-        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
