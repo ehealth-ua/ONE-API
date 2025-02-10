@@ -33,29 +33,29 @@ ENT-066	System Configuration		General
 ENT-067	User				General
 ENT-068	User Authentication		General		DONE
 ENT-069	User Role			General
-ENT-002	Allergy Intolerance		ME
-ENT-003	Approval			ME
-ENT-007	Care Plan			ME
-ENT-008	Care Plan Activity		ME
-ENT-010	Clinical Impression		ME
-ENT-011	Composition			ME
-ENT-012	Condition			ME
-ENT-017	Device				ME
-ENT-019	Diagnostic Report		ME
-ENT-026	Encounter			ME
-ENT-027	Episode Of Care			ME		DONE
-ENT-033	Immunization			ME
-ENT-040	Medication Administration	ME
-ENT-041	Medication Dispense		ME
-ENT-042	Medication Dispense Request	ME
-ENT-043	Medication Request		ME
-ENT-044	Medication Request Request	ME
-ENT-045	Medication Statement		ME
-ENT-048	Observation			ME
-ENT-058	Procedure			ME
-ENT-061	Risk Assessment			ME
-ENT-064	Service Request			ME
-ENT-065	Specimen 			ME		DONE
+ENT-002	Allergy Intolerance		Medical
+ENT-003	Approval			Medical
+ENT-007	Care Plan			Medical
+ENT-008	Care Plan Activity		Medical
+ENT-010	Clinical Impression		Medical
+ENT-011	Composition			Medical
+ENT-012	Condition			Medical
+ENT-017	Device				Medical
+ENT-019	Diagnostic Report		Medical
+ENT-026	Encounter			Medical
+ENT-027	Episode Of Care			Medical		DONE
+ENT-033	Immunization			Medical
+ENT-040	Medication Administration	Medical
+ENT-041	Medication Dispense		Medical
+ENT-042	Medication Dispense Request	Medical
+ENT-043	Medication Request		Medical
+ENT-044	Medication Request Request	Medical
+ENT-045	Medication Statement		Medical
+ENT-048	Observation			Medical
+ENT-058	Procedure			Medical
+ENT-061	Risk Assessment			Medical
+ENT-064	Service Request			Medical
+ENT-065	Specimen 			Medical		DONE
 ENT-015	Declaration 			Personal
 ENT-016	Declaration Request		Personal
 ENT-050	Person				Personal
