@@ -55,7 +55,7 @@ ENT-048	Observation			ME
 ENT-058	Procedure			ME
 ENT-061	Risk Assessment			ME
 ENT-064	Service Request			ME
-ENT-065	Specimen 			ME
+ENT-065	Specimen 			ME		DONE
 ENT-015	Declaration 			Personal
 ENT-016	Declaration Request		Personal
 ENT-050	Person				Personal
