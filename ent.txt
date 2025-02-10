@@ -1,0 +1,68 @@
+ENT-006	Capitation Report		Admin
+ENT-014	Contract			Admin
+ENT-021	Division			Admin
+ENT-023	Employee			Admin
+ENT-024	Employee Request		Admin
+ENT-025	Employee Role			Admin
+ENT-028	Equipment			Admin
+ENT-032	Healthcare Service		Admin
+ENT-035	Legal Entity			Admin
+ENT-036	License				Admin
+ENT-038	Medical Program Provision	Admin
+ENT-049	Party				Admin
+ENT-060	Reimbursement Report		Admin
+ENT-001	Adresess			General
+ENT-004	Approval Aрр			General
+ENT-005	Black List Users		General
+ENT-009	Client				General
+ENT-013	Connection			General
+ENT-018	Device Definition		General
+ENT-020	Dictionary			General
+ENT-029	Event				General
+ENT-030	Forbidden Group			General
+ENT-031	Global Parameters		General
+ENT-034	Job				General
+ENT-037	Medical Program			General
+ENT-039	Medication			General
+ENT-046	Monitor Justification 		General
+ENT-047	NHS Admin Registers		General
+ENT-059	Program Participant		General
+ENT-062	Rule Engine Rule		General
+ENT-063	Service				General
+ENT-066	System Configuration		General
+ENT-067	User				General
+ENT-068	User Authentication		General
+ENT-069	User Role			General
+ENT-002	Allergy Intolerance		ME
+ENT-003	Approval			ME
+ENT-007	Care Plan			ME
+ENT-008	Care Plan Activity		ME
+ENT-010	Clinical Impression		ME
+ENT-011	Composition			ME
+ENT-012	Condition			ME
+ENT-017	Device				ME
+ENT-019	Diagnostic Report		ME
+ENT-026	Encounter			ME
+ENT-027	Episode Of Care			ME
+ENT-033	Immunization			ME
+ENT-040	Medication Administration	ME
+ENT-041	Medication Dispense		ME
+ENT-042	Medication Dispense Request	ME
+ENT-043	Medication Request		ME
+ENT-044	Medication Request Request	ME
+ENT-045	Medication Statement		ME
+ENT-048	Observation			ME
+ENT-058	Procedure			ME
+ENT-061	Risk Assessment			ME
+ENT-064	Service Request			ME
+ENT-065	Specimen 			ME
+ENT-015	Declaration 			Personal
+ENT-016	Declaration Request		Personal
+ENT-050	Person				Personal
+ENT-051	Person Authentication Method 	Personal
+ENT-052	Person Documents		Personal
+ENT-053	Person Merge Request 		Personal
+ENT-054	Person Relationship		Personal
+ENT-055	Person Request			Personal
+ENT-056	Person Verification		Personal
+ENT-057	Preperson			Personal
