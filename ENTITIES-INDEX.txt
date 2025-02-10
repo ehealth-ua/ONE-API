@@ -7,7 +7,7 @@ ENT-025	Employee Role			Admin
 ENT-028	Equipment			Admin
 ENT-032	Healthcare Service		Admin
 ENT-035	Legal Entity			Admin		DONE
-ENT-036	License				Admin
+ENT-036	License				Admin		DONE
 ENT-038	Medical Program Provision	Admin
 ENT-049	Party				Admin
 ENT-060	Reimbursement Report		Admin
