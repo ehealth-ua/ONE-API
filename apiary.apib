@@ -1301,34 +1301,6 @@ Link to Confluence | N/A
 
 + Response 200 (application/json)
 
-# Group Personal Data
-
-## Persons [/personal/persons]
-
-### Get Person [GET]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        |
-Scope              | legal_entity:read
-Auth               | yes
-Link to Confluence | 
-
-+ Response 200 (application/json)
-
-## Prepersons [/personal/prepersons]
-
-### Get Preperson  [GET]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        | 
-Scope              | legal_entity:read
-Auth               | yes
-Link to Confluence | 
-
-+ Response 200 (application/json)
-
 ## Specimen [/me/specimen]
 
 ### Create Specimen [POST /api/patients/{patient_id}/specimens]
@@ -1609,7 +1581,33 @@ http code| processing method | Client recommendations
             + code: 202 (number)
         + data (`Job`)
 
+# Group Personal Data
 
+## Persons [/personal/persons]
+
+### Get Person [GET]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        |
+Scope              | legal_entity:read
+Auth               | yes
+Link to Confluence | 
+
++ Response 200 (application/json)
+
+## Prepersons [/personal/prepersons]
+
+### Get Preperson  [GET]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | 
+Scope              | legal_entity:read
+Auth               | yes
+Link to Confluence | 
+
++ Response 200 (application/json)
 
 # Data Structures
 
