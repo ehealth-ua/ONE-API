@@ -1336,7 +1336,7 @@ The structure of PKCS-7 payload of `signed_data` attribute presented with all ot
             + code: 202 (number)
         + data (`Job`)
 
-### Dummy Create Specimen [POST /api/patients/{patient_id}/specimens]
+### Create Specimen Payload [POST /api/patients/{patient_id}/specimens]
 
 This chapter describes the structure of a single Specimen creation. This is not an actual web-service.
 
@@ -1545,7 +1545,7 @@ http code| processing method | Client recommendations
             + code: 202 (number)
         + data (`Job`)
 
-### Dummy Cancel Specimen [PATCH /api/patients/{patient_id}/specimens/{id}/actions/cancel/dummy]
+### Cancel Specimen Payload [PATCH /api/patients/{patient_id}/specimens/{id}/actions/cancel/dummy]
 
 + Parameters
     + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
