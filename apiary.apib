@@ -1027,7 +1027,252 @@ The required scope is `specimen:write`.
             + code: 202 (number)
         + data (`Job`)
 
-### Get Specimen by Search Params [GET /api/patients/{patient_id}/specimens]
+### Get Specimen by Search Params [GET /api/patients/{patient_id}/specimens{?type,status,registered_by,collected_from,collected_to,container_identifier,container_type,parent,request,encounter,page,page_size}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-012-001-0495
+Scope              | specimen:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18680283137/DRAFT+REST+API+Get+Specimen+by+search+params">Get Specimen by Search Params</a>
+
++ Parameters
+    + status: available (string, optional) - status of the Specimen
+    + type: ABP (string, optional) - kind of material that forms the Specimen
+    + `registered_by`: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - identifier of employee who registered the specimen
+    + `collected_from`: `2023-12-25` (string, optional) - the date from which the Specimen was collected
+    + `collected_to`: `2023-12-28` (string, optional)  - the date to which the Specimen was collected
+    + `container_identifier`: `1-ABC-4311` (string, optional) - identifier of the container in the Specimen
+    + `container_type`: tube (string, optional) - type of the container in the Specimen
+    + parent: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) - parent Specimen 
+    + request: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - service request identifier linked to the Specimen
+    + encounter: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - encounter/context identifier linked to the Specimen
+    + page: 2 (number, optional) - Page number.    
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        api-key: aFBLVTZ6Z2dON1V
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection)
+        + data (array[`Specimen_Response`])
+
+### Get Specimen Details [GET /api/patients/{patient_id}/specimens/{id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-012-001-0495
+Scope              | specimen:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18680381441/DRAFT+REST+API+Get+Specimen+details">Get Specimen Details</a>
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+    + id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique specimen identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        api-key: aFBLVTZ6Z2dON1V
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Specimen_Response`)
+
+### Get Specimen by Accession Identifier [GET /api/specimens/{accession_identifier}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-012-001-0496
+Scope              | specimen:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18680381488/DRAFT+REST+API+Get+Specimen+by+accession+identifier">Get Specimen by Accession Identifier</a>
+
++ Parameters
+    + accession_identifier: `1234-3224-2342-1233` (string, required) - human readable Specimen number
+    
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        api-key: aFBLVTZ6Z2dON1V
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Specimen_Response`)
+            + identity (object, required)
+                + gender: MALE (enum, required) - gender of the patient, value from the dictionary GENDER
+                    - MALE
+                    - FEMALE
+                + age: 35 (number, required) - full years between inserted_at and birth date
+    
+### Process Specimen [PATCH /api/patients/{patient_id}/specimens/{id}/actions/process]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-012-001-0497
+Scope              | specimen:process
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18680381533/DRAFT+REST+API+Process+Specimen">Process Specimen</a>
+
+This method is used to set a received_time for a Specimen.
+
+It can be processed in async way only, so Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+202 | async: **default** method | use Get Async Job Processing Details endpoint from Encounter Data Package to get processing result. Response payload will be returned in the job details
+
++ Parameters
+    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
+    + id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique Specimen identifier
+
++ Request (application/json)
+    + Headers
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
+    + Attributes (object)
+        + `received_time`: `2023-04-20T19:14:13Z` (string, required) - The time when Specimen was received for processing
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Reject Specimen [PATCH /api/patients/{patient_id}/specimens/{id}/actions/reject]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-012-001-0498
+Scope              | specimen:reject
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18680414209/DRAFT+REST+API+Reject+Specimen">Reject Specimen</a>
+
+This method is used to mark Specimen as unsatisfactory.
+
+It can be processed in async way only, so Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+202 | async: **default** method | use Get Async Job Processing Details endpoint from Encounter Data Package to get processing result. Response payload will be returned in the job details
+
++ Parameters
+    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
+    + id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique Specimen identifier
+
++ Request (application/json)
+    + Headers
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
+    + Attributes (object)    
+        + `status_reason` (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `specimen_reject_reasons` (string)
+                    + code: `default` (string)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Cancel Specimen [PATCH /api/patients/{patient_id}/specimens/{id}/actions/cancel]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-012-001-0499
+Scope              | specimen:cancel
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18680381577/DRAFT+REST+API+Cancel+Specimen">Cancel Specimen</a>
+
+This method must be used to cancel existing Specimen. Method receives signed message (pkcs7) that consists of signed content,
+digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
+
+**Important**
+
+1. Signed content of a Specimen must be equal to the Specimen stored in DB. See Get Specimen details
+2. status_reason must be added to signed content
+3. status must be changed to `entered_in_error` for the purpose of displaying in the signed content
+
+It can be processed in async way only, so Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+202 | async: **default** method | use Get Async Job Processing Details endpoint from Encounter Data Package to get processing result. Response payload will be returned in the job details
+
++ Parameters
+    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
+    + id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique Specimen identifier
+    
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    + Attributes (Specimen_Response)
+        + `status_reason` (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `specimen_cancel_reasons` (string)
+                    + code: `default` (string)
+        + `status`: `entered_in_error` (string, required)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Invalidate Specimen [PATCH /api/patients/{patient_id}/specimens/{id}/actions/invalidate]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-012-001-0500
+Scope              | specimen:invalidate
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18680381622/DRAFT+REST+API+Invalidate+Specimen">Invalidate Specimen</a>
+
+This method is used to mark Specimen as unavailable.
+
+It can be processed in async way only, so Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+202 | async: **default** method | use Get Async Job Processing Details endpoint from Encounter Data Package to get processing result. Response payload will be returned in the job details
+
+**Scopes required:** `specimen:invalidate`
+
++ Parameters
+    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
+    + id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique Specimen identifier
+    
++ Request (application/json)
+    + Headers
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
+    + Attributes (object)    
+        + `status_reason` (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `specimen_invalidate_reasons` (string)
+                    + code: `default` (string)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
 
 ## Compositions [/me/compositions]
 
