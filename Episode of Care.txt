@@ -1,6 +1,6 @@
 Create Episode				API-007-006-001-0267
-Get Episodes by search params		API-007-006-001-0268
-Get Episode by id			API-007-006-001-0269
+Get Episodes by Search Params		API-007-006-001-0268
+Get Episode by Id			API-007-006-001-0269
 Get Approved Episodes			API-007-006-001-0270
 Update Episode				API-007-006-001-0271
 Close Episode				API-007-006-001-0272
