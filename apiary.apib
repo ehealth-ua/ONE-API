@@ -995,6 +995,41 @@ Primary license must be updated with `Create or Update Legal Entity` method.
 
 # Group Medical Events
 
+## Specimen [/me/specimen]
+
+### Create Specimen [POST /api/patients/{patient_id}/specimens]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-012-001-0493
+Scope              | specimen:write
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18679365633/DRAFT+REST+API+Create+Specimen">Create Specimen</a>
+
+This endpoint allows to register Specimen by its own.
+Also Specimen can be registered as a part of Encounter Data Package.
+The required scope is `specimen:write`.
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+
++ Request (application/json)
+    + Headers
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    + Attributes (`Specimen_Request`)
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Get Specimen by Search Params [GET /api/patients/{patient_id}/specimens]
+
 ## Compositions [/me/compositions]
 
 ### Create Composition Title [GET /api/patients/{patient_id}/composition_title]
@@ -1568,3 +1603,301 @@ Link to Confluence |
 ### `crud_licenses_post`
 + include `License`
 + is_primary: false (boolean, required)
+
+### Job
++ status: `pending` (string, required) - status of request processing.
++ eta: `2018-08-02T10:45:16.000Z` (string, optional) - estimated time of arrivals
++ links (array[Link], optional) - links to resources that has been impactedas a job processing result
+
+### Link
++ entity: `job` (string, required) - name of the entity that link follows to
++ href: `/Jobs/NBXk9EyErUZv1RhXgyvgg` (string, required) - link to entity
+
+### `Identifier`
++ `type`(Codeable_Concept, required) - Description of identifier
++ `value` : `9183a36b-4d45-4244-9339-63d81cd08d9c` (string, required)- The value that is unique
+
+### `Codeable_Concept`
++ `coding` (array, required, fixed-type)
+    + (object)
+        + include `Coding`
++ text (string, optional)
+
+### `Coding`
++ system : `eHealth/resources` (string, required)
++ code : `patient` (string, required) - Symbol in syntax defined by the system
+
+### `Period`
++ start : `2018-08-02T10:45:16.000Z`(string, required) - Starting time with inclusive boundary
++ end : `2018-08-02T11:00:00.000Z`(string, optional) - End time with inclusive boundary, if not ongoing
+
+### `Quantity`
++ value : `13,5` (number, required)
++ comparator : `>` (string, optional)
++ unit : `kg` (string, optional) - for future use
++ system : `eHealth/ucum/units` (string, required)
++ code: `kg` (string, required)
+
+### `Range`
++ low (Quantity, required)
++ high (Quantity, required)
+
+### `Timing`
++ event: `2018-08-02T10:45:16.000Z`
++ repeat (object)
+    + include `Repeat`
++ code: `TIMING_ABBREVIATION` (string, optional)
+
+### `Repeat`
++ count: 10 (string, optional) - Number of times to repeat
+- One Of
+    + `bounds_duration` (Quantity, optional)
+    + bounds_range (Range, optional)
+    + bounds_period (Period, optional)
++ `count_max`: 20 (string, optional) - Maximum number of times to repeat
++ duration: 15 (string, optional) - How long when it happens
++ `duration_max`: 25 (string, optional) - How long when it happens
++ `duration_unit`: `UNITS_OF_TIME` (string, optional) - unit of time dictionary
++ frequency: 1 (string, optional) - Event occurs frequency times per period
++ `requency_max`: 4 (string, optinal) - Event occurs up to requency max times per period
++ `period`: 1 (string, optinal) - Event occurs frequency times per period
++ `period_max`: 3 (string, optional) - Upper limit of period, 3-4 hours
++ `period_unit`: `UNITS_OF_TIME` (string, optional) - unit of time dictionary
++ `day_of_week`: `DAYS_OF_WEEK` (string, optinal) - DAYS OF WEEK dictionary
++ `time_of_day`: `15:30` (string, optinal) - Time of day for action
++ when: `EVENT_TIMING` (optional) - Code for time period of occurrence
++ offset: 20 (string, optinal) - Minutes from event, before or after
+
+## `Specimen`
+
+### `Specimen_Collection_Request`
++ collector (Reference_request, required) - Who collected the Specimen.
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (enum, required)
+                        - employee
+                        - patient
+- One Of
+    + collected_date_time: `2023-04-20T19:14:13Z` (string, optional) - The time when Specimen was collected. ISO 8601 date and time in UTC timezone.
+    + collected_period (object, optional) - The period of time during which the Specimen was collected
+        + start : `2023-04-20T10:45:16.000Z`(string, required) - Starting time with inclusive boundary
+        + end : `2023-04-20T11:00:00.000Z`(string, optional) - End time with inclusive boundary, if not ongoing
++ duration (object, optional) - How long it took to collect Specimen
+    + value: 5 (number, required)
+    + system: `eHealth/ucum/units` (string, required)
+    + code: min (string, required)
+    + comparator: `>` (string, optional)
++ quantity (object, required) - The quantity of specimen collected
+    + value: 20 (number, required)
+    + system: `eHealth/ucum/units` (string, required)
+    + code: g (string, required)
++ method (Codeable_Concept, optional) - Technique used to perform collection
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `specimen_collection_methods` (string)
+            + code: `default` (string)
++ `body_site` (Codeable_Concept, optional) - Anatomical collection site
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/body_sites` (string)
+            + code: `head` (string)
++ `fasting_status_codeable_concept` (Codeable_Concept, optional) - Whether or how long patient abstained from food and/or drink
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `fasting_statuses` (string)
+            + code: `default` (string)
+
+
+### `Specimen_Container_Request`
++ identifier: `1-3244-ABC` (string, required) - Id for the container
++ description: `Some container description` (string, optional) - Textual description of the container
++ type (Codeable_Concept, required) - Kind of container directly associated with specimen.
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `specimen_container_types` (string)
+            + code: `default` (string)
++ capacity (object, required) - Container volume or size
+    + value: 30000 (number, required)
+    + system: `eHealth/ucum/units` (string, required)
+    + code: mg (string, required)
++ specimen_quantity (object, required) - Quantity of specimen within container
+    + value: 20 (number, required)
+    + system: `eHealth/ucum/units` (string, required)
+    + code: g (string, required)
++ `additive_codeable_concept` (Codeable_Concept, optional) - Additive associated with container.
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `specimen_container_additives` (string)
+            + code: `default` (string)
+
+### `Specimen_Request`
++ `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
++ `id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Specimen Identifier
++ status: `available` (string, required) - status of the Specimen according to `specimen_statuses`
++ type (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `specimen_types` (string)
+            + code: `default` (string)
++ condition (Codeable_Concept, optional) - State of the specimen.
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `specimen_conditions` (string)
+            + code: `default` (string)
++ note: `Some notes` (string, optional) - Comments
++ `managing_organization` (Reference_request, required) - Legal entity where the specimen was created
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
++ `registered_by` (Reference_request, required) - Who registered the specimen.
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string, required)
++ parent (array, optional) - Specimens from which this Specimen originated
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: specimen (string)
++ request (array, optional) - Service requests on diagnostic, represents why the Specimen was collected.
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: service_request (string)
++ collection (`Specimen_Collection_Request`, required) - Collection details
++ container (array, required) - Direct container of Specimen 
+    + (`Specimen_Container_Request`)
+
+### `Specimen_EDP_Request`
++ include `Specimen_Request`
++ `context` (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ collection (`Specimen_Collection_Request`, required) - Collection details
+    + procedure (Reference_request, optional) - Procedure that collects the specimen.
+        + identifier (Identifier, required)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `procedure` (string, required)
++ `received_time`: `2023-04-20T19:14:13Z` (string, optional) - The time when Specimen was received for processing
++ status: `available` (enum, required) - status of the Specimen according to `specimen_statuses`
+    - available
+    - unavailable
++ `status_reason` (Codeable_Concept, optional) - in case the Specimen has unavailable status
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `specimen_invalidate_reasons` (string)
+            + code: `used` (string)
+
+### `Specimen_Response`
++ include `Specimen_Request`
++ status: `available` (enum, required) - status of the Specimen according to `specimen_statuses`
+    - available
+    - unavailable
+    - unsatisfactory
+    - `entered_in_error`
++ `managing_organization` (Reference_response, required) - Legal entity where the Specimen was created
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+    + display_value: `Комунальне підприємство Медлаб` (string, required) - This field is filled on creating and never updated after
++ `registered_by` (Reference_response, required) - Who registered the Specimen.
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string, required)
+    + display_value: `Тарасенко Максим Петрович` (string, required) - This field is filled on creating and never updated after
++ context (Reference_response, optional) - Encounter if Specimen created using EDP.
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string, required)
++ `accession_identifier`: `AX64-654T-X654-AX65` (string, required) - Human readable requisition number
++ `received_time`: `2023-04-20T19:14:13Z` (string, optional) - The time when Specimen was received for processing. ISO 8601 date and time in UTC timezone.
++ parent (array, optional) - Specimens from which this Specimen originated
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: specimen (string)
++ request (array, optional) - Service requests on diagnostic, represents why the Specimen was collected.
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: service_request (string)
++ `subject` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
++ `status_reason` (Codeable_Concept)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `specimen_invalidate_reasons` (enum, string)
+                - `specimen_reject_reasons`
+                - `specimen_invalidate_reasons`
+                - `specimen_cancel_reasons`
+            + code: `default` (string)
++ collection (`Specimen_Collection_Request`, required) - Collection details
+    + collector (Reference_response, required) - Who collected the Specimen.
+        + identifier (Identifier, required)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `employee` (enum, required)
+                            - employee
+                            - patient
+        + display_value: `Василенко Олена Павлівна` (string, required) - This field is filled on creating and never updated after
+    + duration (object, optional) - How long it took to collect Specimen
+        + value: 5 (number, required)
+        + system: `eHealth/ucum/units` (string, required)
+        + code: min (string, required)
+        + comparator: `>` (string, optional)
+        + unit: хв (string, required)
+    + quantity (object, required) - The quantity of Specimen collected
+        + value: 20 (number, required)
+        + system: `eHealth/ucum/units` (string, required)
+        + code: g (string, required)
+        + unit: грам (string, required)
+    + procedure (Reference_response, optional) - Procedure that collects the Specimen.
+        + identifier (Identifier, required)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `procedure` (string, required)
++ container (array, required) - Direct container of Specimen 
+    + (`Specimen_Container_Request`)
+        + capacity (object, required) - Container volume or size
+            + value: 30000 (number, required)
+            + system: `eHealth/ucum/units` (string, required)
+            + code: mg (string, required)
+            + unit: міліграм (string, required)
+        + specimen_quantity (object, required) - Quantity of Specimen within container
+            + value: 20 (number, required)
+            + system: `eHealth/ucum/units` (string, required)
+            + code: g (string, required)
+            + unit: грам (string, required)
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
++ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)  
