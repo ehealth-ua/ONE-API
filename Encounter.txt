@@ -1,0 +1,6 @@
+Submit Encounter Package			API-007-004-004-0252
+Cancel Encounter Package			API-007-004-004-0253
+Get Encounter by id				API-007-004-004-0254
+Get Encounters by search params			API-007-004-004-0255
+Get encounters in episode context		API-007-004-004-0256
+Get encounter details in episode context	API-007-004-004-0257

@@ -1,0 +1,8 @@
+Create Specimen				API-007-012-001-0493
+Get Specimen by search params		API-007-012-001-0494
+Get Specimen details			API-007-012-001-0495
+Get Specimen by accession identifier	API-007-012-001-0496
+Process Specimen			API-007-012-001-0497
+Reject Specimen				API-007-012-001-0498
+Cancel Specimen				API-007-012-001-0499
+Invalidate Specimen			API-007-012-001-0500

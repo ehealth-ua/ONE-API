@@ -1,0 +1,6 @@
+Get Legal Entities			API-005-009-002-0176
+Get Legal Entity by Id			API-005-009-002-0177
+Create or Update Legal Entity		API-005-009-002-0178
+Verify Legal Entity by NHS		API-005-009-002-0179
+Deactivate Legal Entity			API-005-009-002-0180
+Get Related Legal Entities		API-005-009-002-0186

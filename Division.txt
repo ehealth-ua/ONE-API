@@ -1,0 +1,5 @@
+Get Divisions				API-005-006-001-0087
+Update Division				API-005-006-001-0088
+Create Division				API-005-006-001-0089
+Deactivate Division			API-005-006-001-0090
+Activate Division			API-005-006-001-0091

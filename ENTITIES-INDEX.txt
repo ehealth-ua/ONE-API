@@ -1,12 +1,12 @@
 ENT-006	Capitation Report		Admin
 ENT-014	Contract			Admin
-ENT-021	Division			Admin
+ENT-021	Division			Admin		DONE
 ENT-023	Employee			Admin
 ENT-024	Employee Request		Admin
 ENT-025	Employee Role			Admin
 ENT-028	Equipment			Admin
 ENT-032	Healthcare Service		Admin
-ENT-035	Legal Entity			Admin
+ENT-035	Legal Entity			Admin		DONE
 ENT-036	License				Admin
 ENT-038	Medical Program Provision	Admin
 ENT-049	Party				Admin
@@ -31,7 +31,7 @@ ENT-062	Rule Engine Rule		General
 ENT-063	Service				General
 ENT-066	System Configuration		General
 ENT-067	User				General
-ENT-068	User Authentication		General
+ENT-068	User Authentication		General		DONE
 ENT-069	User Role			General
 ENT-002	Allergy Intolerance		ME
 ENT-003	Approval			ME
