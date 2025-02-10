@@ -999,6 +999,19 @@ Primary license must be updated with `Create or Update Legal Entity` method.
 
 # Group Medical Events
 
+Medical events API is a set of web services designed to provide methods of communication
+between eHealth Medical Data Storage and medical information systems (MIS). Medical events
+API is based on the international framework for exchanging digital health
+records - FHIR Release 3 (STU). Most of major resources, data types, data
+structures and their way of interpretation are inherited from FHIR. However,
+there are minor сhanges described in Apiary. To find out more about business
+logic behind the API read this.
+
+### Sequence diagram
+
+In order to provide a consistency of submitted data the established flow should be followed:
+![Contract request flow](https://www.websequencediagrams.com/cgi-bin/cdraw?lz=dGl0bGUgU3VibWl0dGluZyBtZWRpY2FsIGRhdGEgcGFja2FnZQoKcGFydGljaXBhbnQgTUlTIGFzIG1zcAAKDWVIZWFsdGggYXMgZWgABgUAKQ1Eb2N1bWVudCBzdG9yYWdlIGFzAAMICgoKbXNwLT4AMAc6IDw8U2VhcmNoIGZvciBhIHBlcnNvbj4-CgBRBy0-bXNwOiA8PFJlc3BvbnNlIHdpdGgAIAdzIGlkcz4-Cm9wdABIDjw8Q3JlYXRlIGVwaXNvZGUARAwAgSoHIDoAHAdhc3luYyBqb2IAZQ4AaghkAGsGam9iIGlkADUTOiAAXQ4AgU4RR2V0ADkFYnkAMg8AgUwNAFwLZGV0YWlscz4-CmVuZACBSBRVcGQAdGgAXQ4AgQxQAIQFBgCDXAUAgygIbmNvdW50ZXIAhQYJABkKU2lnbgAJGACEQwwAhVsFADgSAIMwVACFWQc6IFNhdmUgc2lnbmVkIGNvbnRlbnQgdG8AhWwJAIQjElByb2Nlc3MAgS0ZAIN7OwCFehRsb3MAhSZnAF4MAIVATAoKCgoKCgoK&s=modern-blue)
+
 ## Episode of Care [/me/episode]
 
 Episode of care is a resource that contains general information about a patient`s medical case, such as care manager and diagnoses history.
