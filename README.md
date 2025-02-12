@@ -82,7 +82,7 @@ This chapter describes the structure of a single Specimen creation. This is not 
     + Attributes (`Specimen_Request`)
 ```
 
-### 2.4. Кожен енйпойнт складається з наступного шаблону:
+### 2.4. Кожен ендпойнт складається з наступного шаблону:
 
 ```
 ### {Назва} [{Метод} {URL}]
