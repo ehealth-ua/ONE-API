@@ -79,7 +79,7 @@ Key                | Value
 ESOZ API ID        | {API}
 Scope              | {Скоуп}
 Auth               | {Авт}
-Link to Confluence | <a href="{посилання на Confluence}">Назва ендпойнту</a>
+Link to Confluence | <a href="{посилання на Confluence}">{Назва}</a>
 
 {Текст}
 
