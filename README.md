@@ -51,7 +51,7 @@ Key                | Value
 ESOZ API ID        | API-007-012-001-0493
 Scope              | specimen:write
 Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18679365633/DRAFT+REST+API+Create+Specimen">Create Specimen</a>
+Link to Confluence | <a href="https://esoz.atlassian.net/wiki/spaces/ESOZ/pages/1/Create+Specimen">Create Specimen</a>
 
 This endpoint allows to register Specimen by its own.
 
