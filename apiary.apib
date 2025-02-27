@@ -1294,14 +1294,34 @@ Use this method by pharmacy user to obtain short Medication Request by ID or req
                 + include `Innm_Dosage_for_Medication_request_Responce`
                 + `medication_remaining_qty`: 10.23 (number, optional) - medication quantity allowed to dispense
 
-### Get Medication request by Id [GET /api/medication_requests/{id}]
+### Get Medication Request by Id [GET /api/medication_requests/{id}]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-005-008-002-0155
 Scope              | medication_request:details
 Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570365627/DRAFT+REST+API+Get+Medication+request+by+ID">Get Medication request by Id</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570365627/DRAFT+REST+API+Get+Medication+request+by+ID">Get Medication Request by Id</a>
+
+Use this method to obtain Medication request by ID.
+
++ Parameters
+    + id: `48416485-cc98-46c4-8bba-e321de9e1ecd` (string, required) - `Medication Request identifier OR request_number`
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + meta (Response__Meta)
+        + data (object)
+            + include `Medication_request_Public_Response_with_Medical_Program_min`
+            + `medication_info` (object, required)
+                + include `Innm_Dosage_for_Medication_request_Responce`
+                + `medication_remaining_qty`: 10.23 (number, optional) - medication quantity allowed to dispense
+
 
 ### Block Medication Request [PATCH /api/medication_requests/{id}/actions/block]
 
