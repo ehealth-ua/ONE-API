@@ -1,7 +1,8 @@
+Search Medication dispenses by Medication request ID		API-005-008-001-0128
 Get Medication dispense details in person context		API-005-008-001-0129
 Create Medication Dispense by Pharmacy User			API-005-008-001-0131
 Process Medication Dispense by Pharmacy User			API-005-008-001-0133
 Reject Medication Dispense by Pharmacy User			API-005-008-001-0135
 Get Medication dispenses by search params by Pharmacy User	API-005-008-001-0138
 Get Medication dispense details by Pharmacy User		API-005-008-001-0139
-Get Medication Dispense by ID					API-005-010-004-0201
+Get Medication Dispense by Id					API-005-010-004-0201
