@@ -1051,7 +1051,9 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ ENT ID        | API-007-006-001-0267
+ESOZ API ID        | API-005-008-002-0145
+Scope              | medication_request:details
+Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570693366/REST+API+Qualify+Medication+Request+by+ID">Qualify Medication Request by Id</a>
 
 This method is used to qualify (possibility to use Innm for the program) Medication request by Id.
@@ -1081,8 +1083,14 @@ Fields descriptions are listed in request Example view.
             + type: unverified (string, required)
             + message: `Only for active MPI record can create medication request!` (string, required)
 
+### Get Medication Requests by Search Params [GET /api/persons/{person_id}/medication_requests{?legal_entity_id,employee_id,status,request_number,created_from,created_to,medication_id,intent,care_plan_id,encounter_id,episode_id,page,page_size,medical_program_id,started_at_from,started_at_to,ended_at_from,ended_at_to,dispense_valid_from_start,dispense_valid_from_end,dispense_valid_to_start,dispense_valid_to_end}]
 
-### Get medication requests by search params [GET /api/persons/{person_id}/medication_requests{?legal_entity_id,employee_id,status,request_number,created_from,created_to,medication_id,intent,care_plan_id,encounter_id,episode_id,page,page_size,medical_program_id,started_at_from,started_at_to,ended_at_from,ended_at_to,dispense_valid_from_start,dispense_valid_from_end,dispense_valid_to_start,dispense_valid_to_end}]
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-008-002-0146
+Scope              | medication_request:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570758862/REST+API+Get+medication+requests+by+search+params">Get Medication Requests by Search Params</a>
 
 Use this method to obtain list of Medication Requests. 
 Use [**Get medication requests details**](https://esoz.docs.apiary.io/#reference/medical-events/medication-request/get-medication-requests-details)
@@ -1127,6 +1135,192 @@ to get Medication Request by ID.
         + data (array)
             + (object)
                 + include `Medication_request_Public_Response_with_Medical_Program_min`
+
+### Get Medication Requests in Care Plan Context [GET /api/care_plans/{care_plan_id}/medication_requests{?legal_entity_id,employee_id,person_id,status,request_number,created_from,created_to,medication_id,intent,encounter_id,page,page_size,medical_program_id,started_at_from,started_at_to,ended_at_from,ended_at_to,dispense_valid_from_start,dispense_valid_from_end,dispense_valid_to_start,dispense_valid_to_end}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-008-002-0147
+Scope              | medication_request:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570562223/REST+API+Get+Medication+requests+in+care+plan+context">Get Medication Requests in Care Plan Context</a>
+
+The method returns a list of medication requests in the context of a care plan. 
+User must have an approval on the care plan from url.
+
+Use [**Get medication requests details**](https://esoz.docs.apiary.io/#reference/medical-events/medication-request/get-medication-requests-details) to get Medication Request by ID.
+
++ Parameters
+    + `legal_entity_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - legal entity identifier.
+    + `employee_id`: `7124259c-eeb1-4cbb-acac-ada2162675d1` (string, optional) - user_id of a doctor.
+    + `person_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - person_id of a patient.
+    + `status`: `ACTIVE` (enum, optional). Default `ACTIVE`
+        - ACTIVE
+        - COMPLETED
+        - EXPIRED
+        - REJECTED
+    + `request_number` : `0000-243P-1X53-EH38` (string, optional) - Public medication request human readable number
+    + `created_from`: `2017-08-17` (string, optional) - Medication request creation date period start, which is determined by the external system. Format *DATE '2017-08-17'*
+    + `created_to`: `2017-08-30` (string, optional) - Medication request creation date period end, which is determined by the external system. Format *DATE '2017-08-30'*
+    + `medication_id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b5b` (string, optional) - innm dosage id
+    + intent: order (string, optional) - Medication request intent
+    + `encounter_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - encounter identifier
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+    + `medical_program_id`: `9a2fc263-6029-4b2b-b40a-66f4435509b7` (string, optional) - Internal medical program ID, a UUID string.
+    + `started_at_from`: `2017-08-16` (string, optional) - Start date of the period of treatment initiation period. Format DATE '2017-08-16'.
+    + `ended_at_from`: `2017-09-16` (string, optional) - End date of the period of treatment initiation period. Format DATE '2017-09-16'.
+    + `started_at_to`: `2017-08-20` (string, optional) - Start date of the period of treatment ending period. Format DATE '2017-08-20'.
+    + `ended_at_to`: `2017-09-20` (string, optional) - End date of the period of treatment ending period. Format DATE '2017-09-20'.
+    + `dispense_valid_from_start`: `2017-02-17` (string, optional) - Start date of the period of dispense issue date. Format DATE '2017-02-17'.
+    + `dispense_valid_from_end`: `2017-02-19` (string, optional) - End date of the period of dispense issue date. Format DATE '2017-02-19'.
+    + `dispense_valid_to_start`: `2017-03-26` (string, optional) - Start date of the period of dispense expiry date. Format DATE '2017-03-26'.
+    + `dispense_valid_to_end`: `2017-03-30` (string, optional) - End date of the period of dispense expiry date. Format DATE '2017-03-30'.
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+   + Attributes (`Response_Collection_V2`)
+        + data (array[`Medication_request_Public_Response_with_Medical_Program_min`])
+
+### Get Medication Requests Details [GET /api/persons/{person_id}/medication_requests/{id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-008-002-0148
+Scope              | medication_request:details
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570103587/REST+API+Get+medication+requests+details">Get Medication Requests Details</a>
+
+Use this method to obtain Medication Request by ID.
+
++ Parameters
+    + `person_id`: `5e661b15-a39a-4713-b18e-ba03a4a48ecc` (string, required) - person_id of a patient.
+    + id: `48416485-cc98-46c4-8bba-e321de9e1ecd` (string, required) - `Medication Request identifier OR request_number`.
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + meta (Response__Meta)
+        + data (object)
+            + include `Medication_request_Public_Response_with_Medical_Program_min`
+            + `medication_info` (object, required)
+                + include `Innm_Dosage_for_Medication_request_Responce`
+                + `medication_remaining_qty`: 10.23 (number, optional) - medication quantity allowed to dispense
+
+### Resend Medication Request [PATCH /api/medication_requests/{id}/actions/resend]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-008-002-0150
+Scope              | medication_request:resend
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570595000/REST+API+Resend+Medication+Request">Resend Medication Request</a>
+
+Use this method to resend SMS to person with medication request number & verification code.
+This could be done only for medication request with type **order**.
+
++ Parameters
+    + `id`: `a89f6a26-4221-4597-a1d2-542d5e40b565` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response__Process_OK`)
+        + meta (Response__Meta)
+        + data (`Medication_request_Public_Response_with_Medical_Program_min`)
+
+### Get Medication Request Printout Form [GET /api/persons/{person_id}/medication_requests/{id}/printout_form]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-008-002-0151
+Scope              | medication_request:details
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570398347/REST+API+Get+Medication+Request+Printout+Form">Get Medication Request Printout Form</a>
+
+### Get Medication Request by Id for Pharmacy User [GET /api/pharmacy/medication_requests/{id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-008-002-0152
+Scope              | medication_request:details_pharm
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570758890/REST+API+Get+Medication+Request+by+ID+by+Pharmacy+User">Get Medication Request by Id for Pharmacy User</a>
+
+### Get Medication request by Id [GET /api/medication_requests/{id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-008-002-0155
+Scope              | medication_request:details
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570365627/DRAFT+REST+API+Get+Medication+request+by+ID">Get Medication request by Id</a>
+
+### Block Medication Request [PATCH /api/medication_requests/{id}/actions/block]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-008-002-0156
+Scope              | medication_request:block
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570463996/REST+API+Block+Medication+Request">Block Medication Request</a>
+
+### Unblock Medication Request [PATCH /api/medication_requests/{id}/actions/unblock]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-008-002-0157
+Scope              | medication_request:block
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570660598/DRAFT+REST+API+Unblock+Medication+Request">Unblock Medication Request</a>
+
+### Block Medication Request by Pharmacy User [PATCH /api/pharmacy/medication_requests/{id}/actions/block]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-008-002-0147
+Scope              | medication_request:reject_pharm
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570758901/REST+API+PRIVATE+SPACE+AR+Private.+Get+Medication+request+by+ID">Private Get Medication Request by Id</a>
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-008-002-0147
+Scope              | medication_request:unblock_pharm
+Auth               | yes
+Link to Confluence | <a href=""></a>
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-008-002-0147
+Scope              | medication_request:read
+Auth               | yes
+Link to Confluence | <a href=""></a>
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-008-002-0147
+Scope              | medication_request:read
+Auth               | yes
+Link to Confluence | <a href=""></a>
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-008-002-0147
+Scope              | medication_request:read
+Auth               | yes
+Link to Confluence | <a href=""></a>
 
 ## Episode of Care [/me/episode]
 
