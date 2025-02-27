@@ -1473,7 +1473,7 @@ In order to reject medication request `reject_reason_code` and `reject_reason` (
 * Medical program is required for *order*.
 * Medical program is absent in *plan*.
 
-Look at [**Dummy Reject Medication Request by Pharmacy User**](https://esoz.docs.apiary.io/#reference/medical-events/dummy-for-medication-request/dummy-reject-medication-request-by-pharmacy-user) for more details.
+Look at [**Dummy Reject Medication Request by Pharmacy User**](https://esoz.docs.apiary.io/#reference/medical-events/medication-request/dummy-reject-medication-request-by-pharmacy-user) for more details.
 
 + Parameters
     + `id`: `a89f6a26-4221-4597-a1d2-542d5e40b565` (string, required)
@@ -1514,6 +1514,44 @@ ESOZ API ID        | ?
 Scope              | medication_request:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18768265379/REST+API+PRIVATE+SPACE+Private.+Get+Medication+request">Private Get Medication Request</a>
+
+### Dummy Reject Medication Request [PATCH /dummy/medication_requests/{id}/actions/reject]
+
++ Parameters
+   + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        api-key: uXhEczJ56adsfh3Ri9SUkc4en
+        msp_drfo: 2534157686
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    + Attributes (`Medication_request_Reject`, required)
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + meta (Response__Meta)
+        + data (object)
+            + include `Medication_request_Reject_Response`
+
+### Dummy Reject Medication Request by Pharmacy User [PATCH /dummy/pharmacy/medication_requests/{id}/actions/reject]
+
++ Parameters
+    + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        api-key: uXhEczJ56adsfh3Ri9SUkc4en
+        msp_drfo: 2534157686
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    + Attributes (`Medication_request_Reject`, required)
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + meta (Response__Meta)
+        + data (object)
+            + include `Medication_request_Public_Response_with_Medical_Program_min_for_Pharmacist_block_reason_required`
 
 ## Medication Dispense [/me/medication_dispense]
 
@@ -1567,8 +1605,6 @@ Use [**Get Medication dispense details in person context**](https://esoz.docs.ap
                 + `status`: NEW (string, required) - Medication Dispense status (NEW, PROCESSED, REJECTED, EXPIRED)
                 + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
                 + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
-
-
 
 ### Get Medication Dispense Details in Person Context [GET /api/persons/{person_id}/medication_dispenses/{id}]
 
@@ -1652,7 +1688,7 @@ Invoke Get Medication dispense details by Pharmacy User to obtain previously cre
 In order to process dispense `payment_id (optional)` and `payment_amount (optional, if medical program
 has funding sourse != NHS)` should be added.
 
-Look at [**Dummy Process Medication Dispense by Pharmacy User**](https://esoz.docs.apiary.io/#reference/medical-events/dummy-for-medication-dispense/process-medication-dispense-by-pharmacy-user) for more details.
+Look at [**Dummy Process Medication Dispense by Pharmacy User**](https://esoz.docs.apiary.io/#reference/medical-events/medication-dispense/dummy-process-medication-dispense-by-pharmacy-user) for more details.
 
 + Parameters
     + `id`: `a89f6a26-4221-4597-a1d2-542d5e40b565` (string, required)
@@ -1721,6 +1757,7 @@ Use [**Get Medication Dispense by Pharmacy User**](https://esoz.docs.apiary.io/#
             + (object)
                 + include `Medication_Dispense_Response_for_Pharmacist`
 
+
 ### Get Medication Dispense Details by Pharmacy User [GET /api/pharmacy/medication_dispenses/{id}]
 
 Key                | Value
@@ -1784,6 +1821,47 @@ ESOZ API ID        | API-005-008-001-0142
 Scope              | medication_dispense_admin:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18767382709/REST+API+Private.+Get+Medication+Dispense+by+ID">Get Medication Dispense by Id</a>
+
+### Dummy Process Medication Dispense [PATCH /dummy/medication_dispenses/{id}/actions/process]
+
++ Parameters
+   + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        api-key: uXhEczJ56adsfh3Ri9SUkc4en
+        msp_drfo: 2534157686
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
+    + Attributes (object, required)
+        + include `Medication_Dispense_Process_Request`
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (object)
+            + include `Medication_Dispense_Response`
+            + status: PROCESSED
+
+### Dummy Process Medication Dispense by Pharmacy User [PATCH /dummy/pharmacy/medication_dispenses/{id}/actions/process]
+
++ Parameters
+   + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        api-key: uXhEczJ56adsfh3Ri9SUkc4en
+        msp_drfo: 2534157686
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    + Attributes (object, required)
+        + include `Medication_Dispense_Process_Request_for_Pharmacist`
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (object)
+            + include `Medication_Dispense_Response_for_Pharmacist`
+            + status: PROCESSED
 
 ## Episode of Care [/me/episode]
 
