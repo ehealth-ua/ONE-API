@@ -603,7 +603,26 @@ Scope              | related_legal_entities:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570889841/DRAFT+Get+divisions">Get Divisions</a>
 
++ Parameters
+    + ids: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional)
+    + name: `Бориспільське відділення клініки` (string, optional)
+    + legal_entity_id: `d8b5f374-0f3c-46e6-baf1-21d97b4c9ff5` (string, optional)
+    + type: CLINIC (string, optional) - Dictionary DIVISION_TYPE
+    + status: ACTIVE (string, optional)
+        - ACTIVE
+        - INACTIVE
+    + `page`: 2 (number) - Page number.
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
 + Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (`crud_division_get`)
 
 ### Update Division [PATCH /api/divisions/{id}]
 
@@ -702,6 +721,11 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 ## Legal Entities [/admin/legal_entities]
 
+Key                | Value
+-------------------|-----------
+ESOZ ENT ID        | ENT-035
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17359405133/Legal+Entity">Legal Entity</a>
+
 ### Get Legal Entities [GET /api/v2/legal_entities{?edrpou,legal_entity_id,settlement_id,type,status,nhs_verified,page,page_size}]
 
 Key                | Value
@@ -743,7 +767,6 @@ List consists of legal entities with parameter `is_active = true`.
                     - ACTIVE
                     - CLOSED
                     - SUSPENDED
-
 
 ### Get Legal Entity by Id [GET /api/v2/legal_entities/{id}]
 
