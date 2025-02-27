@@ -1,0 +1,13 @@
+Get Medication Request details in Composition context   API-007-011-001-0490
+Search Medication Dispenses by Medication Request ID	API-005-008-001-0128
+Qualify Medication Request by ID			API-005-008-002-0145
+Get medication requests by search params		API-005-008-002-0146
+Get Medication requests in care plan context		API-005-008-002-0147
+Get medication requests details				API-005-008-002-0148
+Resend Medication Request				API-005-008-002-0150
+Get Medication Request Printout Form			API-005-008-002-0151
+Get Medication Request by ID by Pharmacy User		API-005-008-002-0152
+Get Medication request by ID				API-005-008-002-0155
+Block Medication Request				API-005-008-002-0156
+Unblock Medication Request				API-005-008-002-0157
+Block Medication Request by Pharmacy User		API-005-008-002-0158
