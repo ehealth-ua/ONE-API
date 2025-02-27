@@ -1249,6 +1249,23 @@ Scope              | medication_request:details
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570398347/REST+API+Get+Medication+Request+Printout+Form">Get Medication Request Printout Form</a>
 
+This method is designed to get printout form (content) by medication request id.
+
++ Parameters
+    + `person_id`: `5e661b15-a39a-4713-b18e-ba03a4a48ecc` (string, required) - person_id of a patient.
+    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - medication request identifier.
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response__Process_OK`)
+        + data (object)
+            + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - medication request identifier
+            + `printout_form`: `Medication request content` (string, required) - HTML document for medication request
+
 ### Get Medication Request by Id for Pharmacy User [GET /api/pharmacy/medication_requests/{id}]
 
 Key                | Value
