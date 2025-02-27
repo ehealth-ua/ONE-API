@@ -1275,6 +1275,25 @@ Scope              | medication_request:details_pharm
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570758890/REST+API+Get+Medication+Request+by+ID+by+Pharmacy+User">Get Medication Request by Id for Pharmacy User</a>
 
+Use this method by pharmacy user to obtain short Medication Request by ID or request_number.
+
++ Parameters
+    + id: `48416485-cc98-46c4-8bba-e321de9e1ecd` (string, required) - `Medication Request identifier OR request_number`
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + meta (Response__Meta)
+        + data (object)
+            + include `Medication_request_Public_Response_with_Medical_Program_min_for_Pharmacist`
+            + `medication_info` (object, required)
+                + include `Innm_Dosage_for_Medication_request_Responce`
+                + `medication_remaining_qty`: 10.23 (number, optional) - medication quantity allowed to dispense
+
 ### Get Medication request by Id [GET /api/medication_requests/{id}]
 
 Key                | Value
