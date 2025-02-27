@@ -1063,7 +1063,6 @@ Link to Confluence |
 
 + Response 200 (application/json)
 
-
 # Group Medical Events
 
 Medical events API is a set of web services designed to provide methods of communication
@@ -1074,6 +1073,27 @@ structures and their way of interpretation are inherited from FHIR. However,
 there are minor сhanges described in Apiary. To find out more about business
 logic behind the API read this.
 
+## About ABAC
+
+Some routes in ESOZ are managed not only by scope-based  model, but Atribute Bаsed Access Control (ABAC) model.
+Routes, that responds with lists, are not designed to cut responses automatically (show only allowed items).
+In order to access list, user should specify filters (search params) to cut entities that are not allowed by ABAC rules. 
+For example,
+
+* to access this route: `/patient/{patient_id}/conditions` user should have approval on ALL patients
+  medical data, otherwise the response will be 403.
+
+* But, by specifinig filters, user can access requested data, if one of the ABAC rules returns true:
+ `/patient/{patient_id}/conditions?episode_context={episode_1}`
+
+Here you can find the list of current [rules](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/17049388207/ABAC+rules+EN).
+
+## About Forbidden Groups Filtration
+
+Some routes in ESOZ are managed not only by scope-based  model and ABAC rules, but Forbidden Groups model.
+
+After successfull access with ABAC response will be filtered according
+to [Medical Events filtration by Forbidden groups](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/5056954517/Medical+Events+filtration+by+Forbidden+groups+EN).
 
 ## Medication Request [/me/medication_request]
 
