@@ -39,7 +39,7 @@
 	ENT-039	Medical Program Provision
 	ENT-040	Medication
 	ENT-041	Medication Administration
-	ENT-042	Medication Dispense (PROGRESS)
+	ENT-042	Medication Dispense (DONE)
 	ENT-043	Medication Request (DONE)
 	ENT-044	Medication Request Request
 	ENT-045	Medication Statement
