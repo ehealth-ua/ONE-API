@@ -6,3 +6,16 @@ Reject Medication Dispense by Pharmacy User			API-005-008-001-0135
 Get Medication dispenses by search params by Pharmacy User	API-005-008-001-0138
 Get Medication dispense details by Pharmacy User		API-005-008-001-0139
 Get Medication Dispense by Id					API-005-010-004-0201
+
+128 ### Create Medication Dispense by Pharmacy User [POST /api/pharmacy/medication_dispenses{?code}]
+129 ### Process Medication Dispense by Pharmacy User [PATCH /api/pharmacy/medication_dispenses/{id}/actions/process]
+130 ### Reject Medication Dispense by Pharmacy User [PATCH /api/pharmacy/medication_dispenses/{id}/actions/reject]
+131 ### Get Medication dispenses by search params by Pharmacy User [GET /api/pharmacy/medication_dispenses{?id,medication_request_id,legal_entity_id,division_id,status,dispensed_from,dispensed_to,care_plan_id,page,page_size}]
+132 ### Get Medication Dispense Details by Pharmacy User [GET /api/pharmacy/medication_dispenses/{id}]
+133 ### Get Medication Dispense by Id [GET /api/cabinet/medication_dispenses/{id}]
+134 ### Search Medication Dispenses by Medication Request Id [GET /api/persons/{person_id}/medication_requests/{id}/medication_dispenses{?status}]
+135 ### Get Medication Dispense Details in Person Context [GET /api/persons/{person_id}/medication_dispenses/{id}]
+136 ### Get Medication Dispense Details in Composition Context [GET /api/persons/{person_id}/compositions/{composition_id}/medication_dispenses/{id}]
+
+137 ### Private Get Medication Dispenses List [GET /api/admin/medication_dispenses{?id,medication_request_id,legal_entity_id,division_id,status,dispensed_from,dispensed_to,care_plan_id,page,page_size}]
+138 ### Private Get Medication Dispense by Id [GET /api/admin/medication_dispenseses/id]
