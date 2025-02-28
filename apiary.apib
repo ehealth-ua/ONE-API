@@ -1231,210 +1231,11 @@ Use this method to obtain Medication Request by ID.
                 + include `Innm_Dosage_for_Medication_request_Responce`
                 + `medication_remaining_qty`: 10.23 (number, optional) - medication quantity allowed to dispense
 
-### Resend Medication Request [PATCH /api/medication_requests/{id}/actions/resend]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        | API-005-008-002-0150
-Scope              | medication_request:resend
-Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570595000/REST+API+Resend+Medication+Request">Resend Medication Request</a>
-
-Use this method to resend SMS to person with medication request number & verification code.
-This could be done only for medication request with type **order**.
-
-+ Parameters
-    + `id`: `a89f6a26-4221-4597-a1d2-542d5e40b565` (string, required)
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (`Response__Process_OK`)
-        + meta (Response__Meta)
-        + data (`Medication_request_Public_Response_with_Medical_Program_min`)
-
-### Get Medication Request Printout Form [GET /api/persons/{person_id}/medication_requests/{id}/printout_form]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        | API-005-008-002-0151
-Scope              | medication_request:details
-Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570398347/REST+API+Get+Medication+Request+Printout+Form">Get Medication Request Printout Form</a>
-
-This method is designed to get printout form (content) by medication request id.
-
-+ Parameters
-    + `person_id`: `5e661b15-a39a-4713-b18e-ba03a4a48ecc` (string, required) - person_id of a patient.
-    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - medication request identifier.
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (`Response__Process_OK`)
-        + data (object)
-            + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - medication request identifier
-            + `printout_form`: `Medication request content` (string, required) - HTML document for medication request
-
-### Get Medication Request by Id by Pharmacy User [GET /api/pharmacy/medication_requests/{id}]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        | API-005-008-002-0152
-Scope              | medication_request:details_pharm
-Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570758890/REST+API+Get+Medication+Request+by+ID+by+Pharmacy+User">Get Medication Request by Id for Pharmacy User</a>
-
-Use this method by pharmacy user to obtain short Medication Request by ID or request_number.
-
-+ Parameters
-    + id: `48416485-cc98-46c4-8bba-e321de9e1ecd` (string, required) - `Medication Request identifier OR request_number`
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (`Response_OK`)
-        + meta (Response__Meta)
-        + data (object)
-            + include `Medication_request_Public_Response_with_Medical_Program_min_for_Pharmacist`
-            + `medication_info` (object, required)
-                + include `Innm_Dosage_for_Medication_request_Responce`
-                + `medication_remaining_qty`: 10.23 (number, optional) - medication quantity allowed to dispense
-
-### Get Medication Request by Id [GET /api/medication_requests/{id}]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        | API-005-008-002-0155
-Scope              | medication_request:details
-Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570365627/DRAFT+REST+API+Get+Medication+request+by+ID">Get Medication Request by Id</a>
-
-Use this method to obtain Medication request by ID.
-
-+ Parameters
-    + id: `48416485-cc98-46c4-8bba-e321de9e1ecd` (string, required) - `Medication Request identifier OR request_number`
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (`Response_OK`)
-        + meta (Response__Meta)
-        + data (object)
-            + include `Medication_request_Public_Response_with_Medical_Program_min`
-            + `medication_info` (object, required)
-                + include `Innm_Dosage_for_Medication_request_Responce`
-                + `medication_remaining_qty`: 10.23 (number, optional) - medication quantity allowed to dispense
-
-
-### Block Medication Request [PATCH /api/medication_requests/{id}/actions/block]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        | API-005-008-002-0156
-Scope              | medication_request:block
-Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570463996/REST+API+Block+Medication+Request">Block Medication Request</a>
-
-Use this method to block Medication request for dispense.
-In order to block medication request `block_reason` and `block_reason_code` should be added in request.
-This method can't be used by employees with type 'PHARMACIST'.
-For pharmacists please use [**Block Medication Request by Pharmacy User**](https://esoz.docs.apiary.io/#reference/medical-events/medication-request/block-medication-request-by-pharmacy-user).
-
-+ Parameters
-    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
-
-+ Request (application/json)
-    + Headers
-       Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-       X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-    + Attributes (object)
-       + `block_reason`: `перевищено норми відпуску` (string, optional) - Block reason
-       + `block_reason_code`: `BLOCK_WRONG_QTY_DRUG` (string, required) - Block reason code `Dictionary MEDICATION_REQUEST_BLOCK_REASON`
-
-+ Response 200 (application/json)
-    + Attributes (`Response_OK`)
-        + meta (Response__Meta)
-        + data (object)
-            + include `Medication_request_Public_Response_with_Medical_Program_min_block_reason_required`
-
-### Unblock Medication Request [PATCH /api/medication_requests/{id}/actions/unblock]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        | API-005-008-002-0157
-Scope              | medication_request:unblock
-Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570660598/DRAFT+REST+API+Unblock+Medication+Request">Unblock Medication Request</a>
-
-Use this method to unblock previously blocked Medication Request for Dispense.
-In order to unblock medication request `block_reason` and `block_reason_code` should be added in request.
-
-+ Parameters
-    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
-
-+ Request (application/json)
-    + Headers
-       Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-       X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-    + Attributes (object)
-       + `block_reason`: `помилки відсутні` (string, optional) - Unblock reason
-       + `block_reason_code`: `UNBLOCK_DEFAULT` (string, required) - Unblock reason code `Dictionary MEDICATION_REQUEST_BLOCK_REASON`       
-
-+ Response 200 (application/json)
-    + Attributes (`Response_OK`)
-        + meta (Response__Meta)
-        + data (object)
-            + include `Medication_request_Public_Response_with_Medical_Program_min_block_reason_required`
-
-### Block Medication Request by Pharmacy User [PATCH /api/pharmacy/medication_requests/{id}/actions/block]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        | API-005-008-002-0158
-Scope              | medication_request:block_pharm
-Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570758901/REST+API+PRIVATE+SPACE+AR+Private.+Get+Medication+request+by+ID">Private Get Medication Request by Id</a>
-
-Use this method to block Medication request for dispense.
-In order to block medication request `block_reason_code` and `block_reason`(optional) should be added in request.
-This method must be used only by employees with type 'PHARMACIST'.
-
-+ Parameters
-    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
-
-+ Request (application/json)
-    + Headers
-       Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-       X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-    + Attributes (object)
-       + `block_reason`: `перевищено норми відпуску` (string, optional) - Block reason
-       + `block_reason_code`: `BLOCK_WRONG_QTY_DRUG` (string, required) - Block reason code `Dictionary MEDICATION_REQUEST_BLOCK_REASON`
-       + `blocked_to`: `2018-08-02T10:45:16.000Z` (string, optional) - Block expiration date
-
-+ Response 200 (application/json)
-    + Attributes (`Response_OK`)
-        + meta (Response__Meta)
-        + data (`Medication_request_Public_Response_with_Medical_Program_min_for_Pharmacist_block_reason_required`)
-
 ### Reject Medication Request [PATCH /api/medication_requests/{id}/actions/reject]
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | ?
+ESOZ API ID        | API-005-008-002-0149
 Scope              | medication_request:unblock_pharm
 Auth               | yes
 Link to Confluence | <a href=""></a>
@@ -1475,7 +1276,7 @@ Look at [**Dummy Reject Medication Request**](https://esoz.docs.apiary.io/#refer
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | ?
+ESOZ API ID        | API-005-008-002-0150
 Scope              | medication_request:reject_pharm
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18757419067/REST+API+Reject+Medication+request+by+Pharmacy+User">Reject Medication Request by Pharmacy User</a>
@@ -1512,11 +1313,269 @@ Look at [**Dummy Reject Medication Request by Pharmacy User**](https://esoz.docs
             + `reject_reason`: `Помилка призначення. Несумісні препарати.` (string, optional, nullable) - Medication request reject reason
             + `reject_reason_code`: `INCORRECT_DOSAGE` (string, required, nullable) - `Dictionary MEDICATION_REQUEST_REJECT_REASON`
 
-### Private Get Medication Request by Id [GET /api/admin/medication_requests/48416485-cc98-46c4-8bba-e321de9e1ecd]
+### Resend Medication Request [PATCH /api/medication_requests/{id}/actions/resend]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-008-002-0151
+Scope              | medication_request:resend
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570595000/REST+API+Resend+Medication+Request">Resend Medication Request</a>
+
+Use this method to resend SMS to person with medication request number & verification code.
+This could be done only for medication request with type **order**.
+
++ Parameters
+    + `id`: `a89f6a26-4221-4597-a1d2-542d5e40b565` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response__Process_OK`)
+        + meta (Response__Meta)
+        + data (`Medication_request_Public_Response_with_Medical_Program_min`)
+
+
+### Get Medication Request Printout Form [GET /api/persons/{person_id}/medication_requests/{id}/printout_form]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-008-002-0152
+Scope              | medication_request:details
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570398347/REST+API+Get+Medication+Request+Printout+Form">Get Medication Request Printout Form</a>
+
+This method is designed to get printout form (content) by medication request id.
+
++ Parameters
+    + `person_id`: `5e661b15-a39a-4713-b18e-ba03a4a48ecc` (string, required) - person_id of a patient.
+    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - medication request identifier.
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response__Process_OK`)
+        + data (object)
+            + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - medication request identifier
+            + `printout_form`: `Medication request content` (string, required) - HTML document for medication request
+
+### Get Medication Request by Id by Pharmacy User [GET /api/pharmacy/medication_requests/{id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-008-002-0153
+Scope              | medication_request:details_pharm
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570758890/REST+API+Get+Medication+Request+by+ID+by+Pharmacy+User">Get Medication Request by Id for Pharmacy User</a>
+
+Use this method by pharmacy user to obtain short Medication Request by ID or request_number.
+
++ Parameters
+    + id: `48416485-cc98-46c4-8bba-e321de9e1ecd` (string, required) - `Medication Request identifier OR request_number`
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + meta (Response__Meta)
+        + data (object)
+            + include `Medication_request_Public_Response_with_Medical_Program_min_for_Pharmacist`
+            + `medication_info` (object, required)
+                + include `Innm_Dosage_for_Medication_request_Responce`
+                + `medication_remaining_qty`: 10.23 (number, optional) - medication quantity allowed to dispense
+
+### Get Medication Request by Id [GET /api/medication_requests/{id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-008-002-0154
+Scope              | medication_request:details
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570365627/DRAFT+REST+API+Get+Medication+request+by+ID">Get Medication Request by Id</a>
+
+Use this method to obtain Medication request by ID.
+
++ Parameters
+    + id: `48416485-cc98-46c4-8bba-e321de9e1ecd` (string, required) - `Medication Request identifier OR request_number`
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + meta (Response__Meta)
+        + data (object)
+            + include `Medication_request_Public_Response_with_Medical_Program_min`
+            + `medication_info` (object, required)
+                + include `Innm_Dosage_for_Medication_request_Responce`
+                + `medication_remaining_qty`: 10.23 (number, optional) - medication quantity allowed to dispense
+
+### Block Medication Request [PATCH /api/medication_requests/{id}/actions/block]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-008-002-0155
+Scope              | medication_request:block
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570463996/REST+API+Block+Medication+Request">Block Medication Request</a>
+
+Use this method to block Medication request for dispense.
+In order to block medication request `block_reason` and `block_reason_code` should be added in request.
+This method can't be used by employees with type 'PHARMACIST'.
+For pharmacists please use [**Block Medication Request by Pharmacy User**](https://esoz.docs.apiary.io/#reference/medical-events/medication-request/block-medication-request-by-pharmacy-user).
+
++ Parameters
+    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+
++ Request (application/json)
+    + Headers
+       Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+       X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
+    + Attributes (object)
+       + `block_reason`: `перевищено норми відпуску` (string, optional) - Block reason
+       + `block_reason_code`: `BLOCK_WRONG_QTY_DRUG` (string, required) - Block reason code `Dictionary MEDICATION_REQUEST_BLOCK_REASON`
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + meta (Response__Meta)
+        + data (object)
+            + include `Medication_request_Public_Response_with_Medical_Program_min_block_reason_required`
+
+### Unblock Medication Request [PATCH /api/medication_requests/{id}/actions/unblock]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-008-002-0156
+Scope              | medication_request:unblock
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570660598/DRAFT+REST+API+Unblock+Medication+Request">Unblock Medication Request</a>
+
+Use this method to unblock previously blocked Medication Request for Dispense.
+In order to unblock medication request `block_reason` and `block_reason_code` should be added in request.
+
++ Parameters
+    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+
++ Request (application/json)
+    + Headers
+       Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+       X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    + Attributes (object)
+       + `block_reason`: `помилки відсутні` (string, optional) - Unblock reason
+       + `block_reason_code`: `UNBLOCK_DEFAULT` (string, required) - Unblock reason code `Dictionary MEDICATION_REQUEST_BLOCK_REASON`       
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + meta (Response__Meta)
+        + data (object)
+            + include `Medication_request_Public_Response_with_Medical_Program_min_block_reason_required`
+
+### Block Medication Request by Pharmacy User [PATCH /api/pharmacy/medication_requests/{id}/actions/block]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-008-002-0157
+Scope              | medication_request:block_pharm
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570758901/REST+API+PRIVATE+SPACE+AR+Private.+Get+Medication+request+by+ID">Private Get Medication Request by Id</a>
+
+Use this method to block Medication request for dispense.
+In order to block medication request `block_reason_code` and `block_reason`(optional) should be added in request.
+This method must be used only by employees with type 'PHARMACIST'.
+
++ Parameters
+    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+
++ Request (application/json)
+    + Headers
+       Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+       X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    + Attributes (object)
+       + `block_reason`: `перевищено норми відпуску` (string, optional) - Block reason
+       + `block_reason_code`: `BLOCK_WRONG_QTY_DRUG` (string, required) - Block reason code `Dictionary MEDICATION_REQUEST_BLOCK_REASON`
+       + `blocked_to`: `2018-08-02T10:45:16.000Z` (string, optional) - Block expiration date
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + meta (Response__Meta)
+        + data (`Medication_request_Public_Response_with_Medical_Program_min_for_Pharmacist_block_reason_required`)
+
+### Unblock Medication Request by Pharmacy User [PATCH /api/pharmacy/medication_requests/{id}/actions/unblock]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-008-002-0158
+Scope              | medication_request:unblock_pharm
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18757844993/REST+API+Unblock+Medication+request+by+Pharmacy+User">Unblock Medication Request by Pharmacy User</a>
+
+Use this method to unblock Medication request for dispense. In order to unblock medication request `block_reason` should be added in request.
+This method must be used only by employees with type 'PHARMACIST'.
+
++ Parameters
+    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+
++ Request (application/json)
+    + Headers
+       Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+       X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
+    + Attributes (object) 
+       + `block_reason_code`: `PRODUCTION_CANCEL` (string, required) - Block reason code `Dictionary MEDICATION_REQUEST_UNBLOCK_REASON`
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + meta (Response__Meta)
+        + data (`Medication_request_Public_Response_with_Medical_Program_min_for_Pharmacist_block_reason_required`)
+
+### Get Medication Request Details in Composition Context [GET /api/persons/{person_id}/compositions/{composition_id}/medication_requests/{id}]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-005-008-002-0159
+Scope              | composition:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18528109137/DRAFT+REST+API+Get+Medication+Request+details+in+Composition+context+API-007-011-001-0490">Get Medication Request Details in Composition Context</a>
+
+Method returns Medication Request details in the context of Composition.
+User must have an approval on the composition from url.
+
++ Parameters
+    + `person_id`: `5e661b15-a39a-4713-b18e-ba03a4a48ecc` (string, required) - Patient identifier
+    + `composition_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Composition identifier
+    + id: `48416485-cc98-46c4-8bba-e321de9e1ecd` (string, required) - Medication Request identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + meta (Response__Meta)
+        + data (object)
+            + include `Medication_request_Public_Response_with_Medical_Program_min`
+            + `medication_info` (object, required)
+                + include `Innm_Dosage_for_Medication_request_Responce`
+                + `medication_remaining_qty`: 10.23 (number, optional) - medication quantity allowed to dispense
+
+### Private Get Medication Request by Id [GET /api/admin/medication_requests/48416485-cc98-46c4-8bba-e321de9e1ecd]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-008-002-0160
 Scope              | medication_request_admin:details
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570758901/REST+API+PRIVATE+SPACE+AR+Private.+Get+Medication+request+by+ID">Private Get Medication Request by Id</a>
@@ -1539,7 +1598,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | ?
+ESOZ API ID        | API-005-008-002-0161
 Scope              | medication_request_admin:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18768265379/REST+API+PRIVATE+SPACE+Private.+Get+Medication+request">Private Get Medication Requests</a>
@@ -1568,7 +1627,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | ?
+ESOZ API ID        | API-005-008-002-0162
 Scope              | medication_request_admin:block
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18785566951/REST+API+PRIVATE+SPACE+AR+Private.+Block+Medication+request">Private Block Medication Request</a>
@@ -1595,10 +1654,10 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | ?
+ESOZ API ID        | API-005-008-002-0163
 Scope              | medication_request_admin:unblock
 Auth               | yes
-Link to Confluence | <a href=""></a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18785763473/REST+API+PRIVATE+SPACE+AR+Private.+Unblock+Medication+request">Private Unblock Medication Request</a>
 
 + Parameters
     + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
@@ -1912,7 +1971,6 @@ This method allows to get short information of the Medication Dispense for the M
     + Attributes (`Response_OK`)
         + data (object)
             + include `Medication_Dispense_Details_Response_for_MSP`
-
 
 ### Get Medication Dispense Details in Composition Context [GET /api/persons/{person_id}/compositions/{composition_id}/medication_dispenses/{id}]
 
