@@ -1670,73 +1670,11 @@ program Dispense details - several medications of different manufacturers
 with the same innm can be dispensed at a time. Total of `medication_qty` should
 be less or equal to medication quantity specified in Medication Request.
 
-### Search Medication Dispenses by Medication Request Id [GET /api/persons/{person_id}/medication_requests/{id}/medication_dispenses{?status}]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        | API-005-008-001-0128
-Scope              | medication_dispense:read
-Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570627767/REST+API+Search+Medication+dispenses+by+Medication+request+ID">Search Medication Dispenses by Medication Request Id</a>
-
-Use this method to obtain list of Medication Dispenses by doctor with medication request ID.
-Only Medication dispenses linked to medication request id will be shown. If you want to reduce amount of data that is going trough your application, use `status` filter and show only dispenses that Doctor is interested in.
-Use [**Get Medication dispense details in person context**](https://esoz.docs.apiary.io/#reference/medical-events/medication-dispense/get-medication-dispense-details-in-person-context) to get Medication Dispense by Id.
-
-+ Parameters
-    + `person_id`: `5e661b15-a39a-4713-b18e-ba03a4a48ecc` (string, required) - person_id of a patient.
-    + `id`: `a89f6a26-4221-4597-a1d2-542d5e40b565` (string, required)
-    + status: PROCESSED (string, optional) - Status
-    + page: 2 (number, optional) - Page number.
-    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (`Response_Collection_V2`)
-        + data (array)
-            + (object)
-                + `id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Medication Dispense Response Identifier
-                + `medication_request` (object, required) - Medication request
-                    + include `Medication_request_Public_Response`
-                + `dispensed_at`: `2017-08-17` (string, required) - date of dispense
-                + `medical_program` (`Medical_Program_Response_without_settings`, required) - Active medical program within which medications are going to be provided
-                + `status`: NEW (string, required) - Medication Dispense status (NEW, PROCESSED, REJECTED, EXPIRED)
-                + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
-                + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
-
-### Get Medication Dispense Details in Person Context [GET /api/persons/{person_id}/medication_dispenses/{id}]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        | API-005-008-001-0129
-Scope              | medication_dispense:read
-Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570103547/REST+API+Get+Medication+dispense+details+in+person+context">Get Medication Dispense Details in Person Context</a>
-
-This method allows to get short information of the Medication Dispense for the MSP (i.o. PRIMARY_CARE, OUTPATIENT) users.
-
-+ Parameters
-    + `id`: `a89f6a26-4221-4597-a1d2-542d5e40b565` (string, required)
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (`Response_OK`)
-        + data (object)
-            + include `Medication_Dispense_Details_Response_for_MSP`
-
 ### Create Medication Dispense by Pharmacy User [POST /api/pharmacy/medication_dispenses{?code}]
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-005-008-001-0131
+ESOZ API ID        | API-005-008-001-0128
 Scope              | medication_dispense:write
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570463962/REST+API+Create+Medication+Dispense+by+Pharmacy+User">Create Medication Dispense by Pharmacy User</a>
@@ -1779,7 +1717,7 @@ medical program, program participant id must be provided also.
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-005-008-001-0133
+ESOZ API ID        | API-005-008-001-0129
 Scope              | medication_dispense:process
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570332866/REST+API+Process+Medication+Dispense+by+Pharmacy+User">Process Medication Dispense by Pharmacy User</a>
@@ -1812,7 +1750,7 @@ Look at [**Dummy Process Medication Dispense by Pharmacy User**](https://esoz.do
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-005-008-001-0135
+ESOZ API ID        | API-005-008-001-0130
 Scope              | medication_dispense:reject
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570922654/REST+API+Reject+Medication+Dispense+by+Pharmacy+User">Reject Medication Dispense by Pharmacy User</a>
@@ -1836,7 +1774,7 @@ This method is used to reject medication dispense.
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-005-008-001-0138
+ESOZ API ID        | API-005-008-001-0131
 Scope              | medication_dispense:read_pharm
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570103570/REST+API+Get+Medication+dispenses+by+search+params+by+Pharmacy+User">Get Medication dispenses by search params by Pharmacy User</a>
@@ -1867,12 +1805,11 @@ Use [**Get Medication Dispense by Pharmacy User**](https://esoz.docs.apiary.io/#
             + (object)
                 + include `Medication_Dispense_Response_for_Pharmacist`
 
-
 ### Get Medication Dispense Details by Pharmacy User [GET /api/pharmacy/medication_dispenses/{id}]
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-005-008-001-0138
+ESOZ API ID        | API-005-008-001-0132
 Scope              | medication_dispense:read_pharm
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570693355/REST+API+Get+Medication+dispense+details+by+Pharmacy+User">Get Medication Dispense Details by Pharmacy User</a>
@@ -1896,7 +1833,7 @@ This method allows to get detailed information of the Medication dispense for th
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-005-008-001-0139
+ESOZ API ID        | API-005-008-001-0133
 Scope              | medication_dispense:read_pharm
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18546196640/REST+API+Get+Medication+Dispense+by+ID">Get Medication Dispense by Id</a>
@@ -1914,23 +1851,144 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
         + data (object)
             + include `Medication_Dispense_Response_without_2d_codes`
 
-### Private Get Medication Dispense List [GET /api/admin/medication_dispenseses]
+### Search Medication Dispenses by Medication Request Id [GET /api/persons/{person_id}/medication_requests/{id}/medication_dispenses{?status}]
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-005-008-001-0141
+ESOZ API ID        | API-005-008-001-0134
+Scope              | medication_dispense:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570627767/REST+API+Search+Medication+dispenses+by+Medication+request+ID">Search Medication Dispenses by Medication Request Id</a>
+
+Use this method to obtain list of Medication Dispenses by doctor with medication request ID.
+Only Medication dispenses linked to medication request id will be shown. If you want to reduce amount of data that is going trough your application, use `status` filter and show only dispenses that Doctor is interested in.
+Use [**Get Medication dispense details in person context**](https://esoz.docs.apiary.io/#reference/medical-events/medication-dispense/get-medication-dispense-details-in-person-context) to get Medication Dispense by Id.
+
++ Parameters
+    + `person_id`: `5e661b15-a39a-4713-b18e-ba03a4a48ecc` (string, required) - person_id of a patient.
+    + `id`: `a89f6a26-4221-4597-a1d2-542d5e40b565` (string, required)
+    + status: PROCESSED (string, optional) - Status
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array)
+            + (object)
+                + `id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Medication Dispense Response Identifier
+                + `medication_request` (object, required) - Medication request
+                    + include `Medication_request_Public_Response`
+                + `dispensed_at`: `2017-08-17` (string, required) - date of dispense
+                + `medical_program` (`Medical_Program_Response_without_settings`, required) - Active medical program within which medications are going to be provided
+                + `status`: NEW (string, required) - Medication Dispense status (NEW, PROCESSED, REJECTED, EXPIRED)
+                + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
+                + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
+
+### Get Medication Dispense Details in Person Context [GET /api/persons/{person_id}/medication_dispenses/{id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-008-001-0135
+Scope              | medication_dispense:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570103547/REST+API+Get+Medication+dispense+details+in+person+context">Get Medication Dispense Details in Person Context</a>
+
+This method allows to get short information of the Medication Dispense for the MSP (i.o. PRIMARY_CARE, OUTPATIENT) users.
+
++ Parameters
+    + `id`: `a89f6a26-4221-4597-a1d2-542d5e40b565` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (object)
+            + include `Medication_Dispense_Details_Response_for_MSP`
+
+
+### Get Medication Dispense Details in Composition Context [GET /api/persons/{person_id}/compositions/{composition_id}/medication_dispenses/{id}]
+
+Method returns Medication Dispense details in the context of Composition
+User must have an approval on the composition from url.
+
++ Parameters
+    + `person_id`: `5e661b15-a39a-4713-b18e-ba03a4a48ecc` (string, required) - Patient identifier
+    + `composition_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Composition identifier
+    + `id`: `a89f6a26-4221-4597-a1d2-542d5e40b565` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medication_Dispense_Response_for_Pharmacist`)
+
+
+### Private Get Medication Dispenses List [GET /api/admin/medication_dispenses{?id,medication_request_id,legal_entity_id,division_id,status,dispensed_from,dispensed_to,care_plan_id,page,page_size}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-008-001-0136
 Scope              | medication_dispense_admin:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18767708182/REST+API+Private.+Get+Medication+Dispense+List">Get Medication Dispense List</a>
+
++ Parameters
+    + id: `a89f6a26-4221-4597-a1d2-542d5e40b565` (string, optional) - Medication dispense ID
+    + medication_request_id: `a89f6a26-4221-4597-a1d2-542d5e40b565` (string, optional) - Medication request ID
+    + legal_entity_id: `a89f6a26-4221-4597-a1d2-542d5e40b565` (string, optional) - Legal entity ID
+    + division_id: `a89f6a26-4221-4597-a1d2-542d5e40b565` (string, optional) - Division ID
+    + status: PROCESSED (string, optional) - Status
+    + dispensed_from: '2017-09-01' (string, optional) - date of dispense
+    + dispensed_to: '2017-10-01' (string, optional) - date of dispense
+    + `care_plan_id`: `8838982b-6a77-4cb5-87cd-cdb82eb55364` (string, optional) - care plan identifier
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array)
+            + (object)
+                + include `Medication_Dispense_Response_Private`
+
 
 ### Private Get Medication Dispense by Id [GET /api/admin/medication_dispenseses/id]
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-005-008-001-0142
+ESOZ API ID        | API-005-008-001-0137
 Scope              | medication_dispense_admin:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18767382709/REST+API+Private.+Get+Medication+Dispense+by+ID">Get Medication Dispense by Id</a>
+
++ Parameters
+    + `id`: `a89f6a26-4221-4597-a1d2-542d5e40b565` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (object)
+            + include `Medication_Dispense_Response_Private`
 
 ### Dummy Process Medication Dispense [PATCH /dummy/medication_dispenses/{id}/actions/process]
 
