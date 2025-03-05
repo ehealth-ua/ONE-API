@@ -498,10 +498,13 @@ Key                | Value
 ESOZ ENT ID        | ENT-060
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17482940731/Dictionaries+and+Registers">Dictionaries and Registers</a>
 
-### Get Dictionaries [GET]
+### Get Dictionaries [GET /api/dictionaries{?name,is_active}]
 
+Key                | Value
+-------------------|-----------
 ESOZ API ID        | API-011-001-008-0406
-Auth               | no
+Scope              | dictionary:read
+Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570889877/DRAFT+REST+API+Get+dictionaries">Get Dictionaries</a>
 
 Each dictionary is an object that contains `{key}:{value}` pairs where: `{key}` is a dictionary record and `{value}` is a dictionary record description.
@@ -518,8 +521,10 @@ Each dictionary is an object that contains `{key}:{value}` pairs where: `{key}` 
     + Attributes (`Response_OK`)
         + data (array[`Dictionary`])
 
-### Get Dictionaries V2 [GET]
+### Get Dictionaries V2 [GET /api/v2/dictionaries{?name,is_active,value_code,value_description,value_is_active}]
 
+Key                | Value
+-------------------|-----------
 ESOZ API ID        | API-011-001-008-0407
 Auth               | no
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570136318/DRAFT+REST+API+Get+dictionaries">Get Dictionaries V2</a>
