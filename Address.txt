@@ -1,0 +1,8 @@
+
+409 ### List Of Districts By Search Params [GET /api/uaddresses/districts{?region_id,region,name,koatuu,page,page_size}]
+410 ### Districts by Region [GET /api/uaddresses/regions/290f1ee-6c54-4b01-90e6-d701748f0851/districts{?name,koatuu,page,page_size}]
+411 ### Settlements by district [GET /api/uaddresses/districts/290f1ee-6c54-4b01-90e6-d701748f0851/settlements{?name,koatuu,page,page_size}]
+412 ### List Of Regions By Search Params [GET /api/uaddresses/regions{?name,koatuu,page,page_size}]
+413 ### List Of Cities By Search Params [GET /api/uaddresses/settlements{?name,region,district,koatuu,page,page_size}]
+414 ### Get Settlement Details by Id [GET /api/uaddresses/settlements/{id}]
+415 ### List of Streets by Search Params [GET /api/uaddresses/streets{?settlement_id,name,type,page,page_size}]

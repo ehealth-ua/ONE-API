@@ -1,0 +1,10 @@
+Get Services Dictionary		API-011-001-007-0403
+Get Program services list	API-011-001-007-0404
+Get Program service by id	API-011-001-007-0405
+Get dictionaries		API-011-001-008-0406
+Get dictionaries V2		API-011-001-008-0407
+Update dictionary		API-011-001-008-0408
+
+406 ### Get Dictionaries [GET /api/v2/dictionaries{?name,is_active}]
+407 ### Get Dictionaries V2 [GET /api/v2/dictionaries{?name,is_active,value_code,value_description,value_is_active}]
+

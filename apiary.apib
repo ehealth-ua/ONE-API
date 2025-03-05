@@ -325,9 +325,230 @@ By default, all collections are ordered in ascending chronological order.
 
 # Group General
 
-## Dictionaries [/gen/dictionaries]
-
 ## Addresses [/gen/addresses]
+
+API for searching Ukrainian Addresses.
+
+Key                | Value
+-------------------|-----------
+ESOZ ENT ID        | ENT-001
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17478451446/UA+ADRESSES">Addresses</a>
+
+### List Of Districts By Search Params [GET /api/uaddresses/districts{?region_id,region,name,koatuu,page,page_size}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-012-001-003-0409
+Scope              | address:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570430977/DRAFT+REST+API+List+Of+Districts+By+Search+Params">List Of Districts By Search Params</a>
+
++ Parameters
+    + region_id: `09a33c98-9a5c-447a-8493-da8fcecb6873` (string, optional) - Province id
+    + region: Київ (string, optional) - Province name
+    + name: `Києво-Святошинський` (string, optional) - Administrative district of province
+    + koatuu: `2625286301` (string, optional) - koatuu classifier id
+    + `page`: 2 (number) - Page number.
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (array[`Response_District`])
+
+### Districts by Region [GET /api/uaddresses/regions/290f1ee-6c54-4b01-90e6-d701748f0851/districts{?name,koatuu,page,page_size}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-012-001-003-0410
+Scope              | address:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570234376/DRAFT+REST+API+Districts+by+Region">Districts by Region </a>
+
++ Parameters
+    + name: `Києво-Святошинський` (string, optional) - Filter by district name
+    + koatuu: `2625286301` (string, optional) - koatuu classifier id
+    + `page`: 2 (number) - Page number.
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (array[`Response_District_Short`])
+
+### Settlements by district [GET /api/uaddresses/districts/290f1ee-6c54-4b01-90e6-d701748f0851/settlements{?name,koatuu,page,page_size}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-012-001-003-0411
+Scope              | address:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570693121/DRAFT+REST+API+Settlements+by+district">Settlements by district</a>
+
+Get list of cities by district.
+
++ Parameters
+    + name: `Київ` (string, optional) - Filter by settlement name
+    + koatuu: `2625286301` (string, optional) - koatuu classifier id
+    + `page`: 2 (number) - Page number.
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (array[`Response_Settlement_Short`])
+
+### List Of Regions By Search Params [GET /api/uaddresses/regions{?name,koatuu,page,page_size}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-012-001-003-0412
+Scope              | address:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570234387/DRAFT+REST+API+List+Of+Regions+By+Search+Params">List Of Regions By Search Params</a>
+
++ Parameters
+    + name: Київ (string, optional) - Province name
+    + koatuu: `2625286301` (string, optional) - koatuu classifier id
+    + `page`: 2 (number) - Page number.
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (array[`Response_Region`])
+
+### List Of Cities By Search Params [GET /api/uaddresses/settlements{?name,region,district,koatuu,page,page_size}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-012-001-003-0413
+Scope              | address:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570562054/DRAFT+REST+API+List+Of+Cities+By+Search+Params">List Of Cities By Search Params </a>
+
+Use this method to obtain list of cities. If you want to reduce amount of data that is going trough your application, use `name`, `region`, `district` or `koatuu classifier` filters and show only cities you are interested in.
+
++ Parameters
+    + name: Новосілки (string, optional) - Name of searching settlement
+    + region: Київ (string, optional) - Province name
+    + district: `Києво-Святошинський` (string, optional) - Administrative district of province
+    + koatuu: `2625286301` (string, optional) - koatuu classifier id
+    + `page`: 2 (number) - Page number.
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (array[`Response_Settlement`])
+
+### Get Settlement Details by Id [GET /api/uaddresses/settlements/{id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-012-001-003-0414
+Scope              | address:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570660364/DRAFT+REST+API+Get+settlement+details+by+ID">Get Settlement Details by Id</a>
+
+Use this method to obtain city details.
+
++ Parameters
+    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - settlement_id
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Response_Settlement`)
+
+### List of Streets by Search Params [GET /api/uaddresses/streets{?settlement_id,name,type,page,page_size}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-012-001-003-0415
+Scope              | address:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570758657/DRAFT+REST+API+List+of+Streets+by+Search+Params">List of Streets by Search Params</a>
+
++ Parameters
+    + settlement_id: `eea333b5-e26d-4e3e-92e2-2ab37b131502` (string, required) - Settlement identifier
+    + name: `Незалежності` (string, optional) - Street name
+    + type: STREET (string, optional) - Street type (Dictionary STREET_TYPE)
+    + `page`: 2 (number) - Page number.
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (array[`Response_Street`])
+
+## Dictionaries and Registers [/gen/services]
+
+API for Services and Dictionaries.
+
+Key                | Value
+-------------------|-----------
+ESOZ ENT ID        | ENT-060
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17482940731/Dictionaries+and+Registers">Dictionaries and Registers</a>
+
+### Get Dictionaries [GET]
+
+ESOZ API ID        | API-011-001-008-0406
+Auth               | no
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570889877/DRAFT+REST+API+Get+dictionaries">Get Dictionaries</a>
+
+Each dictionary is an object that contains `{key}:{value}` pairs where: `{key}` is a dictionary record and `{value}` is a dictionary record description.
+
++ Parameters
+    + `name`: `eHealth/LOINC/observation_codes` (string, optional) - dictionary name
+    + `is_active`: true (boolean, optional) - dictionary status
+
++ Request (application/json)
+    + Headers
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (array[`Dictionary`])
+
+### Get Dictionaries V2 [GET]
+
+ESOZ API ID        | API-011-001-008-0407
+Auth               | no
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570136318/DRAFT+REST+API+Get+dictionaries">Get Dictionaries V2</a>
+
+Each dictionary is an object that contains not only a code and description of a value,
+but also a status of the value. In addition, it can represent hierarchical dictionaries with subordinate (child) values
+
++ Parameters
+    + `name`: `eHealth/ICF/classifiers` (string, optional) - dictionary name
+    + `is_active`: true (boolean, optional) - dictionary status
+    + `value_code`: `b1142` (string, optional) - code of the dictionary value
+    + `value_description`: `Орієнтація в особі` (string, optional) - description of the dictionary value
+    + `value_is_active`: true (string, optional) - status of the dictionary value
+
++ Request (application/json)
+    + Headers
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (array[`Dictionary_v2`])
+            + (object)
+                + include `Dictionary_v2`
+                + name: `eHealth/ICPC2/condition_codes` (string, required) - Unique dictionary name
+                + description: `Коди станів за ICPC2` (string, required) - dictionary description for a user
+                + values (array, required)
+                    + (Dictionary_value)
+                        + code: `D88` (string, required) - code of the dictionary value
+                        + description: `Апендицит` (string, required) - description of the code
 
 ## User Authentication [/gen/userauth]
 
@@ -7326,4 +7547,101 @@ http code| processing method | Client recommendations
 + `name`: `Доступні ліки` (string, required) - medical program name that is used on govermental level
 + `funding_source`: `NHS` (string, required) - `Dictionary FUNDING_SOURCE`
 + `mr_blank_type`: `F-1` (string, required) - `Dictionary MR_BLANK_TYPES`
+
+## Dictionaries
+### `Dictionary`
++ name: DOCUMENT_TYPE (string, required) - Unique dictionary name
++ values (object)
+    + key: value (string, optional) - List of dictionary entries as Key:Value pairs
++ labels (array)
+    - SYSTEM
+    - EXTERNAL
++ is_active: true (boolean, required)
+
+### `Dictionary_value`
++ code: `b1142` (string, required) - code of the dictionary value
++ description: `Орієнтація в особі` (string, required) - description of the code
++ is_active: true (boolean, required) - status of the dictionary value
++ child_values(array) - subordinate values of the dictionary
+
+### `Dictionary_v2`
++ name: `eHealth/ICF/classifiers` (string, required) - Unique dictionary name
++ description: `Класифікатори МКФ` (string, required) - dictionary description for a user
++ values (array, required)
+    + (Dictionary_value)
+        + child_values (array)
+            + (object)
+                + include `Dictionary_value`
+                + code: `b11429` (string, required) - code of the dictionary value
+                + description: `Орієнтація в особі неуточнена` (string, required) - description of the code
++ labels (array)
+    - SYSTEM
+    - EXTERNAL
++ is_active: true (boolean, required)
+
+
+## Global Parameters and Products
+### `Global_Parameters`
++ `declaration_term`: `30` (string, required) - термін дії декларації
++ `declaration_request_expiration`: `30` (string, required) - термін дії заявки на створення декларації
++ `employ_request_expiration`: `30` (string, required) - термін дії заявки на створення працівника
++ `verification_request_expiration`: `30` (string, required) - термін дії заявки на верифікацію декларації
++ adult_age: `18` (string, required) - вік повноліття
++ billing_date: `2` (string, required) - дата біллінгу (1-28)
+
+## UAddresses
+### `Response_Street`
++ id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string) - Address ID
++ settlement_name: Новосілки (string) - City name
++ street_type: вул (string) - Type of street
++ street_name: `Єрмоленка Володимира` (string) - Street name
++ aliases (array, optional)
+
+### `Response_Settlement_Short`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string) - Settlement ID
++ settlement_name: Новосілки (string) - City name
+
+### `Response_Settlement`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string) - Settlement ID
++ region_id: `99310bc4-ac7c-4f1f-bc29-b3ae25bd96bc` (string)
++ region: Київ (string) -  Region name
++ district: `Києво-Святошинський` (string) - District name
++ district_id: `99310bc4-ac7c-4f1f-bc29-b3ae25bd96bc` (string)
++ settlement_name: Новосілки (string) - City name
++ mountain_group: 0 (string) - Mountain group
++ type: `СITY` (string, optional) - Settlement type
++ koatuu: 3520380802 (string, optional) - KOATUU code
++ parent_settlement: Берегово (string, optional) - Parent settlement name
++ parent_settlement_id: `99310bc4-ac7c-4f1f-bc29-b3ae25bd96bc` (string)
+
+### `Response_Region`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string) - Region ID
++ region: Київ (string) -  Region name
++ koatuu: 3520380802 (string, optional) - KOATUU code
+
+### `Response_District_Short`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string) - District ID
++ district: `Києво-Святошинський` (string) - District name
+
+### `Response_District`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string) - District ID
++ region: Київ (string) -  Region name
++ region_id: `c4c0f907-8b60-483e-bbf6-dfb34ab91574` (string)
++ district: `Києво-Святошинський` (string) - District name
++ koatuu: 3520380802 (string, optional) - KOATUU code
+
+### `Create_Settlement`
++ region: Київ (string, required) -  Region name
++ district: `Києво-Святошинський` (string, required) - District name
++ settlement_name: Новосілки (string, required) - City name
+
+### `Create_Street`
++ region: Київ (string, required) -  Region name
++ district: `Києво-Святошинський` (string, required) - District name
++ settlement_name: Новосілки (string, required) - City name
++ street_type: вул (string, required) - Type of street
++ street_name: `Єрмоленка Володимира` (string, required) - Street name
++ street_number: 67 (string, required) - Number of building
++ postal_code: 02140 (string, required) - Postal code
+
 
