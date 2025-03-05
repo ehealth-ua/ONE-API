@@ -1,0 +1,29 @@
+Create Composition Title				API-007-011-001-0471
+Submit Composition					API-007-011-001-0472
+Generate Composition print form				API-007-011-001-0473
+Resend SMS on Composition				API-007-011-001-0474
+Mark in error Composition				API-007-011-001-0475
+Get Composition by search params			API-007-011-001-0476
+Get Composition by identifier				API-007-011-001-0477
+Get Device Dispense details in Composition context	API-007-011-001-0478
+Get Device Request details in Composition context	API-007-011-001-0479
+Get Composition Configurations by search params		API-007-011-001-0480
+Get Episode details in Composition context		API-007-011-001-0481
+Get Diagnostic Report details in Composition context	API-007-011-001-0482
+Get Encounter details in Composition context		API-007-011-001-0483
+Get Care Plan details in Composition context		API-007-011-001-0484
+Get Procedure details in Composition context		API-007-011-001-0485
+Get Condition details in Composition context		API-007-011-001-0486
+Get Observation details in Composition context		API-007-011-001-0487
+Get Immunization details in Composition context		API-007-011-001-0488
+Get Service Request details in Composition context	API-007-011-001-0489
+Get Medication Request Details in Composition Context	API-007-011-001-0490
+Get Medication Dispense details in Composition context	API-007-011-001-0491
+Get Clinical Impression details in Composition context	API-007-011-001-0492
+
+Processed:
+
+471 ### Create Composition Title [GET /api/patients/{patient_id}/composition_title]
+472 ### Submit Composition [GET /api/patients/{patient_id}/compositions]
+490 ### Get Medication Request From Composition [GET /api/persons/{person_id}/compositions/{composition_id}/medication_requests/{id}]
+
