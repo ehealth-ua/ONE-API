@@ -2224,7 +2224,6 @@ User must have an approval on the composition from url.
     + Attributes (`Response_OK`)
         + data (`Medication_Dispense_Response_for_Pharmacist`)
 
-
 ### Private Get Medication Dispenses List [GET /api/admin/medication_dispenses{?id,medication_request_id,legal_entity_id,division_id,status,dispensed_from,dispensed_to,care_plan_id,page,page_size}]
 
 Key                | Value
@@ -2620,7 +2619,21 @@ Scope              | composition:create
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18527191229/DRAFT+REST+API+Create+Composition+Title">Create Composition Title</a>
 
-+ Response 200 (application/json)
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+    + composition_type: `ADOPTION`(string, required) - Composition type
++ Request (application/json)
+    + Headers
+        Authorization: Bearer WUZKa1BnUTRkOWhYcTAxOHNmUTdUUT09
+        api-key: b1lPV3d3blRHRHdOYVYrYmNPU0tJdz09
+        X-Custom-PSK: a1aa07c96f3f4d91870f923a53cc9aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data
+            + title: `98CC-P696-E34T-X4T2` (string, required)
 
 ### Submit Composition [GET /api/patients/{patient_id}/compositions]
 
@@ -2668,16 +2681,533 @@ See ***Dummy Submit Composition*** for Payload.
             + code: 201 (number)
         + data (`Job`)
 
-### Get Medication Request From Composition [GET /api/persons/{person_id}/compositions/{composition_id}/medication_requests/{id}]
+### Get Medication Request Details in Composition Context [GET /api/persons/{person_id}/compositions/{composition_id}/medication_requests/{id}]
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        |
-Scope              | legal_entity:read
+ESOZ API ID        | API-005-008-002-0159
+Scope              | composition:read
 Auth               | yes
-Link to Confluence | N/A
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18528109137/DRAFT+REST+API+Get+Medication+Request+details+in+Composition+context+API-007-011-001-0490">Get Medication Request Details in Composition Context</a>
+
+Method returns Medication Request details in the context of Composition.
+User must have an approval on the composition from url.
+
++ Parameters
+    + `person_id`: `5e661b15-a39a-4713-b18e-ba03a4a48ecc` (string, required) - Patient identifier
+    + `composition_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Composition identifier
+    + id: `48416485-cc98-46c4-8bba-e321de9e1ecd` (string, required) - Medication Request identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + meta (Response__Meta)
+        + data (object)
+            + include `Medication_request_Public_Response_with_Medical_Program_min`
+            + `medication_info` (object, required)
+                + include `Innm_Dosage_for_Medication_request_Responce`
+                + `medication_remaining_qty`: 10.23 (number, optional) - medication quantity allowed to dispense
+
+### Generate Composition Print Form [GET /api/patients/{patient_id}/compositions/{id}/print_form?form_type=INFO_CERTIFICATE]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-011-001-0473
+Scope              | composition:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18527191497/DRAFT+REST+API+Generate+Composition+print+form">Generate Composition Print Form</a>
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+    + composition_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique composition identifier
+    + `form_type`: `INFO_CERTIFICATE`(string, required) - Type of the print form
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        api-key: aFBLVTZ6Z2dON1V
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (text/html)
+        <!DOCTYPE html> .... </html>
+
+### Resend SMS on Composition [PATCH /api/patients/{patient_id}/compositions/{composition_id}/actions/resend]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-011-001-0474
+Scope              | composition:resend_sms
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18527191574/DRAFT+REST+API+Resend+SMS+on+Composition">Resend SMS on Composition</a>
+
+Method to resend sms on Composition
+It can be processed in async way only, so Server might answer with:
+
+http code | processing method | Client recommendations
+--|--|--
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+    + composition_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique composition identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer d368a4b0-4a0e-457a-b267-32359fa6288f
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Mark in error Composition [PATCH /api/patients/{patient_id}/compositions/{id}/actions/mark_in_error]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-011-001-0475
+Scope              | composition:mark_in_error
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18527191635/DRAFT+REST+API+Mark+in+error+Composition">Mark in error Composition</a>
+
+This method must be used to mark in error existing Composition.
+Method receives signed message (pkcs7) that consists of signed content,
+digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
+
+**Important**:
+
+1. Signed content of a Composition must be equal to the Composition stored in DB. See Get Composition details
+2. status_reason must be added to signed content
+3. status must be changed to `ENTERED_IN_ERROR` for the purpose of displaying in the signed content
+
+Please see [Composition status model](https://e-health-ua.atlassian.net/wiki/spaces/emal/pages/18119950362/NEW+ME+Composition+status+model) and Dummy Mark-in-error Composition for more details.
+
+It can be processed in async way only, so Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
++ Parameters
+    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
+    + id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique Composition identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        api-key: aFBLVTZ6Z2dON1V
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Dummy Mark in error Composition [PATCH /api/patients/{patient_id}/compositions/{id}/actions/mark_in_error/dummy]
+
++ Parameters
+    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
+    + id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique Composition identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        api-key: aFBLVTZ6Z2dON1V
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    + Attributes (Composition_Create)
+        + `status_reason` (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `composition_mark_in_error_reasons` (string)
+                    + code: `default` (string)
+        + `status`: `ENTERED_IN_ERROR` (string, required)
+        + `explanatory_letter`: `Comments about the reason to mark composition in error` (string, required)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Get Composition by Search Params [GET /api/patients/{patient_id}/compositions/search{?patient_id,encounter_id,type,date,page,page_size}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-011-001-0476
+Scope              | composition:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18527191696/DRAFT+REST+API+Get+Composition+by+search+params">Get Composition by Search Params</a>
+
++ Parameters
+    + encounter_id: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, optional) - encounter identifier linked to the Composition
+    + context_episode_id: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, optional) - episode
+    + type: `DRIVERS` (string, optional) - type of the Composition
+    + category: `DRIVERS_GROUP1` (string, optional) - category of Composition
+    + status: `FINAL` (string, optional) - status of Composition
+    + title: `98CC-P696-E34T-X4T2` (string, optional) - number of Composition
+    + author: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, optional) - author of Composition
+    + attester: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, optional) - attester of Composition
+    + custodian: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, optional) - LE where Composition was created
+    + `date_from`: `2023-12-25` (string, optional) - the date from which the Composition was signed 
+    + `date_to`: `2023-12-25` (string, optional) - the date to which the Composition was signed
+    + page: 2 (number, optional) - Page number
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        api-key: aFBLVTZ6Z2dON1V
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection)
+        + data (array[`Composition_Short_Response`])
+
+### Get Composition by Identifier [GET /api/patients/{patient_id}/compositions/{id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-011-001-0477]
+Scope              | composition:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18527191751/DRAFT+REST+API+Get+Composition+by+identifier">Get Composition by Identifier</a>
+
++ Parameters
+    + patient_id: `25878134-7592-472a-adc1-f9532ce7f048` (string, required) - patient identifier
+    + id: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required) - Unique composition identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        api-key: aFBLVTZ6Z2dON1V
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection_OK)
+        + data (array[`Composition_Full_Response`])
+
+### Get Device Dispense Details in Composition Context [GET /api/patients/{patient_id}/compositions/{id}/device_dispenses/{device_dispense_id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-011-001-0478
+Scope              | composition:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18659180546/DRAFT+REST+API+Get+Device+Dispense+details+in+Composition+context">Get Device Dispense Details in Composition Context</a>
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `device_dispense_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Device Dispense identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data(`Device_Dispense_Response`)
+
+### Get Device Request Details in Composition Context [GET /api/patients/{patient_id}/compositions/{id}/device_requests/{device_request_id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-011-001-0479
+Scope              | composition:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18658656360/DRAFT+REST+API+Get+Device+Request+details+in+Composition+context">Get Device Request Details in Composition Context</a>
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `device_request_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Device Request identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Device_Request_Response_Details`)
+
+### Get Composition Configurations by Search Params [GET /api/composition_configurations{?type,category,page,page_size}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-011-001-0480
+Scope              | composition_configuration:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18527191170/DRAFT+REST+API+Get+Composition+Configurations+by+search+params">Get Composition Configurations by Search Params</a>
+
++ Parameters
+    + type: `DRIVERS` (string, required) - type of the Composition
+    + category: `DRIVERS_GROUP1` (string, required) - category of Composition
+    + page: 2 (number, optional) - Page number
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        api-key: aFBLVTZ6Z2dON1V
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection)
+        + data (array[`Composition_Configurations_Response`])
+
+### Get Episode Details in Composition Context [GET /api/patients/{patient_id}/compositions/{id}/episodes/{episode_id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-011-001-0481
+Scope              | composition:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18528108642/DRAFT+REST+API+Get+Episode+details+in+Composition+context">Get Episode Details in Composition Context</a>
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `episode_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Episode identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data(`Episode_Of_Care_Response`)
+
+### Get Diagnostic Report Details in Composition Context [GET /api/patients/{patient_id}/compositions/{id}/diagnostic_reports/{diagnostic_report_id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-011-001-0482
+Scope              | composition:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18528108697/DRAFT+REST+API+Get+Diagnostic+Report+details+in+Composition+context">Get Diagnostic Report Details in Composition Context</a>
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `diagnostic_report_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Diagnostic Report identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data(`Diagnostic_Report_Response`)
+
+### Get Encounter Details in Composition Context [GET /api/patients/{patient_id}/compositions/{id}/encounters/{encounter_id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-011-001-0483
+Scope              | composition:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18528108752/DRAFT+REST+API+Get+Encounter+details+in+Composition+context">Get Encounter Details in Composition Context</a>
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `encounter_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Encounter identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data(`Encounter_Response`)
+
+### Get Care Plan Details in Composition Context [GET /api/patients/{patient_id}/compositions/{id}/care_plans/{care_plan_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `care_plan_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Care Plan identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Care_Plan_Show`)
+
+### Get Procedure Details in Composition Context [GET /api/patients/{patient_id}/compositions/{id}/procedures/{procedure_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `procedure_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Procedure identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data(`Procedure_Response`)
+
+### Get Condition Details in Composition Context [GET /api/patients/{patient_id}/compositions/{id}/conditions/{condition_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `condition_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Condition identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Condition_Response`, fixed-type)
+
+### Get Observation Details in Composition Context [GET /api/patients/{patient_id}/compositions/{id}/observations/{observation_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `observation_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Observation identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Observation_Response`, fixed-type)
+
+### Get Immunization details in Composition Context [GET /api/patients/{patient_id}/compositions/{id}/immunizations/{immunization_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `immunization_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Immunization identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Immunization_Response`, fixed-type)
+
+### Get Service Request details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/service_requests/{service_request_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `service_request_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Service Request identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Service_Request_Show`)
+
+
+### Get Medication Request Details in Composition Context [GET /api/persons/{person_id}/compositions/{composition_id}/medication_requests/{id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-011-001-0490
+Scope              | composition:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18528109137/DRAFT+REST+API+Get+Medication+Request+details+in+Composition+context+API-007-011-001-0490">Get Medication Request Details in Composition Context</a>
+
+Method returns Medication Request details in the context of Composition.
+User must have an approval on the composition from url.
+
++ Parameters
+    + `person_id`: `5e661b15-a39a-4713-b18e-ba03a4a48ecc` (string, required) - Patient identifier
+    + `composition_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Composition identifier
+    + id: `48416485-cc98-46c4-8bba-e321de9e1ecd` (string, required) - Medication Request identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + meta (Response__Meta)
+        + data (object)
+            + include `Medication_request_Public_Response_with_Medical_Program_min`
+            + `medication_info` (object, required)
+                + include `Innm_Dosage_for_Medication_request_Responce`
+                + `medication_remaining_qty`: 10.23 (number, optional) - medication quantity allowed to dispense
+
+### Get Medication Dispense Details in Composition Context [GET /api/persons/{person_id}/compositions/{composition_id}/medication_dispenses/{id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-011-001-0491
+Scope              | composition:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18528109137/DRAFT+NEW+Get+Medication+Request+details+in+Composition+context+API-007-011-001-0490">Get Medication Dispense Details in Composition Context</a>
+
+Method returns Medication Dispense details in the context of Composition
+User must have an approval on the composition from url.
+
++ Parameters
+    + `person_id`: `5e661b15-a39a-4713-b18e-ba03a4a48ecc` (string, required) - Patient identifier
+    + `composition_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Composition identifier
+    + `id`: `a89f6a26-4221-4597-a1d2-542d5e40b565` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medication_Dispense_Response_for_Pharmacist`)
+
+### Get Clinical Impression Details in Composition Context [GET /api/patients/{patient_id}/compositions/{id}/clinical_impressions/{clinical_impression_id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-011-001-0492
+Scope              | composition:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18660524033/DRAFT+REST+API+Get+Clinical+Impression+details+in+Composition+context">Get Clinical Impression Details in Composition Context</a>
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `clinical_impression_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Clinical Impression identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Clinical_Impression_Show`)
 
 ## Specimen [/me/specimen]
 
@@ -4628,6 +5158,11 @@ http code| processing method | Client recommendations
                             - diagnostic_report
                             - encounter
 + note: `Some note` (string, optional)
+
+### `Clinical_Impression_Show`
++ include `Clinical_Impression_EncounterPCG_Request`
++ inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
++ updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
 
 ### Procedure_EncounterPCG_Request
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) - Unique procedure identifier 
@@ -7854,4 +8389,2083 @@ http code| processing method | Client recommendations
                 + system: `http://terminology.hl7.org/CodeSystem/list-empty-reason` (string)
                 + display: `Information Withheld` (string)
 + section: (array[Section], optional) - Nested Section
+
+## Service Request
+
+### `Service_Request_Base`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ requisition: `AX654654T` (string, required)
++ `status`: `active` (string, required)
++ `program` (Reference_response, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `medical_program` (string)
++ `program_processing_status`: new (string, optional)
++ `status_history`  (array, required, fixed-type)
+    + (object)
+        + status: `closed` (string, required)
+        + `status_reason` (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/service_request_recall_reasons` (string)
+                    + code: `cured` (string)
+        + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
+        
++ `program_processing_status_history`  (array, optional, fixed-type)
+    + (object)
+        + program_processing_status: `new` (string, required)
+        + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
+        + `inserted_by`: `f7bdce4c-9d6e-4b08-913c-97c4b972f9be` (string, required)
+        
++ `program_service` (Reference_response, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `program_service` (string) 
++ intent: `order` (string, required)
++ priority: `routine` (string, optional)
++ based_on (array,optional, fixed-type)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `care_plan` (string, required)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `activity` (string, required)
++ category (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/SNOMED/service_request_categories` (string)
+            + code: `409063005` (string)
++ code (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service` (string)
++ `subject` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
++ `context` (Reference_response, optional) - encounter on which the service request is based on, optional if focus is set
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
+- One of
+    - `occurrence_period` (object)
+        + start : `2018-08-02T10:45:16.000Z`(string, required) - Starting time with inclusive boundary
+        + end : `2018-08-02T11:00:00.000Z`(string, optional) - End time with inclusive boundary, if not ongoing
+    - `occurrence_date_time`: `2018-08-02T10:45:16.000Z` (string, optional)
++ `requester_employee` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ `requester_legal_entity` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+        + value: `75a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
++ `reason_reference` (array, required)
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (string)
++ `supporting_info` (array, optional, fixed-type)
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `episode_of_care` (string)
++ note: `Some notes` (string, required)
++ patient_instruction: `Some patient instructions` (string, required)
++ expiration_date: `2018-08-02T10:45:16.000Z` (string, required)
++ `permitted_resources` (array, optional)
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `episode_of_care` (string)
++ `used_by_employee` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ `inserted_at`: `2018-08-02T10:45:16.000Z` (string, optional)
++ `updated_at`: `2018-08-02T10:45:16.000Z` (string, optional)
++ `completed_with` (Reference_response, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `diagnostic_report` (string) - or encounter
++ `used_by_legal_entity` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
++ `performer` (Reference_response, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+    + display_value: `Опанасенко Олексій Володимирович` (string, required) - This field is filled on creating and never updated after
++ `location_reference` (Reference_response, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
++ `performer_type` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `SPECIALITY_TYPE` (string)
+            + code: `DIETETICS` (string)
++ quantity (object)
+    + value: 10 (number, required)
+    + system: `SERVICE_UNIT` (string, required)
+    + code: PIECE (string, required)
+    + unit: шт (string)
++ `remaining_quantity` (object)
+    + value: 10 (number, required)
+    + system: `SERVICE_UNIT` (string, required)
+    + code: PIECE (string, required)
+    + unit: шт (string)
++ `used_by_legal_entity_history`  (array, optional, fixed-type)
+    + (object)
+        + `used_by_legal_entity`: (Reference_response, required)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `legal_entity` (string)
+                + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+        + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
+        + `inserted_by`: `f7bdce4c-9d6e-4b08-913c-97c4b972f9be` (string, required)
++ `used_by_employee_history`  (array, optional, fixed-type)
+    + (object)
+        + `used_by_employee`: (Reference_response, required)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `employee` (string)
+                + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
+        + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
+        + `inserted_by`: `f7bdce4c-9d6e-4b08-913c-97c4b972f9be` (string, required)
++ `status_reason` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/service_request_recall_reasons` (string)
+            + code: `cured` (string)
++ specimens (array, optional)
+    + (Reference_response)
+        + identifier (Identifier, optional, fixed-type)
+            + type (Codeable_Concept, required)
+                + coding (array, required,fixed-type)
+                    + (Coding)
+                        + code: `specimen` (string)
++ focus (array, optional) - what the service request is about, when it is not about the subject of record
+    + (Reference_response)
+        + identifier (Identifier, optional, fixed-type)
+            + type (Codeable_Concept, required)
+                + coding (array, required,fixed-type)
+                    + (Coding)
+                        + code: `specimen` (string)
+
+### `Service_Request_Show`
++ include `Service_Request_Base`
+
+### `Service_Request_List`
++ include `Service_Request_Base`
++ identity (`Person_identity`, required) - parametres - last name, first name, second name - can have value NULL
+
+## `Person_details`
+### `Person_identity`
++ last_name: Іванов (string, required) - full surname of the patient
++ first_name: І. (string, required) - short format of the patient's first name with the dot
++ second_name: І. (string, required) - short format of the patient's second name with the dot
++ gender: MALE (enum, required) - gender of the patient, value from the dictionary GENDER
+    - MALE
+    - FEMALE
++ age: 35 (number, required) - full years between inserted_at and birth date
+
+## Procedures
+### Procedure_Request
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) - Unique procedure identifier 
++ `based_on` (Reference_request, optional) - reference to [Service Request](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/service-requests); One of (based_on OR paper_referral) is required
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service_request` (string)
++ `paper_referral` (`Paper_referral`, optional, fixed-type) - One of (based_on OR paper_referral) is required
++ `status` : `completed` (enum, required) - Status for provided procedure
+    - `completed`
+    - `entered_in_error`
++ `status_reason` (Codeable_Concept, optional) - Reason why current status was set to procedure. Is mandatory for `entered_in_error`
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/procedure_status_reasons` (string)
+            + code: `default` (string)
++ code (Reference_request, required) - code of procedure
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service` (string)
+- One Of
+    - `performed_date_time`: `2018-08-02T10:45:16.000Z` (string, optional) - date and time when the procedure have been performed
+    - `performed_period` (object , optional) - is required if procedure based on service request with quantity that has code=MINUTE (system=SERVICE_UNIT)
+        + start: `2018-08-02T10:45:16.000Z` (string, required)
+        + end: `2018-08-12T10:45:16.000Z` (string, required) 
++ `recorded_by` (Reference_request, required) - employee who submit procedure to e-Health
+    + identifier (Identifier, optional, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, required,fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ primary_source: `true` (boolean, required) - source of procedure information. True - the procedure is done by current doctor, false - according to someone description.
+- One Of
+    - performer (object, optional) - if primary_source=true
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
+                        + code: `employee` (string)
+                + text: `Галина Олександрівна` (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+    - `report_origin` (object, optional) - if primary_source=false
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `eHealth/report_origins` (string, required)
+                + code: `mother` (string)
+        + text: `зі слів пацієнта` (string)
++ `division` (Reference_request, optional, fixed-type) - Division of legal_entity where procedure have been performed.
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
++ `managing_organization` (Reference_request, required) - Organization where procedure have been performed. Reference to legal_entity
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+
++ `reason_references` (array, optional) - The justification of why the procedure was performed.
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (string)
+                        
++ `outcome` (Codeable_Concept, optional) - The outcome of the procedure
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/procedure_outcomes` (string)
+            + code: `default_outcome` (string)
+            
++ note: `Додаткова інформація по процедурі` (string, optional) - Any other notes and comments about the procedure.
++ `category` (Codeable_Concept, required) - Classification of the procedure
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/procedure_categories` (string)
+            + code: `default` (string)
+
++ used_codes (array,optional)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+             + system: `eHealth/assistive_products` (string) 
+             + code: `03_05_38` (string)
+             
++ used_references (array, optional) - Items used during procedure.
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `equipment` (string)                
+
+
+### Procedure_Response
++ id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique procedure identifier 
++ `based_on` (Reference_response, optional) - reference to [Service Request](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/service-requests)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service_request` (string)
++ `paper_referral` (`Paper_referral`, optional, fixed-type)
++ `status` : `completed` (enum, required) - Status for provided procedure
+    - `completed`
+    - `entered_in_error`
++ `status_reason` (Codeable_Concept, optional) - Reason why current status was set to procedure. Is mandatory for `entered_in_error`
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/procedure_status_reasons` (string)
+            + code: `default` (string)
++ code (Reference_response, required) - code of procedure
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service` (string)
+- One Of
+    - `performed_date_time`: `2018-08-02T10:45:16.000Z` (string, optional) - date and time when the procedure have been performed
+    - `performed_period` (object , optional) - is required if procedure based on service request with quantity that has code=MINUTE (system=SERVICE_UNIT)
+        + start: `2018-08-02T10:45:16.000Z` (string, required)
+        + end: `2018-08-12T10:45:16.000Z` (string, required) 
++ `recorded_by` (Reference_response, required) - employee who submit procedure to e-Health
+    + identifier (Identifier, optional, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, required,fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+    + display_value: `Шевченко Олесь Вікторович` (string, required) - This field is filled on creating and never updated after
++ primary_source: `true` (boolean, required) - source of procedure information. True - the procedure is done by current doctor, false - according to someone description.
+- One Of
+    - performer (object, optional) - if primary_source=true
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
+                        + code: `employee` (string)
+                + text: `Галина Олександрівна` (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+    - `report_origin` (object, optional) - if primary_source=false
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `eHealth/report_origins` (string, required)
+                + code: `mother` (string)
+        + text: `зі слів пацієнта` (string)
++ `division` (Reference_response, optional, fixed-type) - Division of legal_entity where procedure have been performed.
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
++ `managing_organization` (Reference_response, required) - Organization where procedure have been performed. Reference to legal_entity
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+    + display_value: `Перше відділення обласної лікарня №1` (string, optional) - This field is filled on creating and never updated after
+
++ `reason_references` (array, optional) - The justification of why the procedure was performed.
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (string)
+                        
++ `used_references` (array, optional) - Items used during procedure.
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `equipment` (string)                        
+                        
++ `outcome` (Codeable_Concept, optional) - The outcome of the procedure
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/procedure_outcomes` (string)
+            + code: `default_outcome` (string)
+            
++ note: `Додаткова інформація по процедурі` (string, optional) - Any other notes and comments about the procedure.
++ `category` (Codeable_Concept, required) - Classification of the procedure
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/procedure_categories` (string)
+            + code: `default` (string)
++ encounter (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ `explanatory_letter`: `Процедура була відмінена у зв'язку з помилкою при виборі пацієнта ` (string, optional)
++ origin_episode (Reference_response, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `episode` (string)
++ complication_details (array, reference, optional) - Any complications that occurred during the procedure, or in the immediate post-performance period. Could be filled only for procedure in encounter package and only with reference to condition from same encounter
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (string)
+                        
++ used_codes (array,optional)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+             + system: `eHealth/assistive_products` (string) 
+             + code: `03_05_38` (string)
++ `focal_device` (object, optional) - Manipulated, implanted, or removed device
+    + action (Codeable_Concept, optional) - Kind of change to Device
+        + coding (array, fixed-type)
+            + (Coding)
+             + system: `procedure_focal_device_actions` (string) 
+             + code: `some_action` (string)
+    + manipulated (Reference_request, required) - Implanted Device used for this procedure
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `device` (string)
+
+
+### Procedure_Short_Response
++ id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique procedure identifier
++ `status` : `completed` (enum, required) - Status for provided procedure
+    - `completed`
+    - `entered_in_error`
++ `status_reason` (Codeable_Concept, optional) - Reason why current status was set to procedure. Is mandatory for `entered_in_error`
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/procedure_status_reasons` (string)
+            + code: `default` (string)
++ code (Reference_response, required) - code of procedure
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service` (string)
+- One Of
+    - `performed_date_time`: `2018-08-02T10:45:16.000Z` (string, optional) - date and time when the procedure have been performed
+    - `performed_period` (object , optional) - is required if procedure based on service request with quantity that has code=MINUTE (system=SERVICE_UNIT)
+        + start: `2018-08-02T10:45:16.000Z` (string, required)
+        + end: `2018-08-12T10:45:16.000Z` (string, required) 
++ primary_source: `true` (boolean, required) - source of procedure information. True - the procedure is done by current doctor, false - according to someone description.
++ `managing_organization` (Reference_response, required) - Organization where procedure have been performed. Reference to legal_entity
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+    + display_value: `Перше відділення обласної лікарня №1` (string, optional) - This field is filled on creating and never updated after
++ `category` (Codeable_Concept, required) - Classification of the procedure
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/procedure_categories` (string)
+            + code: `default` (string)
+
+## Care plan
+
+### `Care_Plan_Create`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ `based_on` (Reference_request, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `care_plan` (string)
++ `part_of` (Reference_request, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `care_plan` (string)
++ category (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/care_plan_categories` (string)
+            + code: `diabetics` (string)
++ title: `Diabetics health plan` (string, required)
++ description: `Some description of the care plan` (string, optional)
++ period (Period, required)
++ `supporting_info` (array, optional, fixed-type)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `episode_of_care` (enum)
+                            - procedure
+                            - diagnostic_report
++ note: `Some notes` (string, optional)
++ intent: `order` (enum, required)
+    - order
++ encounter (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ addresses (array, required, fixed-type)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `E11.9` (string)
+                + system: `eHealth/ICD10_AM/condition_codes` (string, required)
++ author (Reference_request, required) - `author of the Care plan`
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ contributor (array, optional, fixed-type)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `employee` (string)
++ `terms_of_service` (Codeable_Concept,required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: INPATIENT (enum)
+                - INPATIENT
+                - OUTPATIENT
+            + system: `PROVIDING_CONDITION` (string)
++ inform_with (object, optional)
+    + `auth_method_id`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method 
++ status: new (string, required)
+
+### `Prequalify_Care_Plan_Activity_base`
++ author (Reference_request, required) - `author of the activity`
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ `care_plan` (Reference_request, required) - `Care plan to which the activity belongs`
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `care_plan` (string)
++ `detail` (Prequslify_Care_Plan_activity_detail_base, required)
+
+### `Prequalify_Care_Plan_Activity_Responce`
++ `program_id`: `59781de0-2e64-4359-b716-bcc05a32c10f` (string, required) - `Medical program identifier`
++ `program_name` : `Fee-For-Service`(string, required)
++ `status` : `INVALID` (enum, required) - Status for ability use program for this activity
+    - VALID
+    - INVALID
++ `rejection_reason` : `Service is not included in the program` (string) - Reason to fetch invalid status
+
+### `Care_Plan_activity_base`
++ id: `75a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - unique within the care plan
++ author (Reference_request, required) - `author of the activity`
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ `care_plan` (Reference_request, required) - `Care plan to which the activity belongs`
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `care_plan` (string)
++ `detail` (`Care_Plan_activity_detail_base`, required)
+
+### `Prequslify_Care_Plan_activity_detail_base`
++ kind: `medication_request` (enum, required)
+    - service_request
+    - medication_request
+    - device_request
+- One of
+    - `product_reference` (object) - `medication if kind is medication request, service/service_group if service request, device_definition if device request`
+         + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
+                        + code: `medication` (enum)
+                            - service
+                            - `service_group`
+                            - medication
+                            - `device_definition`
+                + text (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea3` (string, required)
+    - `product_codeable_concept` (object)
+        + coding (array, optional, fixed-type)
+            + object
+                + code: `30221` (string)
+                + system: `device_definition_classification_type` (string, required)
++ `reason_code` (array, optional, fixed-type)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `X85` (string)
+                + system: `eHealth/ICD10_AM/condition_codes` (string, required)
++ `reason_reference` (array, optional, fixed-type)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (enum) - `conditions/oservations/diagnostic_reports/clinical_impressions that approves diagnoses`
+                            - condition
+                            - oservation
+                            - diagnostic_report
+                            - clinical_impression
++ goal (array, optional, fixed-type)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `diabetes_treatment` (string)
+                + system: `eHealth/care_plan_activity_goals` (string, required)
++ quantity (object)
+    + value: 13 (number, required)
+    + `system`: `MEDICATION_UNIT` (enum, optional) - Can be absent in old version of CPA, is required for kind `medication_request`. `MEDICATION_UNIT` used in activities with kind `medication_request`, `SERVICE_UNIT` - with kind `service_request`
+        - `MEDICATION_UNIT`
+        - `SERVICE_UNIT`
+        - `device_unit`
+    + `code`: `MG` (string, optional) - Can be absent in old version of CPA, is required for kind `medication_request`.
++ `scheduled_period` (object, required)
+    + start: `2018-08-02T10:45:16.000Z`(string, required) -  Starting time with inclusive boundary
+    + end: `2018-08-02T11:00:00.000Z`(string, required) -  End time with inclusive boundary, if not ongoing
++ location (Reference_request)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
++ performer (Reference_request)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ `daily_amount` (object)
+    + value: 13.5 (number, required)
+    + `system`: `MEDICATION_UNIT` (enum, optional) - Can be absent in old version of CPA.
+        - `MEDICATION_UNIT`
+        - `SERVICE_UNIT`
+        - `device_unit`
+    + `code`: `MG` (string, optional) - Can be absent in old version of CPA.
++ description: `Some activity description` (string)
++ `do_not_perform`: false (boolean, required)
++ status: scheduled (string, required)
+
+
+### `Care_Plan_activity_detail_base`
++ kind: `medication_request` (enum, required)
+    - service_request
+    - medication_request
+    - device_request
+- One of
+    - `product_reference` (object) - `medication if kind is medication request, service/service_group if service request, device_definition if device request`
+         + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
+                        + code: `medication` (enum)
+                            - service
+                            - `service_group`
+                            - medication
+                            - `device_definition`
+                + text (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea3` (string, required)
+    - `product_codeable_concept` (object)
+        + coding (array, optional, fixed-type)
+            + object
+                + code: `30221` (string)
+                + system: `device_definition_classification_type` (string, required)
++ `reason_code` (array, optional, fixed-type)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `X85` (string)
+                + system: `eHealth/ICD10_AM/condition_codes` (string, required)
++ `reason_reference` (array, optional, fixed-type)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (enum) - `conditions/oservations/diagnostic_reports/clinical_impressions that approves diagnoses`
+                            - condition
+                            - oservation
+                            - diagnostic_report
+                            - clinical_impression
++ goal (array, optional, fixed-type)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `diabetes_treatment` (string)
+                + system: `eHealth/care_plan_activity_goals` (string, required)
++ quantity (object)
+    + value: 13 (number, required)
+    + `system`: `MEDICATION_UNIT` (enum, optional) - Can be absent in old version of CPA, required if kind `medication_request`. `MEDICATION_UNIT` used in activities with kind `medication_request`, `SERVICE_UNIT` - with kind `service_request`
+        - `MEDICATION_UNIT`
+        - `SERVICE_UNIT`
+        - `device_unit`
+    + `code`: `MG` (string, optional) - Can be absent in old version of CPA, required if kind `medication_request`.
+    + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA.
+- One of
+    - `scheduled_timing` (object)
+        + event (array)
+            - `2018-08-02T10:45:16Z` ([string])
+        + repeat (object)
+            - One Of
+                - `bounds_duration` (object, optional)
+                    + value: 10 (number, required)
+                    + comparator: `>` (string, optional)
+                    + unit: `доба` (string, optional)
+                    + system: `eHealth/ucum/units` (string, required)
+                    + code: `day` (string, required)
+                - bounds_range (object, optional)
+                    + low (object, required)
+                        + value: `13` (number, required)
+                        + unit: `доба` (string, optional) 
+                        + system: `eHealth/ucum/units` (string, required)
+                        + code: `day` (string, required)
+                    + high (object, required)
+                        + value: `23` (number, required)
+                        + unit: `доба` (string, optional) 
+                        + system: `eHealth/ucum/units` (string, required)
+                        + code: `day` (string, required)
+                - bounds_period (object, optional)
+                    + start: `2018-08-02T10:45:16.000Z`(string, required) - Starting time with inclusive boundary
+                    + end: `2018-08-02T11:00:00.000Z`(string, optional) - End time with inclusive boundary, if not ongoing
+            + count: 10 (number, optional) - Number of times to repeat
+            + `count_max`: 20 (number, optional) - Maximum number of times to repeat
+            + duration: 15 (number, optional) - How long when it happens
+            + `duration_max`: 25 (number, optional) - How long when it happens
+            + `duration_unit`: `day` (string, optional) - unit of time dictionary
+            + frequency: 1 (number, optional) - Event occurs frequency times per period
+            + `frequency_max`: 4 (number, optinal) - Event occurs up to requency max times per period
+            + `period`: 1 (number, optinal) - Event occurs frequency times per period
+            + `period_max`: 3 (number, optional) - Upper limit of period, 3-4 hours
+            + `period_unit`: `day` (string, optional) - unit of time dictionary
+            + `day_of_week` (array, optinal) - DAYS OF WEEK dictionary
+                - mon ([string])
+            + `time_of_day` (array, optinal) - Time of day for action
+                - `16:00:00` ([string])
+            + when: (array, optional) - Code for time period of occurrence from EVENT_TIMING dictionary
+                - WAKE ([string])
+            + offset: 20 (number, optinal) - Minutes from event, before or after
+        + code (object)
+            + `coding` (array, required, fixed-type)
+                + (object)
+                    + system: `TIMING_ABBREVIATION` (string, required)
+                    + code: `Q4H` (string, required) - Symbol in syntax defined by the system
+            + text (string, optional)
+    - `scheduled_period` (object)
+        + start: `2018-08-02T10:45:16.000Z`(string, required) -  Starting time with inclusive boundary
+        + end: `2018-08-02T11:00:00.000Z`(string, required) -  End time with inclusive boundary, if not ongoing
+    - `scheduled_string`: `2018-08-02T10:45:16.000Z` (string)
++ location (Reference_request)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
++ performer (Reference_request)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ `daily_amount` (object)
+    + value: 6.5 (number, required)
+    + `system`: `MEDICATION_UNIT` (enum, optional) - Can be absent in old version of CPA, required if kind `medication_request`.
+        - `MEDICATION_UNIT`
+        - `SERVICE_UNIT`
+        - `device_unit`
+    + `code`: `MG` (string, optional) - Can be absent in old version of CPA, required if kind `medication_request`. 
+    + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA.
++ description: `Some activity description` (string)
++ `do_not_perform`: false (boolean, required)
++ `program` (Reference_request, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `medical_program` (string)
++ status: scheduled (string, required)
+
+
+### `Care_plan_activity_show`
++ include `Care_Plan_activity_base`
++ `outcome_reference` (array, optional, fixed-type)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `encounter` (enum)
+                            - encounter
+                            - procedure
+                            - `diagnostic_report`
+                            - `medication_dispense`
+                            - `device_dispense`
++ `outcome_codeable_concept` (array, optional, fixed-type)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `some code` (string)
+                + system: `eHealth/care_plan_activity_outcomes` (string, required)
++ `detail` (Care_Plan_activity_detail_base, required)
+    + status: scheduled (enum, required)
+        - scheduled
+        - `in_progress`
+        - completed
+        - cancelled
+    + `status_reason` (Codeable_Concept, optional, fixed-type)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `some code` (string)
+                + system: `eHealth/care_plan_activity_cancel_reasons` (enum, required)
+                    - `eHealth/care_plan_activity_complete_reasons`
+                    - `eHealth/care_plan_activity_cancel_reasons`
+    + `remaining_quantity` (object)
+        + value: 12 (number, required)
+        + `system`: `MEDICATION_UNIT` (enum, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
+            - `MEDICATION_UNIT`
+            - `SERVICE_UNIT`
+            - `device_unit`
+        + `code`: `MG` (string, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
+        + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA. Sets automatically for corresponding code.
+    + `remaining_quantity_type`: `for_request` (string, required) - Type of remaining_quantity
+
+### `Care_Plan_Show`
++ include `Care_Plan_Create`
++ subject (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `patient` (string)
+        + value: `7c3da506-804d-4550-8993-bf17f9ee0403` (string)
++ status: active (enum, required)
+    - new
+    - active
+    - completed
+    - cencelled
+    - terminated
++ `managing_organization` (Reference_request, required)
+     + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+     + display_value: `Медікал Солюшнc` (string, required)
++ `status_history` (array, required, fixed-type)
+    + (object)
+        + status: `active` (string, required)
+        + `status_reason` (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/care_plan_cancel_reasons` (enum)
+                        - `eHealth/care_plan_cancel_reasons`
+                        - `eHealth/care_plan_complete_reasons`
+                    + code: `some code` (string)
+        + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
+        + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
++ requisition: `0123-4567-89AB-CEIK` (string, required)
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
++ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
+### `Care_plan_summary`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ `based_on` (Reference_request, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `care_plan` (string)
++ requisition: `0123-4567-89AB-CEIK` (string, required)
++ `part_of` (Reference_request, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `care_plan` (string)
++ period (Period, required)
++ intent: `order` (enum, required)
+    - order
++ encounter (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ author (Reference_request, required) - `author of the Care plan`
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ subject (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `patient` (string)
+        + value: `7c3da506-804d-4550-8993-bf17f9ee0403` (string)
++ status: active (enum, required)
+    - new
+    - active
+    - completed
+    - cencelled
+    - terminated
++ `managing_organization` (Reference_request, required)
+     + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+     + display_value: `Медікал Солюшнc` (string, required)
++ `terms_of_service` (Codeable_Concept,required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: INPATIENT (enum)
+                - INPATIENT
+                - OUTPATIENT
+            + system: `PROVIDING_CONDITION` (string)
+
+### `Diagnostic_Report_Base_response`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ `based_on` (Reference_response, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service_request` (string)
++ `paper_referral` (`Paper_referral`, optional, fixed-type)
++ status: `final` (string, required)
++ code (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service` (string)
++ category (array, required)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+             + (Coding)
+                + system: `eHealth/diagnostic_report_categories` (string)
+                + code: `diagnostic_procedure` (string)
+- One Of
+    - effective_date_time: `2018-08-02T10:45:16.000Z` (string, optional)
+    - effective_period (object, optional, fixed-type)
+        + start : `2018-08-02T10:45:16.000Z`(string, required) - Starting time with inclusive boundary
+        + end : `2018-08-02T11:00:00.000Z`(string, optional) - End time with inclusive boundary, if not ongoing
++ issued: `2018-10-08T09:46:37.694Z` (string, required)
++ conclusion: `At risk of osteoporotic fracture` (string, optional)
++ `conclusion_code` (Codeable_Concept)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/ICD10_AM/condition_codes` (string)
+            + code: `H04.2` (string)
++ `recorded_by` (Reference_response, required)
+    + identifier (Identifier, optional, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, required,fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+    + display_value: `Опанасенко Олексій Володимирович` (string, required) - This field is filled on creating and never updated after
++ specimens (array, optional)
+    + (Reference_response)
+        + identifier (Identifier, optional, fixed-type)
+            + type (Codeable_Concept, required)
+                + coding (array, required,fixed-type)
+                    + (Coding)
+                        + code: `specimen` (string)
++ `used_references` (array, optional) - Items used in the report.
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `equipment` (string) 
+
+
+### `Diagnostic_Report_Short_Response`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ status: `final` (string, required)
++ code (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service` (string)
++ category (array, required)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+             + (Coding)
+                + system: `eHealth/diagnostic_report_categories` (string)
+                + code: `diagnostic_procedure` (string)
+- One Of
+    - effective_period (object, optional, fixed-type)
+        + start : `2018-08-02T10:45:16.000Z`(string, required) - Starting time with inclusive boundary
+        + end : `2018-08-02T11:00:00.000Z`(string, required) - End time with inclusive boundary
+    - effective_date_time: `2018-08-02T10:45:16.000Z` (string, optional)
++ issued: `2018-10-08T09:46:37.694Z` (string, required)
++ `managing_organization` (Reference_response, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_enity` (string)
++ `explanatory_letter`: `Звіт був відмінений у зв'язку з помилкою при виборі пацієнта ` (string, optional)
++ `used_references` (array, optional) - Items used in the report.
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `equipment` (string) 
+
+### `Diagnostic_Report_Package_Request`
++ include `Diagnostic_Report_Base_request`
++ primary_source: `true` (boolean, required) - could NOT be false
++ performer (required)
+    - One Of
+        - reference (object, optional)
+            + identifier (object, optional)
+                + type (object, optional)
+                    + coding (array, optional, fixed-type)
+                        + object
+                            + system: `eHealth/resources` (string, required)
+                            + code: `employee` (string)
+                + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+        - text: `Галина Олександрівна` (string)          
++ `managing_organization` (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_enity` (string)
++ `division` (Reference_request, optional, fixed-type) - Division of legal_entity where DR have been performed.
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
++ `results_interpreter` (optional)
+    - One Of
+        - reference (object, optional)
+            + identifier (object, optional)
+                + type (object, optional)
+                    + coding (array, optional, fixed-type)
+                        + object
+                            + system: `eHealth/resources` (string, required)
+                            + code: `employee` (string)
+                + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+        - text: `Опсенко Олексій Володимирович` (string, optional)
+
+### `Diagnostic_Report_Package_Request_Cancel`
++ include `Diagnostic_Report_Base_request`
++ `primary_source`: `true` (boolean, required) - could NOT be false
++ performer (required) - required if primary_source=true
+    - One Of
+        - reference (object, optional)
+            + identifier (object, optional)
+                + type (object, optional)
+                    + coding (array, optional, fixed-type)
+                        + object
+                            + system: `eHealth/resources` (string, required)
+                            + code: `employee` (string)
+                    + text: `Галина Олександрівна` (string)
+                + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+        - text: `Галина Олександрівна` (string)        
++ `managing_organization` (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_enity` (string)
++ `division` (Reference_request, optional, fixed-type) - Division of legal_entity where DR have been performed.
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
++ `results_interpreter` (optional)
+    - One Of
+        - reference (object, optional)
+            + identifier (object, optional)
+                + type (object, optional)
+                    + coding (array, optional, fixed-type)
+                        + object
+                            + system: `eHealth/resources` (string, required)
+                            + code: `employee` (string)
+                + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+        - text: `Опсенко Олексій Володимирович` (string, optional)
++ `explanatory_letter`: `Звіт був відмінений у зв'язку з помилкою при виборі пацієнта ` (string, optional)    
++ `cancellation_reason` (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/cancellation_reasons` (string)
+            + code: `misspelling` (string) \\ wrong_patient, misspelling
+    + text (string)
+
+
+### `Diagnostic_Report_Response`
++ include `Diagnostic_Report_Base_response`
++ inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
++ updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
++ encounter (Reference_response, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ `origin_episode` (Reference_response, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `episode` (string)
++ `division` (Reference_response, optional) - Division of legal_entity where DR have been performed.
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
+    + display_value: `Перше відділення обласної лікарня №1` (string, optional) - This field is filled on creating and never updated after
++ `managing_organization` (Reference_response, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_enity` (string)
+    + `display_value`: `Київська обласна лікарня №1` (string, required) - This field is filled on creating and never updated after          
++ `primary_source`: `true` (boolean, required)
+- One Of
+    - performer (optional) - required if primary_source=true
+        - One Of
+            - reference (object, optional)
+                + identifier (object, optional)
+                    + type (object, optional)
+                        + coding (array, optional, fixed-type)
+                            + object
+                                + system: `eHealth/resources` (string, required)
+                                + code: `employee` (string)
+                    + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+                + `display_value`: `Галина Олександрівна` (string, required)
+            - text: `Галина Олександрівна` (string)
+    - `report_origin` (object, optional) - if primary_source=false
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `eHealth/report_origins` (string, required)
+                + code: `mother` (string)
+        + text: `зі слів пацієнта` (string)
++ `results_interpreter` (optional)
+    - One Of
+        - reference (object, optional)
+            + identifier (object, optional)
+                + type (object, optional)
+                    + coding (array, optional, fixed-type)
+                        + object
+                            + system: `eHealth/resources` (string, required)
+                            + code: `employee` (string)
+                + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+            + `display_value`: `Опанасенко Олексій Володимирович` (string, required)
+        - text: `Опанасенко Олексій Володимирович` (string, optional)
++ `recorded_by` (Reference_response, required)
+    + identifier (Identifier, optional, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, required,fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+    + `display_value`: `Опанасенко Олексій Володимирович` (string, required) - This field is filled on creating and never updated after                
++ `explanatory_letter`: `Звіт був відмінений у зв'язку з помилкою при виборі пацієнта ` (string, optional)    
++ `cancellation_reason` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/cancellation_reasons` (string)
+            + code: `misspelling` (string) \\ wrong_patient, misspelling
+    + text (string)
+
+### `Composition_Configurations_Response`
++ `id`: `2017-04-20T19:14:13Z` (string, required)
++ `type`: (object, required, fixed-type)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `DRIVERS` (string)
+            + system: `COMPOSITION_TYPES` (string)
++ `category`: (object, required, fixed-type)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `DRIVERS_GROUP1` (string)
+            + system: `COMPOSITION_CATEGORIES` (string)
++ `is_active`: true (boolean, required)
++ `settings`: `{ "COMPOSITION_PERSON_GENDER": { "check": [ "female", "male" ] }, "COMPOSITION_SECTION_EMPTY_REASON": { "check": ["NILKNOWN", "NOTASKED", "WITHHELD", "UNAVAILABLE", "CLOSED"] }, "COMPOSITION_SECTION_NESTING_LEVEL": { "check": 5 }, "COMPOSITION_SECTION_COUNT_LIMIT": { "check": 100 }, "COMPOSITION_SECTION_ORDERBY": { "check": [ "USER", "SYSTEM", "EVENT-DATE", "ALPHABETIC", "CATEGORY" ] }, "COMPOSITION_DRIVER_RELATED_CODES": [ { "condition": { "code": "01.", "system": "eHealth/composition_additional_condition_admission" }, "check": ["a", "b", "c", "d", "e", "f", "g"] }, { "condition": { "code": "01.01.", "system": "eHealth/composition_additional_condition_admission" }, "check": ["a", "b", "c", "d", "e", "f", "g"] }, { "condition": { "code": "01.02.", "system": "eHealth/composition_additional_condition_admission" }, "check": ["a", "b", "c", "d", "e", "f", "g"] }]}`(string,required)
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
++ `updated_at`: `2018-08-02T10:45:16.000Z` (string, required)
++ `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
+### `Device_Request_Base`
++ intent: `order` (string, required)
++ quantity (object)
+    + value: 10 (number, required)
+    + system: `device_unit` (string, required)
+    + code: piece (string, required)
+- One Of
+    + `code` (object, optional)
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `device_definition_classification_type` (string)
+                + code: `30221` (string)
+    + `code_reference`  (object, optional)
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, required, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
+                        + code: `device_definition` (string)
++ `encounter` (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ `reason` (array, optional)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (string)
++ `requester` (Reference_request, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
++ authored_on: `2000-01-01T00:00:00.000Z` (string, required)
++ occurrence_period (object, required, fixed-type)
+    + start : `2000-01-01T00:00:00.000Z`(string, required) 
+    + end : `2018-08-02T11:00:00.000Z`(string, required)
++ based_on (array, optional, fixed-type)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `care_plan` (string, required)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `activity` (string, required)
++ priority: `routine` (string, optional)
++ `parameter` (array, optional)
+    + (Device_parameter)
++ `performer` (Reference_request, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
++ supporting_info (array, optional, fixed-type)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (enum, required)
+                            - condition
+                            - observation
+                            - diagnostic_report
+                            - procedure
+                            - encounter
+                            - episode
+                            - device
+                            - device_association
+
+
+### `Device_Request_Response_Base`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ include `Device_Request_Base`
++ quantity (object)
+    + value: 10 (number, required)
+    + system: `device_unit` (string, required)
+    + code: piece (string, required)
++ `status`: `active` (string, required)
++ `status_reason` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `device_request_revoke_reasons` (string)
+            + code: `incorrect_patient` (string)
++ `encounter` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ `subject` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
++ `reason` (array, optional)
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (string)
++ `requester` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
+    + display_value: `Мельник Микола Микитович` (string, required) - This field is filled on creating and never updated after
++ `requester_legal_entity` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+    + display_value: `Комунальне підприємство Медлаб` (string, required) - This field is filled on creating and never updated after
++ `program` (Reference_response, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `medical_program` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+    + display_value: `Доступні медичні вироби` (string, required) - This field is filled on creating and never updated after    
++ requisition: `AX65-4654-TІВ1-ТВТ1` (string, required)
++ dispense_valid_to: `2018-08-02T10:45:16.000Z` (string, required)
++ note: `Some notes` (string, optionnal)
++ `inserted_at`: `2018-08-02T10:45:16.000Z` (string, optional)
++ `updated_at`: `2018-08-02T10:45:16.000Z` (string, optional)
++ based_on (array, optional, fixed-type)
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `care_plan` (string, required)
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `activity` (string, required)
++ priority: `routine` (string, optional)
++ `parameter` (array, optional)
+    + (Device_parameter)
++ `performer` (Reference_response, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
++ supporting_info (array,optional, fixed-type)
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (enum, required)
+                            - condition
+                            - observation
+                            - diagnostic_report
+                            - procedure
+                            - encounter
+                            - episode
+                            - device
+                            - device_association
+
+
+### `Device_Request_Response_Details`
++ include `Device_Request_Response_Base`
++ `remaining_quantity` (object)
+    + value: 10 (number, required)
+    + system: `device_unit` (string, required)
+    + code: piece (string, required)
+    + unit: шт (string, required) 
+
+### `Qualify_Device_Request_Base`
++ `program_id`: `59781de0-2e64-4359-b716-bcc05a32c10f` (string, required) - `Medical program Identifier`
++ `program_name` : `Доступні медичні вироби`(string, required)
++ `status` : `INVALID` (enum, required) - Status for ability use program for this `Device Request`
+    - VALID
+    - INVALID
++ `rejection_reason` : `No appropriate participants found for this medical program` (string) - Reason to fetch invalid status
+
+### Device_Request_Complete_Request
++ include `Device_Request_Response_Base`
++ `status`: completed (string, required) - Device Request status
+
+### `Program_device`
++ id: `0f2fbf93-3041-4c0d-a3cf-ff558c861df8` (string, required) - Program participant identifier
++ `device_definition`(`Device_Definition_base`, required) -  Device definition
++ reimbursement (object, required) - Information about reimbursement by the program
+   + type: `FIXED` (string) - reimbursement type according to REIMBURSEMENT_TYPE dictionary
+   + percentage_discount: 12.45 (number) - Percent of a discount. Applicable only if type PERCENTAGE
+   + `reimbursement_amount`: 50.98 (number) - Amount to reimburse for one device by medical_program. Applicable only if type FIXED
++ wholesale_price: 25.14 (number, optional) - Wholesale pricing per package, UAH
++ consumer_price: 34.03 (number, optional) - Retail price for packaging, UAH
++ reimbursement_daily_count: 5 (number, optional) - The daily count of the device definition to be compensated
++ estimated_payment_amount: 5.15 (number, optional) - Amount of additional payment for packing, UAH
++ max_daily_count: 10 (number, optional) - The maximum allowable daily quantity of the device
++ registry_number: `REG-1111` (string, optional) - Registry number
++ `start_date`: `2019-01-01` (string, required) - Active from date
++ `end_date`: `2019-06-30` (string, optional) - Active to date
+
+### `Device_Definition_base`
++ id: `3e34da3d-9b8c-4aaf-be8e-24a161279b6a` (string, required) - Unique identifier of Device definition
++ `device_names` (array [`device_name`], required)
++ `classification_type`: `30221` (string, required) - Classification type. Dictionary `device_definition_classification_type`
++ `manufacturer` (`Manufacturer`, optional)
++ model_number: `M23N76` (string, optional) - Model number
++ `packaging` (`Device_definition_package`, required)
+
+### `device_name`
++ `name`: `Тест-смужки Accu-Chek Active для глюкометра` (string, required) - Device name
++ `type`: `user_friendly` (enum, required) - Device name type. Dictionary `device_name_type`
+    - user_friendly
+    - registered
+    - patient_reported    
+
+### `Device_definition_package`
++ `packaging_type`: `undefined` (string, required) - Packaging type. Dictionary `device_definition_packaging_type`
++ packaging_count: 50 (number, required) - Number of devices in container
++ `packaging_unit`: `pcs` (string, required) - Packaging unit. Dictionary `device_unit`
+
+### `Qualify_Device_Request_Responce`
++ include `Qualify_Device_Request_Base`
++ `participants` (array, required)
+    + (object)
+        + include `Program_device`
+
+### Device_Dispense_Create_Request
++ include `Device_Dispense_Base`
++ `based_on` (Reference_request, required) - Device request
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `device_request` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
++ `program` (Reference_request, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `medical_program` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
++ `details` (array[`Device_Dispense_Detail_Request`], fixed, required)
++ `when_handed_over`:`2018-08-02T10:45:16.000Z` (string, optional) 
+        
+### Device_Dispense_Complete_Request
++ include `Device_Dispense_Create_Response`
++ `program` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `medical_program` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+    + display_value: `Доступні медичні вироби` (string, required) - This field is filled on creating and never updated after
++ `status`: completed (string, required) - Device Dispense status
++ `when_handed_over`: `2018-08-02T10:45:16.000Z` (string, required)
++ `payment_id`: 1239804 (string, optional) - receipt number for the paid devices
++ `payment_amount`: 50 (number, required) - receipt amount which was paid by patient (UAH)
+
+### Device_Dispense_Response
++ `id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Device Dispense Response Identifier
++ `based_on` (Reference_response, optional) - Device request
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `device_request` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
++ `status`: completed (string, required) - Device Dispense status
++ `subject` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
++ `performer` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
+    + display_value: `Мельник Микола Микитович` (string, required) - This field is filled on creating and never updated after
++ `location` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
+    + display_value: `Перше відділення` (string, required) - This field is filled on creating and never updated after
++ `when_handed_over`: `2018-08-02T10:45:16.000Z` (string, optional)
++ `note`: `Some notes` (string, optionnal)
++ `performer_legal_entity` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+    + display_value: `Комунальне підприємство Медлаб` (string, required) - This field is filled on creating and never updated after
++ `program` (Reference_response, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `medical_program` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+    + display_value: `Доступні медичні вироби` (string, required) - This field is filled on creating and never updated after
++ `details` (array[`Device_Dispense_Detail_Response`], fixed, required)
++ `payment_id`: 1239804 (string, optional) - receipt number for the paid devices
++ `payment_amount`: 50 (number, optional) - receipt amount which was paid by patient (UAH)
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
++ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
++ `part_of` (Reference_response, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `procedure` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
++ `encounter` (Reference_response, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
++ supporting_info (array, optional, fixed-type)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (enum)
+                            - condition
+                            - observation
+                            - diagnostic_report
+                            - procedure
+                            - encounter
+                            - episode 
+                            - device
+                            - device_association
++ `status_reason` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `device_dispense_mark_in_error_reasons` (string)
+            + code: `incorrect_patient` (string)
+            
+
+
+### Device_Dispense_EncounterPCG_Response
++ `id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Device Dispense Response Identifier
++ `based_on` (Reference_response, optional) - Device request
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `device_request` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
++ `status`: completed (string, required) - Device Dispense status
++ `subject` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
++ `performer` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
+    + display_value: `Мельник Микола Микитович` (string, required) - This field is filled on creating and never updated after
++ `location` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
+    + display_value: `Перше відділення` (string, required) - This field is filled on creating and never updated after
++ `when_handed_over`: `2018-08-02T10:45:16.000Z` (string, optional)
++ `note`: `Some notes` (string, optionnal)
++ `performer_legal_entity` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+    + display_value: `Комунальне підприємство Медлаб` (string, required) - This field is filled on creating and never updated after
++ `details` (array[`Device_Dispense_Detail_Response`], fixed, required)
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
++ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
++ `part_of` (Reference_response, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `procedure` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
++ `encounter` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
++ supporting_info (array, optional, fixed-type)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (enum)
+                            - condition
+                            - observation
+                            - diagnostic_report
+                            - procedure
+                            - encounter
+                            - episode 
+                            - device
+                            - device_association
+            
+            
+### Device_Dispense_Create_Response
++ `id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Device Dispense Response Identifier
++ `based_on` (Reference_response, required) - Device request
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `device_request` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
++ `status`: completed (string, required) - Device Dispense status
++ `subject` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
++ `performer` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
+    + display_value: `Мельник Микола Микитович` (string, required) - This field is filled on creating and never updated after
++ `location` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
+    + display_value: `Перше відділення` (string, required) - This field is filled on creating and never updated after
++ `when_handed_over`: `2018-08-02T10:45:16.000Z` (string, optional)
++ `note`: `Some notes` (string, optionnal)
++ `performer_legal_entity` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+    + display_value: `Комунальне підприємство Медлаб` (string, required) - This field is filled on creating and never updated after
++ `program` (Reference_response, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `medical_program` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+    + display_value: `Доступні медичні вироби` (string, required) - This field is filled on creating and never updated after
++ `details` (array[`Device_Dispense_Detail_Response`], fixed, required)
++ `payment_id`: 1239804 (string, optional) - receipt number for the paid devices
++ `payment_amount`: 50 (number, optional) - receipt amount which was paid by patient (UAH)
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
++ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
+
+
+### Device_Dispense_Response_Base
++ `id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Device Dispense Response Identifier
++ `based_on` (Reference_response, optional) - Device request
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `device_request` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
++ `status`: completed (string, required) - Device Dispense status
++ `subject` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
++ `performer` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
+    + display_value: `Мельник Микола Микитович` (string, required) - This field is filled on creating and never updated after
++ `location` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
+    + display_value: `Перше відділення` (string, required) - This field is filled on creating and never updated after
++ `when_handed_over`: `2018-08-02T10:45:16.000Z` (string, optional)
++ `note`: `Some notes` (string, optionnal)
++ `performer_legal_entity` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+    + display_value: `Комунальне підприємство Медлаб` (string, required) - This field is filled on creating and never updated after
++ `program` (Reference_response, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `medical_program` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+    + display_value: `Доступні медичні вироби` (string, required) - This field is filled on creating and never updated after
++ `details` (array[`Device_Dispense_Detail_Response`], fixed, required)
++ `payment_id`: 1239804 (string, optional) - receipt number for the paid devices
++ `payment_amount`: 50 (number, optional) - receipt amount which was paid by patient (UAH)
++ `status_reason` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `device_dispense_mark_in_error_reasons` (string)
+            + code: `incorrect_patient` (string)
+
+### `Device_Dispense_Detail_Request`
+- One Of
+    + `device` (object, optional)
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, required, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
+                        + code: `device_definition` (string)
+            + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
+    + `device_code` (object, optional)
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `device_definition_classification_type` (string)
+                + code: `30221` (string)
++ `program_device` (Reference_request, optional) - Program device
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `program_device` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
++ quantity (object, required)
+    + value: 10 (number, required)
+    + system: `device_unit` (string, required)
+    + code: piece (string, required)
++ `sell_price`: 18.65 (number, optional) - price for one device
++ `discount_amount`: 150 (number, optional) - pharmacy's expected price of dicsount for the requested device quantity
+
+
+### `Device_Dispense_Detail_Response`
++ include `Device_Dispense_Detail_Request`
++ `program_device` (Reference_response, optional) - Program device
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `program_device` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
++ quantity (object, required)
+    + value: 10 (number, required)
+    + system: `device_unit` (string, required)
+    + code: piece (string, required)
+    + unit: шт (string, required)
++ `reimbursement_amount`: 450 (number, optional) - Amount to reimburse for device by medical_program
+
+
+### Device_parameter
++ `code`(Codeable_Concept)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `device_request_code_parameter` (enum, string)
+- One Of
+    - `value_codeable_concept` (Codeable_Concept)
+    - `value_quantity` (Quantity, optional)
+    - `value_range` (Range, optional)
+    - `value_boolean` (boolean, optional)
+    - `value_string` (string, optional)
+
+### `Composition_Full_Response`
++ `id`: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required) - `Identifier of composition`
++ `status`: `FINAL`  (string, required) - `dictionary eHealth/composition_statuses`
++ `type`: (object, required, fixed-type)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `DRIVERS` (string)
+            + system: `COMPOSITION_TYPES` (string)
++ `category`: (object, optional, fixed-type)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `DRIVERS_GROUP1` (string)
+            + system: `COMPOSITION_CATEGORIES` (string)
++ `date`: `2018-08-02T10:45:16.000Z` (string, required)
++ `title`: `98CC-P696-E34T-X4T2` (string, required)
++ `custodian`: (object, required, fixed-type)
+    + identifier (Identifier)
+        + type (object, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+                    + system: `eHealth/resources` (string)
+            + text: `string` (string, required)
+        + value: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required)
+    + `display_value` (string, required)
++ `encounter`: (object, required, fixed-type)
+    + identifier (Identifier)
+        + type (object, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
+                    + system: `eHealth/resources` (string)
+            + text: `string` (string, required)
+        + value: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required)
+    + `display_value` (string, required)
++ `author`: (object, required, fixed-type)
+    + identifier (Identifier)
+        + type (object, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+                    + system: `eHealth/resources` (string)
+            + text: `string` (string, required)
+        + value: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required)
+    + `display_value` (string, required)
++ `section`: (array, optional, fixed-type)
+    + (object)
+        + title: `History of present illness` (string, required)
+        + code (object, required, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `11348-0` (string)
+                    + system: `http://loinc.org` (string)
+                    + display: `History of present illness` (string)
+        + author: (array, required, fixed-type)
+            + (object)
+                + type (object, fixed-type)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `employee` (string)
+                            + system: `eHealth/resources` (string)
+                    + text: `string` (string, required)
+                + value: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required)
+            + `display_value` (string, required)
+        + text: (object, optional, fixed-type)
+            + status: `generated` (string, required)
+            + div: `<div xmlns=\"http://www.w3.org/1999/xhtml\">...` (string, required)
+        + ordered_by: (object, optional, fixed-type)
+            + type (object, fixed-type)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `system` (string)
+                        + system: `http://terminology.hl7.org/CodeSystem/list-order` (string)
+                        + display: `Sorted by System` (string)
+        + entry: (array, optional, fixed-type)
+            + (Reference_request, required)
+                + identifier (Identifier)
+                    + type (Codeable_Concept)
+                        + coding (array, fixed-type)
+                            + (Coding)
+                                + code: `observation` (string)
+        + empty_reason: (array, optional, fixed-type)
+            + (object)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `withheld` (string)
+                        + system: `http://terminology.hl7.org/CodeSystem/list-empty-reason` (string)
+                        + display: `Information Withheld` (string)
+        + section: (array[Section], optional) - Nested Section
++ `extension`: (array, optional, fixed-type)
+    + (object)
+        + code: `COMPOSITION_ADDITIONAL_CONDITION_ADMISSION` (string)
+        + valueCodeableConcept: (object, required, fixed-type)
+            + extension: (array, required, fixed-type)
+                + (object)
+                    + code: `ЗНАЧЕННЯ ДО Codeable Concept` (string, required)
+                    + valueDecimal: `300` (number, required)
+                + (object)
+                    + code: `БУКВА ДО обраного коду з постанови 340` (string, required)
+                    + valueCodeableConcept: (object, required, fixed-type)
+                        + code: (object, fixed-type)
+                            + coding (array, fixed-type)
+                                + (Coding)
+                                    + code: `a` (string)
+                                    + system: `Довідник букв до 340` (string)
+            + code: (object, fixed-type)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `20.07` (string)
+                        + system: `Довідник кодів постанови №340` (string)
++ relates_to: (array, optional, fixed-type)
+    + (Reference_request, required)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `observation` (string)
++ `attester`: (array, optional, fixed-type)
+    + (object)
+        + mode: (object, required, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal` (string)
+                    + system: `http://hl7.org/fhir/composition-attestation-mode` (string)
+                    + display: `Legal` (string)
+        + party: (object, required, fixed-type)
+            + identifier (Identifier)
+                + type: (object, required, fixed-type)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `employee` (string)
+                            + system: `eHealth/resources` (string)
+                    + text: `string` (string, required)
+                + value: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required)
+            + `display_value` (string, required)
++ `event`: (array, optional, fixed-type)
+    + (object)
+        + code: (object, required, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `COMPOSITION_VALIDITY_PERIOD` (string)
+                    + system: `COMPOSITION_EVENTS` (string)
+        + period: (object, required, fixed-type)
+            + start: `2018-08-02T10:45:16.000Z` (string, required)
+            + end: `2018-08-12T10:45:16.000Z` (string, required)
++ `context_episode_id`: `DDD-23323-FDadc-32fd` (string, required)
++ `status_reason`: `TYPO` (string, required)
++ `explanatory_letter`: `test` (string, required)
++ `inform_with`: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, optional)
+
+
+### `Composition_Short_Response` 
++ `id`: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required) - `Identifier of composition`
++ `status`: `FINAL`  (string, required) - `dictionary eHealth/composition_statuses`
++ `type`: (object, required, fixed-type)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `DRIVERS` (string)
+            + system: `COMPOSITION_TYPES` (string)
++ `category`: (object, optional, fixed-type)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `DRIVERS_GROUP1` (string)
+            + system: `COMPOSITION_CATEGORIES` (string)
++ `date`: `2018-08-02T10:45:16.000Z` (string, required)
++ `title`: `98CC-P696-E34T-X4T2` (string, required)
++ `encounter`: (object, required, fixed-type)
+    + identifier (Identifier)
+        + type (object, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
+                    + system: `eHealth/resources` (string)
+            + text: `string` (string, required)
+        + value: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required)
++ `custodian`: (object, required, fixed-type)
+    + identifier (Identifier)
+        + type (object, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+                    + system: `eHealth/resources` (string)
+            + text: `string` (string, required)
+        + value: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required)
++ `author`: (object, required, fixed-type)
+    + identifier (Identifier)
+        + type (object, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+                    + system: `eHealth/resources` (string)
+            + text: `string` (string, required)
+        + value: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required)
++ `attester`: (array, optional, fixed-type)
+    + (object)
+        + mode: (object, required, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal` (string)
+                    + system: `http://hl7.org/fhir/composition-attestation-mode` (string)
+                    + display: `Legal` (string)
+        + party: (object, required, fixed-type)
+            + identifier (Identifier)
+                + type: (object, required, fixed-type)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `employee` (string)
+                            + system: `eHealth/resources` (string)
+                    + text: `string` (string, required)
+                + value: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required)
++ `context_episode_id`: `DDD-23323-FDadc-32fd` (string, required)
 
