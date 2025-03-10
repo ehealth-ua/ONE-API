@@ -555,6 +555,128 @@ but also a status of the value. In addition, it can represent hierarchical dicti
                         + code: `D88` (string, required) - code of the dictionary value
                         + description: `Апендицит` (string, required) - description of the code
 
+## Medical Program [/api/medical_program]
+
+Key                | Value
+-------------------|-----------
+ESOZ ENT ID        | ENT-036
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17359700030/Medical+Program">Medical Program</a>
+
+### Get Medical Programs List [GET /api/medical_programs{?id,name,is_active,mr_blank_type,type,page,page_size}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-011-001-004-0391
+Scope              | medical_program:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570431118/REST+API+Get+medical+programs+list">Get Medical Programs List</a>
+
+Method returns list of medical programs filtering by parameters. By default method returns only active medical programs `is_active=true`
+
++ Parameters
+    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - Medical program identifier
+    + `name`: `Доступні ліки` (string, optional) - Name of the Medical program
+    + `is_active`: `true` (boolean, optional) - Is medical program active or not. Default: true
+    + `mr_blank_type`: `F-1` (string, optional) - Type of blank required by Program for prescription of Medications
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+    + `type`: `MEDICATION`(string, optional) - medical program type
+    
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + meta (Response__Meta)
+        + data (array[`medical_programs_response`])
+
+### Get Medical Program by Id [GET /api/medical_programs/id]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-011-001-004-0392
+Scope              | medical_program:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570431118/REST+API+Get+medical+programs+list">Get Medical Programs List</a>
+
+This endpoint returns medical program by id.
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`medical_programs_response`)
+
+### Get Program Services List [GET /api/program_services{?medical_program_id,page,page_size}]
+
+This endpoint returns list of service program members.
+
+**Scopes required:** `program_service:read`
++ Parameters
+    + medical_program_id: `1380df72-275a-11e7-93ae-92361f002671` (string, required)
+    + page: 2 (number, optional) - Page number
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (array[`Program_Service_Response`])
+
+### Get Program Service by Id [GET /api/program_services/id]
+
+This endpoint returns service program member by id.
+
+**Scopes required:** `program_service:read`
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Program_Service_Response`)
+
+### Get Services Dictionary [GET /api/services{?code,name,page,page_size}]
+
+This web service returns a catalog of services that could be submitted in eHealth. The catalog has a tree data structure. Each node represents group of services (or sub-group), except end-node, that represents services themselves. Maximum nesting level is 4.
+
++ Parameters
+    + `code`: `JF2 01` (string, optional) - Service code.
+    + `name`: `Some Name` (string, optional) - Service name.
+    + `page`: 2 (number, optional) - Page number.
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Service_in_group`)
+
 ## User Authentication [/gen/userauth]
 
 Key                | Value
@@ -1226,6 +1348,7 @@ Primary license must be updated with `Create or Update Legal Entity` method.
     + Attributes (`Response_OK`)
         + data (`crud_licenses_get`)
 
+
 # Group Personal
 
 ## Persons [/personal/persons]
@@ -1282,127 +1405,6 @@ Some routes in ESOZ are managed not only by scope-based  model and ABAC rules, b
 After successfull access with ABAC response will be filtered according
 to [Medical Events filtration by Forbidden groups](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/5056954517/Medical+Events+filtration+by+Forbidden+groups+EN).
 
-## Medical Program [/api/medical_program]
-
-Key                | Value
--------------------|-----------
-ESOZ ENT ID        | ENT-036
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17359700030/Medical+Program">Medical Program</a>
-
-### Get Medical Programs List [GET /api/medical_programs{?id,name,is_active,mr_blank_type,type,page,page_size}]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        | API-011-001-004-0391
-Scope              | medical_program:read
-Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570431118/REST+API+Get+medical+programs+list">Get Medical Programs List</a>
-
-Method returns list of medical programs filtering by parameters. By default method returns only active medical programs `is_active=true`
-
-+ Parameters
-    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - Medical program identifier
-    + `name`: `Доступні ліки` (string, optional) - Name of the Medical program
-    + `is_active`: `true` (boolean, optional) - Is medical program active or not. Default: true
-    + `mr_blank_type`: `F-1` (string, optional) - Type of blank required by Program for prescription of Medications
-    + page: 2 (number, optional) - Page number.
-    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
-    + `type`: `MEDICATION`(string, optional) - medical program type
-    
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (`Response_Collection_V2`)
-        + meta (Response__Meta)
-        + data (array[`medical_programs_response`])
-
-### Get Medical Program by Id [GET /api/medical_programs/id]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        | API-011-001-004-0392
-Scope              | medical_program:read
-Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570431118/REST+API+Get+medical+programs+list">Get Medical Programs List</a>
-
-This endpoint returns medical program by id.
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-        API-key: uXhEczJ56adsfh3Ri9SUkc4en
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (`Response_OK`)
-        + meta (Response__Meta)
-            + code: 200 (number)
-        + data (`medical_programs_response`)
-
-### Get Program Services List [GET /api/program_services{?medical_program_id,page,page_size}]
-
-This endpoint returns list of service program members.
-
-**Scopes required:** `program_service:read`
-+ Parameters
-    + medical_program_id: `1380df72-275a-11e7-93ae-92361f002671` (string, required)
-    + page: 2 (number, optional) - Page number
-    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-        API-key: uXhEczJ56adsfh3Ri9SUkc4en
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (`Response_Collection_V2`)
-        + meta (Response__Meta)
-            + code: 200 (number)
-        + data (array[`Program_Service_Response`])
-
-### Get Program Service by Id [GET /api/program_services/id]
-
-This endpoint returns service program member by id.
-
-**Scopes required:** `program_service:read`
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-        API-key: uXhEczJ56adsfh3Ri9SUkc4en
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (`Response_OK`)
-        + meta (Response__Meta)
-            + code: 200 (number)
-        + data (`Program_Service_Response`)
-
-### Get Services Dictionary [GET /api/services{?code,name,page,page_size}]
-
-This web service returns a catalog of services that could be submitted in eHealth. The catalog has a tree data structure. Each node represents group of services (or sub-group), except end-node, that represents services themselves. Maximum nesting level is 4.
-
-+ Parameters
-    + `code`: `JF2 01` (string, optional) - Service code.
-    + `name`: `Some Name` (string, optional) - Service name.
-    + `page`: 2 (number, optional) - Page number.
-    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-        API-key: uXhEczJ56adsfh3Ri9SUkc4en
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (`Response_OK`)
-        + meta (Response__Meta)
-            + code: 200 (number)
-        + data (`Service_in_group`)
 
 ## Medication Request [/me/medication_request]
 
