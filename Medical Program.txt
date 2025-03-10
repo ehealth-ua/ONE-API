@@ -1,0 +1,8 @@
+Get Medical Programs List		API-011-001-004-0391
+Get Medical Program by Id		API-011-001-004-0392
+
+391 ### Get Medical Programs List [GET /api/medical_programs{?id,name,is_active,mr_blank_type,type,page,page_size}]
+392 ### Get Medical Program by Id [GET /api/medical_programs/id]
+    ### Get Program Services List [GET /api/program_services{?medical_program_id,page,page_size}]
+    ### Get Program Service by Id [GET /api/program_services/id]
+    ### Get Services Dictionary [GET /api/services{?code,name,page,page_size}]

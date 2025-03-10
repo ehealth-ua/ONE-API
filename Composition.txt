@@ -11,7 +11,7 @@ Get Composition Configurations by search params		API-007-011-001-0480
 Get Episode details in Composition context		API-007-011-001-0481
 Get Diagnostic Report details in Composition context	API-007-011-001-0482
 Get Encounter details in Composition context		API-007-011-001-0483
-Get Care Plan details in Composition context		API-007-011-001-0484
+Get Care Plan details in Composition context		API-007-011-001-0484 <-
 Get Procedure details in Composition context		API-007-011-001-0485
 Get Condition details in Composition context		API-007-011-001-0486
 Get Observation details in Composition context		API-007-011-001-0487
@@ -25,5 +25,26 @@ Processed:
 
 471 ### Create Composition Title [GET /api/patients/{patient_id}/composition_title]
 472 ### Submit Composition [GET /api/patients/{patient_id}/compositions]
-490 ### Get Medication Request From Composition [GET /api/persons/{person_id}/compositions/{composition_id}/medication_requests/{id}]
+473 ### Generate Composition Print Form [GET /api/patients/{patient_id}/compositions/{id}/print_form?form_type=INFO_CERTIFICATE]
+474 ### Resend SMS on Composition [PATCH /api/patients/{patient_id}/compositions/{composition_id}/actions/resend]
+475 ### Mark in error Composition [PATCH /api/patients/{patient_id}/compositions/{id}/actions/mark_in_error]
+476 ### Get Composition by Search Params [GET /api/patients/{patient_id}/compositions/search{?patient_id,encounter_id,type,date,page,page_size}]
+477 ### Get Composition by Identifier [GET /api/patients/{patient_id}/compositions/{id}]
+478 ### Get Device Dispense Details in Composition Context [GET /api/patients/{patient_id}/compositions/{id}/device_dispenses/{device_dispense_id}]
+479 ### Get Device Request Details in Composition Context [GET /api/patients/{patient_id}/compositions/{id}/device_requests/{device_request_id}]
+480 ### Get Composition Configurations by Search Params [GET /api/composition_configurations{?type,category,page,page_size}]
+481 ### Get Episode Details in Composition Context [GET /api/patients/{patient_id}/compositions/{id}/episodes/{episode_id}]
+482 ### Get Diagnostic Report Details in Composition Context [GET /api/patients/{patient_id}/compositions/{id}/diagnostic_reports/{diagnostic_report_id}]
+483 ### Get Encounter Details in Composition Context [GET /api/patients/{patient_id}/compositions/{id}/encounters/{encounter_id}]
+    ### Get Care Plan Details in Composition Context [GET /api/patients/{patient_id}/compositions/{id}/care_plans/{care_plan_id}]
+    ### Get Procedure Details in Composition Context [GET /api/patients/{patient_id}/compositions/{id}/procedures/{procedure_id}]
+    ### Get Condition Details in Composition Context [GET /api/patients/{patient_id}/compositions/{id}/conditions/{condition_id}]
+    ### Get Observation Details in Composition Context [GET /api/patients/{patient_id}/compositions/{id}/observations/{observation_id}]
+    ### Get Immunization details in Composition Context [GET /api/patients/{patient_id}/compositions/{id}/immunizations/{immunization_id}]
+    ### Get Service Request details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/service_requests/{service_request_id}]
+490 ### Get Medication Request Details in Composition Context [GET /api/persons/{person_id}/compositions/{composition_id}/medication_requests/{id}]
+491 ### Get Medication Dispense Details in Composition Context [GET /api/persons/{person_id}/compositions/{composition_id}/medication_dispenses/{id}]
+492 ### Get Clinical Impression Details in Composition Context [GET /api/patients/{patient_id}/compositions/{id}/clinical_impressions/{clinical_impression_id}]
 
+
+    
