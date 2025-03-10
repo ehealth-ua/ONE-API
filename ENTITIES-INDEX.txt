@@ -41,7 +41,7 @@ ENT-039	Medication
 ENT-040	Medication Administration
 ENT-041	Medication Dispense (DONE)
 ENT-042	Medication Request (DONE)
-ENT-043	Medication Request Request (PROGRESS)
+ENT-043	Medication Request Request (DONE)
 ENT-044	Medication Statement
 ENT-045	Monitor Justification 
 ENT-046	NHS Admin Registers
