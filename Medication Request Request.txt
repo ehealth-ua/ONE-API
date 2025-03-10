@@ -1,0 +1,15 @@
+PreQualify Medication Request Request			API-005-008-003-0161
+Create Medication Request Request			API-005-008-003-0162
+Get medication request requests by search params	API-005-008-003-0163
+Get Medication Request Requests in care plan context	API-005-008-003-0164
+Get medication request requests details			API-005-008-003-0165
+Sign Medication Request Request				API-005-008-003-0166
+Reject Medication Request Request			API-005-008-003-0167
+
+161 ### PreQualify Medication Request Request [POST /api/medication_request_requests/prequalify]
+162 ### Create Medication Request Request [POST /api/medication_request_requests]
+163 ### Get Medication Request Requests by Search Params [GET /api/persons/{person_id}/medication_request_requests{?legal_entity_id,employee_id,episode_id,care_plan_id,activity_id,encounter_id,status,intent,page,page_size}]
+164 ### Get Medication Request Requests in Care Plan Context [GET /api/care_plans/{care_plan_id}/medication_request_requests{?employee_id,person_id,status,intent,encounter_id,page,page_size}]
+165 ### Get Medication Request Requests Details [GET /api/persons/{person_id}/medication_request_requests/{id}]
+166 ### Sign Medication Request Request [PATCH /api/medication_request_requests/{id}/actions/sign]
+167 ### Reject Medication Request Request [PATCH /api/medication_request_requests/{id}/actions/reject]
