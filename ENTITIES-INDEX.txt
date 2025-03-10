@@ -1,75 +1,70 @@
-	ENT-001	Addresses
-	ENT-002	Allergy Intolerance
-	ENT-003	Approval
-	ENT-004	Approval Aрр
-	ENT-005	Care Plan
-	ENT-006	Care Plan Activity
-	ENT-007	Client
-	ENT-008	Clinical Impression
-	ENT-009	Composition
-	ENT-010	Condition
-	ENT-011	Connection
-	ENT-012	Contract
-	ENT-013	Declaration 
-	ENT-014	Declaration Request
-	ENT-015	Detected Issue
-	ENT-016	Device
-	ENT-017	Device Association
-	ENT-018	Device Definition
-	ENT-019	Device Dispence
-	ENT-020	Device Request
-	ENT-021	Diagnostic Report
-	ENT-022	Division (DONE)
-	ENT-023	Employee
-	ENT-024	Employee Request
-	ENT-025	Employee Role
-	ENT-026	Encounter
-	ENT-027	Episode Of Care (DONE)
-	ENT-028	Equipment
-	ENT-029	Event
-	ENT-030	Forbidden Group
-	ENT-031	Groups of Diagnoses
-	ENT-032	Healthcare Service
-	ENT-033	Immunization
-	ENT-034	Job
-	ENT-035	Legal Entity (DONE)
-	ENT-036	License (DONE)
-	ENT-037	Medical Program
-	ENT-038	Medical Program Participant
-	ENT-039	Medical Program Provision
-	ENT-040	Medication
-	ENT-041	Medication Administration
-	ENT-042	Medication Dispense (DONE)
-	ENT-043	Medication Request (DONE)
-	ENT-044	Medication Request Request
-	ENT-045	Medication Statement
-	ENT-046	Monitor Justification 
-	ENT-047	NHS Admin Registers
-	ENT-048	Observation
-	ENT-049	Party
-	ENT-050	Person
-	ENT-051	Person Authentication Method 
-	ENT-052	Person Confidant Relationship
-	ENT-053	Person Documents
-	ENT-054	Person Merge Request 
-	ENT-055	Person Request
-	ENT-056	Person Verification
-	ENT-057	Preperson
-	ENT-058	Procedure
-	ENT-059	Risk Assessment
-	ENT-060	Rule Engine Rule
-	ENT-061	Service
-	ENT-062	Service Request
-	ENT-063	Specimen (DONE)
-	ENT-064	System Configuration
-	ENT-065	System Dictionary
-	ENT-066	System Global Parameters
-	ENT-067	User
-	ENT-068	User Authentication (DONE)
-	ENT-069	User Role
-	ENT-070	Users Black List
-	ENT-071	Capitation Report
-	ENT-072	Reimbursement Report
-	ENT-072	Visit
-	ENT-073	Integrations
-	ENT-074	Care Team
+ENT-001	Adresess (DONE)
+ENT-002	Allergy Intolerance
+ENT-003	Approval
+ENT-004	Approval Aрр
+ENT-005	Care Plan
+ENT-006	Care Plan Activity
+ENT-007	Client
+ENT-008	Clinical Impression
+ENT-009	Composition (PROGRESS)
+ENT-010	Condition
+ENT-011	Connection
+ENT-012	Contract
+ENT-013	Declaration 
+ENT-014	Declaration Request
+ENT-015	Detected Issue
+ENT-016	Device
+ENT-017	Device Association
+ENT-018	Device Definition
+ENT-019	Device Dispence
+ENT-020	Device Request
+ENT-021	Diagnostic Report
+ENT-022	Division (DONE)
+ENT-023	Employee
+ENT-024	Employee Request
+ENT-025	Employee Role
+ENT-026	Encounter (PROGRESS)
+ENT-027	Episode Of Care (DONE)
+ENT-028	Equipment
+ENT-029	Event
+ENT-030	Forbidden Group
+ENT-031	Groups of Diagnoses
+ENT-032	Healthcare Service
+ENT-033	Immunization, Integrations
+ENT-034	Job
+ENT-034	Legal Entity (DONE)
+ENT-035	License (DONE)
+ENT-036	Medical Program (PLANNED)
+ENT-037	Medical Program Participant
+ENT-038	Medical Program Provision
+ENT-039	Medication
+ENT-040	Medication Administration
+ENT-041	Medication Dispense (DONE)
+ENT-042	Medication Request (DONE)
+ENT-043	Medication Request Request (PLANNED)
+ENT-044	Medication Statement
+ENT-045	Monitor Justification 
+ENT-046	NHS Admin Registers
+ENT-047	Observation
+ENT-048	Party
+ENT-049	Person (PLANNED)
+ENT-050	Person Authentication Method 
+ENT-051	Person Confidant Relationship
+ENT-052	Person Documents
+ENT-053	Person Merge Request 
+ENT-054	Person Request
+ENT-055	Person Verification
+ENT-056	Preperson (PLANNED)
+ENT-057	Procedure
+ENT-058	Risk Assessment
+ENT-059	Rule Engine Rule
+ENT-060	Service (PROGRESS)
+ENT-061	Service Request
+ENT-062	Specimen (DONE)
+ENT-063	System Configuration
+ENT-064	System Dictionary
+ENT-065	System Global Parameters
+ENT-066	User
+ENT-067	User Authentication (DONE)
+ENT-068	User Role
+ENT-069	Users Black List
