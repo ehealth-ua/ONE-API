@@ -23,7 +23,7 @@ ENT-022	Division (DONE)
 ENT-023	Employee
 ENT-024	Employee Request
 ENT-025	Employee Role
-ENT-026	Encounter (PROGRESS)
+ENT-026	Encounter (PLANNED)
 ENT-027	Episode Of Care (DONE)
 ENT-028	Equipment
 ENT-029	Event
@@ -34,7 +34,7 @@ ENT-033	Immunization, Integrations
 ENT-034	Job
 ENT-034	Legal Entity (DONE)
 ENT-035	License (DONE)
-ENT-036	Medical Program (PROGRESS)
+ENT-036	Medical Program (DONE)
 ENT-037	Medical Program Participant
 ENT-038	Medical Program Provision
 ENT-039	Medication
