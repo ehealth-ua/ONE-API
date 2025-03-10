@@ -6,7 +6,7 @@ ENT-005	Care Plan
 ENT-006	Care Plan Activity
 ENT-007	Client
 ENT-008	Clinical Impression
-ENT-009	Composition (PROGRESS)
+ENT-009	Composition (DONE)
 ENT-010	Condition
 ENT-011	Connection
 ENT-012	Contract
@@ -34,14 +34,14 @@ ENT-033	Immunization, Integrations
 ENT-034	Job
 ENT-034	Legal Entity (DONE)
 ENT-035	License (DONE)
-ENT-036	Medical Program (PLANNED)
+ENT-036	Medical Program (PROGRESS)
 ENT-037	Medical Program Participant
 ENT-038	Medical Program Provision
 ENT-039	Medication
 ENT-040	Medication Administration
 ENT-041	Medication Dispense (DONE)
 ENT-042	Medication Request (DONE)
-ENT-043	Medication Request Request (PLANNED)
+ENT-043	Medication Request Request (PROGRESS)
 ENT-044	Medication Statement
 ENT-045	Monitor Justification 
 ENT-046	NHS Admin Registers

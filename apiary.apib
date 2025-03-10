@@ -1282,6 +1282,128 @@ Some routes in ESOZ are managed not only by scope-based  model and ABAC rules, b
 After successfull access with ABAC response will be filtered according
 to [Medical Events filtration by Forbidden groups](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/5056954517/Medical+Events+filtration+by+Forbidden+groups+EN).
 
+## Medical Program [/api/medical_program]
+
+Key                | Value
+-------------------|-----------
+ESOZ ENT ID        | ENT-036
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17359700030/Medical+Program">Medical Program</a>
+
+### Get Medical Programs List [GET /api/medical_programs{?id,name,is_active,mr_blank_type,type,page,page_size}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-011-001-004-0391
+Scope              | medical_program:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570431118/REST+API+Get+medical+programs+list">Get Medical Programs List</a>
+
+Method returns list of medical programs filtering by parameters. By default method returns only active medical programs `is_active=true`
+
++ Parameters
+    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - Medical program identifier
+    + `name`: `Доступні ліки` (string, optional) - Name of the Medical program
+    + `is_active`: `true` (boolean, optional) - Is medical program active or not. Default: true
+    + `mr_blank_type`: `F-1` (string, optional) - Type of blank required by Program for prescription of Medications
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+    + `type`: `MEDICATION`(string, optional) - medical program type
+    
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + meta (Response__Meta)
+        + data (array[`medical_programs_response`])
+
+### Get Medical Program by Id [GET /api/medical_programs/id]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-011-001-004-0392
+Scope              | medical_program:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570431118/REST+API+Get+medical+programs+list">Get Medical Programs List</a>
+
+This endpoint returns medical program by id.
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`medical_programs_response`)
+
+### Get Program Services List [GET /api/program_services{?medical_program_id,page,page_size}]
+
+This endpoint returns list of service program members.
+
+**Scopes required:** `program_service:read`
++ Parameters
+    + medical_program_id: `1380df72-275a-11e7-93ae-92361f002671` (string, required)
+    + page: 2 (number, optional) - Page number
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (array[`Program_Service_Response`])
+
+### Get Program Service by Id [GET /api/program_services/id]
+
+This endpoint returns service program member by id.
+
+**Scopes required:** `program_service:read`
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Program_Service_Response`)
+
+### Get Services Dictionary [GET /api/services{?code,name,page,page_size}]
+
+This web service returns a catalog of services that could be submitted in eHealth. The catalog has a tree data structure. Each node represents group of services (or sub-group), except end-node, that represents services themselves. Maximum nesting level is 4.
+
++ Parameters
+    + `code`: `JF2 01` (string, optional) - Service code.
+    + `name`: `Some Name` (string, optional) - Service name.
+    + `page`: 2 (number, optional) - Page number.
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Service_in_group`)
+
 ## Medication Request [/me/medication_request]
 
 Key                | Value
@@ -10469,3 +10591,80 @@ http code| processing method | Client recommendations
                 + value: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required)
 + `context_episode_id`: `DDD-23323-FDadc-32fd` (string, required)
 
+
+## Medical programs
+
+### `Medical_Program_Response_Report`
++ `id`: `c7d52544-0bd4-4129-97b0-2d72633e0490` (string, required) - Internal medical program ID, a UUID string.
++ `name`: `Доступні ліки` (string, required) - medical program name that is used on govermental level
++ `mr_blank_type`: `F-1` (string, required) - `Dictionary MR_BLANK_TYPES`
+
+### `Program_Service_Response`
++ id: `c290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ medical_program_id: `b290f1ee-6c54-4b01-90e6-d701748f0852` (string, required)
++ service_id: `d290f1ee-6c54-4b01-90e6-d701748f0853` (string, required)
++ service_group_id: null (string, required)
++ consumer_price: 15 (number, required)
++ description: `text` (string, required)
++ request_allowed: true (boolean, required)
++ is_active: true (boolean, required)
++ inserted_at: `2019-04-20T19:14:13Z` (string, required)
++ inserted_by: `f290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ updated_at: `2019-04-20T19:14:13Z` (string, required)
++ updated_by: `f290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+
+
+
+## `Service_dictionary`
+### `Service`
++ id: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
++ name: `Ультразвукове дослідження черевного відділу стравоходу' (string, required)
++ code: `JF2 01` (string, required)
++ is_active: true (boolean, required)
++ parent_id: null (string, optional)
++ category: `imaging` (string, required)
++ is_composition: false (boolean, required)
++ request_allowed: true (boolean, required)
++ `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
++ `inserted_by`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of user who has inserted record
++ `updated_at`: `2018-08-02T10:45:16.000Z` (string, required)
++ `updated_by`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of user who has inserted record
+
+### `Service_group`
++ id: `e5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
++ name: `Ультразвукові дослідження' (string, required)
++ code: `FJ` (string, required)
++ is_active: true (boolean, required)
++ request_allowed: false (boolean, required)
++ `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
++ `inserted_by`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of user who has inserted record
++ `updated_at`: `2018-08-02T10:45:16.000Z` (string, required)
++ `updated_by`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of user who has inserted record
+
+### `Service_in_group`
++ include (`Service_group`)
++ groups (array, optional, fixed-type)
+    + (Service_group)
+        + id: `75a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
+        + name: `Ультразвукові дослідження в гастроентерології' (string, required)
+        + code: `2FJ` (string, required)
+        + services (array, optional, fixed-type)
+             + (`Service`)
+
+### `medical_programs_response`
++ `id`: `c7d52544-0bd4-4129-97b0-2d72633e0490` (string, required) - Internal medical program ID, a UUID string.
++ `name`: `Доступні ліки` (string, required) - medical program name that is used on govermental level
++ `medical_program_settings` (`Medical_program_settings`, required) - some conditions for using program
++ `medical_program_settings_text`: `Some text` (string, optional) - justification of the possibility or impossibility of using the program on medication request with some settings
++ `is_active`: `true` (boolean, optional) - Is medical program active or not. True - Active; False - Inactive
++ `medication_dispense_allowed`: true (boolean, optional) - posibility to create medication dispense with program
++ `medication_dispense_allowed_text`: `Some text` (string, optional) - justification of the possibility or impossibility of using the program on medication dispense
++ `medication_request_allowed`: true (boolean, optional) - posibility to create medication request with program
++ `medication_request_allowed_text`: `Some text` (string, optional) - justification of the possibility or impossibility of using the program on medication request
++ `type`: `MEDICATION` (string, optional) - `Dictionary MEDICAL_PROGRAM_TYPE`
++ `funding_source`: `NHS` (string, required) - `Dictionary FUNDING_SOURCE`
++ `mr_blank_type`: `F-1` (string, required) - `Dictionary MR_BLANK_TYPES`
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, optional) - ISO 8601 date and time in UTC timezone.
++ `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, optional)
++ `updated_at`: `2017-04-20T19:14:13Z` (string, optional) - ISO 8601 date and time in UTC timezone.
++ `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, optional)
