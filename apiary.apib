@@ -3934,14 +3934,14 @@ http code| processing method | Client recommendations
 + Parameters
     + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
     + id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique Specimen identifier
-    
+
 + Request (application/json)
     + Headers
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
             X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
-    + Attributes (object)    
+    + Attributes (object)
         + `status_reason` (Codeable_Concept, required)
             + coding (array, fixed-type)
                 + (Coding)
@@ -3953,6 +3953,45 @@ http code| processing method | Client recommendations
         + meta (Response__Meta)
             + code: 202 (number)
         + data (`Job`)
+
+# Group External
+
+## Composition [/gen/comp]
+
+### SOAP Get Actual Access Status for Drivers [POST /secret]
+
++ Request (application/xml)
+    + Headers
+        SOAPAction: "http://example.com/GetUser"
+        Content-Type: text/xml; charset=utf-8
+
+    + Body
+        <?xml version="1.0" encoding="utf-8"?>
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                xmlns:urn="http://example.com/">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <urn:GetUser>
+                        <urn:UserID>12345</urn:UserID>
+                    </urn:GetUser>
+                </soapenv:Body>
+        </soapenv:Envelope>
+
++ Response 200 (application/xml)
+    + Body
+        <?xml version="1.0" encoding="utf-8"?>
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+                <soapenv:Body>
+                    <GetUserResponse xmlns="http://example.com/">
+                        <User>
+                            <ID>12345</ID>
+                            <Name>John Doe</Name>
+                        </User>
+                    </GetUserResponse>
+                </soapenv:Body>
+        </soapenv:Envelope>
+
+## DGC [/gen/comp]
 
 # Data Structures
 
@@ -11185,3 +11224,4 @@ http code| processing method | Client recommendations
 + `dosage_instruction` (array, required, fixed-type)
     + (Dosage_Instruction)
 + include `MR_MRR_additional_fields`
+
