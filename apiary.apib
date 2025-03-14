@@ -1351,18 +1351,62 @@ Primary license must be updated with `Create or Update Legal Entity` method.
 
 # Group Personal
 
-## Persons [/personal/persons]
-
-### Get Person [GET]
+## Person [/personal/person]
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        |
-Scope              | legal_entity:read
+ESOZ ENT ID        | ENT-050
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17359437910/Person">Person</a>
+
+### Search for a Person [GET /api/persons{?first_name,last_name,second_name,birth_date,tax_id,phone_number,birth_place,birth_certificate,page,page_size}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-010-001-003-0360
+Scope              | person:read
 Auth               | yes
-Link to Confluence | 
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570234423/REST+API+Search+for+a+person">Search for a Person</a>
+
+### Search for a Person [GET /api/persons{?first_name,last_name,second_name,birth_date,tax_id,phone_number,birth_place,birth_certificate,page,page_size}]
+
+This method allows to search for a Person (MPI) without disclosing personal data.
+Method returns only **requested** parameters, birth place and second name in addition for manual identification on MSP side.
+Block `merged_persons` will be deprecated from response and endpoint `Search Person's merged persons` has information abount all merged persons which are related to this person.
+
++ Parameters
+    + first_name: Петро (string, required)
+    + last_name: Іванов (string, required)
+    + second_name: Миколайович (string, optional)
+    + birth_date: `1991-08-19` (string, required) - Complete date format
+    + tax_id: 3126509816 (string, optional)
+    + phone_number: `+380508887700` (string, optional)
+    + `birth_certificate`: 123456 (string, optional) - birth_certificate is optional parameter for search
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
+    + Attributes (`Response__Process_OK`)
+        + data (array)
+            + (object)
+                + include (`Person_Short`)
+                + merged_persons (array, required)
+                    + (object)
+                        + id: `57e30ea3-16f1-4f8e-adcd-1a05e99e2d22` (string, optional) - identifier of the relation of persons who are compared during the deduplication process
+                        + inserted_at: `2019-05-08T15:34:00Z` (string, optional)
+                        + merge_person_id: `bdadc2a7-7283-4f24-bc99-8d8d9808af80` (string, optional) - identifier of a person who is recognized as a duplicate and subsequently deactivated
+                        + person_id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - identifier of the person who as a result of the deduplication is recognized as true and subsequently left active
+                        + updated_at: `2019-05-08T15:34:00Z` (string, optional)
+
++ Response 403 (application/json)
+    + Attributes (`Response_Error`)
+        + meta (Response__Meta, fixed-type)
+            + code: 403 (number)
+        + error (Response__Error, fixed-type)
+            + type: `too_many_results`
+            + message: `This API method returns only exact match results, please retry with more specific search result` (string)
 
 ## Prepersons [/personal/prepersons]
 
@@ -11225,3 +11269,1136 @@ http code| processing method | Client recommendations
     + (Dosage_Instruction)
 + include `MR_MRR_additional_fields`
 
+## Persons
+### `Person`
++ first_name: Петро (string, required)
++ last_name: Іванов (string, required)
++ second_name: Миколайович (string, optional)
++ birth_date: `1991-08-19` (string, required)
++ birth_country: `Україна` (string, required)
++ birth_settlement: `Вінниця` (string, required)
++ gender: MALE, FEMALE (enum[string], required)
++ email: email@example.com (string, optional)
++ tax_id: 3126509816 (string, optional)
++ secret: secret (string, required)
++ documents (array[`Document`], required)
++ addresses (array[`Address`], required)
++ phones (array[`Phone`], optional)
++ `authentication_methods` (array[`Authentication_Method`], required)
++ preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
+    - email
+    - phone
+
+### `Person_v2`
++ id: `13001c60-45a0-4b5a-b425-9505e1de18bd` (string, optional)
++ first_name: Петро (string, required)
++ last_name: Іванов (string, required)
++ second_name: Миколайович (string, optional)
++ birth_date: `1991-08-19` (string, required)
++ birth_country: `Україна` (string, required)
++ birth_settlement: `Вінниця` (string, required)
++ gender: MALE, FEMALE (enum[string], required)
++ email: email@example.com (string, optional)
++ tax_id: 3126509816 (string, optional)
++ secret: secret (string, required)
++ documents (array[`Document`], required)
++ addresses (array[`Address`], required)
++ phones (array[`Phone`], optional)
++ `authentication_methods` (array[`Authentication_Method_Patient_Request`], required)
++ preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
+    - email
+    - phone
+    
+
+### `Person_for_update`
++ id: `14b8f6fa-dc59-4e86-9bbd-dfb35a4b1713` (string, required)
++ first_name: Петро (string, required)
++ last_name: Іванов (string, required)
++ second_name: Миколайович (string, optional)
++ birth_date: `1991-08-19` (string, required)
++ birth_country: `Україна` (string, required)
++ birth_settlement: `Вінниця` (string, required)
++ gender: MALE, FEMALE (enum[string], required)
++ email: email@example.com (string, optional)
++ tax_id: 3126509816 (string, optional)
++ secret: secret (string, required)
++ documents (array[`Document`], required)
++ addresses (array[`Address`], required)
++ phones (array[`Phone`], optional)
++ preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
+    - email
+    - phone
+    
+
+### `Confidant_Person`
++ relation_type: PRIMARY (enum, required)
+    - PRIMARY
+    - SECONDARY
++ first_name: Петро (string, required)
++ last_name: Іванов (string, required)
++ second_name: Миколайович (string, optional)
++ birth_date: `1991-08-19` (string, required)
++ birth_country: `Україна` (string, required)
++ birth_settlement: `Вінниця` (string, required)
++ gender: MALE, FEMALE (enum[string], required)
++ email: confidant_person@example.com (string, optional)
++ tax_id: 3126509816 (string, optional)
++ secret: `secret` (string, required)
++ unzr: `19900101-00099` (string, optional)
++ preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
+    - email
+    - phone
++ documents_person (array[`Document`], required)
++ documents_relationship (array[`RelationshipDocument`], required)
++ phones (array[`Phone`], optional)
+
+### `Confidant_Person_v2`
++ relation_type: PRIMARY (enum, required)
+    - PRIMARY
+    - SECONDARY
++ first_name: Петро (string, required)
++ last_name: Іванов (string, required)
++ second_name: Миколайович (string, optional)
++ birth_date: `1972-10-26` (string, required)
++ birth_country: `Україна` (string, required)
++ birth_settlement: `Вінниця` (string, required)
++ gender: MALE, FEMALE (enum[string], required)
++ tax_id: 2659719350 (string, optional)
++ secret: `secret` (string, required)
++ unzr: `19900101-00099` (string, optional)
++ preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
+    - email
+    - phone
++ documents_person (array[`Document`], required)
++ documents_relationship (array[`RelationshipDocument`], required)
++ phones (array[`Phone`], optional)
++ email: emaill@example.com (string, optional)
+
+### `Confidant_Person_v3`
++ person_id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional)
++ relation_type: PRIMARY (enum, required)
+    - PRIMARY
+    - SECONDARY
++ documents_relationship (array[`RelationshipDocument`], required)
++ first_name: Петро (string, optional)
++ last_name: Іванов (string, optional)
++ second_name: Миколайович (string, optional)
++ birth_date: `1972-10-26` (string, optional)
++ birth_country: `Україна` (string, optional)
++ birth_settlement: `Вінниця` (string, optional)
++ gender: MALE, FEMALE (enum[string], optional)
++ tax_id: 2659719350 (string, optional)
++ secret: `secret` (string, optional)
++ unzr: `19900101-00099` (string, optional)
++ preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
+    - email
+    - phone
++ documents_person (array[`Document`], optional)
++ phones (array[`Phone`], optional)
++ email: emaill@example.com (string, optional)
+
+### `Confidant_Person_PIS`
++ person_id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ documents_relationship (array[`RelationshipDocument`], required)
+
+### `Confidant_Person_Masked`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - confidant person relationship identifier
++ active_to: `2025-08-19` (string, optional) - the date when confidant person relationship is active to
++ documents_relationship (array, required)
+    + (object)
+        + type: BIRTH_CERTIFICATE (string, required) - `Dictionary DOCUMENT_RELATIONSHIP_TYPE`
+        + number: ******18 (string, required) - confidant person relationship document issue number, masked
++ relationship_verification_details (object, required)
+    + `verification_status`: `VERIFICATION_NEEDED` (string, required) - status of relationship verification according to `PERSONS_RELATIONSHIP_VERIFICATION_STATUSES` dictionary
+    + `verification_reason`: `MANUAL_CREATED_BY_DOCTOR` (string, required) - how current relationship verification status has been set according to `PERSONS_RELATIONSHIP_VERIFICATION_STATUSES` dictionary
+    + `verification_comment`: `Підтверджено на підставі свідоцтва про народження` (string, optional) - Relationship verification status description set by NHS or Doctor
++ confidant_person (object, required)
+    + person_id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - confidant person identifier
+    + name: Петров А.А. (string, required) - confidant person name, masked
+    + gender: MALE, FEMALE (enum[string], optional)
+    + tax_id: ******50 (string, optional) - confidant person tax id, masked
+    + no_tax_id: false (boolean, required) - fact of declining tax_id
+    + unzr: `**********99` (string, optional) - unzr (if exists), masked
+    + documents_person (array)
+        + (object)
+            + type: PASSPORT (string, required) - `Dictionary DOCUMENT_TYPE`
+            + number: ******18 (string, required) - confidant person document issue number, masked
+    + phones (array)
+        + (object)
+            + type: MOBILE (string, required) - `Dictionary PHONE_TYPE` type of phone Land Line or Mobile. At least one of type must be present. Each type can be represented only once.
+            + number: +38093*****85 (string, required) - confidant person phone number, masked
+
+### `Create_Confidant_Person_request`
++ confidant_person_id: `7b100a9c-daaa-490e-b88d-2a911059b055` (string, required) - identifier of person who will become confidant
++ documents_relationship (array, required)
+    + (object)
+        + type: DEPRIVATION_OF_PARENTAL_RIGHTS (string, required) - `Dictionary DOCUMENT_RELATIONSHIP_TYPE`
+        + number: АА120518 (string, required) - document issue number
+        + issued_by: `Рокитнянським РВ ГУ МВС Київської області` (string, required) - authority which issued the document
+        + issued_at: `2017-02-28` (string, required) - the date when document was issued
+        + active_to: `2025-08-19` (string, optional) - the date then period of document validity ends.
+
+### `Deactivate_Confidant_Person_request`
++ confidant_person_relationship (object, required)
+    + id: `7b100a9c-daaa-490e-b88d-2a911059b055` (string, required) - identifier of person relationship that will be deactivated
+    + documents_relationship (array, required)
+        + (object)
+            + type: DEPRIVATION_OF_PARENTAL_RIGHTS (string, required) - `Dictionary DOCUMENT_RELATIONSHIP_TYPE`
+            + number: АА120518 (string, required) - document issue number
+            + issued_by: `Рокитнянським РВ ГУ МВС Київської області` (string, required) - authority which issued the document
+            + issued_at: `2017-02-28` (string, required) - the date when document was issued
++ authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of person's auth method
+
+### `Emergency_Contact`
++ first_name: Петро (string, required)
++ last_name: Іванов (string, required)
++ second_name: Миколайович (string, optional)
++ phones (array[`Phone`], required)
+
+### `Person_Request`
++ include `Person`
++ emergency_contact (object, required)
+    + include `Emergency_Contact`
++ `confidant_person` (array[`Confidant_Person`], optional) - Should be set if this Person is disabled, underage, etc.
+
+### `Person_Full`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ Include Person_Request
++ confident_persons (array[`Person`])  - Should be set if this Person is disabled, underage, etc.
++ is_active: true (boolean, required)
++ merged_ids (array)
+    + (object)
+        + id: `7bca069f-21e4-4546-90cf-b65e3f39d93d` (string, required)
++ inserted_at: `2017-03-02T10:45:16.000Z` (string, optional)
++ updated_at: `2017-03-02T10:45:16.000Z` (string, optional)
+
+### `Person_Minimal`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ first_name: Петро (string, required)
++ last_name: Іванов (string, required)
++ second_name: Миколайович (string, optional)
+
+### `Person_Minimal_Declaration_List`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ first_name: Петро (string, required)
++ last_name: Іванов (string, required)
++ second_name: Миколайович (string, optional)
++ birth_date: 1991-08-19 (string, required)
++ `verification_status`: `NOT_VERIFIED` (string, required) - Search declarations by person verification status(according to `PERSON_VERIFICATION_STATUSES` dictionary)
+
+### `Person_Minimal_Declaration_Request`
++ first_name: Петро (string, optional)
++ last_name: Іванов (string, optional)
++ second_name: Миколайович (string, optional)
++ id: `9402935f-39bf-4636-a61e-5fe3227b8d39`(string, optional)
+
+### `Person_Minimal_Contract`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ party (object)
+    + first_name: Петро (string, required)
+    + last_name: Іванов (string, required)
+    + second_name: Миколайович (string, optional)
+
+### `Person_Short`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ first_name: Петро (string, required)
++ last_name: Іванов (string, required)
++ second_name: Миколайович (string, optional)
++ birth_date: `1991-08-19` (string, required) - ISO Datetime.
++ gender (enum, required)
+    - FEMALE
+    - MALE
++ tax_id: 3126509816 (string, optional)
++ phones (array[`Phone`], optional)
++ birth_settlement: Вінниця (string, required)
++ birth_country: Україна (string, required) - країна народження
+
+### `Person_Short_Declaration`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ first_name: Петро (string, required)
++ last_name: Іванов (string, required)
++ second_name: Миколайович (string, optional)
++ birth_date: `1991-08-19` (string, required) - ISO Datetime.
++ gender (enum, required)
+    - FEMALE
+    - MALE
++ tax_id: 3126509816 (string, optional)
++ phones (array[`Phone`], optional)
++ birth_settlement: Вінниця (string, required)
++ birth_country: Україна (string, required) - країна народження
++ `verification_status`: `NOT_VERIFIED` (string, required)
++ `emergency_contact` (Emergency_Contact, required)
++ `confidant_person` (array[`Confidant_Person`], optional) - Should be set if this Person is disabled, underage, etc
+
+### `Authentication_Method`
++ type (enum, required)
+    - OTP
+    - OFFLINE
+    - NA
++ phone_number: `+38093*****85` (string, optional)
+
+### `Authentication_Method_for_request`
++ type (enum, required)
+    - OTP
+    - OFFLINE
++ phone_number: `+38093*****81` (string, optional)
+
+
+### `Authentication_Method_Patient_Request`
++ type (enum, required)
+    - THIRD_PERSON
+    - OTP
+    - OFFLINE
+    - NA
++ phone_number: `+380508887700` (string, optional) - required for type = OTP
++ value: `c282f8a9-e709-40aa-94b4-dde1402bf4b6` (string, optional) - requered for type = THIRD_PERSON
++ alias: `husband` (string, optional) - required it type = THIRD_PERSON,  and optional for type = OTP or OFFLINE
+
+### `Authentication_Methods_Patient_Response`
+- One of
+    + object()
+        + type (enum, required)
+            - OTP
+            - OFFLINE
+            - NA
+        + phone_number: `+38093*****85` (string, optional)
+    + object()
+        + type: THIRD_PERSON
+        + alias: `husband` (string, required)
+        + authentication_reference (object, optional)
+            + type (enum, required)
+                - OTP
+                - OFFLINE
+            + phone_number: `+38093*****91` (string, optional)
+
+### `Authentication_Method_Patient_Response`
++ type (enum, required)
+    - OTP
+    - THIRD_PERSON
+    - OFFLINE
+    - NA
++ phone_number: `+380508887700` (string, optional)
++ alias: `husband` (string, optional)
+
+### `Person_auth_methods`
+
++ id: `b94893f5-b66b-4431-b023-d5b5c037caef` (string, required)
++ type (enum, required)
+    - THIRD_PERSON
++ value: `34d4aca0-ee15-4d2d-9ab8-336e5ba1f9c7` (string, optional) - mpi identifier of `third_person`. It s required for type = `THIRD_PERSON`
++ alias: `husband` (string, optional)
++ ended_at: `2020-01-10 18:23:34.217335` (string, optional) - ISO Datetime
++ started_at: `2020-01-01 18:23:34.217335` (string, optional) - ISO Datetime
++ is_active: true (boolean, optional)
++ person_id: `50320ee5-2bca-472c-a1a0-28e2e003ec2a` (string, optional)
++ confidant_person (object, optional)
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - confidant person identifier
+    + name: Петров А.А. (string, required) - confidant person name, masked
+    + gender: MALE, FEMALE (enum[string], optional)
+    + tax_id: ******50 (string, optional) - confidant person tax id, masked
+    + no_tax_id: false (boolean, required) - fact of declining tax_id
+    + unzr: `**********99` (string, optional) - unzr (if exists), masked
+    + documents_person (array)
+        + (object)
+            + type: PASSPORT (string, required) - `Dictionary DOCUMENT_TYPE`
+            + number: ******18 (string, required) - confidant person document issue number, masked
+    + phones (array)
+        + (object)
+            + type: MOBILE (string, required) - `Dictionary PHONE_TYPE` type of phone Land Line or Mobile. At least one of type must be present. Each type can be represented only once.
+            + number: +38093*****85 (string, required) - confidant person phone number, masked
++ inserted_at: `2021-11-09T00:00:00.000Z` (string, required) - ISO Datetime
++ updated_at: `2021-11-09T00:00:00.000Z` (string, optional) - ISO Datetime
++ inserted_by: `A65C8369-CE3A-44D6-839B-8856E3DC4CA3` (string, required)
++ updated_by: `A65C8369-CE3A-44D6-839B-8856E3DC4CA3` (string, optional)
+
+### `Person_auth_methods_v2`
+
++ id: `b84893f5-b66b-4431-b023-d5b5c037caef` (string, required)
++ type (enum, required)
+    - OTP
++ phone_number: `+38093*****85` (string, optional) - it's required for type = OTP
++ ended_at: `2020-01-10 18:23:34.217335` (string, optional) - ISO Datetime
++ started_at: `2020-01-01 18:23:34.217335` (string, optional) - ISO Datetime
++ is_active: true (boolean, optional)
++ inserted_by: `A65C8369-CE3A-44D6-839B-8856E3DC4CA3` (string, required)
++ updated_by: `A65C8369-CE3A-44D6-839B-8856E3DC4CA3` (string, optional)
++ person_id: `50320ee5-2bca-472c-a1a0-28e2e003ec2a` (string, optional)
++ inserted_at: `2021-11-09T00:00:00.000Z` (string, required) - ISO Datetime
++ updated_at: `2021-11-09T00:00:00.000Z` (string, optional) - ISO Datetime
+
+### `cabinet_person_response`
++ include `Person`
++ unzr: `19900101-00099` (string, optional)
++ `emergency_contact`(`Emergency_Contact`)
++ `process_disclosure_data_consent`: true (boolean, required)
++ `verification`(`Person_Verification_Details`)
+
+### `Authentication_methods_request`
+  - One of
+    + object()
+        + action: DEACTIVATE (string, required)
+        + authentication_method(object)
+            + id: `7b100a9c-daaa-490e-b88d-2a911059b055` (string, required)
+    + object()
+        + action: INSERT (string, required)
+        + authentication_method(object)
+            + type(enum, required)
+                - THIRD_PERSON
+                - OTP
+                - OFFLINE
+            + phone_number: `+380976549872` (string, optional)
+            + value: `7b100a9c-daaa-490e-b88d-2a911059b0d2` (string, optional) - identifier of active person. It's required when type= THIRd_PERSON 
+            + alias: `husband` (string, optional) - it's required id type = THIRD_PERSON
+    + object()
+        + action: UPDATE (string, required)
+        + authentication_method(object)
+            + id: `7b100a9c-daaa-490e-b88d-2a911059b055` (string, required)
+            + alias: `wife` (string, optional)
+
+### `Justification_Response`
++ id: `b94893f5-b66b-4431-b023-d5b5c037caef` (string, required) - identifier of justification in the system
++ expires_at: `2021-11-10T18:23:34.217Z` (string, required) - date and time when justification expires, ISO Datetime.
++ consumer(object, required)
+    + client_id: `b94893f5-b66b-4431-b023-d5b5c037cae1` (string, required) - identifier of the client which consumed patient's data
+    + client_name: `Національна служба здоров'я України` (string, required) - client's name
++ reason: `Просмотр медичних даних пацієнта Олександрова Олександра Володимировича 12.12.2012 р.н згідно судового рішення №АБ-23234234-434` (string, required) - reason why patient's data has been monitored by consumer
++ `reason_type`(Codeable_Concept,required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/justification_reason_types` (string, required)
+            + code: `default` (string, required)
+    + text: `Інше` (string, optional)
++ status: `active` (enum, required) - justification status
+    - active
+    - terminated
++ inserted_at: `2021-11-09T00:00:00.000Z` (string, required) - ISO Datetime.
++ updated_at: `2021-11-09T00:00:00.000Z` (string, required) - ISO Datetime.
+
+### `Person_Verification_Details`
++ `verification_status`: `NOT_VERIFIED` (string, required) - status of person verification according to `PERSON_VERIFICATION_STATUSES` dictionary
++ `details` (object)
+    + `drfo` (object)
+        + `verification_status`: `NOT_VERIFIED` (string, required) - status of person DRFO verification according to `PERSON_VERIFICATION_STATUSES` dictionary
+        + `verification_reason`: `AUTO` (string, required) - how current DRFO verification status has been set according to `PERSON_VERIFICATION_STATUS_REASONS` dictionary
+        + `result`: 12 (number, optional) - result of person DRFO synchronization according to `DRFO_RESULT` dictionary
+    + `dracs_death` (object)
+        + `verification_status`: `NOT_VERIFIED` (string, required) - status of person DRACS death verification according to `PERSON_VERIFICATION_STATUSES` dictionary
+        + `verification_reason`: `AUTO` (string, required) - how current DRACS death verification status has been set according to `PERSON_VERIFICATION_STATUS_REASONS` dictionary
+        + `verification_comment`: `Необхідно повторно підтвердити факт смерті у пацієнта` (string, optional) - DRACS death verification status description set by NHS or Doctor
+    + `nhs` (object)
+        + `verification_status`: `NOT_VERIFIED` (string, required) - status of person manual NHS verification according to `PERSON_VERIFICATION_STATUSES` dictionary
+        + `verification_reason`: `AUTO` (string, required) - how current manual NHS verification status has been set according to `PERSON_VERIFICATION_STATUS_REASONS` dictionary
+        + `verification_comment`: `Бракує даних паспорту пацієнта та його ІПН` (string, optional) - verification status description set by NHS in case NOT_VERIFIED
+    + `unzr` (object)
+        + `verification_status`: `NOT_VERIFIED` (string, required) - status of person UNZR verification according to `PERSON_VERIFICATION_STATUSES` dictionary
+        + `verification_reason`: `AUTO` (string, required) - how current UNZR verification status has been set according to `PERSON_VERIFICATION_STATUS_REASONS` dictionary
+        + `status`: 0 (number, optional) - status of the UNZR record in EIS MVS register for the person. It is set by synchronization according to `EIS_MVS_STATUS` dictionary
+    + `mvs_passport` (object)
+        + `verification_status`: `NOT_VERIFIED` (string, required) - status of MVS passport verification for the person according to `PERSON_VERIFICATION_STATUSES` dictionary
+        + `verification_reason`: `AUTO` (string, required) - how current MVS passport verification status has been set according to `PERSON_VERIFICATION_STATUS_REASONS` dictionary
+        + `status`: 1 (number, optional) - status of the record in EIS MVS register for the passport document. It is set by synchronization according to `EIS_MVS_STATUS` dictionary
+    + `dms_passport` (object)
+        + `verification_status`: `NOT_VERIFIED` (string, required) - status of DMS passport verification for the person according to `PERSON_VERIFICATION_STATUSES` dictionary
+        + `verification_reason`: `AUTO` (string, required) - how current DMS passport verification status has been set according to `PERSON_VERIFICATION_STATUS_REASONS` dictionary
+        + `status`: 1 (number, optional) - status of the record in EIS MVS register for the passport document. It is set by synchronization according to `EIS_MVS_STATUS` dictionary
+    + `dracs_birth` (object)
+        + `verification_status`: `NOT_VERIFIED` (string, required) - status of person DRACS birth verification according to `PERSON_VERIFICATION_STATUSES` dictionary
+        + `verification_reason`: `AUTO_ONLINE` (string, required) - how current DRACS birth verification status has been set according to `PERSON_VERIFICATION_STATUS_REASONS` dictionary
+        + `verification_comment`: `Необхідно повторно підтвердити дані свідоцтва про народження пацієнта` (string, optional) - DRACS birth verification status description set by NHS
+    + `dracs_name_change` (object)
+       + `verification_status`: `VERIFIED` (string, required) - Person DRACS name change verification status according to `PERSON_VERIFICATION_STATUSES` dictionary.
+       + `verification_reason`: `MANUAL_COMFIRMED` (string, required) - Verification reason according to `PERSON_VERIFICATION_STATUS_REASONS` dictionary.
+       + `verification_comment`: `Пацієнт не замінював ПІБ` (string, optional) - Verification comment
+    + `legal_capacity` (object)
+       + `verification_status`: `VERIFICATION_NOT_NEEDED` (string, required) - Person Legal capacity verification status according to `PERSON_VERIFICATION_STATUSES` dictionary.
+       + `verification_reason`: `AUTO_DATA_ABSENT` (string, required) - Verification reason according to `PERSON_VERIFICATION_STATUS_REASONS` dictionary.
+
+### `PersonVerification`
++ person_id: `5a4f839d-3c1d-40b6-93d2-4ad917f03d7e` (string, required) - Unique identifier of the person.
++ `verification_status`: `NOT_VERIFIED` (string, required) - status of person verification according to `PERSON_VERIFICATION_STATUSES` dictionary
++ `details` (object)
+    + `drfo` (object)
+        + `verification_status`: `NOT_VERIFIED` (string, required) - status of person DRFO verification according to `PERSON_VERIFICATION_STATUSES` dictionary
+        + `verification_reason`: `AUTO` (string, required) - how current DRFO verification status has been set according to `PERSON_VERIFICATION_STATUS_REASONS` dictionary
+        + `result`: 12 (number, optional) - result of person DRFO synchronization according to `DRFO_RESULT` dictionary
+        + `synced_at`: `2025-11-11 11:11:11` (string, required) - date of person DRFO synchronization
+        + `unverified_at`: `2024-05-17 02:03:34` (string, required) - date of person DRFO unverified
+    + `dracs_death` (object)
+        + `verification_status`: `NOT_VERIFIED` (string, required) - status of person DRACS death verification according to `PERSON_VERIFICATION_STATUSES` dictionary
+        + `verification_reason`: `AUTO` (string, required) - how current DRACS death verification status has been set according to `PERSON_VERIFICATION_STATUS_REASONS` dictionary
+        + `verification_comment`: `Необхідно повторно підтвердити факт смерті у пацієнта` (string, optional) - DRACS death verification status description set by NHS or Doctor
+        + `unverified_at`: `2024-05-17 02:03:34` (string, required) - date of person DRACS death unverified
+    + `nhs` (object)
+        + `verification_status`: `NOT_VERIFIED` (string, required) - status of person manual NHS verification according to `PERSON_VERIFICATION_STATUSES` dictionary
+        + `verification_reason`: `AUTO` (string, required) - how current manual NHS verification status has been set according to `PERSON_VERIFICATION_STATUS_REASONS` dictionary
+        + `verification_comment`: `Бракує даних паспорту пацієнта та його ІПН` (string, optional) - verification status description set by NHS in case NOT_VERIFIED
+        + `unverified_at`: `2024-05-17 02:03:34` (string, required) - date of person NHS unverified
+    + `unzr` (object)
+        + `verification_status`: `NOT_VERIFIED` (string, required) - status of person UNZR verification according to `PERSON_VERIFICATION_STATUSES` dictionary
+        + `verification_reason`: `AUTO` (string, required) - how current UNZR verification status has been set according to `PERSON_VERIFICATION_STATUS_REASONS` dictionary
+        + `status`: 0 (number, optional) - status of the UNZR record in EIS MVS register for the person. It is set by synchronization according to `EIS_MVS_STATUS` dictionary
+        + `synced_at`: `2025-11-11 11:11:11` (string, required) - date of person UNZR synchronization
+        + `unverified_at`: `2024-05-17 02:03:34` (string, required) - date of person UNZR unverified
+    + `mvs_passport` (object)
+        + `verification_status`: `NOT_VERIFIED` (string, required) - status of MVS passport verification for the person according to `PERSON_VERIFICATION_STATUSES` dictionary
+        + `verification_reason`: `AUTO` (string, required) - how current MVS passport verification status has been set according to `PERSON_VERIFICATION_STATUS_REASONS` dictionary
+        + `status`: 1 (number, optional) - status of the record in EIS MVS register for the passport document. It is set by synchronization according to `EIS_MVS_STATUS` dictionary
+        + `synced_at`: `2025-11-11 11:11:11` (string, required) - date of person EIS MVS synchronization
+        + `unverified_at`: `2024-05-17 02:03:34` (string, required) - date of person EIS MVS unverified
+    + `dms_passport` (object)
+        + `verification_status`: `NOT_VERIFIED` (string, required) - status of DMS passport verification for the person according to `PERSON_VERIFICATION_STATUSES` dictionary
+        + `verification_reason`: `AUTO` (string, required) - how current DMS passport verification status has been set according to `PERSON_VERIFICATION_STATUS_REASONS` dictionary
+        + `status`: 1 (number, optional) - status of the record in EIS MVS register for the passport document. It is set by synchronization according to `EIS_MVS_STATUS` dictionary
+        + `synced_at`: `2025-11-11 11:11:11` (string, required) - date of person DMS synchronization
+        + `unverified_at`: `2024-05-17 02:03:34` (string, required) - date of person DMS unverified
+    + `dracs_birth` (object)
+        + `verification_status`: `NOT_VERIFIED` (string, required) - status of person DRACS birth verification according to `PERSON_VERIFICATION_STATUSES` dictionary
+        + `verification_reason`: `AUTO_ONLINE` (string, required) - how current DRACS birth verification status has been set according to `PERSON_VERIFICATION_STATUS_REASONS` dictionary
+        + `verification_comment`: `Необхідно повторно підтвердити дані свідоцтва про народження пацієнта` (string, optional) - DRACS birth verification status description set by NHS
+        + `synced_at`: `2025-11-11 11:11:11` (string, required) - date of person DRACS birth synchronization
+        + `unverified_at`: `2024-05-17 02:03:34` (string, required) - date of person DRACS birth unverified
+    + `dracs_name_change` (object)
+       + `verification_status`: `VERIFIED` (string, required) - Person DRACS name change verification status according to `PERSON_VERIFICATION_STATUSES` dictionary.
+       + `verification_reason`: `MANUAL_COMFIRMED` (string, required) - Verification reason according to `PERSON_VERIFICATION_STATUS_REASONS` dictionary.
+       + `verification_comment`: `Пацієнт не замінював ПІБ` (string, optional) - Verification comment
+    + `legal_capacity` (object)
+       + `verification_status`: `VERIFICATION_NOT_NEEDED` (string, required) - Person Legal capacity verification status according to `PERSON_VERIFICATION_STATUSES` dictionary.
+       + `verification_reason`: `AUTO_DATA_ABSENT` (string, required) - Verification reason according to `PERSON_VERIFICATION_STATUS_REASONS` dictionary.
+       + `unverified_at`: `2024-05-17 02:03:34` (string, required) - date of person Legal capacity birth unverified
++ person_status: `active` (string) - Person's status (default: `active`)
++ person_updated_at: `2024-12-01T12:34:56Z` (string, required) - Date and time when the person was last updated.
++ declaration_number: `0000-12H4-245D` (string, required) - Declaration number associated with the person.
++ declaration_status: `active` (string) - Declaration status (default: `active`).
+
+## `Merge_Candidates`
+### `Merge_Candidate`
++ id: `8aa4d353-a58f-45f6-b5ce-a89a9cc39391` (string, optional) - Unique record identifier
++ person_id: `50320ee5-2bca-472c-a1a0-28e2e003ec2a` (string, optional) - Merge candidate identifier
++ `master_person_id`: `cb553981-4b7f-45ec-8f73-f77faf2dcb22` (string, optional) - Master person identifier
++ status: NEW (enum, optional) - Record status
+        - NEW
+        - MERGED
++ inserted_at: `1991-08-19T00:00:00.000Z` (string, required) - ISO Datetime.
++ updated_at: `1991-08-19T00:00:00.000Z` (string, required) - ISO Datetime.
+
+
+## DeclarationRequests
+### `crud_Declaration_request_get`
++ id: `73FF38F0-A873-4DB4-A47A-CC0F3D7A6D6A` (string, required)
++ data: `json structure` (string, required)
++ status: `pending` (string, required)
++ inserted_by: `A65C8369-CE3A-44D6-839B-8856E3DC4CA3` (string, required)
++ inserted_at: `2005-10-30 10:45` (string, required) - timestamp
++ updated_at: `2005-10-30 10:45` (string, required) - timestamp
+
+### `declaration_request_patch`
++ id: `73FF38F0-A873-4DB4-A47A-CC0F3D7A6D6A` (string, required)
++ status: `pending` (string, required)
+
+### `media_content`
++ type: `PASSPORT` (string, required)
++ url: `https://storage.ehealth.world` (string, required)
+
+### `contract_media_content`
++ type: `SIGNED_CONTENT` (string, required)
++ url: `https://storage.ehealth.world` (string, required)
+
+## Declarations
+### Declaration
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - id of the signed document stored on the Media content storage
++ person_id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ employee_id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ division_id: `d290f1ee-6c54-4b01-90e6-d701748f0851`m (string, required)
++ `legal_entity_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851`m (string, required)
++ scope (enum, required)
+    - family_doctor
++ start_date: `2017-03-02` (string, required)
++ end_date: `2017-03-02` (string, required)
++ signed_at: `2017-03-02T10:45:16.000Z` (string, required)
++ status (enum, optional)
+    - active
+    - closed
+
+### `crud_Declaration_patch`
++ status (enum, optional)
+    - active
+    - closed
+
+### `crud_Declaration_get`
++ include `Declaration`
++ inserted_at: `1991-08-19T00:00:00.000Z` (string, required)
++ inserted_by: `userid` (string, required)
++ updated_at: `1991-08-19T00:00:00.000Z` (string, required)
++ updated_by: `userid` (string, required)
+
+### `Declaration_Request_Public`
++ person(`Person_Request`, required) - Object that described a Patient. Confidant person should be set for disabled persons, underage persons, etc.
+    + person_id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - person id, that should be changed.
+    + patient_signed: false (boolean, required) - Person's evidence of sign the declaration request
+    + `process_disclosure_data_consent`: true (boolean, required) - Person's evidence of information about consent to data disclosure
++ `employee_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Employee ID with `type=DOCTOR` selected from available Employees as a third contract party.
++ division_id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Registered Medical Service Provider Division identifier.
++ scope (enum, required)
+    - family_doctor
++ overlimit: false (boolean, optional) - when doctor needs more declaration then in declaration_limit is, overlimit should be true
+
+### `Declaration_Request_Public_v2`
++ person (object, required) - Object that described a Patient. Confidant person should be set for disabled persons, underage persons, etc.
+    + id: `3b1d9e46-1c47-4ce8-89f9-15658f77d784` (string, optional) - person id, that should be changed.
+    + first_name: Петро (string, required)
+    + last_name: Іванов (string, required)
+    + second_name: Миколайович (string, optional)
+    + birth_date: `1991-08-19` (string, required)
+    + birth_country: `Україна` (string, required)
+    + birth_settlement: `Вінниця` (string, required)
+    + gender: MALE, FEMALE (enum[string], required)
+    + email: email@example.com (string, optional)
+    + tax_id: 3126509816 (string, optional)
+    + secret: secret (string, required)
+    + documents (array, required)
+        + (object)
+            + type: PASSPORT (string, required) - `Dictionary DOCUMENT_TYPE`
+            + number: АА120518 (string, required) - document issue number
+            + issued_by: `Рокитнянським РВ ГУ МВС Київської області` (string, required) - authority which issued the document
+            + issued_at: `2017-02-28` (string, required) - the date when document was issued
+            + expiration_date: `2027-02-28` (string, optional) - the date when document expired, is necessery for those documents which has this date, ex, Temporary certificate, etc.
+    + addresses (array[`Address`], required)
+    + phones (array[`Phone`], optional)
+    + `authentication_methods` (array[`Authentication_Method`], required)
+    + preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
+        - email
+        - phone
+    + `no_tax_id`: false (boolean, required) - fact of declining tax_id
+    + unzr: `19900101-00011` (string, optional) - the record number in the demographic register
+    + emergency_contact (object, required)
+        + include `Emergency_Contact`
+    + `confidant_person` (array[`Confidant_Person_v2`], optional) - Should be set if this Person is disabled, underage, etc.
+    + patient_signed: false (boolean, required) - Person's evidence of sign the declaration request
+    + `process_disclosure_data_consent`: true (boolean, required) - Person's evidence of information about consent to data disclosure
++ `employee_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Employee ID with `type=DOCTOR` selected from available Employees as a third contract party.
++ division_id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Registered Medical Service Provider Division identifier.
++ scope (enum, required)
+    - family_doctor
++ overlimit: false (boolean, optional) - when doctor needs more declaration then in declaration_limit is, overlimit should be true
+
+### `Declaration_Request_Public_Response`
++ start_date: `2017-03-02` (string, required) - Should be defined on the client side.
++ end_date: `2017-03-02` (string, required) - Will be defined on eHealth side if it's not set.
++ person(`Person_Request`, required) - Object that described a Patient. Confidant person should be set for disabled persons, underage persons, etc.
+    + patient_signed: false (boolean, required) - Person's evidence of sign the declaration request
+    + `process_disclosure_data_consent`: true (boolean, required) - Person's evidence of information about consent to data disclosure
++ scope (enum, required)
+    - family doctor
++ declaration_number: `0000-12H4-245D` (string, required) - unique number of declaration.
++ declaration_id: `8311ab82-e341-4da0-8a95-235ec9885e23` (string, required) - presetted id for future declaration
+
+### `Declaration_Request_Public_Response_v2`
++ start_date: `2017-03-02` (string, required) - Should be defined on the client side.
++ end_date: `2017-03-02` (string, required) - Will be defined on eHealth side if it's not set.
++ person (object, required) - Object that described a Patient. Confidant person should be set for disabled persons, underage persons, etc.
+    + include `Person`
+    + `no_tax_id`: false (boolean, required) - fact of declining tax_id
+    + unzr: `19900101-00011` (string, optional) - the record number in the demographic register
+    + emergency_contact (object, required)
+        + include `Emergency_Contact`
+    + `confidant_person` (array[`Confidant_Person_v2`], optional) - Should be set if this Person is disabled, underage, etc.
+    + patient_signed: false (boolean, required) - Person's evidence of sign the declaration request
+    + `process_disclosure_data_consent`: true (boolean, required) - Person's evidence of information about consent to data disclosure
++ scope (enum, required)
+    - family doctor
++ declaration_number: `0000-12H4-245D` (string, required) - unique number of declaration.
++ declaration_id: `8311ab82-e341-4da0-8a95-235ec9885e23` (string, required) - presetted id for future declaration
+
+### `Declaration_Request_Details_Public`
++ start_date: `2017-03-02` (string, required)
++ end_date: `2017-03-02` (string, required)
++ person(`Person_Request`, required)
+    + patient_signed: false (boolean, required) - Person's evidence of sign the declaration request
+    + `process_disclosure_data_consent`: true (boolean, required) - Person's evidence of information about consent to data disclosure
++ employee (`Employee_Minimal`)
++ `legal_entity` (`Medical_Service_Provider`)
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ division (`Division_Details`)
++ scope (enum, required)
+    - family doctor
++ overlimit: false (boolean, optional) - when doctor needs more declaration then in declaration_limit is, overlimit should be true
++ `declaration_request_id`: `74a6fae6-4207-4e03-a136-f2e70c6b0c02` (string, required)
+
+### `Declaration_Request_Online`
++ `person_id`: `4d0d790c-cbf1-44f5-ab21-ba8db67da161` (string, required) - Person ID
++ `employee_id`: `1a8b10ea-ba09-40f2-8f9e-55608e9208c6` (string, required) - Employee ID with `type=DOCTOR` selected from available Employees as a third contract party.
++ `division_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Registered Medical Service Provider Division identifier.
+
+### `Declaration_Request_Online_Response`
++ start_date: `2017-03-02` (string, required) - Should be defined on the client side.
++ end_date: `2017-03-02` (string, required) - Will be defined on eHealth side if it's not set.
++ person(object, required) - Object that described a Patient. Confidant person should be set for disabled persons, underage persons, etc.
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Person ID
++ overlimit: false (boolean, optional) - when doctor needs more declaration then in declaration_limit is, overlimit should be true
+
+### `Declaration_Request_Short`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - unique id of declaration
++ start_date: `2017-03-02` (string, required)
++ end_date: `2025-03-02` (string, required)
++ status (enum, required)
+    - active
+    - pending_verification
+    - terminated
++ person (Person_Minimal_Declaration_Request)
++ employee (`Employee_Minimal`)
++ `legal_entity` (`MSP_Short`)
++ division (`Division_Short_List`)
+
+### `Declaration_Response_Short_v3`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - unique id of declaration
++ start_date: `2017-03-02` (string, required)
++ end_date: `2025-03-02` (string, required)
++ status (enum, required)
+    - NEW
+    - APPROVED
+    - SIGNED
+    - REJECTED
+    - CANCELLED
++ `status_reason`: `not relevant` (string, optional) - `Dictionary DECLARATION_REQUEST_STATUS_REASON`
++ channel: `MIS` (enum, required) - channel where declaration request was originated
+    - MIS
+    - PIS
+    - CABINET
++ person_id: `4fa9cac7-8950-44db-9294-0daba56eed58` (string, optional) - unique id of person
++ employee_id: `60a797bb-43c5-463d-86ee-68e354cb626b` (string, required) - unique id of employee
++ division_id : `4c9c9c6e-5230-444d-8b65-7678da1c1ab3` (string, required) - unique id of dividion
++ `legal_entity_id` : `56b8bcd7-78b8-4ff7-8a60-a48e54a6ef57` (string, required) unique id of LE
++ authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of person's auth method
++ parent_declaration_id: `8c7753fc-a647-435f-8e43-4ff4546431f6` (string, optional) - identifier of parent declaration
++ `system_declaration_limit`: 900 (number, optional) - Current doctor's limit based on speciality_officio
++ `current_declaration_count`: 675 (number, optional) - Number of declarations assigned to doctor
+
+### `Declaration_short`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ start_date: `2017-03-02` (string, required)
++ end_date: `2017-03-02` (string, required)
++ signed_at: `2017-03-02T00:00:00.000Z` (string, required)
++ status (enum, required)
+    - active
+    - pending_verification
+    - terminated
++ scope (enum, required)
+    - family doctor
++ `declaration_request_id`: `74a6fae6-4207-4e03-a136-f2e70c6b0c02` (string, required)
++ person_id: `5fb57a5d-1457-430e-9678-c81cec72779f` (string, required)
++ `legal_entity_id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ employee_id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ division_id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ inserted_at: `2017-07-06T16:54:05.161571Z` (string, required)
++ is_active: true (boolean, required)
++ reason: `manual_employee` (string, optional)
++ reason_description: `Згідно постанови 1 від 10.01.2017` (string, optional)
+
+### `Declaration_short_v3`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ start_date: `2017-03-02` (string, required)
++ end_date: `2017-03-02` (string, required)
++ signed_at: `2017-03-02T00:00:00.000Z` (string, required)
++ status (enum, required)
+    - active
+    - pending_verification
+    - terminated
++ `declaration_request_id`: `74a6fae6-4207-4e03-a136-f2e70c6b0c02` (string, required)
++ person_id: `5fb57a5d-1457-430e-9678-c81cec72779f` (string, required)
++ `legal_entity_id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ employee_id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ division_id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ inserted_at: `2017-07-06T16:54:05.161571Z` (string, required)
++ is_active: true (boolean, required)
++ reason: `manual_employee` (string, optional)
++ reason_description: `Згідно постанови 1 від 10.01.2017` (string, optional)
+
+### `Declaration_Details`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ declaration_number: `0000-12H4-245D` (string, required) - unique number of declaration.
++ start_date: `2017-03-02` (string, required)
++ end_date: `2017-03-02` (string, required)
++ signed_at: `2017-03-02T00:00:00.000Z` (string, required)
++ person(`Person_Short_Declaration`)
++ employee (`Employee_Declaration_Short`)
++ division (`Division_Short`)
++ `legal_entity` (MSP_Details)
++ status (enum, required)
+    - active
+    - pending_verification
+    - terminated
++ scope (enum, optional)
+    - family_doctor
++ `declaration_request_id`: `74a6fae6-4207-4e03-a136-f2e70c6b0c02` (string, required)
++ inserted_at: `2017-03-02T10:45:16.000Z` (string, optional)
++ updated_at: `2017-03-02T10:45:16.000Z` (string, optional)
++ reason: `manual_employee` (string, optional)
++ reason_description: `Згідно постанови 1 від 10.01.2017` (string, optional)
+
+### `Declaration_Details_Cabinet`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ declaration_number: `0000-12H4-245D` (string, required) - unique number of declaration.
++ start_date: `2017-03-02` (string, required)
++ end_date: `2017-03-02` (string, required)
++ person (`Person_Short`)
+    + unzr: `19910819-00011` (string, optional) - the record number in the demographic register
+    + `emergency_contact` (`Emergency_Contact`, required)
+    + `confidant_person` (array[`Confidant_Person`], optional) - Should be set if this Person is disabled, underage, etc.
++ employee (`Employee_Declaration_Short`)
++ division (`Division_Details_Cabinet`)
++ `legal_entity` (MSP_Details)
++ status (enum, required)
+    - active
+    - pending_verification
+    - terminated
++ scope (enum, required)
+    - family_doctor
++ `declaration_request_id`: `74a6fae6-4207-4e03-a136-f2e70c6b0c02` (string, required)
++ content: `Declaration content` (string, required) - HTML document that MUST be shown to a end-user and signed by hes key. - Should be defined on the client side.
++ inserted_at: `2017-03-02T10:45:16.000Z` (string, optional)
++ updated_at: `2017-03-02T10:45:16.000Z` (string, optional)
+
+### `Declaration_Request_Details_Cabinet`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ declaration_number: `0000-12H4-245D` (string, required) - unique number of declaration.
++ start_date: `2017-03-02` (string, required)
++ end_date: `2017-03-02` (string, required)
++ seed: hash (string, required)
++ person_id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ person(`Person`)
+    + `emergency_contact` (`Emergency_Contact`, required)
+    + `confidant_person` (array[`Confidant_Person`], optional) - Should be set if this Person is disabled, underage, etc.
++ employee (Employee_Declaration_Short)
++ `legal_entity` (`MSP_Details`)
++ division (`Division_Details_Cabinet`)
++ status (enum, required)
+    - new
+    - approved
+    - signed
+    - expired
++ scope (enum, required)
+    - family_doctor
++ `declaration_id`: `74a6fae6-4207-4e03-a136-f2e70c6b0c02` (string, required)
++ content: `Declaration content` (string, required) - HTML document that MUST be shown to a end-user and signed by hes key. - Should be defined on the client side.
++ inserted_at: `2017-03-02T10:45:16.000Z` (string, optional)
++ updated_at: `2017-03-02T10:45:16.000Z` (string, optional)
++ channel: `CABINET` (enum, required) - channel that invoke declaration create service
+
+### `Declaration_list_cabinet`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - unique id of declaration
++ declaration_number: `0000-12H4-245D` (string, required) - unique number of declaration.
++ start_date: `2017-03-02` (string, required)
++ status (enum, required)
+    - active
+    - pending_verification
+    - terminated
++ person (Person_Minimal)
++ employee (`Employee_Minimal_cabinet`)
++ `legal_entity` (`MSP_Short`)
++ division (`Division_Short_List`)
+
+### `Declaration_requests_list_cabinet`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - unique id of declaration request
++ declaration_number: `0000-12H4-245D` (string, required) - unique number of declaration.
++ start_date: `2017-03-02` (string, required)
++ status (enum, required)
+    - new
+    - approved
+    - signed
+    - expired
++ person (Person_Minimal)
++ employee (`Employee_Minimal_cabinet`)
++ `legal_entity` (`MSP_Short`)
++ division (`Division_Short_List`)
+
+### `Declaration_Details_Public`
++ start_date: `2017-03-02` (string, required)
++ end_date: `2017-03-02` (string, required)
++ person(`Person_Request`, required)
+    + id: `5fb57a5d-1457-430e-9678-c81cec72779f` (string)
+    + patient_signed: false (boolean, required) - Person's evidence of sign the declaration request
+    + `process_disclosure_data_consent`: true (boolean, required) - Person's evidence of information about consent to data disclosure
+    + `legal_entity` (`Medical_Service_Provider`)
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ division (`Division_Details`)
++ scope (enum, required)
+    - family doctor
++ `declaration_request_id`: `74a6fae6-4207-4e03-a136-f2e70c6b0c02` (string, required)
+
+### `Decl_req_data_to_be_signed`
++ id: `b099f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+status: `APPROVED` (string, required)
++ declaration_number: `0000-12H4-245D` (string, required) - unique number of declaration.
++ declaration_id: `8311ab82-e341-4da0-8a95-235ec9885e23` (string, required) - presetted id for future declaration
++ start_date: `2017-03-02` (string, required) - Should be defined on the client side.
++ end_date: `2017-03-02` (string, required) - Will be defined on eHealth side if it's not set.
++ content: `Declaration content` (string, required) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
++ channel: `MIS` (enum, required) - channel that invoke declaration create service
++ person (object, required) - Object that described a Patient. Confidant person should be set for disabled persons, underage persons, etc.
+    + id: `5fb57a5d-1457-430e-9678-c81cec72779f` (string,required )
+    + include `Person_info_Public_DRv3`
+    + patient_signed: false (boolean, required) - Person's evidence of sign the declaration request
+    + `process_disclosure_data_consent`: true (boolean, required) - Person's evidence of information about consent to data disclosure
++ employee (`Employee_Minimal`, required)
++ `legal_entity` (`Medical_Service_Provider`, required)
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ division (`Division_Declaration`, required)
++ seed: hash (string, required) - Hash of previous block in declarations chain or other random component that should be signed with declaration.
++ authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of person's auth method
+
+
+
+
+### `Person_info_Public`
++ first_name: Петро (string, required)
++ last_name: Іванов (string, required)
++ second_name: Миколайович (string, optional)
++ birth_date: `2009-07-05` (string, required)
++ birth_country: `Україна` (string, required)
++ birth_settlement: `Вінниця` (string, required)
++ gender: MALE, FEMALE (enum[string], required)
++ email: email@example.com (string, optional)
++ no_tax_id: false (boolean, required)
++ tax_id: 3999869394 (string, optional)
++ secret: secret (string, required)
++ documents (array, required)
+    + (object)
+        + type: BIRTH_CERTIFICATE (string, required) - `Dictionary DOCUMENT_TYPE`
+        + number: АА120518 (string, required) - document issue number
+        + issued_by: `Рокитнянським РВ ГУ МВС Київської області` (string, required) - authority which issued the document
+        + issued_at: `2017-02-28` (string, required) - the date when document was issued
+        + expiration_date: `2027-02-28` (string, optional) - the date when document expired, is necessery for those documents which has this date, ex, Temporary certificate, etc.
++ addresses (array[`Address`], required)
++ phones (array[`Phone`], optional)
++ `authentication_methods` (array[`Authentication_Method_Patient_Request`], optional)
++ unzr: `20090705-00011` (string, optional) - the record number in the demographic register
++ emergency_contact (object, required)
+    + include `Emergency_Contact`
++ `confidant_person` (array[`Confidant_Person_v2`], optional) - Should be set if this Person is disabled, underage, etc.
+
+
+### `Person_info_Public_request_v2_with_new_confidant_data`
++ first_name: Петро (string, required)
++ last_name: Іванов (string, required)
++ second_name: Миколайович (string, optional)
++ birth_date: `2009-07-05` (string, required)
++ birth_country: `Україна` (string, required)
++ birth_settlement: `Вінниця` (string, required)
++ gender: MALE, FEMALE (enum[string], required)
++ email: email@example.com (string, optional)
++ no_tax_id: false (boolean, required)
++ tax_id: 3999869394 (string, optional)
++ secret: secret (string, required)
++ documents (array, required)
+    + (object)
+        + type: BIRTH_CERTIFICATE (string, required) - `Dictionary DOCUMENT_TYPE`
+        + number: АА120518 (string, required) - document issue number
+        + issued_by: `Рокитнянським РВ ГУ МВС Київської області` (string, required) - authority which issued the document
+        + issued_at: `2017-02-28` (string, required) - the date when document was issued
+        + expiration_date: `2027-02-28` (string, optional) - the date when document expired, is necessery for those documents which has this date, ex, Temporary certificate, etc.
++ addresses (array[`Address`], required)
++ phones (array[`Phone`], optional)
++ `authentication_methods` (array[`Authentication_Method_Patient_Request`], optional)
++ unzr: `20090705-00011` (string, optional) - the record number in the demographic register
++ emergency_contact (object, required)
+    + include `Emergency_Contact`
++ `confidant_person` (object, optional) - Must be set if this Person is disabled, underage, etc.
+    + include `Confidant_Person_PIS`
+
+### `Person_info_Public_response_v2_with_new_confidant_data_object`
++ first_name: Петро (string, required)
++ last_name: Іванов (string, required)
++ second_name: Миколайович (string, optional)
++ birth_date: `2009-07-05` (string, required)
++ birth_country: `Україна` (string, required)
++ birth_settlement: `Вінниця` (string, required)
++ gender: MALE, FEMALE (enum[string], required)
++ email: email@example.com (string, optional)
++ no_tax_id: false (boolean, required)
++ tax_id: 3999869394 (string, optional)
++ secret: secret (string, required)
++ documents (array, required)
+    + (object)
+        + type: BIRTH_CERTIFICATE (string, required) - `Dictionary DOCUMENT_TYPE`
+        + number: АА120518 (string, required) - document issue number
+        + issued_by: `Рокитнянським РВ ГУ МВС Київської області` (string, required) - authority which issued the document
+        + issued_at: `2017-02-28` (string, required) - the date when document was issued
+        + expiration_date: `2027-02-28` (string, optional) - the date when document expired, is necessery for those documents which has this date, ex, Temporary certificate, etc.
++ addresses (array[`Address`], required)
++ phones (array[`Phone`], optional)
++ `authentication_methods` (array[`Authentication_Method_Patient_Request`], optional)
++ unzr: `20090705-00011` (string, optional) - the record number in the demographic register
++ emergency_contact (object, required)
+    + include `Emergency_Contact`
++ `confidant_person` (object, optional) - Must be set if this Person is disabled, underage, etc.
+    + include `Confidant_Person_PIS`
+
+### `Person_info_Public_response_v2_with_new_confidant_data`
++ first_name: Петро (string, required)
++ last_name: Іванов (string, required)
++ second_name: Миколайович (string, optional)
++ birth_date: `2009-07-05` (string, required)
++ birth_country: `Україна` (string, required)
++ birth_settlement: `Вінниця` (string, required)
++ gender: MALE, FEMALE (enum[string], required)
++ email: email@example.com (string, optional)
++ no_tax_id: false (boolean, required)
++ tax_id: 3999869394 (string, optional)
++ secret: secret (string, required)
++ documents (array, required)
+    + (object)
+        + type: BIRTH_CERTIFICATE (string, required) - `Dictionary DOCUMENT_TYPE`
+        + number: АА120518 (string, required) - document issue number
+        + issued_by: `Рокитнянським РВ ГУ МВС Київської області` (string, required) - authority which issued the document
+        + issued_at: `2017-02-28` (string, required) - the date when document was issued
+        + expiration_date: `2027-02-28` (string, optional) - the date when document expired, is necessery for those documents which has this date, ex, Temporary certificate, etc.
++ addresses (array[`Address`], required)
++ phones (array[`Phone`], optional)
++ `authentication_methods` (array[`Authentication_Method_Patient_Request`], optional)
++ unzr: `20090705-00011` (string, optional) - the record number in the demographic register
++ emergency_contact (object, required)
+    + include `Emergency_Contact`
++ `confidant_person` (array, optional) - Must be set if this Person is disabled, underage, etc.
+    + (object)
+        + include `Confidant_Person_PIS`
+
+### `Patient_short`
++ person_id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Id створеної персони
++ updated_at: `2017-03-02T00:00:00.000Z` (string, required)
++ status: SIGNED (string, optional)
++ id: `74a6fae6-4207-4e03-a136-f2e70c6b0c02` (string, required) - request id
++ inserted_at: `2017-07-06T16:54:05.161571Z` (string, required)
+
+
+### `Patient_Request_Short`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - unique id of declaration
++ status: APPROVED (enum, required)
+    - NEW
+    - APPROVED
+    - SIGNED
+    - REJECTED
+    - CANCELLED
++ person (object, optional) - Object that described a Patient
+    + first_name: Петро (string, required)
+    + last_name: Іванов (string, required)
+    + second_name: Миколайович (string, optional)
++ version: 2 (number, required) - version of endpoint used to create person request
+
+### `Person_info_Public_DRv3`
++ first_name: Петро (string, required)
++ last_name: Іванов (string, required)
++ second_name: Миколайович (string, optional)
++ birth_date: `2009-07-05` (string, required)
++ birth_country: `Україна` (string, required)
++ birth_settlement: `Вінниця` (string, required)
++ gender: MALE, FEMALE (enum[string], required)
++ email: email@example.com (string, optional)
++ `no_tax_id`: false (boolean, required)
++ tax_id: 3999869394 (string, optional)
++ secret: secret (string, required)
++ documents (array, required)
+    + (object)
+        + type: BIRTH_CERTIFICATE (string, required) - `Dictionary DOCUMENT_TYPE`
+        + number: АА120518 (string, required) - document issue number
+        + issued_by: `Рокитнянським РВ ГУ МВС Київської області` (string, required) - authority which issued the document
+        + issued_at: `2017-02-28` (string, required) - the date when document was issued
+        + expiration_date: `2027-02-28` (string, optional) - the date when document expired, is necessery for those documents which has this date, ex, Temporary certificate, etc.
++ addresses (array[`Address`], required)
++ phones (array[`Phone`], optional)
++ `authentication_methods` (array, required)
+    + (object)
+        + type (enum, required)
+            - OTP
+            - OFFLINE
+        + phone_number: `+38093*****85` (string, optional)
++ unzr: `20090705-00011` (string, optional) - the record number in the demographic register
++ emergency_contact (object, required)
+    + include `Emergency_Contact`
++ `confidant_person` (array[`Confidant_Person_v2`], optional) - Should be set if this Person is disabled, underage, etc.
++ preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
+    - email
+    - phone
+
+### `Person_info_Public_PIS`
++ first_name: Петро (string, required)
++ last_name: Іванов (string, required)
++ second_name: Миколайович (string, optional)
++ birth_date: `2009-07-05` (string, required)
++ birth_country: `Україна` (string, required)
++ birth_settlement: `Вінниця` (string, required)
++ gender: MALE, FEMALE (enum[string], required)
++ email: email@example.com (string, optional)
++ no_tax_id: false (boolean, required)
++ tax_id: 3999869394 (string, optional)
++ secret: secret (string, required)
++ documents (array, required)
+    + (object)
+        + type: BIRTH_CERTIFICATE (string, required) - `Dictionary DOCUMENT_TYPE`
+        + number: АА120518 (string, required) - document issue number
+        + issued_by: `Рокитнянським РВ ГУ МВС Київської області` (string, required) - authority which issued the document
+        + issued_at: `2017-02-28` (string, required) - the date when document was issued
+        + expiration_date: `2027-02-28` (string, optional) - the date when document expired, is necessery for those documents which has this date, ex, Temporary certificate, etc.
++ addresses (array[`Address`], required)
++ phones (array[`Phone`], optional)
++ `authentication_methods` (array[`Authentication_Method_Patient_Request`], optional)
++ unzr: `20090705-00011` (string, optional) - the record number in the demographic register
++ emergency_contact (object, required)
+    + include `Emergency_Contact`
++ `confidant_person` (object, required)
+    + include `Confidant_Person_PIS`
++ preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
+    - email
+    - phone
+
+  
+##2FA
+
+### `authentication_factor`
++ id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ type: `sms` (string, required) - 2fa type
++ factor: `+380881234567` (string, required) - 2fa factor, ex. phone number
++ is_active: true (boolean)
++ user_id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+
+### `Employee_Declaration_Short`
++ id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ position: P1 (string, required) - `Dictionary: POSITION`
++ `employee_type`: DOCTOR (string) - `Dictionary: EMPLOYEE_TYPE`
++ status: APPROVED, STOPPED, ENTERED IN ERROR, REORGANIZED, AUTODEACTIVATED (enum, required) - Employee status
++ start_date: `2017-03-02T10:45:16.000Z` (string, required)
++ end_date: `2018-03-02T10:45:16.000Z` (string, optional)
++ party (object)
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+    + include `Party_Short`
++ division_id: `4cffa825-8b5b-4cba-9a38-fb57733e14b2` (string, optional) - division identifier
++ `legal_entity_id`: `be3a154c-3e07-496d-9680-f22c443f5d0c` (string, required) - legal entity identifier
++ doctor (DoctorNew)
+
+
+
+## DoctorsNew
+### DoctorNew
++ educations (array[`Education`], required)  - освіта
++ qualifications (array[`Qualification`], optional) - підвищення кваліфікації
++ specialities (array[`Speciality`], required)  - блок інформації про отримання сертифікату спеціалісту та проходження атестацій
++ science_degree (ScienceDegree, optional)
+
+### `DoctorNew_Short`
++ specialities (array[`Speciality`], required)
+
+### `DoctorNew_Short_Single`
++ speciality (Speciality, required)
+
+### RelationshipDocument
++ type: BIRTH_CERTIFICATE (string, required) - `Dictionary DOCUMENT_RELATIONSHIP_TYPE`
++ number: АА120518 (string, required) - document issue number
++ issued_by: `Рокитнянським РВ ГУ МВС Київської області` (string, optional) - authority which issued the document
++ issued_at: `2017-02-28` (string, optional) - the date when document was issued
++ active_to: `2025-08-19` (string, optional) - the date then period of document validity ends.
+
+### Document
++ type: PASSPORT (string, required) - `Dictionary DOCUMENT_TYPE`
++ number: АА120518 (string, required) - document issue number
++ `expiration_date`: `2021-02-28` (string, optional) - `document expiration date. Required for NATIONAL_ID document type`
++ issued_by: `Рокитнянським РВ ГУ МВС Київської області` (string, optional) - authority which issued the document
++ issued_at: `2017-02-28` (string, optional) - the date when document was issued
