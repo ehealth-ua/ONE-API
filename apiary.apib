@@ -1408,6 +1408,56 @@ Block `merged_persons` will be deprecated from response and endpoint `Search Per
             + type: `too_many_results`
             + message: `This API method returns only exact match results, please retry with more specific search result` (string)
 
+### Search Person's Merged Persons [GET /api/persons/{id}/merged_persons{?status,page,page_size}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-010-001-003-0361
+Scope              | person:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570332697/REST+API+Search+Person+s+merged+persons">Search Person's Merged Persons</a>
+
+This method allows to find all persons, which were merged with this person. Also this endpoint shows all the persons who enter the whole chain of merges to this person.
+This information was in response of Get `Search for a Person` before.
+
++ Parameters
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+    + status: `MERGED` (string, optional)
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        api-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array)
+            + (object)
+                + id: `57e30ea3-16f1-4f8e-adcd-1a05e99e2d22` (string, optional) - identifier of the relation of persons who are compared during the deduplication process
+                + inserted_at: `2019-05-08T15:34:00Z` (string, optional)
+                + merge_person_id: `bdadc2a7-7283-4f24-bc99-8d8d9808af80` (string, optional) - identifier of a person who is recognized as a duplicate and subsequently deactivated
+                + master_person_id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - identifier of the person who as a result of the deduplication is recognized as true and subsequently left active
+                + updated_at: `2019-05-08T15:34:00Z` (string, optional)
+                + status: `MERGED` (string, optional)
+            + (object)
+                + id: `a4181621-681f-4e46-b0ba-7fa4e59859ef` (string, optional) - identifier of the relation of persons who are compared during the deduplication process
+                + inserted_at: `2019-01-08T15:34:00Z` (string, optional)
+                + merge_person_id: `1a356e56-a991-4ceb-a475-3edfd9930265` (string, optional) - identifier of a person who is recognized as a duplicate and subsequently deactivated
+                + master_person_id: `bdadc2a7-7283-4f24-bc99-8d8d9808af80` (string, optional) - identifier of the person who as a result of the deduplication is recognized as true and subsequently left active
+                + updated_at: `2019-01-08T15:34:00Z` (string, optional)
+                + status: `DECLINED` (string, optional)
+
++ Response 404 (application/json)
+    + Attributes (`Response_Error`)
+        + meta (Response__Meta, fixed-type)
+            + code: 404 (number)
+        + error (Response__Error, fixed-type)
+            + type: `forbidden`
+            + message: `Such person not found` (string)
+
 ## Prepersons [/personal/prepersons]
 
 ### Get Preperson  [GET]
