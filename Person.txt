@@ -1,0 +1,19 @@
+Scope:
+
+Search for a person			API-010-001-003-0360 GET /api/persons
+Search Person's merged persons		API-010-001-003-0361 GET /api/persons/{{id}}/merged_persons
+Get Person verification details		API-010-001-003-0363 GET GET /api/persons/{{id}}/verification
+Search for a Person			API-010-001-003-0366
+Search for a Person internal		API-010-001-003-0367
+PIS. Patient sign-up			API-010-001-003-0372 GET /sign-in
+PIS. Patient sign-in			API-010-001-003-0373 GET /sign-in
+PIS. Get Person details			API-010-001-011-0451 GET /api/pis/person
+
+Produced:
+
+360 ### Search for a Person [GET /api/persons{?first_name,last_name,second_name,birth_date,tax_id,phone_number,birth_place,birth_certificate,page,page_size}]
+361 ### Search Person's merged persons [GET /api/persons/{id}/merged_persons{?status,page,page_size}]
+363 ### Get Person Verification Details [GET /api/persons/{id}/verification]
+372 ### Patient sign-up [GET /sign-up{?client_id,redirect_uri,scope,user_data}]
+372 ### Patient sign-in [GET /sign-in{?client_id,redirect_uri,scope,user_data,state}]
+451 ### Get Person Details [GET /api/pis/person]
