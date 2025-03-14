@@ -1367,8 +1367,6 @@ Scope              | person:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570234423/REST+API+Search+for+a+person">Search for a Person</a>
 
-### Search for a Person [GET /api/persons{?first_name,last_name,second_name,birth_date,tax_id,phone_number,birth_place,birth_certificate,page,page_size}]
-
 This method allows to search for a Person (MPI) without disclosing personal data.
 Method returns only **requested** parameters, birth place and second name in addition for manual identification on MSP side.
 Block `merged_persons` will be deprecated from response and endpoint `Search Person's merged persons` has information abount all merged persons which are related to this person.
