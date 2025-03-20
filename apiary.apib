@@ -347,13 +347,15 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
     + name: `Києво-Святошинський` (string, optional) - Administrative district of province
     + koatuu: `2625286301` (string, optional) - koatuu classifier id
     + `page`: 2 (number) - Page number.
-    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 500. Default: 50
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 500. Default: 10
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection_V2`)
         + meta (Response__Meta)
             + code: 200 (number)
         + data (array[`Response_District`])
+
++ Response 422 (application/json)
 
 ### Districts by Region [GET /api/uaddresses/regions/290f1ee-6c54-4b01-90e6-d701748f0851/districts{?name,koatuu,page,page_size}]
 
@@ -365,14 +367,16 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 + Parameters
     + name: `Києво-Святошинський` (string, optional) - Filter by district name
     + koatuu: `2625286301` (string, optional) - koatuu classifier id
-    + `page`: 2 (number) - Page number.
-    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 500. Default: 50
+    + `page`: 2 (number) - Page number. Default: 1
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 500. Default: 10
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection_V2`)
         + meta (Response__Meta)
             + code: 200 (number)
         + data (array[`Response_District_Short`])
+
++ Response 400 (application/json)
 
 ### Settlements by District [GET /api/uaddresses/districts/290f1ee-6c54-4b01-90e6-d701748f0851/settlements{?name,koatuu,page,page_size}]
 
@@ -386,14 +390,16 @@ Get list of cities by district.
 + Parameters
     + name: `Київ` (string, optional) - Filter by settlement name
     + koatuu: `2625286301` (string, optional) - koatuu classifier id
-    + `page`: 2 (number) - Page number.
-    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 500. Default: 50
+    + `page`: 2 (number) - Page number. Default: 1
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 300. Default: 10
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection_V2`)
         + meta (Response__Meta)
             + code: 200 (number)
         + data (array[`Response_Settlement_Short`])
+
++ Response 400 (application/json)
 
 ### List Of Regions By Search Params [GET /api/uaddresses/regions{?name,koatuu,page,page_size}]
 
@@ -405,8 +411,8 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 + Parameters
     + name: Київ (string, optional) - Province name
     + koatuu: `2625286301` (string, optional) - koatuu classifier id
-    + `page`: 2 (number) - Page number.
-    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 500. Default: 50
+    + `page`: 2 (number) - Page number. Default: 1
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 500. Default: 10
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection_V2`)
@@ -428,7 +434,7 @@ Use this method to obtain list of cities. If you want to reduce amount of data t
     + region: Київ (string, optional) - Province name
     + district: `Києво-Святошинський` (string, optional) - Administrative district of province
     + koatuu: `2625286301` (string, optional) - koatuu classifier id
-    + `page`: 2 (number) - Page number.
+    + `page`: 2 (number) - Page number. Default: 1
     + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 500. Default: 50
 
 + Response 200 (application/json)
@@ -455,6 +461,8 @@ Use this method to obtain city details.
             + code: 200 (number)
         + data (`Response_Settlement`)
 
++ Response 400 (application/json)
+
 ### List of Streets by Search Params [GET /api/uaddresses/streets{?settlement_id,name,type,page,page_size}]
 
 Key                | Value
@@ -466,7 +474,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
     + settlement_id: `eea333b5-e26d-4e3e-92e2-2ab37b131502` (string, required) - Settlement identifier
     + name: `Незалежності` (string, optional) - Street name
     + type: STREET (string, optional) - Street type (Dictionary STREET_TYPE)
-    + `page`: 2 (number) - Page number.
+    + `page`: 2 (number) - Page number. Default: 1
     + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 500. Default: 50
 
 + Response 200 (application/json)
@@ -474,6 +482,8 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
         + meta (Response__Meta)
             + code: 200 (number)
         + data (array[`Response_Street`])
+
++ Response 422 (application/json)
 
 ## Dictionaries and Registers [/gen/services]
 
