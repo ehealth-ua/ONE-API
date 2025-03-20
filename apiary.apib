@@ -339,8 +339,6 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-012-001-003-0409
-Scope              | address:read
-Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570430977/DRAFT+REST+API+List+Of+Districts+By+Search+Params">List Of Districts By Search Params</a>
 
 + Parameters
@@ -349,7 +347,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
     + name: `Києво-Святошинський` (string, optional) - Administrative district of province
     + koatuu: `2625286301` (string, optional) - koatuu classifier id
     + `page`: 2 (number) - Page number.
-    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 500. Default: 50
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection_V2`)
@@ -362,15 +360,13 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-012-001-003-0410
-Scope              | address:read
-Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570234376/DRAFT+REST+API+Districts+by+Region">Districts by Region </a>
 
 + Parameters
     + name: `Києво-Святошинський` (string, optional) - Filter by district name
     + koatuu: `2625286301` (string, optional) - koatuu classifier id
     + `page`: 2 (number) - Page number.
-    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 500. Default: 50
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection_V2`)
@@ -383,8 +379,6 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-012-001-003-0411
-Scope              | address:read
-Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570693121/DRAFT+REST+API+Settlements+by+district">Settlements by district</a>
 
 Get list of cities by district.
@@ -393,7 +387,7 @@ Get list of cities by district.
     + name: `Київ` (string, optional) - Filter by settlement name
     + koatuu: `2625286301` (string, optional) - koatuu classifier id
     + `page`: 2 (number) - Page number.
-    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 500. Default: 50
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection_V2`)
@@ -406,15 +400,13 @@ Get list of cities by district.
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-012-001-003-0412
-Scope              | address:read
-Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570234387/DRAFT+REST+API+List+Of+Regions+By+Search+Params">List Of Regions By Search Params</a>
 
 + Parameters
     + name: Київ (string, optional) - Province name
     + koatuu: `2625286301` (string, optional) - koatuu classifier id
     + `page`: 2 (number) - Page number.
-    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 500. Default: 50
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection_V2`)
@@ -427,8 +419,6 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-012-001-003-0413
-Scope              | address:read
-Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570562054/DRAFT+REST+API+List+Of+Cities+By+Search+Params">List Of Cities By Search Params </a>
 
 Use this method to obtain list of cities. If you want to reduce amount of data that is going trough your application, use `name`, `region`, `district` or `koatuu classifier` filters and show only cities you are interested in.
@@ -439,7 +429,7 @@ Use this method to obtain list of cities. If you want to reduce amount of data t
     + district: `Києво-Святошинський` (string, optional) - Administrative district of province
     + koatuu: `2625286301` (string, optional) - koatuu classifier id
     + `page`: 2 (number) - Page number.
-    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 500. Default: 50
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection_V2`)
@@ -452,8 +442,6 @@ Use this method to obtain list of cities. If you want to reduce amount of data t
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-012-001-003-0414
-Scope              | address:read
-Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570660364/DRAFT+REST+API+Get+settlement+details+by+ID">Get Settlement Details by Id</a>
 
 Use this method to obtain city details.
@@ -472,8 +460,6 @@ Use this method to obtain city details.
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-012-001-003-0415
-Scope              | address:read
-Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570758657/DRAFT+REST+API+List+of+Streets+by+Search+Params">List of Streets by Search Params</a>
 
 + Parameters
@@ -481,7 +467,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
     + name: `Незалежності` (string, optional) - Street name
     + type: STREET (string, optional) - Street type (Dictionary STREET_TYPE)
     + `page`: 2 (number) - Page number.
-    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 500. Default: 50
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection_V2`)
@@ -503,8 +489,6 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-011-001-008-0406
-Scope              | dictionary:read
-Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570889877/DRAFT+REST+API+Get+dictionaries">Get Dictionaries</a>
 
 Each dictionary is an object that contains `{key}:{value}` pairs where: `{key}` is a dictionary record and `{value}` is a dictionary record description.
@@ -526,11 +510,14 @@ Each dictionary is an object that contains `{key}:{value}` pairs where: `{key}` 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-011-001-008-0407
-Auth               | no
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570136318/DRAFT+REST+API+Get+dictionaries">Get Dictionaries V2</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570627706/REST+API+Get+dictionary+v.2">Get Dictionaries V2</a>
 
 Each dictionary is an object that contains not only a code and description of a value,
 but also a status of the value. In addition, it can represent hierarchical dictionaries with subordinate (child) values
+
+NOTE:
+
+On `PREPROD` envoronment this endpoint requires authentication with `address:read` scope.
 
 + Parameters
     + `name`: `eHealth/ICF/classifiers` (string, optional) - dictionary name
