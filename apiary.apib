@@ -2506,32 +2506,6 @@ This method allows to get short information of the Medication Dispense for the M
         + data (object)
             + include `Medication_Dispense_Details_Response_for_MSP`
 
-### Get Medication Dispense Details in Composition Context [GET /api/persons/{person_id}/compositions/{composition_id}/medication_dispenses/{id}]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        | API-005-008-001-0136
-Scope              | composition:read
-Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18528109137/DRAFT+NEW+Get+Medication+Request+details+in+Composition+context+API-007-011-001-0490">Get Medication Dispense Details in Composition Context</a>
-
-Method returns Medication Dispense details in the context of Composition
-User must have an approval on the composition from url.
-
-+ Parameters
-    + `person_id`: `5e661b15-a39a-4713-b18e-ba03a4a48ecc` (string, required) - Patient identifier
-    + `composition_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Composition identifier
-    + `id`: `a89f6a26-4221-4597-a1d2-542d5e40b565` (string, required)
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (`Response_OK`)
-        + data (`Medication_Dispense_Response_for_Pharmacist`)
-
 ### Private Get Medication Dispenses List [GET /api/admin/medication_dispenses{?id,medication_request_id,legal_entity_id,division_id,status,dispensed_from,dispensed_to,care_plan_id,page,page_size}]
 
 Key                | Value
