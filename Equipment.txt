@@ -1,0 +1,19 @@
+Конфлюєнс:
+
+Create equipment 			[API-007-002-002-0232]
+Update equipment 			[API-007-002-002-0233] нема
+Get equipment list 			[API-007-002-002-0234]
+Get equipment details by ID 		[API-007-002-002-0235]
+Deactivate equipment 			[API-007-002-002-0236] нема
+Activate equipment 			[API-007-002-002-0237] нема
+Get Equipments 				[API-007-002-002-0238] нема
+Change equipment status 		[API-007-002-002-0239]
+Change equipment availability status 	[API-007-002-002-0240]
+
+Апіарі:
+
+232 ### Create Equipment [POST /api/equipment]
+234 ### Get Equipment List [GET /api/equipment{?division_id,device_definition_id,type,status,model_number,manufacturer,availability_status,recorder,inventory_number,serial_number,name,created_from,created_to,page,page_size}]
+235 ### Get Equipment Details by Id [GET /api/equipment/{id}]
+239 ### Change Equipment Status [PATCH /api/equipment/{id}/actions/change_status]
+240 ### Change Equipment Availability Status [PATCH /api/equipment/{id}/actions/change_availability_status]

@@ -25,7 +25,7 @@ ENT-024	Employee Request
 ENT-025	Employee Role
 ENT-026	Encounter (PLANNED)
 ENT-027	Episode Of Care (DONE)
-ENT-028	Equipment
+ENT-028	Equipment (DONE)
 ENT-029	Event
 ENT-030	Forbidden Group
 ENT-031	Groups of Diagnoses

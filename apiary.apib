@@ -1262,6 +1262,151 @@ Use this method to get the list of child legal entities which are related to cur
             + code: 200 (number)
         + data (array[`Legal_Entity_Related`])
 
+## Equipment [/general/equipment]
+
+Key                | Value
+-------------------|-----------
+ESOZ ENT ID        | ENT-028
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17479761953/Equipment+ENT-028">Equipment</a>
+
+### Create Equipment [POST /api/equipment]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-002-002-0232
+Scope              | equipment:write
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571807355/DRAFT+REST+API+Create+equipment">Get Legators Legal Entities</a>
+
+This method allows to register equipment and bind it with division of legal entity
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
+    + Attributes (object)
+        + include `Equipment_base_v2`
+
++ Response 201 (application/json)
+    + Attributes (`Response__Process_OK`)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (`Equipment_response_v2`)
+
+### Get Equipment List [GET /api/equipment{?division_id,device_definition_id,type,status,model_number,manufacturer,availability_status,recorder,inventory_number,serial_number,name,created_from,created_to,page,page_size}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-002-002-0234
+Scope              | equipment:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571905656/DRAFT+REST+API+Get+equipment+list">Get Equipment List</a>
+
++ Parameters
+    + division_id: `8be63914-a278-470b-b868-1af5b9087332` (string, optional) - Division identifier
+    + device_definition_id: `8be63914-a278-470b-b868-1af5b9087332` (string, optional) - Device definition identifier
+    + type: `03221` (string, optional) - `Code from dictionary EQUIPMENT_TYPE`
+    + status: ACTIVE (string, optional) - Entity status
+    + model_number: PC122345 (string, optional) - Model number
+    + manufacturer: `ФОП Виробник` (string, optional) - Manufacturer
+    + availability_status: AVAILABLE (string, optional) - Availability status
+    + recorder: `8be63914-a278-470b-b868-1af5b9087332` (string, optional) - Employee who created equipment
+    + inventory_number: `123-654` (string, optional) - Inventory number
+    + serial_number: `8be63914-a278-470b-b868-1af5b9087332` (string, optional) - Serial number
+    + name: `8be63914-a278-470b-b868-1af5b9087332` (string, optional) - Name
+    + created_from: `2017-08-17` (string, optional) - Start date of the period to find equipments created in this period
+    + created_to: `2017-08-20` (string, optional) - End date of the period to find equipments created in this period
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array[`Equipment_response_v2`])
+
+### Get Equipment Details by Id [GET /api/equipment/{id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-002-002-0235
+Scope              | equipment:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571709070/DRAFT+REST+API+Get+equipment+details+by+ID">Get Equipment Details by Id</a>
+
++ Parameters
+    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Equipment identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
++ Response 200 (application/json)
+    + Attributes (`Response__Process_OK`)
+        + data (`Equipment_response_v2`)
+
+### Change Equipment Status [PATCH /api/equipment/{id}/actions/change_status]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-002-002-0239
+Scope              | equipment:write
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18872959018/DRAFT+REST+API+Change+equipment+status">Change Equipment Status</a>
+
+Method to changes equipment status to `inactive` or `entered_in_error`.
+
++ Parameters
+    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Equipment identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    + Attributes (object)
+        + status: `entered_in_error` (string, required) - New equipment status `Dictionary: equipment_statuses`
+        + `error_reason`: `Out of service` (string, optional) - Error reason `Dictionary: equipment_status_reasons`
+
++ Response 200 (application/json)
+    + Attributes (`Response__Process_OK`)
+        + data (`Equipment_response_v2`)
+            - status: `entered_in_error` (string, required) - New equipment status `Dictionary: equipment_statuses`
+            - `error_reason`: `Out of service` (string, optional) - Error reason `Dictionary: equipment_status_reasons`
+
+### Change Equipment Availability Status [PATCH /api/equipment/{id}/actions/change_availability_status]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-002-002-0240
+Scope              | equipment:write
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18872500325/DRAFT+REST+API+Change+equipment+availability+status">Change Equipment Availability Status</a>
+
++ Parameters
+    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - Equipment identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    + Attributes (object)
+        + availability_status: `damaged` (string, required) - New equipment status
+
++ Response 200 (application/json)
+    + Attributes (`Response__Process_OK`)
+        + data (`Equipment_response_v2`)
+            - availability_status: `damaged` (string, required) - New equipment status
+            
 ### Licenses [/admin/licenses]
 
 Key                | Value
@@ -12537,4 +12682,83 @@ status: `APPROVED` (string, required)
 + unzr: `19900101-00099` (string, optional)
 + `emergency_contact`(`Emergency_Contact`, required)
 + `verification`(`Person_Verification_Details`, required)
+
+
+## `Equipment`
+### `Equipment_base`
++ type: `23143534` (string, required)- `code from dictionary -  EQUIPMENT_TYPE`            
++ external_id: `123-ASD-#1` (string, required) - Identifier from external system
++ udi (array, optional) - A set of unique identifiers assigned to the asset by the manufacturer 
+    + (object)
+        + value: `IMEI 49015420323751` (string, required) - udi identifier
+        + type: `default` (string, required) - `type of the udi identifier acording to dictionary EQUIPMENT_UDI_TYPE`
+        + assigner_name: `Ukrainian center of the certification` (string, optional) - assigner name of the udi
++ lot_number: `RZ12345678` (string, optional)
++ manufacturer: `GlobalMed, Inc` (string, optional)
++ manufacture_date: `1999-01-01` (string, optional)
++ expiration_date: `2020-01-01` (string, optional)
++ model_number: `NSPX30` (string, optional)
++ part_number: `#e30-SD` (string, optional)
++ version: `v1.0.1` (string, optional)
++ name: `Рентген апарат флюрографічній` (string, optional)
++ serial_number: `S/N234554` (string, optional)
++ note: `Технічний огляд раз на рік` (string, optional)
+
+### `Equipment_base_v2`
++ inventory_number: `234554` (string, optional) - Inventory number
++ serial_number: `S/N234554` (string, optional) - Serial number
++ device_definition_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, optional) - Reference to device definition
++ names (array[`Equipment_name`], required) - Equipment names
++ status: `active` (string, required) - Device status `Dictionary: equipment_statuses`
++ `availability_status`: `available` (string, required) - Device availability status `Dictionary: equipment_status_reasons`
++ manufacturer: `GlobalMed, Inc` (string, optional) - Manufacturer
++ manufacture_date: `1999-01-01` (string, optional) - Manufacturer date
++ model_number: `NSPX30` (string, optional) - Model number
++ type: `30221` (string, required) - `Dictionary: device_definition_classification_type`
++ properties (array[`Equipment_property`], optional) - Equipment properties
++ division_id: `8be63914-a278-470b-b868-1af5b9087332` (string, optional) - Reference to division
++ note: `Технічний огляд раз на рік` (string, optional)
++ parent_id: `8be63914-a278-470b-b868-1af5b9087332` (string, optional) - Reference to equipment
++ lot_number: `RZ12345678` (string, optional) - Lot number
++ expiration_date: `2020-01-01` (string, optional) - Expiration date
++ recorder: `8be63914-a278-470b-b868-1af5b9087332` (string, required) - Reference to employee
+
+### `Equipment_response_v2`
++ id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - Equipment identifier
++ include `Equipment_base_v2`
++ `legal_entity_id`: `483af06f-d4c6-4c9e-8d9b-680b5ef7270d` (string, required) - Reference to legal entity
++ `error_reason`: `Out of service` (string, optional) - Error reason `Dictionary: equipment_status_reasons`
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
++ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
+### `Equipment_name`
++ `name`: `Екг-апарат портативний PM10 S61-2047` (string, required) - Equipment name
++ `type`: `registered` (enum, required) - Equipment name type. Dictionary `device_name_type`
+    - user_friendly
+    - registered
+    - patient_reported
+
+### `Equipment_property`
++ `type`: `width` (string, required) - Property type. Dictionary `device_properties`
+- One of
+    + `value_integer`: 10 (number, required)
+    + `value_decimal`: 15.543 (number, required)
+    + `value_boolean`: true (boolean, required)
+    + `value_string`: `blue` (string, required)
+
+### `Equipment_response`
++ id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - Equipment identifier
++ division_id: `8be63914-a278-470b-b868-1af5b9087332` (string, required) - Division identifier
++ `legal_entity_id`: `483af06f-d4c6-4c9e-8d9b-680b5ef7270d` (string, required) - Legal entity identifier
++ include `Equipment_base`
++ status: ACTIVE (string, required)
+    - ACTIVE
+    - INACTIVE
++ is_active: true (boolean, required) - Technical attribute. Indicates the availability of therecord in the system
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
++ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
 
