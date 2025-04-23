@@ -2068,6 +2068,71 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
     + Attributes (`Response_OK`)
         + data (`Allergy_Intolerance_Response`, fixed-type)
 
+## Encounter [/me/encounter]
+
+Key                | Value
+-------------------|-----------
+ESOZ ENT ID        | ENT-026
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17479467056/Encounter+ENT-026">Encounter</a>
+
+### Get Short Encounters by Search Params (Patient Summary) [GET /api/patients/{patient_id}/summary/encounters{?status,episode_id,type,class,performer_speciality,date_from,date_to}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-026-0002
+Scope              | patient_summary:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572069411/DRAFT+REST+API+Get+Short+Encounters+by+search+params+Patient+Summary">Get Short Encounters by Search Params (Patient Summary)</a>
+
+The endpoint returns a list of short Encounter info filtered by search params.
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+    + `period_start_from`: `2000-01-01`(string, optional) - Start date of the period of encounter initiation period. Format DATE '2017-08-16'. Example: 2017-08-16
+    + `period_start_to`: `2000-01-10`(string, optional) - End date of the period of encounter initiation period. Format DATE '2017-09-16'. Example: 2017-09-16.
+    + `period_end_from`: `2000-01-05`(string, optional) - Start date of the period of encounter ending period. Format DATE '2017-08-20'. Example: 2017-08-20.
+    + `period_end_to`: `2000-01-15`(string, optional) - End date of the period of treatment ending period. Format DATE '2017-09-20'. Example: 2017-09-20.
+    + `episode_id`: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional)
+    + status: finished (string, optional)
+    + type: discharge (string, optional)
+    + class: INPATIENT (string, optional)
+    + `performer_speciality`: VIROLOGY (string, optional)
+    + `page`: `2` (number, optional) - Page number.    
+    + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        api-key: aFBLVTZ6Z2dON1V
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection)
+        + data (array[`Encounter_Short`])
+
+### Get Short Encounter by Id (Patient Summary) [GET /api/patients/{patient_id}/summary/encounters/{encounter_id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-026-0002
+Scope              | patient_summary:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572265991/DRAFT+REST+API+Get+Short+Encounter+by+id+Patient+Summary">Get Short Encounter by Id (Patient Summary)</a>
+
+The endpoint returns single short Encounter info.
+
++ Parameters
+    + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
+    + encounter_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique encounter identifier
+    
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Encounter_Short`)
 
 ## Medication Request [/me/medication_request]
 

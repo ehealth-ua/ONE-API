@@ -1,6 +1,5 @@
-Submit Encounter Package			API-007-004-004-0252
-Cancel Encounter Package			API-007-004-004-0253
-Get Encounter by Id				API-007-004-004-0254
-Get Encounters by Іearch params			API-007-004-004-0255
-Get Encounters in Episode Context		API-007-004-004-0256
-Get Encounter Details in Episode Context	API-007-004-004-0257
+Get Short Encounters by search params (Patient Summary) [API-007-026-0001]
+Get Short Encounter by id (Patient Summary) [API-007-026-0002]
+
+### Get Short Encounters by Search Params (Patient Summary) [GET /api/patients/{patient_id}/summary/encounters{?status,episode_id,type,class,performer_speciality,date_from,date_to}]3
+### Get Short Encounter by Id (Patient Summary) [GET /api/patients/{patient_id}/summary/encounters/{encounter_id}]
