@@ -1,11 +1,11 @@
 ENT-001	Adresess (DONE)
-ENT-002	Allergy Intolerance
+ENT-002	Allergy Intolerance (2/6)
 ENT-003	Approval
 ENT-004	Approval Aрр
 ENT-005	Care Plan
 ENT-006	Care Plan Activity
 ENT-007	Client
-ENT-008	Clinical Impression
+ENT-008	Clinical Impression (2/4)
 ENT-009	Composition (DONE)
 ENT-010	Condition
 ENT-011	Connection

@@ -1,0 +1,6 @@
+Get Allergy Intolerances (Patient Summary) [API-007-002-0003]
+Get Allergy Intolerance by id (Patient Summary) [API-007-002-0004]
+
+### Get Allergy Intolerances (Patient Summary) [GET /api/patients/{patient_id}/summary/allergy_intolerances{?page,page_size,code,onset_date_time_from,onset_date_time_to}]
+### Get Allergy Intolerance by Id (Patient Summary) [GET /api/patients/{patient_id}/summary/allergy_intolerances/{id}]
+
