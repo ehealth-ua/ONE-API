@@ -3714,6 +3714,36 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
     + Attributes (`Response_OK`)
         + data (`Medical_Event_Context_Episode_Response`)
 
+### Get Short Episodes by Search Params (Patient Summary) [GET /api/patients/{patient_id}/summary/episodes{?period_from,period_to,page,page_size}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-027-0023
+Scope              | patient_summary:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18917916673/DRAFT+REST+API+Get+Short+Episodes+by+search+params">Get Short Episodes by Search Params (Patient Summary)</a>
+
+This web service returns brief information in order not to disclose confidential and sensitive data. Access to full episode data is restricted by patient's approval.
+If you have an approval - you can obtain episode details and nested entities through `/episode/:id/*` web services.
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `page`: 2 (number, optional) - Page number
+    + `page_size`: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `period_start_from`: `2017-01-01` (string, optional)
+    + `period_start_to`: `2018-01-01` (string, optional)
+    + `period_end_from`: `2017-01-01` (string, optional)
+    + `period_end_to`: `2018-01-01` (string, optional)
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        api-key: aFBLVTZ6Z2dON1V
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data(array[`Episode_Of_Care_Short`])
+
 ## Composition [/me/composition]
 
 Key                | Value

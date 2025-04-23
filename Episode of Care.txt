@@ -7,3 +7,6 @@ Close Episode				API-007-006-001-0272
 Cancel Episode				API-007-006-001-0273
 Get Encounter context			API-007-004-004-0258
 Get Short Episodes by Diagnoses Groups	API-007-006-001-0274
+
+### Get Short Episodes by Search Params (Patient Summary) [GET /api/patients/{patient_id}/summary/episodes{?period_from,period_to,page,page_size}]
+### Get Encounter Context [GET /api/patients/{patient_id}/encounters/{encounter_id}/context]
