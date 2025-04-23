@@ -1957,7 +1957,62 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
         + data (array[`Device_Response`], fixed-type)    
+
+## Diagnostic Report [/me/diagnostic_report]
+
+Key                | Value
+-------------------|-----------
+ESOZ ENT ID        | ENT-021
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18832949339/Diagnostic+Report+ENT-021
+">Diagnostic Report</a>
     
+### Get Diagnostic Report by Id (Patient Summary) [GET /api/patients/{patient_id}/summary/diagnostic_reports/{diagnostic_report_id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-021-0006
+Scope              | patient_summary:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572233223/DRAFT+REST+API+Get+Devices+by+search+params+Patient+Summary">Get Diagnostic Report by Id (Patient Summary)</a>
+
++ Parameters
+    + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
+    + diagnostic_report_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique DR identifier
+    
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Diagnostic_Report_Response`)
+
+### Get Diagnostic Report by Search Params (Patient Summary) [GET /api/patients/{patient_id}/summary/diagnostic_reports/{?issued_from,issued_to,page,page_size,code,encounter_id,context_episode_id, initial_episode_id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-021-0006
+Scope              | patient_summary:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572200466/DRAFT+REST+API+Get+Diagnostic+Report+by+search+params+Patient+Summary">Get Diagnostic Report by Search Params (Patient Summary)</a>
+
++ Parameters
+    + `page`: 2 (number, optional) - Page number.    
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `code`: `12345` (string, optional) 
+    + `issued_from`: `1990-01-01` (string, optional) 
+    + `issued_to`: `2000-01-01` (string, optional) 
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Diagnostic_Report_Response`], fixed-type)
+
 ## Allergy Intollerance [/me/allergy_intollerance]
 
 Key                | Value

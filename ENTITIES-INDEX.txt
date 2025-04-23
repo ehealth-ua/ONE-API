@@ -18,7 +18,7 @@ ENT-017	Device Association
 ENT-018	Device Definition
 ENT-019	Device Dispence
 ENT-020	Device Request
-ENT-021	Diagnostic Report
+ENT-021	Diagnostic Report (2/7)
 ENT-022	Division (DONE)
 ENT-023	Employee
 ENT-024	Employee Request

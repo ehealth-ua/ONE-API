@@ -1,0 +1,5 @@
+Get Diagnostic Report by ID (Patient Summary) [API-007-021-0006]
+Get Diagnostic Report by search params (Patient Summary) [API-007-021-0007]
+
+### Get Diagnostic Report by Search Params (Patient Summary) [GET /api/patients/{patient_id}/summary/diagnostic_reports/{?issued_from,issued_to,page,page_size,code,encounter_id,context_episode_id, initial_episode_id}]
+### Get Diagnostic Report by Id (Patient Summary) [GET /api/patients/{patient_id}/summary/diagnostic_reports/{diagnostic_report_id}]
