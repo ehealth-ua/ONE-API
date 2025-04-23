@@ -1793,6 +1793,62 @@ Some routes in ESOZ are managed not only by scope-based  model and ABAC rules, b
 After successfull access with ABAC response will be filtered according
 to [Medical Events filtration by Forbidden groups](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/5056954517/Medical+Events+filtration+by+Forbidden+groups+EN).
 
+## Clinical Impression [/me/clinical_impression]
+
+Key                | Value
+-------------------|-----------
+ESOZ ENT ID        | ENT-008
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18831213242/Clinical+Impression+ENT-008">Clinical Impression</a>
+
+### Get Clinical Impression by Id (Patient Summary) [GET /api/patients/{patient_id}/summary/clinical_impressions/{clinical_impression_id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-008-0003
+Scope              | patient_summary:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571873083/DRAFT+REST+API+Get+Clinical+Impression+by+id+Patient+Summary">Get Clinical Impression by Id (Patient Summary)</a>
+
++ Parameters
+    + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
+    + clinical_impression_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique Clinical impression identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Clinical_Impression_Show`)
+
+### Get Clinical Impressions (Patient Summary) [GET /api/patients/{patient_id}/summary/clinical_impressions{?encounter_id,episode_id,code,status,page,page_size}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-008-0004
+Scope              | patient_summary:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18831213242/Clinical+Impression+ENT-008">Get Clinical Impressions (Patient Summary)</a>
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + encounter_id: `7c3da506-804d-4550-8993-bf17f9ee0400` (string, optional) - identifier of the encounter in Clinical impression
+    + episode_id: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional)    
+    + code: `insulin_1` (string, optional) - Clinical impression's code
+    + status: `completed` (string, optional) - Clinical impression's status
+    + page: 2 (number, optional) - Page number
+    + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Clinical_Impression_Show`], fixed-type)
+
 ## Allergy Intollerance [/me/allergy_intollerance]
 
 Key                | Value
@@ -1848,61 +1904,6 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
     + Attributes (`Response_OK`)
         + data (`Allergy_Intolerance_Response`, fixed-type)
 
-Key                | Value
--------------------|-----------
-ESOZ ENT ID        | ENT-008
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18831213242/Clinical+Impression+ENT-008">Clinical Impression</a>
-
-
-### Get Clinical Impression by Id (Patient Summary) [GET /api/patients/{patient_id}/summary/clinical_impressions/{clinical_impression_id}]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        | API-007-008-0003
-Scope              | patient_summary:read
-Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571873083/DRAFT+REST+API+Get+Clinical+Impression+by+id+Patient+Summary">Get Clinical Impression by Id (Patient Summary)</a>
-
-
-+ Parameters
-    + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
-    + clinical_impression_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique Clinical impression identifier
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer mF_9.B5f-4.1JqM
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (`Response_OK`)
-        + data (`Clinical_Impression_Show`)
-
-### Get Clinical Impressions (Patient Summary) [GET /api/patients/{patient_id}/summary/clinical_impressions{?encounter_id,episode_id,code,status,page,page_size}]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        | API-007-008-0004
-Scope              | patient_summary:read
-Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18831213242/Clinical+Impression+ENT-008">Get Clinical Impressions (Patient Summary)</a>
-
-+ Parameters
-    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
-    + encounter_id: `7c3da506-804d-4550-8993-bf17f9ee0400` (string, optional) - identifier of the encounter in Clinical impression
-    + episode_id: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional)    
-    + code: `insulin_1` (string, optional) - Clinical impression's code
-    + status: `completed` (string, optional) - Clinical impression's status
-    + page: 2 (number, optional) - Page number
-    + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer mF_9.B5f-4.1JqM
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (`Response_Collection`)
-        + data (array[`Clinical_Impression_Show`], fixed-type)
 
 ## Medication Request [/me/medication_request]
 
