@@ -1793,6 +1793,60 @@ Some routes in ESOZ are managed not only by scope-based  model and ABAC rules, b
 After successfull access with ABAC response will be filtered according
 to [Medical Events filtration by Forbidden groups](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/5056954517/Medical+Events+filtration+by+Forbidden+groups+EN).
 
+## Allergy Intollerance [/me/allergy_intollerance]
+
+Key                | Value
+-------------------|-----------
+ESOZ ENT ID        | ENT-022
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17479434304/Allergy+Intolerance+ENT-002">Allergy Intolerance</a>
+
+### Get Allergy Intolerances [GET /api/patients/{patient_id}/summary/allergy_intolerances{?page,page_size,code,onset_date_time_from,onset_date_time_to}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-002-0003
+Scope              | patient_summary:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571905775/DRAFT+REST+API+Get+Allergy+Intolerances+Patient+Summary">Get Allergy Intolerances (Patient Summary)</a>
+
++ Parameters
+    + `patient_id`: `7a489bbd-d8e2-48d9-92fd-fcf0102f7b08` (string, required) - Unique patient identifier
+    + `page`: `2` (number, optional) - Page number.
+    + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `code`: `227493005` (string, optional)
+    + `onset_date_time_from`: `1990-01-01` (string, optional)
+    + `onset_date_time_to`: `2000-01-01` (string, optional)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Allergy_Intolerance_Response`], fixed-type)
+
+### Get Allergy Intolerance by Id (Patient Summary) [GET /api/patients/{patient_id}/summary/allergy_intolerances/{id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-002-0003
+Scope              | patient_summary:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571905775/DRAFT+REST+API+Get+Allergy+Intolerances+Patient+Summary">Get Allergy Intolerances (Patient Summary)</a>
+
++ Parameters
+    + patient_id: `7a489bbd-d8e2-48d9-92fd-fcf0102f7b08` (string, required) - Unique patient identifier
+    + id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique allergy intolerance identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Allergy_Intolerance_Response`, fixed-type)
 
 ## Medication Request [/me/medication_request]
 
