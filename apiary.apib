@@ -3692,6 +3692,28 @@ If you have an approval - you can obtain episode details and nested entities thr
     + Attributes (`Response_Collection`)
         + data(array[`Episode_Of_Care_Short_With_Diagnoses`])
 
+### Get Encounter Context [GET /api/patients/{patient_id}/encounters/{encounter_id}/context]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-027-0006
+Scope              | medical_event_context:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18022334586/DRAFT+REST+API+Get+Encounter+context">Get Encounter Context</a>
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `encounter_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Encounter identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
+
 ## Composition [/me/composition]
 
 Key                | Value
@@ -13230,3 +13252,31 @@ status: `APPROVED` (string, required)
 + inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
 + updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
 
+### `Medical_Event_Context_Episode_Response`
++ `episode` (`Medical_Event_Context_Episode`)
+
+### `Medical_Event_Context_Episode_with_Diagnostic_Report_Response`
++ `episode` (`Medical_Event_Context_Episode`)
++ `diagnostic_report` (`Medical_Event_Context_Diagnostic_Report`)
+
+### `Medical_Event_Context_Episode_with_Origin_Episode_Response`
++ `episode` (`Medical_Event_Context_Episode`)
++ `origin_episode` (`Medical_Event_Context_Episode`)
+
+### `Medical_Event_Context_Episode`
++ identifier (Identifier)
+    + type (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `episode` (string)
+    + value: `7c3da506-804d-4550-8993-bf17f9ee0403` (string)
++ display_value: `null` (string, required) - This field is filled on creating and never updated after
+
+### `Medical_Event_Context_Diagnostic_Report`
++ identifier (Identifier)
+    + type (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `diagnostic_report` (string)
+    + value: `7c3da506-804d-4550-8993-bf17f9ee0403` (string)
++ display_value: `null` (string, required) - This field is filled on creating and never updated after
