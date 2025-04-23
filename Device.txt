@@ -1,0 +1,5 @@
+Get Device by id (Patient Summary) [API-007-016-0003]
+Get Devices by search params (Patient Summary) [API-007-016-0002]
+
+### Get Device by id [GET /api/patients/{patient_id}/summary/devices/{device_id}]
+### Get Devices by search params [GET /api/patients/{patient_id}/summary/devices{?asserted_date_from,asserted_date_to,page,page_size,type,encounter_id,episode_id}]

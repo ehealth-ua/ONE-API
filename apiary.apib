@@ -1904,6 +1904,60 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
     + Attributes (`Response_OK`)
         + data (`Condition_Response`, fixed-type)
 
+## Device [/me/device]
+
+Key                | Value
+-------------------|-----------
+ESOZ ENT ID        | ENT-016
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18832326705/Device+ENT-016">Device</a>
+
+### Get Device by Id (Patient Summary) [GET /api/patients/{patient_id}/summary/devices/{device_id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-016-0003
+Scope              | patient_summary:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571807338/DRAFT+REST+API+Get+Device+by+id+Patient+Summary">Get Device by Id (Patient Summary)</a>
+
++ Parameters
+    + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
+    + device_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique device identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Device_Response`)
+
+### Get Devices by Search Params (Patient Summary) [GET /api/patients/{patient_id}/summary/devices{?asserted_date_from,asserted_date_to,page,page_size,type,encounter_id,episode_id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-016-0002
+Scope              | patient_summary:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572233223/DRAFT+REST+API+Get+Devices+by+search+params+Patient+Summary">Get Devices by Search Params (Patient Summary)</a>
+
++ Parameters
+    + `page`: 2 (number, optional) - Page number.    
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `type`: `spine_board` (string, optional) 
+    + `asserted_date_from`: `1990-01-01` (string, optional) 
+    + `asserted_date_to`: `2000-01-01` (string, optional) 
+    
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Device_Response`], fixed-type)    
+    
 ## Allergy Intollerance [/me/allergy_intollerance]
 
 Key                | Value
@@ -13021,4 +13075,38 @@ status: `APPROVED` (string, required)
 + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
 + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
 + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
+### `Device_Response`
++ include `Device_Request`
++ definition (Reference_response, optional)
+    + identifier (Identifier, optional, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, required,fixed-type)
+                + (Coding)
+                    + code: `device_definition` (string)
++ parent: (Reference_response, optional)
+    + identifier (Identifier, optional, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, required,fixed-type)
+                + (Coding)
+                    + code: `device` (string)
++ recorder: (Reference_response, required)
+    + identifier (Identifier, optional, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, required,fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ context: (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ `status_reason` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `device_status_reasons` (string)
+            + code: `default` (string)
++ inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
++ updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
 
