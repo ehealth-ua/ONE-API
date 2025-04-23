@@ -23,7 +23,7 @@ ENT-022	Division (DONE)
 ENT-023	Employee
 ENT-024	Employee Request
 ENT-025	Employee Role
-ENT-026	Encounter (PLANNED)
+ENT-026	Encounter (2/9)
 ENT-027	Episode Of Care (DONE)
 ENT-028	Equipment (DONE)
 ENT-029	Event
