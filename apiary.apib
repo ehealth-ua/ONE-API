@@ -1849,6 +1849,54 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
     + Attributes (`Response_Collection`)
         + data (array[`Clinical_Impression_Show`], fixed-type)
 
+### Get Conditions (Patient Summary) [GET /api/patients/{patient_id}/summary/conditions{?page,page_size,code,onset_date_from,onset_date_to}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-008-003-0282
+Scope              | patient_summary:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572069377/DRAFT+REST+API+Get+Conditions+Patient+Summary">Get Conditions (Patient Summary)</a>
+
++ Parameters
+    + `patient_id`: `7a489bbd-d8e2-48d9-92fd-fcf0102f7b08` (string, required) - Unique patient identifier
+    + `page`: `1` (number,optional) - Page number.    
+    + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `code`: `A20` (string, optional)
+    + `onset_date_from`: `1990-01-01` (string, optional)
+    + `onset_date_to`: `2000-01-01` (string, optional)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Condition_Response`], fixed-type)
+
+### Get Condition by Id (Patient Summary) [GET /api/patients/{patient_id}/summary/conditions/{id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-008-003-0283
+Scope              | patient_summary:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572134913/DRAFT+REST+API+Get+Condition+by+id+Patient+Summary">Get Condition by Id (Patient Summary)</a>
+
++ Parameters
+    + patient_id: `7a489bbd-d8e2-48d9-92fd-fcf0102f7b08` (string, required) - Unique patient identifier
+    + id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique condition identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Condition_Response`, fixed-type)
+
 ## Allergy Intollerance [/me/allergy_intollerance]
 
 Key                | Value

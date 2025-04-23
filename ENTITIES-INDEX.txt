@@ -7,7 +7,7 @@ ENT-006	Care Plan Activity
 ENT-007	Client
 ENT-008	Clinical Impression (2/4)
 ENT-009	Composition (DONE)
-ENT-010	Condition
+ENT-010	Condition (2/6)
 ENT-011	Connection
 ENT-012	Contract
 ENT-013	Declaration

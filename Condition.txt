@@ -1,0 +1,5 @@
+Get Conditions (Patient Summary) [API-007-008-003-0282]
+Get Condition by id (Patient Summary) [API-007-008-003-0283]
+
+### Get Conditions (Patient Summary) [GET /api/patients/{patient_id}/summary/conditions{?page,page_size,code,onset_date_from,onset_date_to}]
+### Get Condition by Id (Patient Summary) [GET /api/patients/{patient_id}/summary/conditions/{id}]
