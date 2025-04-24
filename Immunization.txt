@@ -1,0 +1,2 @@
+Get Immunizations (Patient Summary) [API-007-033-0001]
+Get Immunization by id (Patient Summary) [API-007-033-0002]

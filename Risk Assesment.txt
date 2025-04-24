@@ -1,0 +1,2 @@
+Get Risk Assessment by id (Patient Summary) [API-007-059-0001]
+Get Risk Assessments by search params (Patient Summary) [API-007-059-0002]

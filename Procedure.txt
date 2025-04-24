@@ -1,0 +1,2 @@
+Get Procedure by id (Patient Summary) [API-007-058-0001]
+Get Procedures by search params (Patient Summary) [API-007-058-0002]

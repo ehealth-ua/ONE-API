@@ -28,9 +28,9 @@ ENT-027	Episode Of Care (DONE)
 ENT-028	Equipment (DONE)
 ENT-029	Event
 ENT-030	Forbidden Group
-ENT-031	Groups of Diagnoses
+ENT-031	Groups of Diagnoses (DONE)
 ENT-032	Healthcare Service
-ENT-033	Immunization, Integrations
+ENT-033	Immunization (2/6)
 ENT-034	Job
 ENT-035	Legal Entity (DONE)
 ENT-036	License (DONE)
@@ -42,10 +42,10 @@ ENT-041	Medication Administration
 ENT-042	Medication Dispense (DONE)
 ENT-043	Medication Request (DONE)
 ENT-044	Medication Request Request (DONE)
-ENT-045	Medication Statement
+ENT-045	Medication Statement (DONE)
 ENT-046	Monitor Justification
 ENT-047	NHS Admin Registers
-ENT-048	Observation
+ENT-048	Observation (2/6)
 ENT-049	Party
 ENT-050	Person (DONE)
 ENT-051	Person Authentication Method
@@ -54,11 +54,11 @@ ENT-053	Person Documents
 ENT-054	Person Merge Request
 ENT-055	Person Request
 ENT-056	Person Verification
-ENT-057	Preperson (PLANNED)
-ENT-058	Procedure
-ENT-059	Risk Assessment
+ENT-057	Preperson
+ENT-058	Procedure (2/6)
+ENT-059	Risk Assessment (2/4)
 ENT-060	Rule Engine Rule
-ENT-061	Service (PROGRESS)
+ENT-061	Service
 ENT-062	Service Request
 ENT-063	Specimen (DONE)
 ENT-064	System Configuration
