@@ -3936,14 +3936,14 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
             + type: NOT_FOUND (string)
             + message: `Patient not found` (string)
 
-### Get Allergy Intolerances Context [GET /api/patients/{patient_id}/episodes/{episode_id}/allergy_intolerances{?code,onset_date_time_from,onset_date_time_to,page,page_size}]
+### Get Allergy Intolerance Context [GET /api/patients/{patient_id}/episodes/{episode_id}/allergy_intolerances{?code,onset_date_time_from,onset_date_time_to,page,page_size}]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-007-027-0001
 Scope              | medical_event_context:read
 Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18681724979/DRAFT+REST+API+Get+Allergy+Intolerance+context">Get Allergy Intolerances Context</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18681724979/DRAFT+REST+API+Get+Allergy+Intolerance+context">Get Allergy Intolerance Context</a>
 
 + Parameters
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
@@ -3986,14 +3986,80 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
     + Attributes (`Response_OK`)
         + data (`Medical_Event_Context_Episode_Response`)
 
-### Get Encounters Context [GET /api/patients/{patient_id}/episodes/{episode_id}/encounters{?date_from,date_to,page,page_size}]
+### Get Condition Context [GET /api/patients/{patient_id}/conditions/{condition_id}/context]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-027-0003
+Scope              | medical_event_context:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18563466419/DRAFT+REST+API+Get+Condition+context">Get Condition Context</a>
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `condition_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Condition identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
+
+### Get Device Context [GET /api/patients/{patient_id}/devices/{device_id}/context]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-027-0004
+Scope              | medical_event_context:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18681987331/DRAFT+REST+API+Get+Device+context">Get Device Context</a>
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `device_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Device identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
+
+### Get Diagnostic Report Context [GET /api/patients/{patient_id}/diagnostic_reports/{diagnostic_report_id}/context]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-027-0005
+Scope              | medical_event_context:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18563466447/DRAFT+REST+API+Get+Diagnostic+Report+contexts">Get Diagnostic Report Context</a>
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `diagnostic_report_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Diagnostic Report identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_with_Origin_Episode_Response`)
+ 
+### Get Encounter Context [GET /api/patients/{patient_id}/episodes/{episode_id}/encounters{?date_from,date_to,page,page_size}]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-007-027-0006
-Scope              | episode:write
+Scope              | medical_event_context:read
 Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18022334586/REST+API+Get+Encounter+context">Get Encounters in Episode Context</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18022334586/REST+API+Get+Encounter+context">Get Encounter Context</a>
 
 + Parameters
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
@@ -4007,6 +4073,183 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
         + data (`Medical_Event_Context_Episode_Response`)
+
+### Get Immunization Context [GET /api/patients/{patient_id}/immunizations/{immunization_id}/context]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-027-0015
+Scope              | medical_event_context:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18699550744/DRAFT+REST+API+Get+Immunization+context">Get Immunization Context</a>
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `immunization_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Immunization identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
+
+### Get Medication Administration Context [GET /api/patients/{patient_id}/medication_administrations/{medication_administration_id}/context]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-027-0016
+Scope              | medical_event_context:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18564972893/DRAFT+REST+API+Get+Medication+Administration+context">Get Medication Administration Context</a>
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `medication_administration_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Medication Administration identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
+
+### Get Medication Statement Context [GET /api/patients/{patient_id}/medication_statements/{medication_statement_id}/context]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-027-0017
+Scope              | medical_event_context:read
+Auth               | yes
+Link to Confluence | <a href=https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18699747509/DRAFT+REST+API+Get+Medication+Statement+context">Get Medication Statement Context</a>
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `medication_statement_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Medication Statement identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
+
+### Get Observation Contexts [GET /api/patients/{patient_id}/observations/{observation_id}/context]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-027-0018
+Scope              | medical_event_context:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18429411565/DRAFT+REST+API+Get+Observation+contexts">Get Observation Context</a>
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `observation_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Observation identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_with_Diagnostic_Report_Response`)
+
+### Get Procedure Context [GET /api/patients/{patient_id}/procedures/{procedure_id}/context]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-027-0019
+Scope              | medical_event_context:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18563794707/DRAFT+REST+API+Get+Procedure+contexts">Get Procedure Context</a>
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `procedure_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Procedure identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_with_Origin_Episode_Response`)
+
+### Get Risk Assessment Context [GET /api/patients/{patient_id}/risk_assessments/{risk_assessment_id}/context]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-027-0020
+Scope              | medical_event_context:read
+Auth               | yes
+Link to Confluence | <a href="">Get Risk Assessment Context</a>
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `risk_assessment_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Risk Assessment identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
+
+### Get Device Association Context [GET /api/patients/{patient_id}/device_associations/{device_association_id}/context]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-027-0021
+Scope              | medical_event_context:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18937675779/DRAFT+REST+API+Get+Device+Association+context">Get Device Association Context</a>
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `device_association_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) -  Device Association identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
+
+### Get Detected Issue Context [GET /api/patients/{patient_id}/detected_issues/{detected_issue_id}/context]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-027-0022
+Scope              | medical_event_context:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18937282609/DRAFT+REST+API+Get+Detected+Issue+context">Get Detected Issue Context</a>
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `detected_issue_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) -  Detected Issue identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
+
 
 ### Get Short Episodes by Diagnoses Groups [GET /api/patients/{patient_id}/diagnoses_groups/episodes{?period_from,period_to,diagnoses_group_id,managing_organization_id,page,page_size}]
 
