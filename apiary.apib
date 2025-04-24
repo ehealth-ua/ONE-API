@@ -338,7 +338,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-012-001-003-0409
+ESOZ API ID        | API-012-001-0001
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570430977/DRAFT+REST+API+List+Of+Districts+By+Search+Params">List Of Districts By Search Params</a>
 
 + Parameters
@@ -361,7 +361,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-012-001-003-0410
+ESOZ API ID        | API-012-001-0002
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570234376/DRAFT+REST+API+Districts+by+Region">Districts by Region </a>
 
 + Parameters
@@ -382,7 +382,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-012-001-003-0411
+ESOZ API ID        | API-012-001-0003
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570693121/DRAFT+REST+API+Settlements+by+district">Settlements by district</a>
 
 Get list of cities by district.
@@ -405,7 +405,7 @@ Get list of cities by district.
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-012-001-003-0412
+ESOZ API ID        | API-012-001-0004
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570234387/DRAFT+REST+API+List+Of+Regions+By+Search+Params">List Of Regions By Search Params</a>
 
 + Parameters
@@ -424,7 +424,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-012-001-003-0413
+ESOZ API ID        | API-012-001-0005
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570562054/DRAFT+REST+API+List+Of+Cities+By+Search+Params">List Of Cities By Search Params </a>
 
 Use this method to obtain list of cities. If you want to reduce amount of data that is going trough your application, use `name`, `region`, `district` or `koatuu classifier` filters and show only cities you are interested in.
@@ -447,7 +447,7 @@ Use this method to obtain list of cities. If you want to reduce amount of data t
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-012-001-003-0414
+ESOZ API ID        | API-012-001-0006
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570660364/DRAFT+REST+API+Get+settlement+details+by+ID">Get Settlement Details by Id</a>
 
 Use this method to obtain city details.
@@ -467,7 +467,7 @@ Use this method to obtain city details.
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-012-001-003-0415
+ESOZ API ID        | API-012-001-0007
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570758657/DRAFT+REST+API+List+of+Streets+by+Search+Params">List of Streets by Search Params</a>
 
 + Parameters
@@ -485,20 +485,20 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 + Response 422 (application/json)
 
-## Dictionaries and Registers [/gen/services]
+## System Dictionary [/gen/system_dictionary]
 
 API for Services and Dictionaries.
 
 Key                | Value
 -------------------|-----------
-ESOZ ENT ID        | ENT-060
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17482940731/Dictionaries+and+Registers">Dictionaries and Registers</a>
+ESOZ ENT ID        | ENT-065
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17483006257/System+Dictionary+ENT-065">System Dictionary</a>
 
 ### Get Dictionaries [GET /api/dictionaries{?name,is_active}]
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-011-001-008-0406
+ESOZ API ID        | API-011-065-0001
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570889877/DRAFT+REST+API+Get+dictionaries">Get Dictionaries</a>
 
 Each dictionary is an object that contains `{key}:{value}` pairs where: `{key}` is a dictionary record and `{value}` is a dictionary record description.
@@ -521,7 +521,7 @@ Each dictionary is an object that contains `{key}:{value}` pairs where: `{key}` 
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-011-001-008-0407
+ESOZ API ID        | API-011-065-0002
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570627706/REST+API+Get+dictionary+v.2">Get Dictionaries V2</a>
 
 Each dictionary is an object that contains not only a code and description of a value,
@@ -567,7 +567,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-011-001-004-0391
+ESOZ API ID        | API-011-037-0001
 Scope              | medical_program:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570431118/REST+API+Get+medical+programs+list">Get Medical Programs List</a>
@@ -597,10 +597,10 @@ Method returns list of medical programs filtering by parameters. By default meth
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-011-001-004-0392
+ESOZ API ID        | API-011-037-0002
 Scope              | medical_program:read
 Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570431118/REST+API+Get+medical+programs+list">Get Medical Programs List</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570103419/REST+API+Get+Medical+Program+by+id">Get Medical Program by Id</a>
 
 This endpoint returns medical program by id.
 
@@ -618,9 +618,8 @@ This endpoint returns medical program by id.
 
 ### Get Program Services List [GET /api/program_services{?medical_program_id,page,page_size}]
 
-This endpoint returns list of service program members.
+This endpoint returns list of service program members. **Scopes required:** `program_service:read`.
 
-**Scopes required:** `program_service:read`
 + Parameters
     + medical_program_id: `1380df72-275a-11e7-93ae-92361f002671` (string, required)
     + page: 2 (number, optional) - Page number
@@ -640,9 +639,7 @@ This endpoint returns list of service program members.
 
 ### Get Program Service by Id [GET /api/program_services/id]
 
-This endpoint returns service program member by id.
-
-**Scopes required:** `program_service:read`
+This endpoint returns service program member by id. **Scopes required:** `program_service:read`.
 
 + Request (application/json)
     + Headers
@@ -729,7 +726,7 @@ export function setupAuth() {
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-009-001-001-0323
+ESOZ API ID        | API-009-068-0001
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571446858/Login">Login</a>
 
 Create Session Token by Object.
@@ -806,7 +803,7 @@ Link to Confluence | N/A
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-009-001-001-0324
+ESOZ API ID        | API-009-068-0002
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571807257/Exchange+oAuth+Code+Grant+to+Access+Token">Issuing Grant Access Token</a>
 
 + Request (application/json)
@@ -831,7 +828,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-009-001-001-0325
+ESOZ API ID        | API-009-068-0003
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571315778/Use+Refresh+Token+for+Access+Token+extension">Reissuing Session Token</a>
 
 + Request (application/json)
@@ -856,7 +853,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-009-001-001-0326
+ESOZ API ID        | API-009-068-0004
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18448646240/DRAFT+PIS.+Logout">Logout</a>
 
 
@@ -919,7 +916,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-005-006-001-0087
+ESOZ API ID        | API-005-022-0001
 Scope              | related_legal_entities:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570889841/DRAFT+Get+divisions">Get Divisions</a>
@@ -949,7 +946,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-005-006-001-0088
+ESOZ API ID        | API-005-022-0002
 Scope              | related_legal_entities:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570136296/DRAFT+Update+division">Update Division</a>
@@ -976,7 +973,7 @@ More details can be found [here](https://e-health-ua.atlassian.net/wiki/x/GQB7Iw
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-005-006-001-0089
+ESOZ API ID        | API-005-022-0003
 Scope              | related_legal_entities:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570431096/DRAFT+Create+division">Create Division</a>
@@ -1000,7 +997,7 @@ More details can be found [here](https://e-health-ua.atlassian.net/wiki/x/GQB7Iw
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-005-006-001-0090
+ESOZ API ID        | API-005-022-0004
 Scope              | related_legal_entities:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570922579/DRAFT+Deactivate+division">Deactivate Division</a>
@@ -1022,7 +1019,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-005-006-001-0091
+ESOZ API ID        |API-005-022-0005
 Scope              | related_legal_entities:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570693263/DRAFT+Activate+division">Activate Division</a>
@@ -1051,7 +1048,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-005-009-002-0176
+ESOZ API ID        | API-005-035-0001
 Scope              | legal_entity:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570824360/DRAFT+Get+Legal+Entities+V2">Get Legal Entities</a>
@@ -1097,7 +1094,7 @@ List consists of legal entities with parameter `is_active = true`.
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-005-009-002-0177
+ESOZ API ID        | API-005-035-0002
 Scope              | legal_entity:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570562268/DRAFT+Get+Legal+Entity+by+ID+V2">Get Legal Entity by Id</a>
@@ -1132,7 +1129,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-005-009-002-0178
+ESOZ API ID        | API-005-035-0003
 Scope              | legal_entity:write
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570857172/DRAFT+Create+Update+Legal+Entity+V2">Create or Update Legal Entity</a>
@@ -1206,7 +1203,9 @@ that describes the latest legal entity data model and can be used as documentati
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-005-009-002-0179
+ESOZ API ID        |API-005-035-0004
+Auth               | yes
+Scope              | legal_entity:verify
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570464009/DRAFT+Verify+Legal+Entity+by+NHS">Verify Legal Entity by NHS</a>
 
 Use this method to verify legal entity by NHS.
@@ -1229,7 +1228,9 @@ Available transition: `nhs_verified` false --> true.
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-005-009-002-0180
+ESOZ API ID        | API-005-035-0005
+Scope              | legal_entity:deactivate
+Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570824371/DRAFT+Deactivate+Legal+Entity">Deactivate Legal Entity</a>
 
 Use this method to deactivate MSP.
@@ -1254,7 +1255,7 @@ Update status on CLOSED.
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-005-009-002-0186
+ESOZ API ID        | API-005-035-0006
 Scope              | related_legal_entities:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570922693/DRAFT+Get+legators+Legal+Entities">Get Legators Legal Entities</a>
@@ -1332,7 +1333,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-007-002-002-0232
+ESOZ API ID        | API-007-028-0001
 Scope              | equipment:write
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571807355/DRAFT+REST+API+Create+equipment">Create Equipment</a>
@@ -1358,7 +1359,7 @@ This method allows to register equipment and bind it with division of legal enti
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-007-002-002-0234
+ESOZ API ID        |API-007-028-0003
 Scope              | equipment:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571905656/DRAFT+REST+API+Get+equipment+list">Get Equipment List</a>
@@ -1394,7 +1395,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-007-002-002-0235
+ESOZ API ID        | API-007-028-0004
 Scope              | equipment:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571709070/DRAFT+REST+API+Get+equipment+details+by+ID">Get Equipment Details by Id</a>
@@ -1416,7 +1417,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-007-002-002-0239
+ESOZ API ID        | API-007-028-0008
 Scope              | equipment:write
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18872959018/DRAFT+REST+API+Change+equipment+status">Change Equipment Status</a>
@@ -1445,7 +1446,7 @@ Method to changes equipment status to `inactive` or `entered_in_error`.
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-007-002-002-0240
+ESOZ API ID        |API-007-028-0009
 Scope              | equipment:write
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18872500325/DRAFT+REST+API+Change+equipment+availability+status">Change Equipment Availability Status</a>
@@ -1477,7 +1478,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-005-009-003-0187
+ESOZ API ID        | API-005-036-0001
 Scope              | license:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570824387/DRAFT+Get+licenses">Get Licenses</a>
@@ -1502,7 +1503,7 @@ Use this end-point to obtain all Licenses of the legal entity.
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-005-009-003-0188
+ESOZ API ID        | API-005-036-0002
 Scope              | license:write
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570758930/DRAFT+Create+license">Create License</a>
@@ -1529,7 +1530,7 @@ Primary license must be added with `Create or Update Legal Entity` method.
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-005-009-003-0188
+ESOZ API ID        | API-005-036-0003
 Scope              | license:write
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570136425/DRAFT+Update+license">Update License</a>
@@ -1567,7 +1568,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-010-001-003-0360
+ESOZ API ID        | API-010-050-0001
 Scope              | person:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570234423/REST+API+Search+for+a+person">Search for a Person</a>
@@ -1615,7 +1616,7 @@ Block `merged_persons` will be deprecated from response and endpoint `Search Per
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-010-001-003-0361
+ESOZ API ID        |API-010-050-0002
 Scope              | person:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570332697/REST+API+Search+Person+s+merged+persons">Search Person's Merged Persons</a>
@@ -1665,7 +1666,7 @@ This information was in response of Get `Search for a Person` before.
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-010-001-003-0363
+ESOZ API ID        | API-010-050-0003
 Scope              | person_verification:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570758717/DRAFT+REST+API+Get+Person+verification+details">Get Person Verification Details</a>
@@ -1690,7 +1691,7 @@ This method returns current person's verification status and another information
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-010-001-003-0372
+ESOZ API ID        | API-010-050-0004
 Scope              | person:sign_up
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18448875573/DRAFT+REST+API+PIS.+Patient+sign-up">Patient sign-up</a>
@@ -1711,7 +1712,7 @@ User will see rendered registration page signed on PIS side and provided via que
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-010-001-003-0373
+ESOZ API ID        | API-010-050-0005
 Scope              | person:sign_in
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18449301577/DRAFT+REST+API+PIS.+Patient+sign-in">Patient sign-in</a>
@@ -1736,7 +1737,7 @@ For security purposes, we will set `X-Frame-Options: deny` header that will disa
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-010-001-003-0373
+ESOZ API ID        | API-010-050-0006
 Scope              | person:sign_in
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18698829979/DRAFT+REST+API+PIS.+Get+Person+details">Get Person Details</a>
