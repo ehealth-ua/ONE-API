@@ -3964,6 +3964,28 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
     + Attributes (`Response_Collection`)
         + data (array[`Allergy_Intolerance_Response`], fixed-type)
 
+### Get Clinical Impression Context [GET /api/patients/{patient_id}/clinical_impressions/{clinical_impression_id}/context]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-027-0002
+Scope              | medical_event_context:read
+Auth               | yes
+Link to Confluence | <a href="">Get Clinical Impression Context</a>
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `clinical_impression_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Clinical Impression identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
+
 ### Get Encounters Context [GET /api/patients/{patient_id}/episodes/{episode_id}/encounters{?date_from,date_to,page,page_size}]
 
 Key                | Value
