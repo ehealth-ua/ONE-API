@@ -1,0 +1,4 @@
+Get Active Diagnoses (Patient Summary) [API-007-031-0001]
+
+### Get active Diagnoses [GET /api/patients/{patient_id}/summary/diagnoses]
+

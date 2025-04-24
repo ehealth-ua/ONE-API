@@ -2134,6 +2134,41 @@ The endpoint returns single short Encounter info.
     + Attributes (`Response_OK`)
         + data (`Encounter_Short`)
 
+## Groups of Diagnoses [/me/groups_of_diagnoses]
+
+Key                | Value
+-------------------|-----------
+ESOZ ENT ID        | ENT-031
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17479467181/Groups+of+Diagnoses+ENT-031">Groups of Diagnoses</a>
+
+### Get Active Diagnoses (Patient Summary) [GET /api/patients/{patient_id}/summary/diagnoses]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-031-0001
+Scope              | patient_summary:read 
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572167687/DRAFT+REST+API+Get+Active+Diagnoses+Patient+Summary">Get Active Diagnoses (Patient Summary)</a>
+
+This endpoint returns current diagnoses related only to active episodes. In order to get specific condition details, use [Get Condition by ID](https://esoz.docs.apiary.io/#reference/medical-events/condition/get-condition-by-id-(patient-summary))
+
++ Parameters
+    + `patient_id`: `7a489bbd-d8e2-48d9-92fd-fcf0102f7b08` (string, required) - Unique patient identifier
+    + `page`: `1` (number,optional) - Page number.    
+    + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `code`: `A20` (string, optional)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array, required, fixed-type)
+            + (Diagnosis_Referrence_Condition)
+            + (Diagnosis_Referrence_Condition_2)
+
 ## Medication Request [/me/medication_request]
 
 Key                | Value
