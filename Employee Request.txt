@@ -1,0 +1,5 @@
+Create Employee Request 				[API-005-024-0001]
+Get Employee Requests List 				[API-005-024-0002]
+Get Employee Request by ID 				[API-005-024-0003]
+Approve or Reject Employee Request 			[API-005-024-0004]
+Get Employee ID by Employee Request ID 			[API-005-024-0005]
