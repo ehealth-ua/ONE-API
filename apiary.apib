@@ -884,7 +884,7 @@ This method is designed to obtain list of contract request with filters. This me
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-005-012-0008
+ESOZ API ID        | API-005-012-0009
 Scope              | contract_request:approve
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17569087548/REST+API+Public.+Approve+Contract+Request+by+MSP">Approve Contract Request by MSP</a>
@@ -914,9 +914,14 @@ Only after that NHS employee can sign the contract request.
         + data (object)
             + include `Contract_request_Details_Reimbursement`
 
-### Public. Terminate Contract Request by MSP [PATCH /api/contract_requests/{contract_type}/{id}/actions/terminate]
+### Terminate Contract Request by MSP [PATCH /api/contract_requests/{contract_type}/{id}/actions/terminate]
 
-***Scope  contract_request:terminate***
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-012-0010
+Scope              | contract_request:terminate
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17569742899/REST+API+Public.+Terminate+Contract+Request+by+MSP">Terminate Contract Request by MSP</a>
 
 This WS is designed to terminate contract request by contractor. Contract request can't be in status='SIGNED'
 
@@ -924,11 +929,9 @@ This WS is designed to terminate contract request by contractor. Contract reques
     + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
 
 + Request (application/json)
-
     + Headers
-
-            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes (object)
         + `status_reason`: `Неправильний період контракту`(string, optional) - the reason of terminated status
@@ -947,9 +950,14 @@ This WS is designed to terminate contract request by contractor. Contract reques
         + data (object)
             + include `Contract_request_Details_Capitation`
 
-### Public. Get Contract Request Printout Content [GET /api/contract_requests/{contract_type}/{id}/printout_content]
+### Get Contract Request Printout Content [GET /api/contract_requests/{contract_type}/{id}/printout_content]
 
-***Scope  contract_request:read***
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-012-0011
+Scope              | contract_request:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17569021981/REST+API+Public.+Get+Contract+Request+Printout+Content">Get Contract Request Printout Content</a>
 
 This method is designed to get printout content by contract request id. In order to sign contract it's need to invoke
 Get Contract Request Details and Get Contract Request Printout Content and sign whole data.
@@ -970,11 +978,14 @@ Get Contract Request Details and Get Contract Request Printout Content and sign 
             + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - contract request identifier
             + `printout_content`: `Contract request content` (string, required) - HTML document for contract request, is shown contract request in status 'PENDING_NHS_SIGN'
 
+### Sign Contract Request by MSP [PATCH /api/contract_requests/{contract_type}/{id}/actions/sign_msp]
 
-
-### Public. Sign Contract Request by MSP [PATCH /api/contract_requests/{contract_type}/{id}/actions/sign_msp]
-
-***Scope  contract_request:sign***
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-012-0012
+Scope              | contract_request:sign
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17569546253/REST+API+Public.+Sign+Contract+Request+by+MSP">Sign Contract Request by MSP</a>
 
 This WS is designed to sign contract request from MSP side. Contract request's status must be in status ='NHS_SIGNED'.
 EDRPOU in DS certeficate = contractor_owner_id.lega_entity.edrpou and suranme in DS=contractor_owner_id.party_id.last_name
