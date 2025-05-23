@@ -485,6 +485,55 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 + Response 422 (application/json)
 
+## Contract [/gen/contract]
+
+Key                | Value
+-------------------|-----------
+ESOZ ENT ID        | ENT-012
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18833473537/Contract+ENT-012">Contract</a>
+
+### Get Contracts List [GET /api/contracts/{contract_type}/{?id,contractor_legal_entity_id,edrpou,contractor_owner_id,nhs_signer_id,is_suspended,status,contract_number,date_from_start_date,date_to_start_date,date_from_end_date,date_to_end_date,medical_program_id,page,page_size}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-012-0001
+Scope              | contract:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17569644549/REST+API+Public.+Get+Contracts+list+API-005-012-0001">Get Contracts List</a>
+
+This method is designed to obtain list of contracts with filters. This method return shorten information about contract, in order to see all information try to use 'get contract details'
+
++ Parameters
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - id of contract request
+    + contractor_legal_entity_id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - id of legal entity which created contract request.
+    + edrpou: `5432345432` (string, optional) - contractor legal entity EDRPOU
+    + contractor_owner_id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - id of legal entity owner.
+    + `nhs_signer_id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - id of nhs employee
+    + status: `VERIFIED` (enum, optional) - current contract status.
+        - TERMINATED
+        - VERIFIED
+    + is_suspended: true (boolean, optional) - wether contract is active
+    + date_from_start_date: `2018-01-01` (string, optional)
+    + date_to_start_date: `2019-01-01` (string, optional)
+    + date_from_end_date: `2018-01-01` (string, optional)
+    + date_to_end_date: `2019-01-01` (string, optional)
+    + contract_number: `0000-9EAX-XT7X-3115` (string, optional) - human readable number of contract request.
+    + medical_program_id: `2075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - id of a program that is a subject of a contract
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array[`Contracts_list_capitation`])
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array[`Contracts_list_reimbursement`])
+
 ## System Dictionary [/gen/system_dictionary]
 
 API for Services and Dictionaries.
@@ -1904,55 +1953,6 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
         + data (`Condition_Response`, fixed-type)
-
-## Contract [/gen/contract]
-
-Key                | Value
--------------------|-----------
-ESOZ ENT ID        | ENT-012
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18833473537/Contract+ENT-012">Contract</a>
-
-### Get Contracts List [GET /api/contracts/{contract_type}/{?id,contractor_legal_entity_id,edrpou,contractor_owner_id,nhs_signer_id,is_suspended,status,contract_number,date_from_start_date,date_to_start_date,date_from_end_date,date_to_end_date,medical_program_id,page,page_size}]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        | API-005-012-0001
-Scope              | contract:read
-Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17569644549/REST+API+Public.+Get+Contracts+list+API-005-012-0001">Get Contracts List</a>
-
-This method is designed to obtain list of contracts with filters. This method return shorten information about contract, in order to see all information try to use 'get contract details'
-
-+ Parameters
-    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - id of contract request
-    + contractor_legal_entity_id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - id of legal entity which created contract request.
-    + edrpou: `5432345432` (string, optional) - contractor legal entity EDRPOU
-    + contractor_owner_id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - id of legal entity owner.
-    + `nhs_signer_id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - id of nhs employee
-    + status: `VERIFIED` (enum, optional) - current contract status.
-        - TERMINATED
-        - VERIFIED
-    + is_suspended: true (boolean, optional) - wether contract is active
-    + date_from_start_date: `2018-01-01` (string, optional)
-    + date_to_start_date: `2019-01-01` (string, optional)
-    + date_from_end_date: `2018-01-01` (string, optional)
-    + date_to_end_date: `2019-01-01` (string, optional)
-    + contract_number: `0000-9EAX-XT7X-3115` (string, optional) - human readable number of contract request.
-    + medical_program_id: `2075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - id of a program that is a subject of a contract
-    + page: 2 (number, optional) - Page number.
-    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (`Response_Collection_V2`)
-        + data (array[`Contracts_list_capitation`])
-+ Response 200 (application/json)
-    + Attributes (`Response_Collection_V2`)
-        + data (array[`Contracts_list_reimbursement`])
 
 ## Device [/me/device]
 
