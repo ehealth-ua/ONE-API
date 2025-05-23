@@ -1905,6 +1905,55 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
     + Attributes (`Response_OK`)
         + data (`Condition_Response`, fixed-type)
 
+## Contract [/gen/contract]
+
+Key                | Value
+-------------------|-----------
+ESOZ ENT ID        | ENT-012
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18833473537/Contract+ENT-012">Contract</a>
+
+### Get Contracts List [GET /api/contracts/{contract_type}/{?id,contractor_legal_entity_id,edrpou,contractor_owner_id,nhs_signer_id,is_suspended,status,contract_number,date_from_start_date,date_to_start_date,date_from_end_date,date_to_end_date,medical_program_id,page,page_size}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-012-0001
+Scope              | contract:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17569644549/REST+API+Public.+Get+Contracts+list+API-005-012-0001">Get Contracts List</a>
+
+This method is designed to obtain list of contracts with filters. This method return shorten information about contract, in order to see all information try to use 'get contract details'
+
++ Parameters
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - id of contract request
+    + contractor_legal_entity_id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - id of legal entity which created contract request.
+    + edrpou: `5432345432` (string, optional) - contractor legal entity EDRPOU
+    + contractor_owner_id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - id of legal entity owner.
+    + `nhs_signer_id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - id of nhs employee
+    + status: `VERIFIED` (enum, optional) - current contract status.
+        - TERMINATED
+        - VERIFIED
+    + is_suspended: true (boolean, optional) - wether contract is active
+    + date_from_start_date: `2018-01-01` (string, optional)
+    + date_to_start_date: `2019-01-01` (string, optional)
+    + date_from_end_date: `2018-01-01` (string, optional)
+    + date_to_end_date: `2019-01-01` (string, optional)
+    + contract_number: `0000-9EAX-XT7X-3115` (string, optional) - human readable number of contract request.
+    + medical_program_id: `2075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - id of a program that is a subject of a contract
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array[`Contracts_list_capitation`])
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array[`Contracts_list_reimbursement`])
+
 ## Device [/me/device]
 
 Key                | Value
@@ -13881,3 +13930,323 @@ status: `APPROVED` (string, required)
 + include `Medication_Statement_Request`
 + inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
 + updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
+
+## Contracts
+
+### `Employee_divisions_response`
++ `employee`
+    + include (`Person_Minimal_Contract`)
+    + include (`DoctorNew_Short_Single`)
++ `staff_units`: `0.5` (number, required)
++ `declaration_limit`: `2000` (number, required) - declaration limit for current employee within the contract
++ `division_id`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required) - division ID
+
+
+### `contract_legal_entity_details`
++ id: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, required) - legal entity ID which make contract request
++ name: Клініка Ноунейм (string, required) - full official name of legal entity also the name to show on public sources [as map, portal etc]
++ edrpou: 32323454 (string, required) - Unified Register of Businesses and Organizations
++ addresses (array[`Address`], required) - The max items of array is 2: REGISTRATION - required, RESIDENCE - optional. DIVISION is exception: REGISTRATION - optional, RESIDENCE - required
+
+### `Payment_details`
++ `bank_name`: `Банк номер 1` (string, required) - bank name
++ MFO: `351005` (string, optional) - bank code, required for account number
++ `payer_account`: `32009102701026` (string, required) - Account number or International Bank Account Number
+
+
+### `Contractor_divisions`
++ id: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required) - division ID
++ name: Бориспільське відділення Клініки Ноунейм (string, required) - the full name of division
++ addresses (array[`Address`], required)
++ phones (array[`Phone`], required)
++ email: email@example.com (string, required) - division's email
++ working_hours (`workinghours`) - optional field, business hours by each day weekly, doesn't make any influence on business process and will be shown on portal and map.
++ mountain_group: false (boolean, optional)
+
+### `Contracts_list_capitation`
++ id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, required) - contract ID
++ `contract_type`: `CAPITATION` (string, required)
++ `contractor_legal_entity_id`: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, required) - legal entity ID which make contract request
++ `contractor_owner` (object, required)
+    + include (`Person_Minimal_Contract`)
++ `contractor_base`: `на підставі закону про Медичне обслуговування населення` (string, required) - documents which allows to represent clinic
++ status: `VERIFIED` (string, required) - contract_request status
++ `contractor_divisions` (array, required, fixed)
+    + (object)
+        + id: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required) - division ID
+        + name: Бориспільське відділення Клініки Ноунейм (string, required) - the full name of division
++ `external_contractor_flag`: true (boolean, optional) - true if exists appendix 2
++ `nhs_signer_id`: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, optional) - person which represents nhs
++ `nhs_legal_entity_id`: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, optional) - nhs legal entity ID
++ `nhs_signer_base`: `на підставі наказу` (string, optional) - documents which allows to represent nhs
++ `issue_city`: `Київ` (string, optional) - place of contract request
++ `nhs_contract_price`: `50000` (number, optional) - contract price
++ contract_number: `0000-9EAX-XT7X-3115` (string, optional) - human readable number of contract request.
++ contract_request_id: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, optional) - contract request id
++ `start_date`: `2017-04-20` (string, required) - contract start date
++ `end_date`: `2018-04-20` (string, required) - contract start date
++ is_suspended: false (string, required) - whether the contract is active or temporary suspended
++ id_form: `PMD` (string, required)
++ parent_contract_id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, optional)
++ `assignee_id`: `22e416c4-5747-41cd-9f73-c3a85cdee885` (string, optional) - NHS employee which review contract request
++ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
+
+
+### `Contracts_list_reimbursement`
++ id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, required) - contract ID
++ `contract_type`: `REIMBURSEMENT` (string, required)
++ `contractor_legal_entity_id`: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, required) - legal entity ID which make contract request
++ `contractor_owner` (object, required)
+    + include (`Person_Minimal_Contract`)
++ `contractor_base`: `на підставі закону про Медичне обслуговування населення` (string, required) - documents which allows to represent clinic
++ status: `VERIFIED` (string, required) - contract_request status
++ `contractor_divisions` (array, required, fixed)
+    + (object)
+        + id: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required) - division ID
+        + name: Бориспільське відділення Клініки Ноунейм (string, required) - the full name of division
++ `nhs_signer_id`: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, optional) - person which represents nhs
++ `nhs_legal_entity_id`: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, optional) - nhs legal entity ID
++ `nhs_signer_base`: `на підставі наказу` (string, optional) - documents which allows to represent nhs
++ `issue_city`: `Київ` (string, optional) - place of contract request
++ `nhs_contract_price`: `50000` (number, optional) - contract price
++ contract_number: `0000-9EAX-XT7X-3115` (string, optional) - human readable number of contract request.
++ contract_request_id: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, optional) - contract request id
++ `start_date`: `2017-04-20` (string, required) - contract start date
++ `end_date`: `2018-04-20` (string, required) - contract start date
++ is_suspended: false (string, required) - whether the contract is active or temporary suspended
++ id_form: `RMB` (string, required)
++ parent_contract_id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, optional)
++ `assignee_id`: `22e416c4-5747-41cd-9f73-c3a85cdee885` (string, optional) - NHS employee which review contract request
++ `medical_programs` (array, required)
+    + `3914a240-63db-404e-b730-09222bfeb2d0` (string, required) - - ids of a medical programs that is a subject of reimbursment contract
++ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
+
+
+
+### `Contract_Details_Capitation`
++ id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, required) - contract ID
++ `contract_type`: `CAPITATION` (string, required)
++ `start_date`: `2017-04-20` (string, required) - contract start date
++ `end_date`: `2017-04-20` (string, required) - contract end date
++ `contractor_legal_entity`(object, required)
+    + include (`contract_legal_entity_details`)
++ `contractor_owner` (object, required)
+    + include (`Person_Minimal_Contract`)
++ `contractor_base`: `на підставі закону про Медичне обслуговування населення` (string, required) - documents which allows to represent clinic
++ `contractor_payment_details` (object, required)
+    + include (`Payment_details`, required)
++ `contractor_rmsp_amount`: `50000` (number, required) - the amount of population which were served by this MSP
++ `contractor_divisions` (array, fixed, required)
+    + (object)
+        + include `Contractor_divisions`
++ `external_contractor_flag`: true (boolean, optional) - the existence of second appendix
++ `external_contractors` (array, optional) - existing legal_entities with ACTIVE status
+    + (object)
+        + include (`External_contractors_response`, required)
++ `contractor_employee_divisions` (array, fixed, required)
+    + (object)
+        + include `Employee_divisions_response`
++ `nhs_signer_base`: `на підставі наказу` (string, optional) - documents which allows to represent nhs
++ `nhs_contract_price`: `50000` (number, optional) - contract price
++ `nhs_payment_method`: `BACKWARD` (enum, optional) - payment method for contract (from CONTRACT_PAYMENT_METHOD dictionary)
++ status: `VERIFIED` (string, required) - contract status
++ reason: `не було виконано умов контракту` (string, optional) - additional the reason of terminated status
++ `status_reason`: `default` (string, optional) - the reason of terminated status
++ `nhs_signer` (object, optional)
+    + include (`Person_Minimal_Contract`)
++ `nhs_legal_entity` (object)
+    + include (`contract_legal_entity_details`)
++ issue_city: `Київ` (string, optional) - place of contract request
++ contract_number: `0000-9EAX-XT7X-3115` (string, optional) - human readable number of contract request.
++ contract_request_id: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, required) - contract request id
++ is_suspended: false (boolean, required) - whether the contract is active or temporary suspended
++ `end_date`: `2017-04-20` (string, required) - contract end date
++ id_form: `PMD` (string, required)
++ parent_contract_id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, optional)
++ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
+
+
+
+### `Contract_Details_Reimbursement`
++ id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, required) - contract ID
++ `contract_type`: `REIMBURSEMENT` (string, required)
++ `start_date`: `2017-04-20` (string, required) - contract start date
++ `end_date`: `2017-04-20` (string, required) - contract end date
++ `contractor_legal_entity`(object, required)
+    + include (`contract_legal_entity_details`)
++ `contractor_owner` (object, required)
+    + include (`Person_Minimal_Contract`)
++ `contractor_base`: `на підставі закону про Медичне обслуговування населення` (string, required) - documents which allows to represent clinic
++ `contractor_payment_details` (object, required)
+    + include (`Payment_details`, required)
+
++ `contractor_divisions` (array, fixed, required)
+    + (object)
+        + include `Contractor_divisions`
++ `nhs_signer_base`: `на підставі наказу` (string, optional) - documents which allows to represent nhs
++ `nhs_payment_method`: `BACKWARD` (enum, optional) - payment method for contract (from CONTRACT_PAYMENT_METHOD dictionary)
++ status: `VERIFIED` (string, required) - contract status
++ status_reason: `не було виконано умов контракту` (string, optional) - the reason of terminated status
++ `nhs_signer` (object, optional)
+    + include (`Person_Minimal_Contract`)
++ `nhs_legal_entity` (object)
+    + include (`contract_legal_entity_details`)
++ issue_city: `Київ` (string, optional) - place of contract request
++ contract_number: `0000-9EAX-XT7X-3115` (string, optional) - human readable number of contract request.
++ contract_request_id: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, required) - contract request id
++ is_suspended: false (boolean, required) - whether the contract is active or temporary suspended
++ `end_date`: `2017-04-20` (string, required) - contract end date
++ id_form: `RMB` (string, required)
++ parent_contract_id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, optional)
++ `medical_programs` (array, required)
+    + `3914a240-63db-404e-b730-09222bfeb2d0` (string, required) - - ids of a medical programs that is a subject of reimbursment contract
++ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
+
+
+
+### `Capitation_report`
++ id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, required) - Unique report id
++ billing_date: `2018-05-01` (string, required) - Report billing date
++ inserted_at: `2018-05-22` (string, required) - Date that shows when the report was generated
+
+### `Capitation_report_detail`
++ id: `29000165-09106b70-18b0-4726-b0ed-6bda1369fd52` (string, required) - Synthetical record identifier
++ biling_date: `2017-04-20` (string, required) - report biling date
++ report_id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, required) - Unique report id
++ legal_entity_id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, required) - Legal entity id
++ edrpou: `29000165` (string, required) - Legal entity edrpou
++ legal_entity_name: `Поліклініка для Капітації` (string, required) - Legal entity name
++ capitation_contracts (array, required)
+    + (object)
+        + contract_id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, required) - contract ID
+        + contract_number: `0000-9EAX-XT7X-3115` (string, optional) - human readable number of contract request.
+        + details (array, required)
+            + (object)
+                + mountain_group: true (boolean)
+                + attributes (object, required)
+                    + `0-5`: 17 (number, required)
+                    + `6-17`: 7 (number, required)
+                    + `18-39`: 9 (number, required)
+                    + `40-65`: 12 (number, required)
+                    + `65+`: 15 (number, required)
+            + (object)
+                + mountain_group: false (boolean)
+                + attributes (object, required)
+                    + `0-5`: 22 (number, required)
+                    + `6-17`: 10 (number, required)
+                    + `18-39`: 15 (number, required)
+                    + `40-65`: 19 (number, required)
+                    + `65+`: 21 (number, required)
+        + total (object, required)
+            + attributes (object, required)
+                + `0-5`: 39 (number, required)
+                + `6-17`: 17 (number, required)
+                + `18-39`: 24 (number, required)
+                + `40-65`: 31 (number, required)
+                + `65+`: 36 (number, required)
+
+## `Contracts_CRUD`
+
+### `Contracts_CRUD_request`
++ `start_date`: `2017-04-20` (string, required) - contract start date
++ `end_date`: `2017-04-20` (string, required) - contract end date
++ status: `VERIFIED` (string, required) - contract status
++ contractor_legal_entity_id: `56440c03-e218-432a-b417-9574b2b287bd` (string, required)
++ contractor_owner_id: `54fea667-62cf-4688-ae9e-31acc19d986d` (string, required)
++ `contractor_base`: `на підставі закону про Медичне обслуговування населення` (string, required) - documents which allows to represent clinic
++ `contractor_payment_details` (object, required)
+    + include (`Payment_details`, required)
++ `contractor_rmsp_amount`: `50000` (number, optional) - the amount of population which were served by this MSP
++ `external_contractor_flag`: true (boolean, optional) - the existence of second appendix
++ `external_contractors` (array, optional) - existing legal_entities with ACTIVE status
+    + (object)
+        + include (`External_contractors_response`, required)
++ `nhs_signer_id`: `da8cc932-7bca-4048-a3ff-9b07f901a860` (string, required)
++ `nhs_signer_base`: `на підставі наказу` (string, optional) - documents which allows to represent nhs
++ `nhs_legal_entity_id`: `e5f76afb-4d96-4279-bcf1-0308457e6b64` (string, required)
++ `nhs_payment_method`: `BACKWARD` (enum, optional) - payment method for contract (from CONTRACT_PAYMENT_METHOD dictionary)
++ is_suspended: false (boolean, required) - whether the contract is active or temporary suspended
++ issue_city: `Київ` (string, optional) - place of contract request
++ `nhs_contract_price`: `50000` (number, optional) - contract price
++ contract_number: `0000-9EAX-XT7X-3115` (string, optional) - human readable number of contract request
++ `status_reason`: `default` (string, optional) - The reason of terminated status
++ parent_contract_id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, optional)
++ id_form: `PMD` (string, required)
++ `nhs_signed_date`: `2017-04-20` (string, required) - Date when contract was signed by NHS
++ type: `CAPITATION` (string, required)
+    - CAPITATION
+    - REIMBURSEMENT
++ reason: `не було виконано умов контракту` (string, optional) - additional the reason of terminated status
++ `signed_content_location`: `bucket_name/folder_identifier/file_name` (string, optional) - Location of the signed content in media storage
+
+### `Contracts_CRUD_response`
++ id: `8be63914-a278-470b-b868-1af5b9087332` (string, required) - Unique record identifier
++ include `Contracts_CRUD_request`
++ `medical_programs` (array, optional) - list of medical programs
+    - `d313342c-0b3c-443b-a92e-afb78d1e8086`
++ is_active: true (boolean, required) - Technical attribute. Indicates the availability of therecord in the system
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
++ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
+### `Contract_divisions_CRUD_request`
++ division_id: `4b6b3b53-282a-415b-8f88-f1c7ab65f4a3` (string, required) - Employee identifier
++ contract_id: `71e51746-cc88-46e1-95ab-19cc5911d74c` (string, required) - Division identifier
+
+### `Contract_divisions_CRUD_response`
++ id: `8be63914-a278-470b-b868-1af5b9087332` (string, required) - Unique record identifier
++ include `Contract_divisions_CRUD_request`
++ is_active: true (boolean, required) - Technical attribute. Indicates the availability of therecord in the system
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
++ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
+### `Contract_employees_CRUD_request`
++ staff_units: 1 (number, required) - The ratio of employment, e.g. full-time or part-time. Range from 0 to 1
++ declaration_limit: 2000 (number, required) - Declaration limit for current employee within the contract
++ employee_id: `ce050c01-f4a5-4d5f-85d6-7e41d41146bf` (string, required) - Employee identifier
++ division_id: `62d0a654-2e7f-40fb-b1bb-8a38cdc3f701` (string, required) - Division identifier
++ contract_id: `6bb64748-7707-4be8-86e0-56cfb08e9b88` (string, required) - Contract identifier
++ start_date: `2018-04-20T19:14:13Z` (string, required) - Start date and time of employee involvment period
++ end_date: `2019-04-20T19:14:13Z` (string, required) - End date and time of employee involvment period. If empty - then infinite
+
+### `Contract_employees_CRUD_response`
++ id: `8be63914-a278-470b-b868-1af5b9087332` (string, required) - Unique record identifier
++ include `Contract_employees_CRUD_request`
++ is_active: true (boolean, required) - Technical attribute. Indicates the availability of therecord in the system
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
++ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
+
+### `External_contractors`
++ `legal_entity_id`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required) - external_contractor ID
++ `contract` (object,required)
+  + `number`: `1234567`(string, required) - number of contract with sub contractor
+  + `issued_at`: `2018-01-01` (string, required) - issue date of contract with sub contractor
+  + `expires_at`: `2019-01-01` (string, required) - expiry date of contract with sub contractor
++ divisions (array, fixed, required)
+    + (object)
+      + id: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+      + `medical_service`: `Послуга ПМД` (string, required)
+
+### `External_contractors_response`
++ `legal_entity` (object)
+    + include (`Legal_Entity_Short_Cabinet`)
++ `contract` (object,required)
+  + `number`: `1234567`(string, required) - number of contract with sub contractor
+  + `issued_at`: `2018-01-01` (string, required) - issue date of contract with sub contractor
+  + `expires_at`: `2019-01-01` (string, required) - expiry date of contract with sub contractor
++ divisions (array, fixed, required)
+    + (object)
+      + id: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+      + name: Бориспільське відділення Клініки Ноунейм (string, required) - the full name of division
+      + `medical_service`: `Послуга ПМД` (string, required)
+
