@@ -499,7 +499,7 @@ Key                | Value
 ESOZ API ID        | API-005-012-0001
 Scope              | contract:read
 Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17569644549/REST+API+Public.+Get+Contracts+list+API-005-012-0001">Get Contracts List</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17569644549/REST+API+Public.+Get+Contracts+list">Get Contracts List</a>
 
 This method is designed to obtain list of contracts with filters. This method return shorten information about contract, in order to see all information try to use 'get contract details'
 
@@ -533,6 +533,38 @@ This method is designed to obtain list of contracts with filters. This method re
 + Response 200 (application/json)
     + Attributes (`Response_Collection_V2`)
         + data (array[`Contracts_list_reimbursement`])
+
+### Get Contract Details [GET /api/contracts/{contract_type}/{id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-012-0002
+Scope              | contract:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17569153045/REST+API+Public.+Get+Contract+Details">Get Contracts List</a>
+
+This method is designed to get full information of contract by id.
+
++ Parameters
+    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - contract identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response__Process_OK`)
+        + data (object)
+            + include `Contract_Details_Capitation`
+        + urgent (object, required)
+            + documents (array[`contract_media_content`], optional)
++ Response 200 (application/json)
+    + Attributes (`Response__Process_OK`)
+        + data (object)
+            + include `Contract_Details_Reimbursement`
+        + urgent (object, required)
+            + documents (array[`contract_media_content`], optional)
 
 ## System Dictionary [/gen/system_dictionary]
 
