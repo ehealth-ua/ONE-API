@@ -3,7 +3,7 @@ Get Employee Details 				[API-005-023-0002]
 Deactivate Employee 				[API-005-023-0003]
 PIS. Get employees (Bulk data export) 		[API-005-023-0004]
 PIS. Get employee roles (Bulk data export) 	[API-005-023-0005]
-Reorganize Employee 				[API-005-007-001-0100]
+Reorganize Employee 				[API-005-007-001-0100] ???
 Get Reorganized Employees List 			[API-005-007-001-0101]
 Create new employee 				[API-005-007-001-0102]
 Update employee 				[API-005-007-001-0103]
