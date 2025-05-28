@@ -20,8 +20,8 @@ ENT-019	Device Dispence
 ENT-020	Device Request
 ENT-021	Diagnostic Report (2/7)
 ENT-022	Division (DONE)
-ENT-023	Employee (PROGRESS)
-ENT-024	Employee Request (PRGRESS)
+ENT-023	Employee (DONE)
+ENT-024	Employee Request (DONE)
 ENT-025	Employee Role
 ENT-026	Encounter (2/9)
 ENT-027	Episode Of Care (DONE)

@@ -1024,6 +1024,179 @@ In DS EDRPOU/DRFO must be equal to contractor_legal_entity.edrpou
         + data (object)
             + include `Contract_Details_Reimbursement`
 
+## Employee [/gen/employee]
+
+Key                | Value
+-------------------|-----------
+ESOZ ENT ID        | ENT-023
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18833473561/Employee">Employee</a>
+
+The set of the end-points may be used to manage `Doctors`, `HR's` and `Accountants` that
+are employed by legal entity (such as Medical Service Provider).
+
+According to the strong binding of the Employees to the Employer (legal entity)
+all GET-endpoints returning Employee info are mounted through the
+`/legal_entities/{legal_entity_id}` path.
+
+### Get Employees List [GET /api/employees{?no_tax_id,tax_id,party_id,verification_status,edrpou,legal_entity_id,division_id,status,employee_type,page,page_size}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-023-0001
+Scope              | employee:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570660527/DRAFT+REST+API+Get+Employees+List">Get Employees List</a>
+
+Use this end-point to obtain all Employees of the legal entity.
+Method returns shortened data structure. Use [**Get Employee details**](https://uaehealthapi.docs.apiary.io/#reference/public.-medical-service-provider-integration-layer/employees/get-employee-details) to get detailed information.
+
++ Parameters
+    + no_tax_id: true (boolean, optional) - filter employees with or w/o tax_id
+    + tax_id: 3015492561 (string, optional)
+    + party_id: `d290f1ee-6c54-4b01-90e6-d701748f0152` (string, optional)
+    + edrpou: 38782323 (string, optional) - filter employees by legal_entity edrpou
+    + `legal_entity_id`: `d290f1ee-6c54-4b01-90e6-d701748f0152` (string, optional) - filter employees by legal_entity id
+    + division_id: `d290f1ee-6c54-4b01-90e6-d701748f0152` (string, optional)
+    + status: APPROVED (enum, optional) - filter employees by status
+        - APPROVED
+        - STOPPED
+        - ENTERED IN ERROR
+        - AUTODEACTIVATED
+        - REORGANIZED
+    + employee_type: DOCTOR (string, optional)
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array[`Employee_Short`])
+
+### Get Employee Details [GET /api/employees/{employee_id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-023-0002
+Scope              | employee:details
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570889888/DRAFT+REST+API+Get+Employee+Details">Get Employee Details</a>
+
+Use this end-point to obtain detailed information about employee.
+Response structure differs depending on employee type:
+
+For **HR, ACCOUNTANT, OWNER** or **PHARMACY_OWNER:**
+* Person info
+* Employee info
+* User Info
+
+For **DOCTOR, SPECIALIST, ASSISTANT, PHARMACIST, MED_ADMIN, LABORANT** or **MED_COORDINATOR:**
+* Person info
+* Employee info
+* User Info
+* Employee info
+
++ Parameters
+    + employee_id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Employee_Response`)
+            + division (Division_Short)
+            + `legal_entity` (`Legal_Entity_Short`)
+                + `legal_form`: 140 (string, required) - `Business form of legal entity received from edr - Use dictionary LEGAL_FORM to show the name`
+                + `owner_property_type`: STATE (string, required) - `Dictionary OWNER_PROPERTY_TYPE`
+                + `mis_verified`: VERIFIED, NOT_VERIFIED (enum, required)
+
+### Deactivate Employee [PATCH /api/employees/{id}/actions/deactivate]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-023-0003
+Scope              | employee:deactivate
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570594960/DRAFT+REST+API+Deactivate+Employee">Deactivate Employee</a>
+
+Use this method to deactivate employee. **OWNER** and **PHARMACY_OWNER** can't be deactivated using this method.
+(the 409 error with message 'Owner can't be deactivated').
+**OWNER** and **PHARMACY_OWNER** deactivates when corresponding legal_entity deactivates.
+Employee deactivation:
+
+* Revoke role from user
+* Deactivate declarations
+* Update employee parameters
+
++ Parameters
+    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    + Attributes (object)
+        + `status`: `STOPPED` (string, required) - reasons for deactivation: STOPPED or ENTERED IN ERROR
+        + `end_date`: `2017-09-01` (string, optional) - the actual date of termination the employee in the specified position. Required for status = STOPPED
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Employee_Response`)
+            + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+            + division (Division_Short)
+                + `legal_entity` (`Legal_Entity_Short`)
+            + status: STOPPED, ENTERED IN ERROR (enum,required)
+
+### PIS Get Employees [GET /api/pis/bulk/employees{?depth}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-023-0004
+Scope              | employee_bulk:read_pis
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18695225381/DRAFT+REST+API+PIS.+Get+employees+Bulk+data+export">PIS Get Employees</a>
+
+Get employees.
+
++ Parameters
+    + depth: 5 (number, optional) - Number of days to get changes
+
++ Request (application/json)
+    + Headers
+        api-key: L0RWeXV6a2tQWEp3OTJaM0RkYzBmQT09
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_wo_Paging_with_Date`)
+        + data (array[`Employee_bulk`])
+
+### Get Employee Roles [GET /api/pis/bulk/employee_roles{?depth}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-023-0005
+Scope              | employee_role_bulk:read_pis
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18695520259/DRAFT+REST+API+PIS.+Get+employee+roles+Bulk+data+export">Get Employee Roles</a>
+
+Get employee roles.
+
++ Parameters
+    + depth: 5 (number, optional) - Number of days to get changes
+
++ Request (application/json)
+    + Headers
+        api-key: L0RWeXV6a2tQWEp3OTJaM0RkYzBmQT09
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_wo_Paging_with_Date`)
+        + data (array[`Employee_role_bulk`])
+
 ## Employee Requests [/gen/employee_requests]
 
 Key                | Value
@@ -1628,7 +1801,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-005-022-0001
-Scope              | related_legal_entities:read
+Scope              | division:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570889841/DRAFT+Get+divisions">Get Divisions</a>
 
@@ -1658,7 +1831,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-005-022-0002
-Scope              | related_legal_entities:read
+Scope              | division:write
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570136296/DRAFT+Update+division">Update Division</a>
 
@@ -1685,7 +1858,7 @@ More details can be found [here](https://e-health-ua.atlassian.net/wiki/x/GQB7Iw
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-005-022-0003
-Scope              | related_legal_entities:read
+Scope              | division:write
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570431096/DRAFT+Create+division">Create Division</a>
 
@@ -1709,7 +1882,7 @@ More details can be found [here](https://e-health-ua.atlassian.net/wiki/x/GQB7Iw
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-005-022-0004
-Scope              | related_legal_entities:read
+Scope              | division:deactivate
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570922579/DRAFT+Deactivate+division">Deactivate Division</a>
 
@@ -1730,8 +1903,8 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        |API-005-022-0005
-Scope              | related_legal_entities:read
+ESOZ API ID        | API-005-022-0005
+Scope              | division:activate
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570693263/DRAFT+Activate+division">Activate Division</a>
 
@@ -15106,4 +15279,49 @@ status: `APPROVED` (string, required)
 + division (`Division_Short`)
 + `legal_entity` (`Legal_Entity_Short`)
 + doctor (DoctorNew_Short)
+
+### `Response_Collection_wo_Paging_with_Date`
++ meta (Response__Meta_Date, fixed-type)
++ data (array[], fixed-type)
+
+### `Employee_bulk`
++ id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ position: P1 (string, required) - `Dictionary: POSITION`
++ status: APPROVED (string, required) - Employee status
++ `employee_type`: DOCTOR (string) - `Dictionary: EMPLOYEE_TYPE`
++ is_active: true (boolean, required)
++ start_date: `2017-03-02T10:45:16.000Z` (string, required)
++ end_date: `2018-03-02T10:45:16.000Z` (string, optional)
++ legal_entity_id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, required)
++ division_id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, optional)
++ party_id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, required)
++ inserted_at: `2021-11-09T00:00:00.000Z` (string, required) - ISO Datetime
++ updated_at: `2021-11-09T00:00:00.000Z` (string, optional) - ISO Datetime
++ `status_reason`: `manual_employee` (string, optional)
++ additional_info (object, optional)
+    + educations (array[`Education`], required)
+    + qualifications (array[`Qualification`], optional)
+    + specialities (array[`Speciality`], required)
+    + science_degree (ScienceDegree, optional)
++ speciality (`Speciality`, optional)
+
+### `Response__Meta_Date`
++ code: 200 (number) - HTTP response code.
++ url: https://example.com/resource (string) - URL to requested resource.
++ type (enum) - Type of data that is located in `data` attribute.
+    - object (string) - `data` attribute is a JSON object.
+    - list (string) - `data` attribute is a list.
++ `request_id`: `6617aeec-15e2-4d6f-b9bd-53559c358f97#17810` (string) - [Request ID](https://docs.apimanifest.apiary.io/#introduction/interacting-with-api/request-id). Send it with `X-Request-ID` header.
++ date: `2023-04-20T00:00:00.000Z` (string, required) - The date the limit and declarations count valid for
+
+### `Employee_Response`
++ id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ position: P8 (string, required) - `Dictionary POSITION`
++ start_date: `2017-03-02T10:45:16.000Z` (string, required)
++ end_date: `2018-03-02T10:45:16.000Z` (string, optional)
++ status: APPROVED, STOPPED, ENTERED IN ERROR, REORGANIZED, AUTODEACTIVATED (enum, required)
++ `is_active`: `true` (boolean, required)
++ `employee_type`: DOCTOR (string, required) - `Dictionary EMPLOYEE_TYPE`
++ party (`Party_Response_old`)
++ doctor (DoctorNew, optional) - `Field's name depends on employee type name.
 
