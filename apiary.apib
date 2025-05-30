@@ -5230,7 +5230,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-007-011-001-0472
+ESOZ API ID        | API-007-009-0011
 Scope              | composition:write
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18527191288/REST+API+Submit+Composition">Submit Composition</a>
@@ -5272,37 +5272,6 @@ See ***Dummy Submit Composition*** for Payload.
             + code: 201 (number)
         + data (`Job`)
 
-### Get Medication Request Details in Composition Context [GET /api/persons/{person_id}/compositions/{composition_id}/medication_requests/{id}]
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        | API-005-008-002-0159
-Scope              | composition:read
-Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18528109137/DRAFT+REST+API+Get+Medication+Request+details+in+Composition+context+API-007-011-001-0490">Get Medication Request Details in Composition Context</a>
-
-Method returns Medication Request details in the context of Composition.
-User must have an approval on the composition from url.
-
-+ Parameters
-    + `person_id`: `5e661b15-a39a-4713-b18e-ba03a4a48ecc` (string, required) - Patient identifier
-    + `composition_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Composition identifier
-    + id: `48416485-cc98-46c4-8bba-e321de9e1ecd` (string, required) - Medication Request identifier
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (`Response_OK`)
-        + meta (Response__Meta)
-        + data (object)
-            + include `Medication_request_Public_Response_with_Medical_Program_min`
-            + `medication_info` (object, required)
-                + include `Innm_Dosage_for_Medication_request_Responce`
-                + `medication_remaining_qty`: 10.23 (number, optional) - medication quantity allowed to dispense
-
 ### Generate Composition Print Form [GET /api/patients/{patient_id}/compositions/{id}/print_form?form_type=INFO_CERTIFICATE]
 
 Key                | Value
@@ -5329,7 +5298,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-007-011-001-0474
+ESOZ API ID        | API-007-009-0013
 Scope              | composition:resend_sms
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18527191574/DRAFT+REST+API+Resend+SMS+on+Composition">Resend SMS on Composition</a>
@@ -5360,7 +5329,7 @@ http code | processing method | Client recommendations
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-007-011-001-0475
+ESOZ API ID        | API-007-009-0014
 Scope              | composition:mark_in_error
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18527191635/DRAFT+REST+API+Mark+in+error+Composition">Mark in error Composition</a>
@@ -5430,7 +5399,7 @@ http code| processing method | Client recommendations
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-007-011-001-0476
+ESOZ API ID        | API-007-009-0015
 Scope              | composition:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18527191696/DRAFT+REST+API+Get+Composition+by+search+params">Get Composition by Search Params</a>
@@ -5581,7 +5550,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-007-011-001-0482
+ESOZ API ID        | API-007-009-0021
 Scope              | composition:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18528108697/DRAFT+REST+API+Get+Diagnostic+Report+details+in+Composition+context">Get Diagnostic Report Details in Composition Context</a>
@@ -5604,7 +5573,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-007-011-001-0483
+ESOZ API ID        | API-007-009-0022
 Scope              | composition:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18528108752/DRAFT+REST+API+Get+Encounter+details+in+Composition+context">Get Encounter Details in Composition Context</a>
@@ -5627,7 +5596,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-007-011-001-0484
+ESOZ API ID        | API-007-009-0023
 Scope              | composition:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18528108807/DRAFT+REST+API+Get+Care+Plan+details+in+Composition+context">Get Care Plan Details in Composition Context</a>
@@ -5650,7 +5619,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-007-011-001-0485
+ESOZ API ID        | API-007-009-0024
 Scope              | composition:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18528108862/DRAFT+REST+API+Get+Procedure+details+in+Composition+context">Get Procedure Details in Composition Context</a>
@@ -5674,7 +5643,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-007-011-001-0486
+ESOZ API ID        | API-007-009-0025
 Scope              | composition:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18528108917/DRAFT+REST+API+Get+Condition+details+in+Composition+context">Get Condition in Composition Context</a>
@@ -5698,7 +5667,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-007-011-001-0487
+ESOZ API ID        | API-007-009-0026
 Scope              | composition:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18528108972/DRAFT+REST+API+Get+Observation+details+in+Composition+context">Get Composition in Composition Context</a>
@@ -5722,7 +5691,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-007-011-001-0488
+ESOZ API ID        | API-007-009-0027
 Scope              | composition:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18528109027/DRAFT+REST+API+Get+Immunization+details+in+Composition+context">Get Composition in Composition Context</a>
@@ -5745,7 +5714,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-007-011-001-0489
+ESOZ API ID        | API-007-009-0028
 Scope              | composition:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18528109082/DRAFT+REST+API+Get+Service+Request+details+in+Composition+context">Get Composition in Composition Context</a>
@@ -5769,7 +5738,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-007-011-001-0490
+ESOZ API ID        | API-007-009-0029
 Scope              | composition:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18528109137/DRAFT+REST+API+Get+Medication+Request+details+in+Composition+context+API-007-011-001-0490">Get Medication Request Details in Composition Context</a>
@@ -5800,7 +5769,7 @@ User must have an approval on the composition from url.
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-007-011-001-0491
+ESOZ API ID        | API-007-009-0030
 Scope              | composition:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18528109137/DRAFT+NEW+Get+Medication+Request+details+in+Composition+context+API-007-011-001-0490">Get Medication Dispense Details in Composition Context</a>
@@ -5826,7 +5795,7 @@ User must have an approval on the composition from url.
 
 Key                | Value
 -------------------|-----------
-ESOZ API ID        | API-007-011-001-0492
+ESOZ API ID        | API-007-009-0031
 Scope              | composition:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18660524033/DRAFT+REST+API+Get+Clinical+Impression+details+in+Composition+context">Get Clinical Impression Details in Composition Context</a>
