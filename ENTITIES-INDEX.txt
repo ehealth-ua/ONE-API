@@ -3,8 +3,8 @@ Electronic Healthcare System of Ukraine https://esoz.docs.apiary.io
 
 ENT-001	Adresess (DONE)                 ENT-002	Allergy Intolerance (2/6)               ENT-003	Approval
 ENT-004	Approval Aрр                    ENT-005	Care Plan                               ENT-006	Care Plan Activity
-ENT-007	Client                          ENT-008	Clinical Impression (2/4)               ENT-009	Composition (DONE)
-ENT-010	Condition (2/6)                 ENT-011	Connection                              ENT-012	Contract (DONE)
+ENT-007	Client (DONE)                   ENT-008	Clinical Impression (2/4)               ENT-009	Composition (DONE)
+ENT-010	Condition (2/6)                 ENT-011	Connection (DONE)                       ENT-012	Contract (DONE)
 ENT-013	Declaration                     ENT-014	Declaration Request                     ENT-015	Detected Issue
 ENT-016	Device                          ENT-017	Device Association                      ENT-018	Device Definition
 ENT-019	Device Dispence                 ENT-020	Device Request                          ENT-021	Diagnostic Report (2/7)

@@ -485,6 +485,201 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 + Response 422 (application/json)
 
+
+## Client [/gen/client]
+
+Key                | Value
+-------------------|-----------
+ESOZ ENT ID        | ENT-007
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18831213200/Client+ENT-007">Client</a>
+
+### Get Clients [GET /api/clients]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-009-007-0001
+Scope              | client:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571381320/DRAFT+REST+API+Get+clients">Get Clients</a>
+
+This service returns list of clients filtered by context depending on client type:
+
+* Mithril Admin - receives all client records without context
+* MSP - receives only its own client
+* MIS - receives only its own client
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array[`Client`])
+
+### Get Client Details [GET /api/clients/{id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-009-007-0002
+Scope              | client:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571708960/DRAFT+REST+API+Get+client+details">Get Client Details</a>
+
+This service returns client details.
+
+Service will return authorization error (403) if the requested client doesn't correspond with context.
+
++ Parameters
+    + id: `1380df72-275a-11e7-93ae-92361f002671` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Client`)
+            + client_type_name: MSP (string, optional)
+
+## Connection [/gen/connection]
+
+Key                | Value
+-------------------|-----------
+ESOZ ENT ID        | ENT-011
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18832949290/Connection+ENT-011">Connection</a>
+
+### Get Client Connections [GET /api/clients/{id}/connections]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-009-011-0001
+Scope              | connection:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571381331/DRAFT+REST+API+Get+client+connections">Get Client Connections</a>
+
+Service returns list of connections for specified client
+
+Service will return authorization error (403) if the requested client doesn't correspond with context
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array[`Connection`])
+
+### Get Client Connection Details [GET /api/clients/{id}/connections/{connection_id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-009-011-0002
+Scope              | connection:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571610696/DRAFT+REST+API+Get+client+connection+details">Get Client Connection Details</a>
+
++ Parameters
+    + id: `1380df72-275a-11e7-93ae-92361f002671` (string, required)
+    + connection_id: `e5372365-d47a-467f-81d0-f35117864352` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Connection`)
+
+### Update Client Connection [PATCH /api/clients/{id}/connections/{connection_id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-009-011-0003
+Scope              | connection:write
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571676232/DRAFT+REST+API+Update+client+connection">Update Client Connection</a>
+
+Only redirect uri can be updated using this method
+
++ Parameters
+    + id: `1380df72-275a-11e7-93ae-92361f002671` (string, required)
+    + connection_id: `e5372365-d47a-467f-81d0-f35117864352` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
+    + Attributes (object)
+        + redirect_uri: `https://example3.com` (string, required)
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Connection`)
+
+### Refresh Client Secret [PATCH /api/clients/{id}/connections/{connection_id}/actions/refresh_secret]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-009-011-0004
+Scope              | connection:refresh_secret
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571446869/DRAFT+REST+API+Refresh+client+secret">Refresh Client Secret</a>
+
+This method is used to refresh client secret for specified client connection.
+Only legal entity owner can request new client secret for his own legal entity.
+
++ Parameters
+    + id: `1380df72-275a-11e7-93ae-92361f002671` (string, required)
+    + connection_id: `e5372365-d47a-467f-81d0-f35117864352` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (object)
+            + include `Connection`
+            + secret: `ZlFOaHBTR0d3Q0hQcDEraHVYdXBVZz09` (string, required)
+
+### Delete Client Connection [DELETE /api/clients/{id}/connections/{connection_id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-009-011-0005
+Scope              | connection:delete
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571250278/DRAFT+REST+API+Delete+client+connection">Delete Client Connection</a>
+
+This method is used to **delete** specified client connection.
+Deleted connection can't be restored and used again.
+
++ Parameters
+    + id: `1380df72-275a-11e7-93ae-92361f002671` (string, required)
+    + connection_id: `e5372365-d47a-467f-81d0-f35117864352` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (object)
+        + meta (Response__Meta, fixed-type)
+
 ## Contract [/gen/contract]
 
 Key                | Value
@@ -1558,6 +1753,81 @@ This web service returns a catalog of services that could be submitted in eHealt
         + meta (Response__Meta)
             + code: 200 (number)
         + data (`Service_in_group`)
+
+## User [/gen/user]
+
+Key                | Value
+-------------------|-----------
+ESOZ ENT ID        | ENT-067
+Link to Confluence | <a href="">User</a>
+
+### Get Nonce [GET /oauth/nonce]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-009-067-0001
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571315797/DRAFT+REST+API+Get+nonce">Get Nonce</a>
+
+This WS allows to get nonce (one time JWT) for active client of the system.
+Field `client_secret` must be passed if client type = TRUSTED_PIS.
+
+Nonce payload example:
+
+```
+{
+  "aud": "mithril-login",
+  "exp": 1523439201,
+  "iat": 1523438301,
+  "iss": "EHealth",
+  "jti": "efe1f08e-d4b4-4cef-a02c-78ea4a1dda25",
+  "nbf": 1523438300,
+  "nonce": 123,
+  "sub": 123,
+  "typ": "access"
+}
+```
+
++ Request (application/json)
+    + Headers
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
+    + Attributes (object)
+        + `client_id`: `30074b6e-fbab-4dc1-9d37-88c21dab1847` (string, required)
+        + `client_secret`: `c2778f3064753ea70de870a53795f5c9` (string, optional)
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (object)
+           + token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJtaXRocmlsLWxvZ2luIiwiZXhwIjoxNTIzNDM5MjAxLCJpYXQiOjE1MjM0MzgzMDEsImlzcyI6IkVIZWFsdGgiLCJqdGkiOiJlZmUxZjA4ZS1kNGI0LTRjZWYtYTAyYy03OGVhNGExZGRhMjUiLCJuYmYiOjE1MjM0MzgzMDAsIm5vbmNlIjoxMjMsInN1YiI6MTIzLCJ0eXAiOiJhY2Nlc3MifQ.UZ6S92h3nAG-GKY_XUE1Rc6uR_BuqR8ufUJfMhhKtNmt7DkkQlU49qPXjL0LFddVz1E2DXi2a-BQ0FG-DHsTHA' (string, required)
+
+### Deprecated Refresh Client Secret [PATCH /api/clients/{id}/connections/{connection_id}/actions/refresh_secret]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-009-067-0002
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571381309/DRAFT+REST+API+Refresh+client+secret+-+Deprecated">Refresh Client Secret</a>
+
+
+This method is used to refresh client secret for specified client connection
+Only legal entity owner can request new client secret for his own legal entity
+
+**Scopes required:** `connection:refresh_secret`
+
++ Parameters
+    + id: `1380df72-275a-11e7-93ae-92361f002671` (string, required)
+    + connection_id: `e5372365-d47a-467f-81d0-f35117864352` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (object)
+            + include `Connection`
+            + secret: `ZlFOaHBTR0d3Q0hQcDEraHVYdXBVZz09` (string, required)
 
 ## User Authentication [/gen/userauth]
 
@@ -15303,3 +15573,20 @@ status: `APPROVED` (string, required)
 + status: ACTIVE (string, required)
 + inserted_at: `2021-11-09T00:00:00.000Z` (string, required) - ISO Datetime
 + updated_at: `2021-11-09T00:00:00.000Z` (string, optional) - ISO Datetime
+
+### `Client` (object)
++ id: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, required) - Unique client id
++ name: `eHealth portal` (string, required) - Client name.
++ settings (object) - Client settings.
++ user_id: `user-1380df72-275a-11e7-93ae-92361f002671` (string, required) - Owner-user internal ID, a UUID string.
++ `client_type_id`: `261d52f9-b355-4029-863d-8fc52e9d0b81` - Client Type identifier
++ is_blocked: `false` (string, required) - whether the client is marked as fraud
++ `block_reason`: `MSP has fakes doctors` (string, optional) - the reason to block
++ inserted_at: `2017-04-20T19:14:13Z` (string, required) - date and time, when the entity was created
++ updated_at: `2017-04-20T19:14:13Z` (string, required) - date and time, when the entity was updated
+
+### `Connection`
++ id: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, required) - Unique connection id
++ client_id: `c4a6d45f-2cf2-4e6d-909a-5962604ad63b` (string, required) - Unique connection id
++ consumer_id: `25c03af6-69bd-439e-b0dd-f1669b3dbbfd` (string, required) - Unique connection id
++ redirect_uri: `https://example2.com` (string, required)

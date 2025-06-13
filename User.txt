@@ -1,0 +1,2 @@
+Get nonce 					[API-009-067-0001]
+API Refresh client secret - Deprecated 		[API-009-001-002-0329]

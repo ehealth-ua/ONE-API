@@ -1,0 +1,6 @@
+Get client connections 			[API-009-011-0001]
+Get client connection details 		[API-009-011-0002]
+Update client connection 		[API-009-011-0003]
+Refresh client secret 			[API-009-011-0004]
+Delete client connection 		[API-009-011-0005]
+
