@@ -1564,6 +1564,90 @@ This service should be used with mis `access_token` authetification method and u
             + status: `APPROVED` (string, required)
             + updated_at: `2017-05-05T14:09:59.232112` (string, optional)
 
+## Employee Role [/api/employee_roles]
+
+Key                | Value
+-------------------|-----------
+ESOZ ENT ID        | ENT-025
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18832326729/Employee+Role+ENT-025">Employee Role</a>
+
+### Add Employee Role [POST]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-025-0001
+Scope              | employee_role:write
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570791584/DRAFT+REST+API+Add+employee+role+API-005-025-0001">Add Employee Role</a>
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    + Attributes (`Employee_role_base`)
+
++ Response 201 (application/json)
+    + Attributes (`Response__Process_OK`)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (`Employee_role_response`)
+
+### Get Employee Roles [GET /api/employee_roles/{?employee_id,healthcare_service_id,status,page,page_size}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-025-0002
+Scope              | employee_role:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570365562/DRAFT+REST+API+Get+employee+roles+API-005-025-0002">Get Employee Roles</a>
+
+At least one query parameter must be provided.
+
++ Parameters
+    + `employee_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - Employee identifier
+    + `healthcare_service_id`: `c4de7c6e-8c6e-4d4f-8843-6bc122977227` (string, optional) - Healthcare service identifier
+    + status: active (string, optional) - Search only for active or inactive employee roles.
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array[`Employee_role_response`])
+
+### Get Employee Role by Id [GET /api/employee_roles/{id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-025-0003
+Scope              | employee_role:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570627750/DRAFT+REST+API+Get+employee+role+by+ID+API-005-025-0003">Get Employee Role by Id</a>
+
++ Parameters
+    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - Employee role identifier
+
++ Response 200 (application/json)
+    + Attributes (`Response__Process_OK`)
+        + data (`Employee_role_response`)
+
+### Deactivate Employee Role [PATCH /api/employee_roles/{id}/actions/deactivate]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-025-0004
+Scope              | employee_role:write
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570398336/DRAFT+REST+API+Deactivate+employee+role+API-005-025-0004">Deactivate Employee Role</a>
+
++ Parameters
+    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - Employee role identifier
+
++ Response 200 (application/json)
+    + Attributes (`Response__Process_OK`)
+        + data (`Employee_role_response`)
+            - status: INACTIVE
+
 ## System Dictionary [/gen/system_dictionary]
 
 API for Services and Dictionaries.
@@ -15611,3 +15695,23 @@ status: `APPROVED` (string, required)
 + client_id: `c4a6d45f-2cf2-4e6d-909a-5962604ad63b` (string, required) - Unique connection id
 + consumer_id: `25c03af6-69bd-439e-b0dd-f1669b3dbbfd` (string, required) - Unique connection id
 + redirect_uri: `https://example2.com` (string, required)
+
+
+### `Employee_role_base`
++ `healthcare_service_id`: `98b6ed10-17b4-44f1-892c-7514f66bf505` (string, required) - reference to healthcare service
++ `employee_id`: `9d229fcb-6a77-4574-99a5-30729aa518fd` (string, required) - reference to employee
+
+### `Employee_role_response`
++ id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required)
++ include `Employee_role_base`
++ start_date: `2019-04-20T19:14:13Z` (string, required)
++ end_date: `2017-12-20T19:14:13Z` (string, optional)
++ status: ACTIVE (string, required)
+    - ACTIVE
+    - INACTIVE
++ is_active: true (boolean, required) - Technical attribute. Indicates the availability of therecord in the system
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
++ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
