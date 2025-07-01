@@ -8,7 +8,7 @@ ENT-010	Condition (2/6)                 ENT-011	Connection (DONE)               
 ENT-013	Declaration (DONE)              ENT-014	Declaration Request (DONE)              ENT-015	Detected Issue
 ENT-016	Device                          ENT-017	Device Association                      ENT-018	Device Definition
 ENT-019	Device Dispence                 ENT-020	Device Request                          ENT-021	Diagnostic Report (2/7)
-ENT-022	Division (DONE)                 ENT-023	Employee (PROGRESS)                     ENT-024	Employee Request (DONE)
+ENT-022	Division (DONE)                 ENT-023	Employee (DONE)                     ENT-024	Employee Request (DONE)
 ENT-025	Employee Role (DONE)            ENT-026	Encounter (2/9)                         ENT-027	Episode Of Care (DONE)
 ENT-028	Equipment (DONE)                ENT-029	Event                                   ENT-030	Forbidden Group
 ENT-031	Groups of Diagnoses (DONE)      ENT-032	Healthcare Service                      ENT-033	Immunization (2/6)
