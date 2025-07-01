@@ -1219,6 +1219,84 @@ In DS EDRPOU/DRFO must be equal to contractor_legal_entity.edrpou
         + data (object)
             + include `Contract_Details_Reimbursement`
 
+## Declarations [/api/declarations]
+
+Key                | Value
+-------------------|-----------
+ESOZ ENT ID        | ENT-013
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18832326681/Declaration+ENT-013">Declaration</a>
+
+### Get Person Declaration [GET /api/persons/{id}/declaration]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-013-0001
+Scope              | declaration:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570463825/DRAFT+REST+API+Get+Person+Declaration">Get Person Declaration</a>
+
+This method allows to receive active person declarations issued by current legal entity (based on access_token).
+It can be used to check if Patient has active declarations in other Legal Entities.
+
+It returns:
+
+1. Short declaration info if **active declaration found** AND issued by legal entity that is available for `access_token` scope.
+2. 404 error if **active declaration not found**.
+3. 403 if **active declaration found** issued by **other** (not available by access scopes) legal entity.
+
++ Parameters
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Declaration_Details`])
+
++ Response 403 (application/json)
+    + Attributes (`Response_Error`)
+        + meta (Response__Meta, fixed-type)
+            + code: 403 (number)
+        + error (Response__Error, fixed-type)
+            + type: `forbidden`
+            + message: `Active declaration belongs to another msp` (string)
+
+### Get Declarations List [GET /api/declarations{?employee_id,legal_entity_id,status,declaration_number,page,page_size,reason}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-013-0002
+Scope              | declaration:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570889788/DRAFT+REST+API+Get+Declarations+List">Get Declarations List</a>
+
+Use this method to obtain list of Declarations for an `empolee_id` and legal_entity_id. If you want to reduce amount of data that is going trough your application, use `status` filter and show only requests that Doctor is interested in current UI section.
+
+Method returns shortened details, to obtain full information - get Declaration Details by it's ID.
+
++ Parameters
+    + `employee_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - `user_id` of a Doctor.
+    + `legal_entity_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - MSP ID.
+    + `declaration_number`: `0000-12H4-245D` (string, optional) - unique human redable number of declaration.
+    + status: active (string, optional)
+        + Default: active
+    + reason: offline (string, optional) - filter declaration by reason
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array[`nhs_declaration_list_Public`])
+
+
 ## Employee [/gen/employee]
 
 Key                | Value
@@ -15714,4 +15792,48 @@ status: `APPROVED` (string, required)
 + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
 + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
 + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
+### `nhs_declaration_list_Public`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - id of the signed document stored on the Media content storage
++ declaration_number: `0000-12H4-245D` (string, required) - unique number of declaration.
++ `employee` (`Employee_For_Declaration_Minimal`, required)
++ `division` (`DivisionName`, required)
++ start_date: `2017-03-02` (string, required)
++ end_date: `2017-03-02` (string, required)
++ status (enum, optional)
+    - active
+    - closed
+    - terminated
++ reason: `manual_employee` (string, optional)
++ reason_description: `Згідно постанови 1 від 10.01.20171111` (string, optional)
++ person (`Person_Minimal_Declaration_List`, required)
++ `legal_entity` (`Legal_Entity_For_Declaration_Short`, required)
++ `declaration_request_id`: `74a6fae6-4207-4e03-a136-f2e70c6b0c02` (string, required)
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
+
+### `nhs_declaration`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ include `Declaration_Request_Details_Public`
++ `media_content`: `https://ehealth.gov.ua/wp-content/uploads/2022/07/photo_2022-07-15_15-16-49-825x510.jpg`,`https://ehealth.gov.ua/wp-content/uploads/2020/11/mockDrop_iPhone-5-825x510.jpg`  (array, required)
+
+### MainStats
++ declarations: 100 (number, required)
++ msps: 2 (number, required)
++ doctors: 15 (number, required)
+
+### `MainStats_Division`
++ stats (DivisionStats, required)
++ division (DivisionName, required)
+
+### DivisionStats
++ declarations: 100 (number, required)
++ msps: 2 (number, required)
++ doctors: 15 (number, required)
++ medication_requests_active: 2 (number, required)
++ medication_requests_completed: 3 (number, required)
+
+### DivisionName
++ id: `asSbcy12sYs8c` (string, required)
++ name: `Пединовка` (string, required)
 
