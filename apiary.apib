@@ -1379,6 +1379,102 @@ declaration status will be changed to `active`
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
 
+### PIS Get Declarations Limit and Declarations Count per Practitioner [GET /api/pis/bulk/declarations_limit]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-013-0006
+Scope              | declaration_bulk:read_pis
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18689392669/DRAFT+REST+API+PIS.+Get+declarations+limit+and+declarations+count+per+practitioner">Get Declarations Limit and Declarations Count per Practitioner</a>
+
+Get declaration limit and count per practitioner.
+
++ Request (application/json)
+    + Headers
+        api-key: L0RWeXV6a2tQWEp3OTJaM0RkYzBmQT09
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_wo_Paging_with_Date`)
+        + data (array[`Declarations_limit_bulk`])
+
+### PIS Get Declarations [GET /api/pis/declarations{?status,start_date_from,start_date_to,end_date_from,end_date_to,page,page_size}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-013-0007
+Scope              | declaration:read_pis
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18691129345/DRAFT+REST+API+PIS.+Get+declarations">Get Declarations</a>
+
+This WS allows to see all patient's declarations and filter them.
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9
+        api-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Parameters
+    + status: active (string, optional)
+    + start_date_from: `2022-08-19` (string, optional)
+    + start_date_to: `2023-08-19` (string, optional)
+    + end_date_from: `2023-09-19` (string, optional)
+    + end_date_to: `2023-10-19` (string, optional)
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array[`Declaration_list`])
+
+### PIS Get Declaration Details [GET /api/pis/declarations/{id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-013-0008
+Scope              | declaration:read_pis
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18691915777/DRAFT+REST+API+PIS.+Get+Declaration+details">Get Declaration Details</a>
+
+Current WS allows to see details of declaration knowing its' id.
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9
+        api-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Parameters
+    + id: 7e9cffd9-c75f-45fb-badf-6e8d20b6a8a8 (uuid)
+
++ Response 200 (application/json)
+    + Attributes (`Response__Process_OK`)
+        + data (`Declaration_Details_PIS`)
+        + urgent (object, required)
+            + links (array[`signed_content`], optional)
+
+### Terminate Declaration [PATCH /api/pis/declarations/{id}/actions/terminate]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-013-0009
+Scope              | declaration:terminate_pis
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18690506972/DRAFT+REST+API+PIS.+Terminate+declaration">Terminate Declaration</a>
+
+Patient can terminate active declaration using this method.
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9
+        api-key: uXhEczJ56adsfh3Ri9SUkc4en
+
+    + Attributes (object)
+        + reason_description: `Неякісне обслуговування` (string, optional)
+
++ Response 200 (application/json)
+    + Attributes (`Response__Process_OK`)
+        + data (`Declaration_Details_terminated`)
+
 ## Employee [/gen/employee]
 
 Key                | Value
