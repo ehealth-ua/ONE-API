@@ -1728,6 +1728,13 @@ This endpoint returns declaration requests that were created through V2 and V3. 
 
 ### Get Declaration Requests List V3 [GET /api/v3/declaration_requests{?employee_id,legal_entity_id,status,channel,page,page_size}]
 
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-014-0006
+Scope              | declaration_request:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570431074/DRAFT+REST+API+Get+Declaration+Requests+List+V3">Get Declaration Requests List V3</a>
+
 Use this method to obtain list of Declaration Requests for an `empolee_id`. If you want to reduce amount of data that is going trough your application, use `status` filter and show only requests that Doctor or Admin is interested in current UI section.
 
 Also we suggest use `employee_id` and `legal_entity_id` to make sure that end-user understands context of actions that he or she will perform.
@@ -1756,7 +1763,6 @@ If declaration request is created by v2, the field `person_id` will be empty
     + page: 2 (number, optional) - Page number.
     + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
 
-
 + Request (application/json)
     + Headers
         Authorization: Bearer c2778f3064753ea70de870a53795f5c9
@@ -1767,6 +1773,13 @@ If declaration request is created by v2, the field `person_id` will be empty
         + data (array[`Declaration_Response_Short_v3`])
 
 ### Resend Authorization OTP on Declaration Request [POST /api/v3/declaration_requests/{id}/actions/resend_otp]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-014-0007
+Scope              | otp:write
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570103380/DRAFT+REST+API+Resend+Authorization+OTP+on+Declaration+Request">esend Authorization OTP on Declaration Request</a>
 
 Use this method to resend sms on previously created Declaration Request V3.
 
@@ -1781,6 +1794,60 @@ Use this method to resend sms on previously created Declaration Request V3.
 + Response 200 (application/json)
     + Attributes (`Response__Process_OK`)
         + data (`OTP`)
+
+### PIS Create Declaration Request [POST /api/pis/declaration_requests]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-014-0008
+Scope              | declaration_request:write_pis
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18690507015/DRAFT+REST+API+PIS.+Create+Declaration+request">Create Declaration Request</a>
+
+This WS allows patient to register new declaration request
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9
+        api-key: uXhEczJ56adsfh3Ri9SUkc4en
+
+    + Attributes (object)
+        + include `Create_Declaration_Request_PIS`
+
++ Response 201 (application/json)
+    + Attributes (`Response__Process_OK`)
+        + data (`Create_Declaration_Request_Response_PIS`)
+
+### PIS Get Declaration Requests [GET /api/pis/declaration_requests{?status,start_date_from,start_date_to,end_date_from,end_date_to,page,page_size,channel}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-014-0009
+Scope              | declaration_request:read_pis
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18690507045/DRAFT+REST+API+PIS.+Get+Declaration+requests">Get Declaration Requests</a>
+
+This WS allows to see patient's declaration requests and filter them.
+If the request has been cleared of personal patient data due to security requirements, such data will not be returned
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9
+        api-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Parameters
+    + status: active (string, optional)
+    + start_date_from: `2022-08-19` (string, optional)
+    + start_date_to: `2023-08-19` (string, optional)
+    + end_date_from: `2023-09-19` (string, optional)
+    + end_date_to: `2023-10-19` (string, optional)
+    + channel: `PIS` (string, optional)
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array[`Declaration_requests_list`])
 
 ## Employee [/gen/employee]
 
@@ -16439,3 +16506,157 @@ status: `APPROVED` (string, required)
     - UNVERIFIED
 + `code_expired_at`: `2017-07-10T12:20:16.300597Z` (string, required)
 + active: true (boolean, required)
+
+### `Declaration_requests_list`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - unique id of declaration request
++ declaration_number: `0000-12H4-245D` (string, required) - unique number of declaration.
++ start_date: `2017-03-02` (string, optional)
++ end_date: `2017-02-28` (string, optional)
++ channel: `PIS` (string, optional)
++ `status_reason`: `manual_employee` (string, optional)
++ status (enum, optional)
+    - new
+    - approved
+    - signed
+    - expired
+    - rejected
+    - cancelled
++ person (Person_Minimal_declaration_requst)
++ employee (`Employee_Minimal_declaration_request`, optional)
++ `legal_entity` (`MSP_Short_declaration_request`, optional)
++ division (`Division_Short_List_declaration_request`, optional)
+
+### `Division_Short_List_declaration_request`
++ id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ name: Бориспільське відділення Клініки Ноунейм (string, optional)
++ type: clinic (enum, optional)
+    - CLINIC
+    - AMBULANT_CLINIC
+    - FAP
++ status: ACTIVE (enum, optional)
+    - ACTIVE
+    - INACTIVE
++ dls_id: `2872985` (string, optional)
++ dls_verified: true (boolean, optional)
+
+### `MSP_Short_declaration_request`
++ id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ name: Клініка Ноунейм (string, optional)
++ short_name: Ноунейм (string, optional)
++ `legal_form`: 140 (string, optional) - `Dictionary LEGAL_FORM`
++ edrpou: 5432345432 (string, optional)
+
+### `Employee_Minimal_declaration_request`
++ id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ position: P6 (string, optional) - `Dictionary POSITION`
++ party (object)
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional)
+    + include `Party_Short_declaration_requst`    
+
+### `Party_Short_declaration_requst`
++ first_name: Петро (string, optional)
++ last_name: Іванов (string, optional)
++ second_name: Миколайович (string, optional)
+
+### `Person_Minimal_declaration_requst`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional)
++ first_name: Петро (string, optional)
++ last_name: Іванов (string, optional)
++ second_name: Миколайович (string, optional)
+
+### `Create_Declaration_Request_Response_PIS`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ seed: hash (string, required)
++ include `Declaration_Request_Public_Response`
++ status: `NEW` (string, required)
++ employee (`Employee_Minimal`, required)
+    + speciality: `FAMILY_DOCTOR` (string, required) - Information about the employee's specialty
++ `legal_entity` (`Medical_Service_Provider`, required)
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ division (`Division_Declaration`, required)
++ content: `Declaration content` (string, required) - HTML document
++ `data_to_be_signed` (`Declaration_request_data_to_be_signed`, required)
++ channel: `PIS` (enum, required) - channel that invoke declaration create service
+
+### `Declaration_request_data_to_be_signed`
++ id: `b099f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ status: `NEW` (string, required)
++ declaration_number: `0000-12H4-245D` (string, required) - unique number of declaration.
++ declaration_id: `8311ab82-e341-4da0-8a95-235ec9885e23` (string, required) - presetted id for future declaration
++ start_date: `2017-03-02` (string, required) - Should be defined on the client side.
++ end_date: `2017-03-02` (string, required) - Will be defined on eHealth side if it's not set.
++ content: `Declaration content` (string, required) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
++ channel: `PIS` (enum, required) - channel that invoke declaration create service
++ person (object, required) - Object that described a Patient. Confidant person should be set for disabled persons, underage persons, etc.
+    + id: `5fb57a5d-1457-430e-9678-c81cec72779f` (string,required )
+    + include `Data_to_be_signed_PersonDetails`
+    + patient_signed: false (boolean, required) - Person's evidence of sign the declaration request
+    + `process_disclosure_data_consent`: true (boolean, required) - Person's evidence of information about consent to data disclosure
++ employee (`Employee_Minimal`, required)
++ `legal_entity` (`Medical_Service_Provider`, required)
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ division (`Division_Declaration`, required)
++ seed: hash (string, required) - Hash of previous block in declarations chain or other random component that should be signed with declaration.
++ authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of person's auth method
+
+### `Data_to_be_signed_PersonDetails`
++ first_name: Петро (string, required)
++ last_name: Іванов (string, required)
++ second_name: Миколайович (string, optional)
++ birth_date: `2009-07-05` (string, required)
++ birth_country: `Україна` (string, required)
++ birth_settlement: `Вінниця` (string, required)
++ gender: MALE, FEMALE (enum[string], required)
++ email: email@example.com (string, optional)
++ `no_tax_id`: false (boolean, required)
++ tax_id: 3999869394 (string, optional)
++ secret: secret (string, required)
++ documents (array, required)
+    + (object)
+        + type: BIRTH_CERTIFICATE (string, required) - `Dictionary DOCUMENT_TYPE`
+        + number: АА120518 (string, required) - document issue number
+        + issued_by: `Рокитнянським РВ ГУ МВС Київської області` (string, required) - authority which issued the document
+        + issued_at: `2017-02-28` (string, required) - the date when document was issued
+        + expiration_date: `2027-02-28` (string, optional) - the date when document expired, is necessery for those documents which has this date, ex, Temporary certificate, etc.
++ addresses (array[`Address`], required)
++ phones (array[`Phone`], optional)
++ `authentication_methods` (array, required)
+    + (object)
+        + type (enum, required)
+            - OTP
+            - OFFLINE
+        + phone_number: `+38093*****85` (string, optional)
++ unzr: `20090705-00011` (string, optional) - the record number in the demographic register
++ emergency_contact (object, required)
+    + include `Emergency_Contact`
++ `confidant_person` (array[`Data_to_be_signed_ConfidantPerson`], optional) - Should be set if this Person is disabled, underage, etc.
++ preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
+    - email
+    - phone
+
+### `Data_to_be_signed_ConfidantPerson`
++ relation_type: PRIMARY (enum, required)
+    - PRIMARY
+    - SECONDARY
++ first_name: Петро (string, required)
++ last_name: Іванов (string, required)
++ second_name: Миколайович (string, optional)
++ birth_date: `1972-10-26` (string, required)
++ birth_country: `Україна` (string, required)
++ birth_settlement: `Вінниця` (string, required)
++ gender: MALE, FEMALE (enum[string], required)
++ tax_id: 2659719350 (string, optional)
++ secret: `secret` (string, required)
++ unzr: `19900101-00099` (string, optional)
++ preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
+    - email
+    - phone
++ documents_person (array[`Document`], required)
++ documents_relationship (array[`RelationshipDocument`], required)
++ phones (array[`Phone`], optional)
++ email: emaill@example.com (string, optional)
+
+### `Create_Declaration_Request_PIS`
++ `employee_id`: `1a8b10ea-ba09-40f2-8f9e-55608e9208c6` (string, required) - Employee ID with `type=DOCTOR` selected from available Employees as a third contract party.
++ `division_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Registered Medical Service Provider Division identifier.
+
