@@ -1482,6 +1482,306 @@ Key                | Value
 ESOZ ENT ID        | ENT-014
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18832949315/Declaration+Request">Declaration</a>
 
+### Create Declaration Request V3 [POST /api/v3/declaration_requests]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-014-0001
+Scope              | declaration_request:write
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570234464/DRAFT+REST+API+Create+Declaration+Request+V3">Create Declaration Request V3</a>
+
+This method is used to create Declaration Request (as part of Declaration creation process) via new api. 
+
+This method method allows you to create a declaration only for an existing person.
+
+To create declaration request based on active declaration in reorganized legal entity, `parent_declaration_id` must be passed in request.
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        api-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
+    + Attributes (object)
+        + include `Declaration_Request_Online`
+        + authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of person's auth method
+        + parent_declaration_id: `8c7753fc-a647-435f-8e43-4ff4546431f6` (string, optional) - identifier of parent declaration in reorganized legal entity
+
++ Response 201 (application/json)
+    + Attributes (`Response__Process_OK`)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (object)
+            + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+            + start_date: `2017-03-02` (string, required) - Should be defined on the client side.
+            + end_date: `2017-03-02` (string, required) - Will be defined on eHealth side if it's not set.
+            + `person_id`: `4d0d790c-cbf1-44f5-ab21-ba8db67da161` (string, required) - Person ID
+            + `employee_id`: `1a8b10ea-ba09-40f2-8f9e-55608e9208c6` (string, required) - Employee ID with `type=DOCTOR` selected from available Employees as a third contract party.
+            + `division_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+            + declaration_number: `0000-12H4-245D` (string, required) - unique number of declaration.
+            + declaration_id: `8311ab82-e341-4da0-8a95-235ec9885e23` (string, required) - presetted id for future declaration
+            + parent_declaration_id: `8c7753fc-a647-435f-8e43-4ff4546431f6` (string, optional) - identifier of parent declaration
+            + status: `NEW` (string, required)
+            + `status_reason`: `not relevant` (string, optional) - `Dictionary DECLARATION_REQUEST_STATUS_REASON`
+            + `system_declaration_limit`: 900 (number, optional) - Current doctor's limit based on speciality_officio
+            + `current_declaration_count`: 675 (number, optional) - Number of declarations assigned to doctor
+            + channel: `MIS` (enum, required) - channel that invoke declaration create service
+            + authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of person's auth method
+            
+        + urgent (object, required)
+            + `authentication_method_current` (object, required)
+                + type: `OTP` (enum, required)
+                    - OTP
+                    - OFFLINE
+                    - NA
+                + number: `+38093*****74` (string, required)
+            + documents (array[`media_content`], optional)
+
++ Response 422 (application/json)
+    + Attributes (`Response_Error`)
+        + meta (Response__Meta)
+            + code: 422
+        + error
+            + type: unverified (string, required)
+            + message: `Person not found` (string, required)
+
+### Approve Declaration Request V3 [PATCH /api/v3/declaration_requests/{id}/actions/approve]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-014-0002
+Scope              | declaration_request:approve
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570332759/DRAFT+REST+API+Approve+Declaration+Request+V3">Approve Declaration Request V3</a>
+
+Use this method to approve previously created Declaration Request.
+
+In case if authentication_method is OTP, request example:
+
+```
+{
+  "verification_code": 3748
+}
+```
+
+In case if authentication_method is OFFLINE or N/A, request body should be empty.
+Before approve patient's scanned documents should be uploaded to the ([Signed URL's](https://cloud.google.com/storage/docs/access-control/create-signed-urls-program)).
+All links are generated for one one-page document in jpeg format. Document should be no more than 10MB.
+If make declaration request via cabinet then nothing must be uploaded to URL.
+Clients can use signed URL's to directly access [s3 storage](https://storage.ehealth.gov.ua/) and upload files via API.
+
++ Parameters
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
+    + Attributes (object)
+        + `verification_code`: 2836 (number, optional) - required if authentication_method is OTP
+
++ Response 201 (application/json)
+    + Attributes (`Response__Process_OK`)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (object)
+            + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+            + start_date: `2017-03-02` (string, required) - Should be defined on the client side.
+            + end_date: `2017-03-02` (string, required) - Will be defined on eHealth side if it's not set.
+            + `person_id`: `4d0d790c-cbf1-44f5-ab21-ba8db67da161` (string, required) - Person ID
+            + `employee_id`: `1a8b10ea-ba09-40f2-8f9e-55608e9208c6` (string, required) - Employee ID with `type=DOCTOR` selected from available Employees as a third contract party.
+            + `division_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+            + declaration_number: `0000-12H4-245D` (string, required) - unique number of declaration.
+            + declaration_id: `8311ab82-e341-4da0-8a95-235ec9885e23` (string, required) - presetted id for future declaration
+            + parent_declaration_id: `8c7753fc-a647-435f-8e43-4ff4546431f6` (string, optional) - identifier of parent declaration
+            + status: `NEW` (string, required)
+            + `status_reason`: `not relevant` (string, optional) - `Dictionary DECLARATION_REQUEST_STATUS_REASON`
+            + `system_declaration_limit`: 900 (number, optional) - Current doctor's limit based on speciality_officio
+            + `current_declaration_count`: 675 (number, optional) - Number of declarations assigned to doctor
+            + channel: `MIS` (enum, required) - channel that invoke declaration create service
+            + authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of person's auth method
+            + `data_to_be_signed` (`Decl_req_data_to_be_signed`, required)
+
++ Response 422 (application/json)
+    + Attributes (`Response_Error`)
+        + meta (Response__Meta)
+            + code: 422
+        + error
+            + type: request_malformed (string, required)
+            + message: `This doctor has X declarations and could not sign more` (string, required)
+
+### Reject Declaration Request V3 [PATCH /api/v3/declaration_requests/{id}/actions/reject]
+
+Use this method to reject previously created Declaration Request.
+
++ Parameters
+    + id: b075f148-7f93-4fc2-b2ec-2d81b19a9b7b (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 201 (application/json)
+    + Attributes (`Response__Process_OK`)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (object)
+            + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+            + start_date: `2017-03-02` (string, required) - Should be defined on the client side.
+            + end_date: `2017-03-02` (string, required) - Will be defined on eHealth side if it's not set.
+            + `person_id`: `4d0d790c-cbf1-44f5-ab21-ba8db67da161` (string, required) - Person ID
+            + `employee_id`: `1a8b10ea-ba09-40f2-8f9e-55608e9208c6` (string, required) - Employee ID with `type=DOCTOR` selected from available Employees as a third contract party.
+            + `division_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+            + declaration_number: `0000-12H4-245D` (string, required) - unique number of declaration.
+            + declaration_id: `8311ab82-e341-4da0-8a95-235ec9885e23` (string, required) - presetted id for future declaration
+            + parent_declaration_id: `8c7753fc-a647-435f-8e43-4ff4546431f6` (string, optional) - identifier of parent declaration
+            + status: `NEW` (string, required)
+            + `status_reason`: `not relevant` (string, optional) - `Dictionary DECLARATION_REQUEST_STATUS_REASON`
+            + `system_declaration_limit`: 900 (number, optional) - Current doctor's limit based on speciality_officio
+            + `current_declaration_count`: 675 (number, optional) - Number of declarations assigned to doctor
+            + channel: `MIS` (enum, required) - channel that invoke declaration create service
+            + authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of person's auth method
+            + `data_to_be_signed` (`Decl_req_data_to_be_signed`, optional)
+
+### Sign Declaration Request V3 [PATCH /api/v3/declaration_requests/{id}/actions/sign]
+
+This method is used to sign Declaration Request. Method receives signed message (pkcs7) including signed content, digital signature and signer public key in `signed_content` property.
+All signature fields will be validated (including signer certificate authority).
+
+This service will store signed copy of Declaration Request in Media Content Storage, create declaration if signature is all checks is passed.
+
+Signed content MUST consists of JSON object with Declaration Request data from field `data_to_be_signed`. Object that need to be signed is returned by `Get Declaration request by ID` or `Approve declaration request` response, `JSON.Path: $.data.data_to_be_signed`.
+Patient must re-read and sign declaration print form and after that `patient_signed` should be changed to TRUE.
+
+Declaration request can be signed either by doctor or admin (user with scope `declaration_request:sign`) from legal entity as in declaration request.
+
+**Important**
+
+Invoke Get Declaration Request by ID to obtain seed - Hash of previous block in declarations chain or other random component that should be signed with declaration.
+
+There is a [**dummy method**](https://uaehealthapi.docs.apiary.io/#reference/dummy-methods/dummy-for-declaration-request/sign-declaration-request) that describes the signed date example.
+
++ Parameters
+    + id: b075f148-7f93-4fc2-b2ec-2d81b19a9b7b (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
+    + Attributes (object)
+        + `signed_declaration_request`: `ewogICJpZCI6ICJiMDk5ZjE0OC03ZjkzLTRmYzItYjJlYy0yZDgxYjE5YTliN2IiLAogICJkZWNsYXJhdGlvbl9udW1iZXIiOiAiMDAwMC0xMkg0LTI0NUQiLAogICJkZWNsYXJhdGlvbl9pZCI6ICI4MzExYWI4Mi1lMzQxLTRkYTAtOGE5NS0yMzVlYzk4ODVlMjMiLAogICJzdGFydF9kYXRlIjogIjIwMTctMDMtMDIiLAogICJlbmRfZGF0ZSI6ICIyMDE3LTAzLTAyIiwKICAiY29udGVudCI6ICJEZWNsYXJhdGlvbiBjb250ZW50IiwKICAiY2hhbm5lbCI6ICJNSVMiLAogICJwZXJzb24iOiB7CiAgICAiaWQiOiAiNWZiNTdhNWQtMTQ1Ny00MzBlLTk2NzgtYzgxY2VjNzI3NzlmIiwKICAgICJmaXJzdF9uYW1lIjogItCf0LXRgtGA0L4iLAogICAgImxhc3RfbmFtZSI6ICLQhtCy0LDQvdC+0LIiLAogICAgInNlY29uZF9uYW1lIjogItCc0LjQutC+0LvQsNC50L7QstC40YciLAogICAgImJpcnRoX2RhdGUiOiAiMjAwOS0wNy0wNSIsCiAgICAiYmlydGhfY291bnRyeSI6ICLQo9C60YDQsNGX0L3QsCIsCiAgICAiYmlydGhfc2V0dGxlbWVudCI6ICLQktGW0L3QvdC40YbRjyIsCiAgICAiZ2VuZGVyIjogIk1BTEUiLAogICAgImVtYWlsIjogImVtYWlsQGV4YW1wbGUuY29tIiwKICAgICJub190YXhfaWQiOiBmYWxzZSwKICAgICJ0YXhfaWQiOiAiMzk5OTg2OTM5NCIsCiAgICAic2VjcmV0IjogInNlY3JldCIsCiAgICAiZG9jdW1lbnRzIjogWwogICAgICB7CiAgICAgICAgInR5cGUiOiAiQklSVEhfQ0VSVElGSUNBVEUiLAogICAgICAgICJudW1iZXIiOiAi0JDQkDEyMDUxOCIsCiAgICAgICAgImlzc3VlZF9ieSI6ICLQoNC+0LrQuNGC0L3Rj9C90YHRjNC60LjQvCDQoNCSINCT0KMg0JzQktChINCa0LjRl9Cy0YHRjNC60L7RlyDQvtCx0LvQsNGB0YLRliIsCiAgICAgICAgImlzc3VlZF9hdCI6ICIyMDE3LTAyLTI4IiwKICAgICAgICAiZXhwaXJhdGlvbl9kYXRlIjogIjIwMjctMDItMjgiCiAgICAgIH0KICAgIF0sCiAgICAiYWRkcmVzc2VzIjogWwogICAgICB7CiAgICAgICAgInR5cGUiOiAiUkVTSURFTkNFIiwKICAgICAgICAiY291bnRyeSI6ICJVQSIsCiAgICAgICAgImFyZWEiOiAi0JbQuNGC0L7QvNC40YDRgdGM0LrQsCIsCiAgICAgICAgInJlZ2lvbiI6ICLQkdC10YDQtNC40YfRltCy0YHRjNC60LjQuSIsCiAgICAgICAgInNldHRsZW1lbnQiOiAi0JrQuNGX0LIiLAogICAgICAgICJzZXR0bGVtZW50X3R5cGUiOiAiQ0lUWSIsCiAgICAgICAgInNldHRsZW1lbnRfaWQiOiAiYjA3NWYxNDgiLAogICAgICAgICJzdHJlZXRfdHlwZSI6ICJTVFJFRVQiLAogICAgICAgICJzdHJlZXQiOiAi0LLRg9C7LiDQndGW0LbQuNC90YHRjNC60LAiLAogICAgICAgICJidWlsZGluZyI6ICIxNSIsCiAgICAgICAgImFwYXJ0bWVudCI6ICIyMyIsCiAgICAgICAgInppcCI6ICIwMjA5MCIKICAgICAgfQogICAgXSwKICAgICJwaG9uZXMiOiBbCiAgICAgIHsKICAgICAgICAidHlwZSI6ICJNT0JJTEUiLAogICAgICAgICJudW1iZXIiOiAiKzM4MDUwMzQxMDg3MCIKICAgICAgfQogICAgXSwKICAgICJhdXRoZW50aWNhdGlvbl9tZXRob2RzIjogWwogICAgICB7CiAgICAgICAgInR5cGUiOiAiVEhJUkRfUEVSU09OIiwKICAgICAgICAidmFsdWUiOiAiKzM4MDUwODg4NzcwMCIsCiAgICAgICAgImFsaWFzIjogImh1c2JhbmQiCiAgICAgIH0KICAgIF0sCiAgICAidW56ciI6ICIyMDA5MDcwNS0wMDAxMSIsCiAgICAiZW1lcmdlbmN5X2NvbnRhY3QiOiB7CiAgICAgICJmaXJzdF9uYW1lIjogItCf0LXRgtGA0L4iLAogICAgICAibGFzdF9uYW1lIjogItCG0LLQsNC90L7QsiIsCiAgICAgICJzZWNvbmRfbmFtZSI6ICLQnNC40LrQvtC70LDQudC+0LLQuNGHIiwKICAgICAgInBob25lcyI6IFsKICAgICAgICB7CiAgICAgICAgICAidHlwZSI6ICJNT0JJTEUiLAogICAgICAgICAgIm51bWJlciI6ICIrMzgwNTAzNDEwODcwIgogICAgICAgIH0KICAgICAgXQogICAgfSwKICAgICJjb25maWRhbnRfcGVyc29uIjogWwogICAgICB7CiAgICAgICAgInJlbGF0aW9uX3R5cGUiOiAiUFJJTUFSWSIsCiAgICAgICAgImZpcnN0X25hbWUiOiAi0J/QtdGC0YDQviIsCiAgICAgICAgImxhc3RfbmFtZSI6ICLQhtCy0LDQvdC+0LIiLAogICAgICAgICJzZWNvbmRfbmFtZSI6ICLQnNC40LrQvtC70LDQudC+0LLQuNGHIiwKICAgICAgICAiYmlydGhfZGF0ZSI6ICIxOTcyLTEwLTI2IiwKICAgICAgICAiYmlydGhfY291bnRyeSI6ICLQo9C60YDQsNGX0L3QsCIsCiAgICAgICAgImJpcnRoX3NldHRsZW1lbnQiOiAi0JLRltC90L3QuNGG0Y8iLAogICAgICAgICJnZW5kZXIiOiAiTUFMRSIsCiAgICAgICAgInRheF9pZCI6ICIyNjU5NzE5MzUwIiwKICAgICAgICAic2VjcmV0IjogInNlY3JldCIsCiAgICAgICAgInVuenIiOiAiMTk5MDAxMDEtMDAwOTkiLAogICAgICAgICJwcmVmZXJyZWRfd2F5X2NvbW11bmljYXRpb24iOiAiZW1haWwiLAogICAgICAgICJkb2N1bWVudHNfcGVyc29uIjogWwogICAgICAgICAgewogICAgICAgICAgICAidHlwZSI6ICJQQVNTUE9SVCIsCiAgICAgICAgICAgICJudW1iZXIiOiAi0JDQkDEyMDUxOCIsCiAgICAgICAgICAgICJleHBpcmF0aW9uX2RhdGUiOiAiMjAyMS0wMi0yOCIsCiAgICAgICAgICAgICJpc3N1ZWRfYnkiOiAi0KDQvtC60LjRgtC90Y/QvdGB0YzQutC40Lwg0KDQkiDQk9CjINCc0JLQoSDQmtC40ZfQstGB0YzQutC+0Zcg0L7QsdC70LDRgdGC0ZYiLAogICAgICAgICAgICAiaXNzdWVkX2F0IjogIjIwMTctMDItMjgiCiAgICAgICAgICB9CiAgICAgICAgXSwKICAgICAgICAiZG9jdW1lbnRzX3JlbGF0aW9uc2hpcCI6IFsKICAgICAgICAgIHsKICAgICAgICAgICAgInR5cGUiOiAiQklSVEhfQ0VSVElGSUNBVEUiLAogICAgICAgICAgICAibnVtYmVyIjogItCQ0JAxMjA1MTgiLAogICAgICAgICAgICAiaXNzdWVkX2J5IjogItCg0L7QutC40YLQvdGP0L3RgdGM0LrQuNC8INCg0JIg0JPQoyDQnNCS0KEg0JrQuNGX0LLRgdGM0LrQvtGXINC+0LHQu9Cw0YHRgtGWIiwKICAgICAgICAgICAgImlzc3VlZF9hdCI6ICIyMDE3LTAyLTI4IgogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgInBob25lcyI6IFsKICAgICAgICAgIHsKICAgICAgICAgICAgInR5cGUiOiAiTU9CSUxFIiwKICAgICAgICAgICAgIm51bWJlciI6ICIrMzgwNTAzNDEwODcwIgogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgImVtYWlsIjogImVtYWlsbEBleGFtcGxlLmNvbSIKICAgICAgfQogICAgXSwKICAgICJwcmVmZXJyZWRfd2F5X2NvbW11bmljYXRpb24iOiAiZW1haWwiLAogICAgInBhdGllbnRfc2lnbmVkIjogdHJ1ZSwKICAgICJwcm9jZXNzX2Rpc2Nsb3N1cmVfZGF0YV9jb25zZW50IjogdHJ1ZQogIH0sCiAgImVtcGxveWVlIjogewogICAgImlkIjogImQyOTBmMWVlLTZjNTQtNGIwMS05MGU2LWQ3MDE3NDhmMDg1MSIsCiAgICAicG9zaXRpb24iOiAiUDYiLAogICAgInBhcnR5IjogewogICAgICAiaWQiOiAiYjA3NWYxNDgtN2Y5My00ZmMyLWIyZWMtMmQ4MWIxOWE5YjdiIiwKICAgICAgIm5vX3RheF9pZCI6IHRydWUsCiAgICAgICJmaXJzdF9uYW1lIjogItCf0LXRgtGA0L4iLAogICAgICAibGFzdF9uYW1lIjogItCG0LLQsNC90L7QsiIsCiAgICAgICJzZWNvbmRfbmFtZSI6ICLQnNC40LrQvtC70LDQudC+0LLQuNGHIiwKICAgICAgImVtYWlsIjogImVtYWlsQGV4YW1wbGUuY29tIiwKICAgICAgInBob25lcyI6IFsKICAgICAgICB7CiAgICAgICAgICAidHlwZSI6ICJNT0JJTEUiLAogICAgICAgICAgIm51bWJlciI6ICIrMzgwNTAzNDEwODcwIgogICAgICAgIH0KICAgICAgXQogICAgfQogIH0sCiAgImxlZ2FsX2VudGl0eSI6IHsKICAgICJuYW1lIjogItCa0LvRltC90ZbQutCwINCd0L7Rg9C90LXQudC8IiwKICAgICJzaG9ydF9uYW1lIjogItCd0L7Rg9C90LXQudC8IiwKICAgICJsZWdhbF9mb3JtIjogIjE0MCIsCiAgICAicHVibGljX25hbWUiOiAi0KbQn9Cc0KHQlCDihJYxIiwKICAgICJlZHJwb3UiOiAiNTQzMjM0NTQzMiIsCiAgICAibGljZW5zZXMiOiBbCiAgICAgIHsKICAgICAgICAibGljZW5zZV9udW1iZXIiOiAiZmQxMjM0NDMiLAogICAgICAgICJpc3N1ZWRfYnkiOiAi0JrQstCw0LvRltGE0ZbQutCw0YbQudC90LAg0LrQvtC80ZbRgdGW0Y8iLAogICAgICAgICJpc3N1ZWRfZGF0ZSI6ICIyMDE3LTAyLTI4IiwKICAgICAgICAiZXhwaXJ5X2RhdGUiOiAiMjAxNy0wMi0yOCIsCiAgICAgICAgImFjdGl2ZV9mcm9tX2RhdGUiOiAiMjAxNy0wMi0yOCIsCiAgICAgICAgIndoYXRfbGljZW5zZWQiOiAi0YDQtdCw0LvRltC30LDRhtGW0Y8g0L3QsNGA0LrQvtGC0LjRh9C90LjRhSDQt9Cw0YHQvtCx0ZbQsiIsCiAgICAgICAgIm9yZGVyX25vIjogItCS0JA0MzIzNCIKICAgICAgfQogICAgXSwKICAgICJhY2NyZWRpdGF0aW9uIjogewogICAgICAiY2F0ZWdvcnkiOiAiU0VDT05EIiwKICAgICAgImlzc3VlZF9kYXRlIjogIjIwMTctMDItMjgiLAogICAgICAiZXhwaXJ5X2RhdGUiOiAiMjAxNy0wMi0yOCIsCiAgICAgICJvcmRlcl9ubyI6ICJmZDEyMzQ0MyIsCiAgICAgICJvcmRlcl9kYXRlIjogIjIwMTctMDItMjgiCiAgICB9LAogICAgImFkZHJlc3NlcyI6IFsKICAgICAgewogICAgICAgICJ0eXBlIjogIlJFU0lERU5DRSIsCiAgICAgICAgImNvdW50cnkiOiAiVUEiLAogICAgICAgICJhcmVhIjogItCW0LjRgtC+0LzQuNGA0YHRjNC60LAiLAogICAgICAgICJyZWdpb24iOiAi0JHQtdGA0LTQuNGH0ZbQstGB0YzQutC40LkiLAogICAgICAgICJzZXR0bGVtZW50IjogItCa0LjRl9CyIiwKICAgICAgICAic2V0dGxlbWVudF90eXBlIjogIkNJVFkiLAogICAgICAgICJzZXR0bGVtZW50X2lkIjogImIwNzVmMTQ4IiwKICAgICAgICAic3RyZWV0X3R5cGUiOiAiU1RSRUVUIiwKICAgICAgICAic3RyZWV0IjogItCy0YPQuy4g0J3RltC20LjQvdGB0YzQutCwIiwKICAgICAgICAiYnVpbGRpbmciOiAiMTUiLAogICAgICAgICJhcGFydG1lbnQiOiAiMjMiLAogICAgICAgICJ6aXAiOiAiMDIwOTAiCiAgICAgIH0KICAgIF0sCiAgICAicGhvbmVzIjogWwogICAgICB7CiAgICAgICAgInR5cGUiOiAiTU9CSUxFIiwKICAgICAgICAibnVtYmVyIjogIiszODA1MDM0MTA4NzAiCiAgICAgIH0KICAgIF0sCiAgICAiZW1haWwiOiAiZW1haWxAZXhhbXBsZS5jb20iLAogICAgImlkIjogImIwNzVmMTQ4LTdmOTMtNGZjMi1iMmVjLTJkODFiMTlhOWI3YiIKICB9LAogICJkaXZpc2lvbiI6IHsKICAgICJpZCI6ICJkMjkwZjFlZS02YzU0LTRiMDEtOTBlNi1kNzAxNzQ4ZjA4NTEiLAogICAgImxlZ2FsX2VudGl0eV9pZCI6ICJjOGFhZGI4Ny1lY2I5LTQxY2EtOWFkNC1mZmRmZTFkZDg5YzkiLAogICAgIm5hbWUiOiAi0JHQvtGA0LjRgdC/0ZbQu9GM0YHRjNC60LUg0LLRltC00LTRltC70LXQvdC90Y8g0JrQu9GW0L3RltC60Lgg0J3QvtGD0L3QtdC50LwiLAogICAgImFkZHJlc3NlcyI6IFsKICAgICAgewogICAgICAgICJ0eXBlIjogIlJFU0lERU5DRSIsCiAgICAgICAgImNvdW50cnkiOiAiVUEiLAogICAgICAgICJhcmVhIjogItCW0LjRgtC+0LzQuNGA0YHRjNC60LAiLAogICAgICAgICJyZWdpb24iOiAi0JHQtdGA0LTQuNGH0ZbQstGB0YzQutC40LkiLAogICAgICAgICJzZXR0bGVtZW50IjogItCa0LjRl9CyIiwKICAgICAgICAic2V0dGxlbWVudF90eXBlIjogIkNJVFkiLAogICAgICAgICJzZXR0bGVtZW50X2lkIjogImIwNzVmMTQ4IiwKICAgICAgICAic3RyZWV0X3R5cGUiOiAiU1RSRUVUIiwKICAgICAgICAic3RyZWV0IjogItCy0YPQuy4g0J3RltC20LjQvdGB0YzQutCwIiwKICAgICAgICAiYnVpbGRpbmciOiAiMTUiLAogICAgICAgICJhcGFydG1lbnQiOiAiMjMiLAogICAgICAgICJ6aXAiOiAiMDIwOTAiCiAgICAgIH0KICAgIF0sCiAgICAicGhvbmVzIjogWwogICAgICB7CiAgICAgICAgInR5cGUiOiAiTU9CSUxFIiwKICAgICAgICAibnVtYmVyIjogIiszODA1MDM0MTA4NzAiCiAgICAgIH0KICAgIF0sCiAgICAiZW1haWwiOiAiZW1haWxAZXhhbXBsZS5jb20iLAogICAgInR5cGUiOiAiY2xpbmljIiwKICAgICJleHRlcm5hbF9pZCI6ICIzMjEzMjEzIiwKICAgICJkbHNfaWQiOiAiMjg3Mjk4NSIsCiAgICAiZGxzX3ZlcmlmaWVkIjogdHJ1ZQogIH0sCiAgInNlZWQiOiAiaGFzaCIKfQ==` (string, required)
+
++ Response 200 (application/json)
+    + Attributes (`Response__Process_OK`)
+        + data (`Declaration_short_v3`)
+
+### Get Declaration Request by ID V3 [GET /api/v3/declaration_requests/{id}]
+
+This endpoint returns declaration requests that were created through V2 and V3. Fields `person_id` and `data_to_be_signed` will be empty if declaration request is created by V2.
+
++ Parameters
+    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - request identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (object)
+            + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+            + start_date: `2017-03-02` (string, required) - Should be defined on the client side.
+            + end_date: `2017-03-02` (string, required) - Will be defined on eHealth side if it's not set.
+            + `person_id`: `4d0d790c-cbf1-44f5-ab21-ba8db67da161` (optional, required) - Person ID
+            + `employee_id`: `1a8b10ea-ba09-40f2-8f9e-55608e9208c6` (string, required) - Employee ID with `type=DOCTOR` selected from available Employees as a third contract party.
+            + `division_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+            + `legal_entity_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - MSP ID.
+            + declaration_number: `0000-12H4-245D` (string, required) - unique number of declaration.
+            + declaration_id: `8311ab82-e341-4da0-8a95-235ec9885e23` (string, required) - presetted id for future declaration
+            + parent_declaration_id: `8c7753fc-a647-435f-8e43-4ff4546431f6` (string, optional) - identifier of parent declaration  
+            + status: SIGNED (enum, required)
+                - NEW
+                - APPROVED
+                - SIGNED
+                - CANCELLED
+            + `status_reason`: `not relevant` (string, optional) - `Dictionary DECLARATION_REQUEST_STATUS_REASON`
+            + `system_declaration_limit`: 900 (number, optional) - Current doctor's limit based on speciality_officio
+            + `current_declaration_count`: 675 (number, optional) - Number of declarations assigned to doctor
+            + channel: `MIS` (enum, required) - channel that invoke declaration create service
+            + authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of person's auth method
+            + `data_to_be_signed` (`Decl_req_data_to_be_signed`, optional)
+        + urgent (object, required)
+            + `authentication_method_current` (object, required)
+                + type: `OTP` (enum, required)
+                    - OTP
+                    - OFFLINE
+                    - NA
+                + number: `+38093*****85` (string, required)
+            + documents (array[`media_content`], optional)
+
+### Get Declaration Requests List V3 [GET /api/v3/declaration_requests{?employee_id,legal_entity_id,status,channel,page,page_size}]
+
+Use this method to obtain list of Declaration Requests for an `empolee_id`. If you want to reduce amount of data that is going trough your application, use `status` filter and show only requests that Doctor or Admin is interested in current UI section.
+
+Also we suggest use `employee_id` and `legal_entity_id` to make sure that end-user understands context of actions that he or she will perform.
+
+Method returns shortened details, to obtain full information - get Declaration Request it by it's ID.
+
+**Important**
+
+This endpoint shows the declaration requests which are created by V2 and V3. Due to the fact that structure of declaration request V3 is different from the structure of decl request V2 , so not all fields of declaration request v2 can be displayed.
+If declaration request is created by v2, the field `person_id` will be empty
+
++ Parameters
+    + `employee_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - user_id of a doctor.
+    + `legal_entity_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - MSP ID.
+    + status: active (enum, optional)
+        - NEW
+        - APPROVED
+        - SIGNED
+        - REJECTED
+        - CANCELLED
+        - EXPIRED
+    + channel: MIS (enum, optional)
+        - MIS
+        - PIS
+        - CABINET
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array[`Declaration_Response_Short_v3`])
+
+### Resend Authorization OTP on Declaration Request [POST /api/v3/declaration_requests/{id}/actions/resend_otp]
+
+Use this method to resend sms on previously created Declaration Request V3.
+
++ Parameters
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response__Process_OK`)
+        + data (`OTP`)
+
 ## Employee [/gen/employee]
 
 Key                | Value
@@ -16130,3 +16430,12 @@ status: `APPROVED` (string, required)
 + declarations_limit: 1000 (number, required)
 + declarations_count: 753 (number, required)
 
+### OTP
++ id: `7d23bebb-1cf3-4221-bf21-18aada444756` (string, required)
++ status: `NEW` (enum, required)
+    - NEW
+    - CANCELED
+    - VERIFIED
+    - UNVERIFIED
++ `code_expired_at`: `2017-07-10T12:20:16.300597Z` (string, required)
++ active: true (boolean, required)
