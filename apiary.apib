@@ -1296,6 +1296,88 @@ Method returns shortened details, to obtain full information - get Declaration D
     + Attributes (`Response_Collection_V2`)
         + data (array[`nhs_declaration_list_Public`])
 
+### Get Declaration by Id [GET /api/declarations/{id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-013-0003
+Scope              | declaration:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570463836/REST+API+Get+Declaration+by+ID">Get Declaration by Id</a>
+
+This method allows to receive detailed information about person Declaration by declaration ID.
+
++ Parameters
+    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - request identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (object)
+            + include `Declaration_Details`
+        + urgent (object, required)
+            + `authentication_method_current` (object, required)
+                + type: `OTP` (enum, required)
+                    - OTP
+                    - OFFLINE
+                    - NA
+                + number: `+38093*****85` (string, required)
+
+### Reject Declaration [PATCH /declarations/{id}/reject]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-013-0004
+Scope              | declaration:reject
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570529322/DRAFT+REST+API+Reject+declaration">Reject Declaration</a>
+
+This method is used by NHS_admin to reject declarations that has been created with the offline authorization.
+In case if the verification result is not acceptable.
+declaration status will be changed to `closed`
+
++ Parameters
+    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
+    + Attributes (`crud_Declaration_patch`)
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+
+### Verify Ddeclaration [PATCH /api/declarations/{id}/actions/approve]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-013-0005
+Scope              | declaration:approve
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570299934/DRAFT+REST+API+Verify+declaration">Verify Ddeclaration</a>
+
+This method is used by NHS_admin to verify declarations that has been created with the offline authorization.
+declaration status will be changed to `active`
+
++ Parameters
+    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    + Attributes (`crud_Declaration_patch`)
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
 
 ## Employee [/gen/employee]
 
