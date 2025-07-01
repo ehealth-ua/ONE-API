@@ -1,0 +1,4 @@
+Add employee role [API-005-025-0001]
+Get employee roles [API-005-025-0002]
+Get employee role by ID [API-005-025-0003]
+Deactivate employee role [API-005-025-0004]
