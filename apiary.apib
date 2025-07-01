@@ -1614,6 +1614,13 @@ Clients can use signed URL's to directly access [s3 storage](https://storage.ehe
 
 ### Reject Declaration Request V3 [PATCH /api/v3/declaration_requests/{id}/actions/reject]
 
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-014-0003
+Scope              | declaration_request:reject
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570234475/DRAFT+REST+API+Reject+Declaration+Request+V3">Reject Declaration Request V3</a>
+
 Use this method to reject previously created Declaration Request.
 
 + Parameters
@@ -1648,6 +1655,13 @@ Use this method to reject previously created Declaration Request.
 
 ### Sign Declaration Request V3 [PATCH /api/v3/declaration_requests/{id}/actions/sign]
 
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-014-0004
+Scope              | declaration_request:sign
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570136258/DRAFT+REST+API+Sign+Declaration+Request+V3">Sign Declaration Request V3</a>
+
 This method is used to sign Declaration Request. Method receives signed message (pkcs7) including signed content, digital signature and signer public key in `signed_content` property.
 All signature fields will be validated (including signer certificate authority).
 
@@ -1679,7 +1693,14 @@ There is a [**dummy method**](https://uaehealthapi.docs.apiary.io/#reference/dum
     + Attributes (`Response__Process_OK`)
         + data (`Declaration_short_v3`)
 
-### Get Declaration Request by ID V3 [GET /api/v3/declaration_requests/{id}]
+### Get Declaration Request by Id V3 [GET /api/v3/declaration_requests/{id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-005-014-0005
+Scope              | declaration_request:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570529333/DRAFT+REST+API+Get+Declaration+Request+by+ID+V3">Get Declaration By Id V3</a>
 
 This endpoint returns declaration requests that were created through V2 and V3. Fields `person_id` and `data_to_be_signed` will be empty if declaration request is created by V2.
 
