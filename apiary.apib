@@ -16022,3 +16022,111 @@ status: `APPROVED` (string, required)
 + id: `asSbcy12sYs8c` (string, required)
 + name: `Пединовка` (string, required)
 
+
+### `Declaration_Details_terminated`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ declaration_number: `0000-12H4-245D` (string, required) - unique number of declaration.
++ start_date: `2017-03-02` (string, required)
++ end_date: `2017-03-02` (string, required)
++ signed_at: `2017-03-02T00:00:00.000Z` (string, required)
++ person (`Person_declaration`, required)
+    + id: `b075f148-7f93-4fc2-b2ec-3d81b19a9b7b` (string, required)
+    + unzr: `19910819-00011` (string, optional) - the record number in the demographic register
+    + `emergency_contact` (`Emergency_Contact`, required)
+    + `confidant_person` (array[`Confidant_Person`], optional) - Should be set if this Person is disabled, underage, etc.
++ employee (`Employee_Declaration_Short`, required)
++ division (`Division_Declaration`, required)
++ `legal_entity` (MSP_Details, required)
++ status (enum, required)
+    - terminated
+    - pending_verification
+    - active
++ scope (enum, required)
+    - family_doctor
++ `declaration_request_id`: `74a6fae6-4207-4e03-a136-f2e70c6b0c02`
++ content: `Declaration content` (string, required) - HTML document that MUST be shown to a end-user and signed by hes key. - Should be defined on the client side.
++ inserted_at: `2017-03-02T10:45:16.000Z` (string, required)
++ updated_at: `2017-03-02T10:45:16.000Z` (string, optional)
++ reason: `manual_employee` (string, optional)
++ reason_description: `Згідно постанови 1 від 10.01.2017` (string, optional)
+
+### `Person_declaration`
++ first_name: Петро (string, required)
++ last_name: Іванов (string, required)
++ second_name: Миколайович (string, optional)
++ birth_date: `1991-08-19` (string, required)
++ birth_country: `Україна` (string, required)
++ birth_settlement: `Вінниця` (string, required)
++ gender: MALE, FEMALE (enum[string], required)
++ email: email@example.com (string, optional)
++ tax_id: 3126509816 (string, optional)
++ no_tax_id: true (boolean, required)
++ secret: secret (string, required)
++ documents (array[`Document`], required)
++ addresses (array[`Address`], required)
++ phones (array[`Phone`], optional)
++ preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
+    - email
+    - phone    
+
+### `signed_content`
++ type: `SIGNED_CONTENT` (string, required)
++ url: `https://storage.ehealth.world` (string, required)
+
+### `Declaration_Details_PIS`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ declaration_number: `0000-12H4-245D` (string, required) - unique number of declaration.
++ start_date: `2017-03-02` (string, required)
++ end_date: `2017-03-02` (string, required)
++ signed_at: `2017-03-02T00:00:00.000Z` (string, required)
++ person (`Person_declaration`, required)
+    + id: `b075f148-7f93-4fc2-b2ec-3d81b19a9b7b` (string, required)
+    + unzr: `19910819-00011` (string, optional) - the record number in the demographic register
+    + `emergency_contact` (`Emergency_Contact`, required)
+    + `confidant_person` (array[`Confidant_Person`], optional) - Should be set if this Person is disabled, underage, etc.
++ employee (`Employee_Declaration_Short`, required)
++ division (`Division_Declaration`, required)
++ `legal_entity` (MSP_Details, required)
++ status (enum, required)
+    - terminated
+    - pending_verification
+    - active
++ scope (enum, required)
+    - family_doctor
++ `declaration_request_id`: `74a6fae6-4207-4e03-a136-f2e70c6b0c02`
++ content: `Declaration content` (string, required) - HTML document that MUST be shown to a end-user and signed by hes key. - Should be defined on the client side.
++ inserted_at: `2017-03-02T10:45:16.000Z` (string, required)
++ updated_at: `2017-03-02T10:45:16.000Z` (string, optional)
++ reason: `manual_employee` (string, optional)
++ reason_description: `Згідно постанови 1 від 10.01.2017` (string, optional)
+
+### `Declaration_list`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - unique id of declaration
++ declaration_number: `0000-12H4-245D` (string, required) - unique number of declaration.
++ start_date: `2017-03-02` (string, required)
++ end_date: `2017-02-28` (string, required)
++ status (enum, required)
+    - active
+    - pending_verification
+    - terminated
++ reason: `manual_employee` (string, optional)
++ reason_description: `Згідно постанови 1 від 10.01.2017` (string, optional)
++ person (Person_Minimal, required)
++ employee (`Employee_Minimal_pis`, required)
++ `legal_entity` (`MSP_Short`, required)
++ division (`Division_Short_List`, required)
++ inserted_at: `1991-08-19T00:00:00.000Z` (string, required)
++ updated_at: `1991-08-19T00:00:00.000Z` (string, optional)
+
+### `Employee_Minimal_pis`
++ id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ position: P6 (string, required) - `Dictionary POSITION`
++ party (object)
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+    + include `Party_Short`
+    
+### `Declarations_limit_bulk`
++ party_id: `cdcf456b-e235-4850-9f00-27cc3453d346` (string, required)
++ declarations_limit: 1000 (number, required)
++ declarations_count: 753 (number, required)
+
