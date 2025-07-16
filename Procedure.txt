@@ -1,2 +1,7 @@
-Get Procedure by id (Patient Summary) [API-007-058-0001]
-Get Procedures by search params (Patient Summary) [API-007-058-0002]
+Get Procedure by id (Summary) 			[API-007-058-0001]
+Get Procedures by search params (Summary) 	[API-007-058-0002]
+Create Procedure 				[API-007-058-0003]
+Get Procedures by ID 				[API-007-058-0004]
+Get Procedures by search params 		[API-007-058-0005]
+Cancel Procedure 				[API-007-058-0006]
+

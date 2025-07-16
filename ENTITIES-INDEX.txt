@@ -20,7 +20,7 @@ ENT-046	Monitor Justification           ENT-047	NHS Admin Registers             
 ENT-049	Party                           ENT-050	Person (DONE)                           ENT-051	Person Authentication Method
 ENT-052	Person Confidant Relationship   ENT-053	Person Documents                        ENT-054	Person Merge Request
 ENT-055	Person Request                  ENT-056	Person Verification                     ENT-057	Preperson
-ENT-058	Procedure (2/6)                 ENT-059	Risk Assessment (2/4)                   ENT-060	Rule Engine Rule
+ENT-058	Procedure (DONE)                ENT-059	Risk Assessment (2/4)                   ENT-060	Rule Engine Rule
 ENT-061	Service                         ENT-062	Service Request                         ENT-063	Specimen (DONE)
 ENT-064	System Configuration            ENT-065	System Dictionary                       ENT-066	System Global Parameters
 ENT-067	User                            ENT-068	User Authentication (DONE)              ENT-069	User Role
