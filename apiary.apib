@@ -3,7 +3,7 @@ HOST: https://api.ehealth.gov.ua
 
 # ESOZ
 
-**Version: 9.11 V3** 2025-07-01
+**Version: 9.11 V3** 2025-07-15
 
 ## General Information
 
@@ -5643,14 +5643,14 @@ Key                | Value
 ESOZ ENT ID        | ENT-048
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17479958643/Observation+ENT-048">Observation</a>
 
-### Get Observations (Patient Summary) [GET /api/patients/{patient_id}/summary/observations{?page,page_size,code,issued_from,issued_to}]
+### Get Observations (Summary) [GET /api/patients/{patient_id}/summary/observations{?page,page_size,code,issued_from,issued_to}]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-007-048-0001
 Scope              | patient_summary:read
 Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572200494/DRAFT+REST+API+Get+Observations+Patient+Summary">Get Observations (Patient Summary)</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572200494/DRAFT+REST+API+Get+Observations+Patient+Summary">Get Observations (Summary)</a>
 
 + Parameters
     + `patient_id`: `7a489bbd-d8e2-48d9-92fd-fcf0102f7b08` (string, required) - Unique patient identifier
@@ -5669,14 +5669,14 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
     + Attributes (`Response_Collection`)
         + data (array[`Observation_Response`], fixed-type)
 
-### Get Observation by Id (Patient Summary) [GET /api/patients/{patient_id}/summary/observations/{id}]
+### Get Observation by Id (Summary) [GET /api/patients/{patient_id}/summary/observations/{id}]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-007-048-0002
 Scope              | patient_summary:read
 Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572266008/DRAFT+REST+API+Get+Observation+by+id+Patient+Summary">Get Observation by Id (Patient Summary)</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572266008/DRAFT+REST+API+Get+Observation+by+id+Patient+Summary">Get Observation by Id (Summary)</a>
 
 + Parameters
     + patient_id: `7a489bbd-d8e2-48d9-92fd-fcf0102f7b08` (string, required) - Unique patient identifier
@@ -5690,6 +5690,59 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
         + data (`Observation_Response`, fixed-type)
+
+### Get Observation by Id [GET /api/patients/{patient_id}/observations/{observation_id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-048-0005
+Scope              | observation:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571709149/DRAFT+REST+API+Get+Observation+by+ID">Get Observation by Id</a>
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `observation_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Observation identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Observation_Response`)
+
+### Get Observations by Searсh Params [GET /api/patients/{patient_id}/observations{?encounter_id,diagnostic_report_id,episode_id,code,issued_from,issued_to,page,page_size}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-048-0006
+Scope              | observation:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571643655/DRAFT+REST+API+Get+Observations+by+search+params">Get Observations by Searсh Params</a>
+
++ Parameters
+    + `page`: `1` (number, optional) - Page number    
+    + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `code`: `10569-2` (string, optional)
+    + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
+    + `diagnostic_report_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
+    + `episode_id`: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional)
+    + `issued_from`:`1990-01-01` (string, optional)
+    + `issued_to`: `2000-01-01` (string, optional)
+    + `device_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
+    + `managing_organization_id`: `887a37a4-c95f-4017-ba11-a000c61bf700` (string, optional)
+    + `specimen_id`: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Observation_Response`])
 
 ## Procedure [/me/procedures]
 

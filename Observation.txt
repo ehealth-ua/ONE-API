@@ -1,3 +1,5 @@
-Get Observations (Patient Summary) [API-007-048-0001]
-Get Observation by id (Patient Summary) [API-007-048-0002]
+Get Observations (Summary) 		[API-007-048-0001]
+Get Observation by id (Summary) 	[API-007-048-0002]
+Get Observation by ID 			[API-007-048-0005]
+Get Observations by search params 	[API-007-048-0006]
 

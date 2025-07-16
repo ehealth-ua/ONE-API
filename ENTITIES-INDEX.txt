@@ -16,7 +16,7 @@ ENT-034	Job                             ENT-035	Legal Entity (DONE)             
 ENT-037	Medical Program (DONE)          ENT-038	Medical Program Participant             ENT-039	Medical Program Provision
 ENT-040	Medication                      ENT-041	Medication Administration               ENT-042	Medication Dispense (DONE)
 ENT-043	Medication Request (DONE)       ENT-044	Medication Request Request (DONE)       ENT-045	Medication Statement (DONE)
-ENT-046	Monitor Justification           ENT-047	NHS Admin Registers                     ENT-048	Observation (2/6)
+ENT-046	Monitor Justification           ENT-047	NHS Admin Registers                     ENT-048	Observation (4/6)
 ENT-049	Party                           ENT-050	Person (DONE)                           ENT-051	Person Authentication Method
 ENT-052	Person Confidant Relationship   ENT-053	Person Documents                        ENT-054	Person Merge Request
 ENT-055	Person Request                  ENT-056	Person Verification                     ENT-057	Preperson
