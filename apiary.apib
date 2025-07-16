@@ -3885,14 +3885,14 @@ Key                | Value
 ESOZ ENT ID        | ENT-008
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18831213242/Clinical+Impression+ENT-008">Clinical Impression</a>
 
-### Get Clinical Impression by Id (Patient Summary) [GET /api/patients/{patient_id}/summary/clinical_impressions/{clinical_impression_id}]
+### Get Clinical Impression by Id (Summary) [GET /api/patients/{patient_id}/summary/clinical_impressions/{clinical_impression_id}]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-007-008-0003
 Scope              | patient_summary:read
 Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571873083/DRAFT+REST+API+Get+Clinical+Impression+by+id+Patient+Summary">Get Clinical Impression by Id (Patient Summary)</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571873083/DRAFT+REST+API+Get+Clinical+Impression+by+id+Patient+Summary">Get Clinical Impression by Id (Summary)</a>
 
 + Parameters
     + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
@@ -3907,14 +3907,14 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
     + Attributes (`Response_OK`)
         + data (`Clinical_Impression_Show`)
 
-### Get Clinical Impressions (Patient Summary) [GET /api/patients/{patient_id}/summary/clinical_impressions{?encounter_id,episode_id,code,status,page,page_size}]
+### Get Clinical Impressions (Summary) [GET /api/patients/{patient_id}/summary/clinical_impressions{?encounter_id,episode_id,code,status,page,page_size}]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-007-008-0004
 Scope              | patient_summary:read
 Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18831213242/Clinical+Impression+ENT-008">Get Clinical Impressions (Patient Summary)</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18831213242/Clinical+Impression+ENT-008">Get Clinical Impressions (Summary)</a>
 
 + Parameters
     + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
@@ -3941,14 +3941,14 @@ Key                | Value
 ESOZ ENT ID        | ENT-010
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18832326657/Condition+ENT-010">Condition</a>
 
-### Get Conditions (Patient Summary) [GET /api/patients/{patient_id}/summary/conditions{?page,page_size,code,onset_date_from,onset_date_to}]
+### Get Conditions (Summary) [GET /api/patients/{patient_id}/summary/conditions{?page,page_size,code,onset_date_from,onset_date_to}]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-007-010-0005
 Scope              | patient_summary:read
 Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572069377/DRAFT+REST+API+Get+Conditions+Patient+Summary">Get Conditions (Patient Summary)</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572069377/DRAFT+REST+API+Get+Conditions+Patient+Summary">Get Conditions (Summary)</a>
 
 + Parameters
     + `patient_id`: `7a489bbd-d8e2-48d9-92fd-fcf0102f7b08` (string, required) - Unique patient identifier
@@ -3967,14 +3967,14 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
     + Attributes (`Response_Collection`)
         + data (array[`Condition_Response`], fixed-type)
 
-### Get Condition by Id (Patient Summary) [GET /api/patients/{patient_id}/summary/conditions/{id}]
+### Get Condition by Id (Summary) [GET /api/patients/{patient_id}/summary/conditions/{id}]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-007-010-0006
 Scope              | patient_summary:read
 Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572134913/DRAFT+REST+API+Get+Condition+by+id+Patient+Summary">Get Condition by Id (Patient Summary)</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572134913/DRAFT+REST+API+Get+Condition+by+id+Patient+Summary">Get Condition by Id (Summary)</a>
 
 + Parameters
     + patient_id: `7a489bbd-d8e2-48d9-92fd-fcf0102f7b08` (string, required) - Unique patient identifier
@@ -3996,14 +3996,14 @@ Key                | Value
 ESOZ ENT ID        | ENT-016
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18832326705/Device+ENT-016">Device</a>
 
-### Get Device by Id (Patient Summary) [GET /api/patients/{patient_id}/summary/devices/{device_id}]
+### Get Device by Id (Summary) [GET /api/patients/{patient_id}/summary/devices/{device_id}]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-007-016-0003
 Scope              | patient_summary:read
 Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571807338/DRAFT+REST+API+Get+Device+by+id+Patient+Summary">Get Device by Id (Patient Summary)</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571807338/DRAFT+REST+API+Get+Device+by+id+Patient+Summary">Get Device by Id (Summary)</a>
 
 + Parameters
     + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
@@ -4018,14 +4018,14 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
     + Attributes (`Response_OK`)
         + data (`Device_Response`)
 
-### Get Devices by Search Params (Patient Summary) [GET /api/patients/{patient_id}/summary/devices{?asserted_date_from,asserted_date_to,page,page_size,type,encounter_id,episode_id}]
+### Get Devices by Search Params (Summary) [GET /api/patients/{patient_id}/summary/devices{?asserted_date_from,asserted_date_to,page,page_size,type,encounter_id,episode_id}]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-007-016-0002
 Scope              | patient_summary:read
 Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572233223/DRAFT+REST+API+Get+Devices+by+search+params+Patient+Summary">Get Devices by Search Params (Patient Summary)</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572233223/DRAFT+REST+API+Get+Devices+by+search+params+Patient+Summary">Get Devices by Search Params (Summary)</a>
 
 + Parameters
     + `page`: 2 (number, optional) - Page number.    
@@ -4050,14 +4050,14 @@ Key                | Value
 ESOZ ENT ID        | ENT-021
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18832949339/Diagnostic+Report+ENT-021">Diagnostic Report</a>
     
-### Get Diagnostic Report by Id (Patient Summary) [GET /api/patients/{patient_id}/summary/diagnostic_reports/{diagnostic_report_id}]
+### Get Diagnostic Report by Id (Summary) [GET /api/patients/{patient_id}/summary/diagnostic_reports/{diagnostic_report_id}]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-007-021-0006
 Scope              | patient_summary:read
 Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572233223/DRAFT+REST+API+Get+Devices+by+search+params+Patient+Summary">Get Diagnostic Report by Id (Patient Summary)</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572233223/DRAFT+REST+API+Get+Devices+by+search+params+Patient+Summary">Get Diagnostic Report by Id (Summary)</a>
 
 + Parameters
     + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
@@ -4072,14 +4072,14 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
     + Attributes (`Response_OK`)
         + data (`Diagnostic_Report_Response`)
 
-### Get Diagnostic Report by Search Params (Patient Summary) [GET /api/patients/{patient_id}/summary/diagnostic_reports/{?issued_from,issued_to,page,page_size,code,encounter_id,context_episode_id, initial_episode_id}]
+### Get Diagnostic Report by Search Params (Summary) [GET /api/patients/{patient_id}/summary/diagnostic_reports/{?issued_from,issued_to,page,page_size,code,encounter_id,context_episode_id, initial_episode_id}]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-007-021-0007
 Scope              | patient_summary:read
 Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572200466/DRAFT+REST+API+Get+Diagnostic+Report+by+search+params+Patient+Summary">Get Diagnostic Report by Search Params (Patient Summary)</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572200466/REST+API+Get+Diagnostic+Report+by+Search+Params+Summary">Get Diagnostic Report by Search Params (Summary)</a>
 
 + Parameters
     + `page`: 2 (number, optional) - Page number.    
@@ -4159,14 +4159,14 @@ Key                | Value
 ESOZ ENT ID        | ENT-026
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17479467056/Encounter+ENT-026">Encounter</a>
 
-### Get Short Encounters by Search Params (Patient Summary) [GET /api/patients/{patient_id}/summary/encounters{?status,episode_id,type,class,performer_speciality,date_from,date_to}]
+### Get Short Encounters by Search Params (Summary) [GET /api/patients/{patient_id}/summary/encounters{?status,episode_id,type,class,performer_speciality,date_from,date_to}]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-007-026-0001
 Scope              | patient_summary:read
 Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572069411/DRAFT+REST+API+Get+Short+Encounters+by+search+params+Patient+Summary">Get Short Encounters by Search Params (Patient Summary)</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572069411/DRAFT+REST+API+Get+Short+Encounters+by+search+params+Patient+Summary">Get Short Encounters by Search Params (Summary)</a>
 
 The endpoint returns a list of short Encounter info filtered by search params.
 
@@ -4194,14 +4194,14 @@ The endpoint returns a list of short Encounter info filtered by search params.
     + Attributes (Response_Collection)
         + data (array[`Encounter_Short`])
 
-### Get Short Encounter by Id (Patient Summary) [GET /api/patients/{patient_id}/summary/encounters/{encounter_id}]
+### Get Short Encounter by Id (Summary) [GET /api/patients/{patient_id}/summary/encounters/{encounter_id}]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-007-026-0002
 Scope              | patient_summary:read
 Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572265991/DRAFT+REST+API+Get+Short+Encounter+by+id+Patient+Summary">Get Short Encounter by Id (Patient Summary)</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572265991/DRAFT+REST+API+Get+Short+Encounter+by+id+Patient+Summary">Get Short Encounter by Id (Summary)</a>
 
 The endpoint returns single short Encounter info.
 
@@ -4225,16 +4225,16 @@ Key                | Value
 ESOZ ENT ID        | ENT-031
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17479467181/Groups+of+Diagnoses+ENT-031">Groups of Diagnoses</a>
 
-### Get Active Diagnoses (Patient Summary) [GET /api/patients/{patient_id}/summary/diagnoses]
+### Get Active Diagnoses (Summary) [GET /api/patients/{patient_id}/summary/diagnoses]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-007-031-0001
 Scope              | patient_summary:read 
 Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572167687/DRAFT+REST+API+Get+Active+Diagnoses+Patient+Summary">Get Active Diagnoses (Patient Summary)</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572167687/DRAFT+REST+API+Get+Active+Diagnoses+Patient+Summary">Get Active Diagnoses (Summary)</a>
 
-This endpoint returns current diagnoses related only to active episodes. In order to get specific condition details, use [Get Condition by ID](https://esoz.docs.apiary.io/#reference/medical-events/condition/get-condition-by-id-(patient-summary))
+This endpoint returns current diagnoses related only to active episodes. In order to get specific condition details, use [Get Condition by ID](https://esoz.docs.apiary.io/#reference/medical-events/condition/get-condition-by-id-(summary))
 
 + Parameters
     + `patient_id`: `7a489bbd-d8e2-48d9-92fd-fcf0102f7b08` (string, required) - Unique patient identifier
@@ -4260,14 +4260,14 @@ Key                | Value
 ESOZ ENT ID        | ENT-033
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17479434292/Immunization+ENT-033">Immunization</a>
 
-### Get Immunizations (Patient Summary) [GET /api/patients/{patient_id}/summary/immunizations{?page,page_size,code,date_from,date_to}]
+### Get Immunizations (Summary) [GET /api/patients/{patient_id}/summary/immunizations{?page,page_size,code,date_from,date_to}]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-007-033-0001
 Scope              | patient_summary:read 
 Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572069422/DRAFT+REST+API+Get+Immunizations+Patient+Summary">Get Immunizations (Patient Summary)</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572069422/DRAFT+REST+API+Get+Immunizations+Patient+Summary">Get Immunizations (Summary)</a>
 
 + Parameters
     + `patient_id`: `7a489bbd-d8e2-48d9-92fd-fcf0102f7b08` (string, required) - Unique patient identifier
@@ -4286,14 +4286,14 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
     + Attributes (`Response_Collection`)
         + data (array[`Immunization_Response`], fixed-type)
 
-### Get Immunization by Id (Patient Summary) [GET /api/patients/{patient_id}/summary/immunizations/{id}]
+### Get Immunization by Id (Summary) [GET /api/patients/{patient_id}/summary/immunizations/{id}]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-007-033-0002
 Scope              | patient_summary:read 
 Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572069433/DRAFT+REST+API+Get+Immunization+by+id+Patient+Summary">Get Immunization by Id (Patient Summary)</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572069433/DRAFT+REST+API+Get+Immunization+by+id+Patient+Summary">Get Immunization by Id (Summary)</a>
 
 + Parameters
     + patient_id: `7a489bbd-d8e2-48d9-92fd-fcf0102f7b08` (string, required) - Unique patient identifier
@@ -5588,14 +5588,14 @@ Key                | Value
 ESOZ ENT ID        | ENT-045
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18699747489/Medication+Statement+ENT-045">Medication Statement</a>
 
-### Get Medication Statement by Id (Patient Summary) [GET /api/patients/{patient_id}/summary/medication_statements/{medication_statement_id}]
+### Get Medication Statement by Id (Summary) [GET /api/patients/{patient_id}/summary/medication_statements/{medication_statement_id}]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-007-045-0001
 Scope              | patient_summary:read
 Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572036621/DRAFT+REST+API+Get+Medication+Statement+by+id+Patient+Summary">Get Medication Statement by Id (Patient Summary)</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572036621/DRAFT+REST+API+Get+Medication+Statement+by+id+Patient+Summary">Get Medication Statement by Id (Summary)</a>
 
 + Parameters
     + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
@@ -5610,14 +5610,14 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
     + Attributes (`Response_OK`)
         + data (`Medication_Statement_Response`)
 
-### Get Medication Statement by Search Params (Patient Summary) [GET /api/patients/{patient_id}/summary/medication_statements/{?asserted_date_from,asserted_date_to,page,page_size,medication_code,encounter_id,episode_id}]
+### Get Medication Statement by Search Params (Summary) [GET /api/patients/{patient_id}/summary/medication_statements/{?asserted_date_from,asserted_date_to,page,page_size,medication_code,encounter_id,episode_id}]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-007-045-0002
 Scope              | patient_summary:read
 Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572036632/DRAFT+REST+API+Get+Medication+Statement+by+search+params+Patient+Summary">Get Medication Statement by Search Params (Patient Summary)</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572036632/DRAFT+REST+API+Get+Medication+Statement+by+search+params+Patient+Summary">Get Medication Statement by Search Params (Summary)</a>
 
 + Parameters
     + `page`: 2 (number, optional) - Page number.    
@@ -5977,14 +5977,14 @@ Key                | Value
 ESOZ ENT ID        | ENT-059
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17480187981/Risk+Assessment+ENT-059">Risk Assesment</a>
 
-### Get Risk Assessment by Id (Patient Summary) [GET /api/patients/{patient_id}/summary/risk_assessments/{risk_assessment_id}]
+### Get Risk Assessment by Id (Summary) [GET /api/patients/{patient_id}/summary/risk_assessments/{risk_assessment_id}]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-007-059-0001
 Scope              | patient_summary:read
 Auth               | yes
-Link to Confluence | <a href="">Get Risk Assessment by Id (Patient Summary)</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572200511/REST+API+Get+Risk+Assessment+by+id+Summary">Get Risk Assessment by Id (Summary)</a>
 
 + Parameters
     + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
@@ -5999,14 +5999,14 @@ Link to Confluence | <a href="">Get Risk Assessment by Id (Patient Summary)</a>
     + Attributes (`Response_OK`)
         + data (`Risk_Assessment_Response`)
 
-### Get Risk Assessments by Search Params (Patient Summary) [GET /api/patients/{patient_id}/summary/risk_assessments{?code,asserted_date_from,asserted_date_to,page,page_size,encounter_id,episode_id}]
+### Get Risk Assessments by Search Params (Summary) [GET /api/patients/{patient_id}/summary/risk_assessments{?code,asserted_date_from,asserted_date_to,page,page_size,encounter_id,episode_id}]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-007-059-0002
 Scope              | patient_summary:read
 Auth               | yes
-Link to Confluence | <a href="">Get Risk Assessments by Search Params (Patient Summary)</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572266019/REST+API+Get+Risk+Assessments+by+search+params+Summary">Get Risk Assessments by Search Params (Summary)</a>
 
 + Parameters
     + `page`: 2 (number, optional) - Page number.    
@@ -6582,14 +6582,14 @@ If you have an approval - you can obtain episode details and nested entities thr
     + Attributes (`Response_Collection`)
         + data(array[`Episode_Of_Care_Short_With_Diagnoses`])
 
-### Get Short Episodes by Search Params (Patient Summary) [GET /api/patients/{patient_id}/summary/episodes{?period_from,period_to,page,page_size}]
+### Get Short Episodes by Search Params (Summary) [GET /api/patients/{patient_id}/summary/episodes{?period_from,period_to,page,page_size}]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-007-027-0023
 Scope              | patient_summary:read
 Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18917916673/DRAFT+REST+API+Get+Short+Episodes+by+search+params">Get Short Episodes by Search Params (Patient Summary)</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18917916673/DRAFT+REST+API+Get+Short+Episodes+by+search+params">Get Short Episodes by Search Params (Summary)</a>
 
 This web service returns brief information in order not to disclose confidential and sensitive data. Access to full episode data is restricted by patient's approval.
 If you have an approval - you can obtain episode details and nested entities through `/episode/:id/*` web services.
