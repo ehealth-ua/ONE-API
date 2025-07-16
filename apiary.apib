@@ -6241,18 +6241,17 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
             + type: NOT_FOUND (string)
             + message: `Patient not found` (string)
 
-### Get Allergy Intolerance Context [GET /api/patients/{patient_id}/episodes/{episode_id}/allergy_intolerances/{allergy_intolerance_id}]
+### Get Allergy Intolerance Context [GET /api/patients/patient_id/allergy_intolerances/allergy_intolerance_id/context]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-007-027-0001
 Scope              | medical_event_context:read
 Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18681724979/DRAFT+REST+API+Get+Allergy+Intolerance+context">Get Allergy Intolerance Context</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18681724979/REST+API+Get+Allergy+Intolerance+Context">Get Allergy Intolerance Context</a>
 
 + Parameters
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
-    + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
     + `allergy_intolerance_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Allergy intolerance identifier
 
 + Request (application/json)
