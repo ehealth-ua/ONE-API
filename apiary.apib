@@ -7604,10 +7604,6 @@ http code| processing method | Client recommendations
 
 # Data Structures
 
-### `Response_TIL_GetDictionaries`
-+ data (array[], fixed-type)
-+ error (Response__Error, fixed-type)
-
 ### `TIL_ChildValues2`
 + description (string, optional) - Опис
 + is_active (boolean, optional) - Ознака активності
@@ -7626,6 +7622,10 @@ http code| processing method | Client recommendations
 + labels (array[string], required) - Мітки
 + name (string, required) - Назва
 + values (array[TIL_ChildValues1], required) - Значення
+
+### `Response_TIL_GetDictionaries`
++ data (array[TIL_GetDictionary], fixed-type)
++ error (Response__Error, fixed-type)
 
 ### `Response_Collection`
 + meta (Response__Meta, fixed-type)
