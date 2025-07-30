@@ -7613,9 +7613,21 @@ http code| processing method | Client recommendations
 + is_active (boolean, requires) - Ознака активності
 + labels (array[string], required) - Мітки
 + name (string, required) - Назва
-+ values (array[TIL_ChildValues], required) - Значення
++ values (array[TIL_ChildValues1], required) - Значення
 
-### `TIL_ChildValues`
+### `TIL_ChildValues1`
++ description (string, optional) - Опис
++ is_active (boolean, requires) - Ознака активності
++ code (string, required) - Код
++ child_values (array[TIL_ChildValues2], required) - Значення
+
+### `TIL_ChildValues2`
++ description (string, optional) - Опис
++ is_active (boolean, requires) - Ознака активності
++ code (string, required) - Код
++ child_values (array[TIL_ChildValues3], required) - Значення
+
+### `TIL_ChildValues3`
 + description (string, optional) - Опис
 + is_active (boolean, requires) - Ознака активності
 + code (string, required) - Код
