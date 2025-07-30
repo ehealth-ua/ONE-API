@@ -2505,7 +2505,31 @@ Each dictionary is an object that contains `{key}:{value}` pairs where: `{key}` 
 
 + Response 400 (application/json)
 
-### Get Dictionaries V2 [GET /api/v2/dictionaries{?name,is_active,value_code,value_description,value_is_active}]
+### PIS Get dictionaries v2 [GET /api/v2/dictionaries{?name,is_active,value_code,value_description,value_is_active}]
+
+Each dictionary is an object that contains not only a code and description of a value,
+but also a status of the value. In addition, it can represent hierarchical dictionaries with subordinate (child) values
+
++ Parameters
+    + `name`: `eHealth/ICF/classifiers` (string, optional) - dictionary name
+    + `is_active`: true (boolean, optional) - dictionary status
+    + `value_code`: `b1142` (string, optional) - code of the dictionary value
+    + `value_description`: `Орієнтація в особі` (string, optional) - description of the dictionary value
+    + `value_is_active`: true (string, optional) - status of the dictionary value
+
++ Response 200 (application/json)
+    + Attributes (`Response__Process_OK`)
+        + data (array[`Dictionary_v2`])
+            + (object)
+                + include `Dictionary_v2`
+                + name: `eHealth/ICPC2/condition_codes` (string, required) - Unique dictionary name
+                + description: `Коди станів за ICPC2` (string, required) - dictionary description for a user
+                + values (array, required)
+                    + (Dictionary_value)
+                        + code: `D88` (string, required) - code of the dictionary value
+                        + description: `Апендицит` (string, required) - description of the code
+
+### MIS Get Dictionaries V2 [GET /api/v2/dictionaries{?name,is_active,value_code,value_description,value_is_active}]
 
 Key                | Value
 -------------------|-----------
