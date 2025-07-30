@@ -7610,19 +7610,19 @@ http code| processing method | Client recommendations
 
 ### `TIL_ChildValues2`
 + description (string, optional) - Опис
-+ is_active (boolean, requires) - Ознака активності
-+ code (string, required) - Код
-+ child_values (array[], required) - Значення
++ is_active (boolean, optional) - Ознака активності
++ code (string, optional) - Код
++ child_values (array[], optional) - Значення
 
 ### `TIL_ChildValues1`
-+ description (string, optional) - Опис
-+ is_active (boolean, requires) - Ознака активності
++ description (string, required) - Опис
++ is_active (boolean, required) - Ознака активності
 + code (string, required) - Код
-+ child_values (array[TIL_ChildValues2], required) - Значення
++ child_values (array[TIL_ChildValues2], optional) - Значення
 
 ### `TIL_GetDictionary`
 + description (string, optional) - Опис
-+ is_active (boolean, requires) - Ознака активності
++ is_active (boolean, required) - Ознака активності
 + labels (array[string], required) - Мітки
 + name (string, required) - Назва
 + values (array[TIL_ChildValues1], required) - Значення
