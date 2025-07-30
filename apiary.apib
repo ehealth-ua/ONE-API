@@ -2559,6 +2559,31 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 + Response 200 (application/json)
     + Attributes (`Response_TIL_GetDictionaries`)
         + data (array[`TIL_GetDictionary`])
+             + code: "04_06" (string, required) - Код
+             + description (string, optional) - Названий
+             + labels: ["SYSTEM", "EXTERNAL"] (array[string], required) - Мітки
+             + is_active: true (boolean, required) - Ознака активності
+             + values (array, required) - Значення
+                 + (TIL_ChildValues)
+                     + code: "04_06" (string, required) - Код
+                     + description: "Допоміжні засоби для лікування кровообігу" (string, required) - Назва
+                     + is_active: true (boolean, required) - Ознака активності
+                     + child_values (array, required) - Дочірні значення
+                 + (TIL_ChildValues)
+                     + code: "04_33" (string, required) - Код
+                     + description: "Допоміжні засоби, призначені для збереження цілісності тканин" (string, required)
+                     + is_active: true (boolean, required) - Ознака активності
+                     + child_values (array, required) - Дочірні значення
+                 + (TIL_ChildValues)
+                     + code: "04_48" (string, required) - Код
+                     + description: "Обладнання для тренування руху, сили і балансу" (string, required)
+                     + is_active: true (boolean, required) - Ознака активності
+                     + child_values (array, required) - Дочірні значення
+                 + (TIL_ChildValues)
+                     + code: "22_27" (string, required) - Код
+                     + description: "Допоміжні засоби для подавання сигналів тривоги, індикації, нагадування та сигналізації" (string, required)
+                     + is_active: true (boolean, required) - Ознака активності
+                     + child_values (array, required) - Дочірні значення
         + error (Response__Error)
         
 ## Medical Program [/api/medical_program]
@@ -7604,17 +7629,11 @@ http code| processing method | Client recommendations
 
 # Data Structures
 
-### `TIL_ChildValues2`
-+ description (string, optional) - Опис
-+ is_active (boolean, optional) - Ознака активності
-+ code (string, optional) - Код
-+ child_values (array[], optional) - Значення
-
 ### `TIL_ChildValues1`
 + description (string, required) - Опис
 + is_active (boolean, required) - Ознака активності
 + code (string, required) - Код
-+ child_values (array[], optional) - Значення
++ child_values (array[], optional) - Дочірні значення
 
 ### `TIL_GetDictionary`
 + description (string, optional) - Опис
