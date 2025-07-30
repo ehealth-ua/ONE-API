@@ -2544,6 +2544,23 @@ On `PREPROD` envoronment this endpoint requires authentication with `address:rea
 
 + Response 400 (application/json)
 
+### Trembita Get Dictionaries [GET /dictionaries{?name,is_active,value_code}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-048-065-7003
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/19029196829/TREMBITA+REST+API+Get+Dictionaries">Trembita Get Dictionaries</a>
+
++ Parameters
+    + `name`: `eHealth/ICF/classifiers` (string, optional) - Назва довідника
+    + `is_active`: true (boolean, optional) - Статус довідника
+    + `value_code`: `b1142` (string, optional) - Код значення довідника
+
++ Response 200 (application/json)
+    + Attributes (`Response_TIL_GetDictionaries`)
+        + data (array[`TIL_GetDictionary`])
+        + error (Response__Error)
+        
 ## Medical Program [/api/medical_program]
 
 Key                | Value
@@ -7587,7 +7604,23 @@ http code| processing method | Client recommendations
 
 # Data Structures
 
-## Responses
+### `Response_TIL_GetDictionaries`
++ data (array[], fixed-type)
++ error (Response__Error, fixed-type)
+
+### `TIL_GetDictionary`
++ description (string, optional) - Опис
++ is_active (boolean, requires) - Ознака активності
++ labels (array[string], required) - Мітки
++ name (string, required) - Назва
++ values (array[TIL_ChildValues], required) - Значення
+
+### `TIL_ChildValues`
++ description (string, optional) - Опис
++ is_active (boolean, requires) - Ознака активності
++ code (string, required) - Код
++ child_values (array[TIL_ChildValues], required) - Значення
+
 ### `Response_Collection`
 + meta (Response__Meta, fixed-type)
 + data (array[], fixed-type)
