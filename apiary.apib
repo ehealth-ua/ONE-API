@@ -2558,8 +2558,8 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 + Response 200 (application/json)
     + Attributes (`Response_TIL_GetDictionaries`)
-        + data (array['TIL_GetDictionary'])
-             + object
+        + data (array[`TIL_GetDictionary`])
+             + object (`TIL_GetDictionary`)
                  + description: NULL (string, optional) - Названий
                  + labels: ["SYSTEM", "EXTERNAL"] (array[string], required) - Мітки
                  + is_active: true (boolean, required) - Ознака активності
@@ -2615,6 +2615,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
                                   + is_active: true (boolean, required) - Ознака активності
                                   + child_values (array[])
         + error (Response__Error)
+        
         
 ## Medical Program [/api/medical_program]
 
