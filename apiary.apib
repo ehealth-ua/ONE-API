@@ -2552,7 +2552,7 @@ ESOZ API ID        | API-048-065-7003
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/19029196829/TREMBITA+REST+API+Get+Dictionaries">Trembita Get Dictionaries</a>
 
 + Parameters
-    + `name`: `eHealth/ICF/classifiers` (string, optional) - Назва довідника
+    + `name`: `eHealth/assistive_devices` (string, optional) - Назва довідника
     + `is_active`: true (boolean, optional) - Статус довідника
     + `value_code`: `b1142` (string, optional) - Код значення довідника
 
@@ -7608,18 +7608,24 @@ http code| processing method | Client recommendations
 + data (array[], fixed-type)
 + error (Response__Error, fixed-type)
 
+### `TIL_ChildValues2`
++ description (string, optional) - Опис
++ is_active (boolean, requires) - Ознака активності
++ code (string, required) - Код
++ child_values (array[], required) - Значення
+
+### `TIL_ChildValues1`
++ description (string, optional) - Опис
++ is_active (boolean, requires) - Ознака активності
++ code (string, required) - Код
++ child_values (array[TIL_ChildValues2], required) - Значення
+
 ### `TIL_GetDictionary`
 + description (string, optional) - Опис
 + is_active (boolean, requires) - Ознака активності
 + labels (array[string], required) - Мітки
 + name (string, required) - Назва
 + values (array[TIL_ChildValues1], required) - Значення
-
-### `TIL_ChildValues1`
-+ description (string, optional) - Опис
-+ is_active (boolean, requires) - Ознака активності
-+ code (string, required) - Код
-+ child_values (array[], required) - Значення
 
 ### `Response_Collection`
 + meta (Response__Meta, fixed-type)
