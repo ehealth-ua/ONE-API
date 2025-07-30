@@ -2558,29 +2558,29 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 + Response 200 (application/json)
     + Attributes (`Response_TIL_GetDictionaries`)
-        + data (array[`TIL_GetDictionary`])
-             + (`TIL_GetDictionary`)
+        + data (array[])
+             + object
                  + code: "04_06" (string, required) - Код
                  + description: NULL (string, optional) - Названий
                  + labels: ["SYSTEM", "EXTERNAL"] (array[string], required) - Мітки
                  + is_active: true (boolean, required) - Ознака активності
-                 + values (array[`TIL_ChildValues`])
-                     + (`TIL_ChildValues`)
+                 + values (array[])
+                     + object (`TIL_ChildValues`)
                          + code: "04_06" (string, required) - Код
                          + description: "Допоміжні засоби для лікування кровообігу" (string, required) - Назва
                          + is_active: true (boolean, required) - Ознака активності
                          + child_values (array[])
-                     + (`TIL_ChildValues`)
+                     + object (`TIL_ChildValues`)
                          + code: "04_33" (string, required) - Код
                          + description: "Допоміжні засоби, призначені для збереження цілісності тканин" (string, required)
                          + is_active: true (boolean, required) - Ознака активності
                          + child_values (array[])
-                     + (`TIL_ChildValues`)
+                     + object (`TIL_ChildValues`)
                          + code: "04_48" (string, required) - Код
                          + description: "Обладнання для тренування руху, сили і балансу" (string, required)
                          + is_active: true (boolean, required) - Ознака активності
                          + child_values (array[])
-                     + (`TIL_ChildValues`)
+                     + object (`TIL_ChildValues`)
                          + code: "22_27" (string, required) - Код
                          + description: "Допоміжні засоби для подавання сигналів тривоги, індикації, нагадування та сигналізації" (string, required)
                          + is_active: true (boolean, required) - Ознака активності
