@@ -7633,17 +7633,17 @@ http code| processing method | Client recommendations
 + description (string, required) - Опис
 + is_active (boolean, required) - Ознака активності
 + code (string, required) - Код
-+ child_values (array[], optional) - Дочірні значення
++ child_values (array[], fixed-type) - Дочірні значення
 
 ### `TIL_GetDictionary`
 + description (string, optional) - Опис
 + is_active (boolean, required) - Ознака активності
 + labels (array[string], required) - Мітки
 + name (string, required) - Назва
-+ values (array[TIL_ChildValues], required) - Значення
++ values (array[`TIL_ChildValues`], fixed-type) - Значення
 
 ### `Response_TIL_GetDictionaries`
-+ data (array[TIL_GetDictionary], fixed-type)
++ data (array[`TIL_GetDictionary`], fixed-type)
 + error (Response__Error, fixed-type)
 
 ### `Response_Collection`
