@@ -2574,16 +2574,46 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
                          + description: "Допоміжні засоби, призначені для збереження цілісності тканин" (string, required)
                          + is_active: true (boolean, required) - Ознака активності
                          + child_values (array[])
+                              + object (`TIL_ChildValues`)
+                                  + code: "04_33_03" (string, required) - Код
+                                  + description: "Подушки для сидіння та підстилки для збереження цілісності тканин" (string, required)
+                                  + is_active: true (boolean, required) - Ознака активності
+                                  + child_values (array[])
+                              + object (`TIL_ChildValues`)
+                                  + code: "04_33_06" (string, required) - Код
+                                  + description: "Допоміжні засоби для збереження цілісності тканин у лежачому положенні" (string, required)
+                                  + is_active: true (boolean, required) - Ознака активності
+                                  + child_values (array[])
                      + object (`TIL_ChildValues`)
                          + code: "04_48" (string, required) - Код
                          + description: "Обладнання для тренування руху, сили і балансу" (string, required)
                          + is_active: true (boolean, required) - Ознака активності
                          + child_values (array[])
+                              + object (`TIL_ChildValues`)
+                                  + code: "04_48_07" (string, required) - Код
+                                  + description: "Допоміжні засоби для тренування патерну ходіння" (string, required)
+                                  + is_active: true (boolean, required) - Ознака активності
+                                  + child_values (array[])
+                              + object (`TIL_ChildValues`)
+                                  + code: "04_48_15" (string, required) - Код
+                                  + description: "Вироби для тренування рук, вироби для тренування тулуба та вироби для тренування ніг" (string, required)
+                                  + is_active: true (boolean, required) - Ознака активності
+                                  + child_values (array[])
                      + object (`TIL_ChildValues`)
                          + code: "22_27" (string, required) - Код
                          + description: "Допоміжні засоби для подавання сигналів тривоги, індикації, нагадування та сигналізації" (string, required)
                          + is_active: true (boolean, required) - Ознака активності
                          + child_values (array[])
+                              + object (`TIL_ChildValues`)
+                                  + code: "22_27_04" (string, required) - Код
+                                  + description: "Вироби для сигналізації" (string, required)
+                                  + is_active: true (boolean, required) - Ознака активності
+                                  + child_values (array[])
+                              + object (`TIL_ChildValues`)
+                                  + code: "22_27_12" (string, required) - Код
+                                  + description: "Годинники і хронометри" (string, required)
+                                  + is_active: true (boolean, required) - Ознака активності
+                                  + child_values (array[])
         + error (Response__Error)
         
 ## Medical Program [/api/medical_program]
