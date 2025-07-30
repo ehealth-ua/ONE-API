@@ -2510,6 +2510,10 @@ Each dictionary is an object that contains `{key}:{value}` pairs where: `{key}` 
 Each dictionary is an object that contains not only a code and description of a value,
 but also a status of the value. In addition, it can represent hierarchical dictionaries with subordinate (child) values
 
+NOTE:
+
+On all envoronments this endpoint DOESN'T require authentication with `address:read` scope.
+
 + Parameters
     + `name`: `eHealth/ICF/classifiers` (string, optional) - dictionary name
     + `is_active`: true (boolean, optional) - dictionary status
@@ -2541,7 +2545,7 @@ but also a status of the value. In addition, it can represent hierarchical dicti
 
 NOTE:
 
-On `PREPROD` envoronment this endpoint requires authentication with `address:read` scope.
+On all envoronments this endpoint requires authentication with `address:read` scope.
 
 + Parameters
     + `name`: `eHealth/ICF/classifiers` (string, optional) - dictionary name
