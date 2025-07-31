@@ -2582,68 +2582,67 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 + Parameters
     + `name`: `eHealth/assistive_devices` (string, optional) - Назва довідника
     + `is_active`: true (boolean, optional) - Статус довідника
-    + `value_code`: `b1142` (string, optional) - Код значення довідника
+    + `value_code`: `04` (string, optional) - Код значення довідника
 
 + Response 200 (application/json)
     + Attributes (`Response_TIL_GetDictionaries`)
         + data (array)
              + object (`TIL_GetDictionary`)
-                 + labels: ["SYSTEM", "EXTERNAL"]
+                 + labels: [`SYSTEM`, `EXTERNAL`]
                  + is_active: true
                  + values (array)
                      + (`TIL_ChildValues`)
-                         + code: "04_06"
-                         + description: "Допоміжні засоби для лікування кровообігу"
+                         + code: `04_06`
+                         + description: `Допоміжні засоби для лікування кровообігу`
                          + is_active: true
                          + child_values (array)
                      + (`TIL_ChildValues`)
-                         + code: "04_33"
-                         + description: "Допоміжні засоби, призначені для збереження цілісності тканин"
+                         + code: `04_33`
+                         + description: `Допоміжні засоби, призначені для збереження цілісності тканин`
                          + is_active: true
                          + child_values (array)
                               + (`TIL_ChildValues`)
-                                  + code: "04_33_03"
-                                  + description: "Подушки для сидіння та підстилки для збереження цілісності тканин"
+                                  + code: `04_33_03`
+                                  + description: `Подушки для сидіння та підстилки для збереження цілісності тканин`
                                   + is_active: true
                                   + child_values (array)
                               + (`TIL_ChildValues`)
-                                  + code: "04_33_06"
-                                  + description: "Допоміжні засоби для збереження цілісності тканин у лежачому положенні"
+                                  + code: `04_33_06`
+                                  + description: `Допоміжні засоби для збереження цілісності тканин у лежачому положенні`
                                   + is_active: true
                                   + child_values (array)
                      + (`TIL_ChildValues`)
-                         + code: "04_48" 
-                         + description: "Обладнання для тренування руху, сили і балансу"
+                         + code: `04_48`
+                         + description: `Обладнання для тренування руху, сили і балансу`
                          + is_active: true
                          + child_values (array)
                               + (`TIL_ChildValues`)
-                                  + code: "04_48_07"
-                                  + description: "Допоміжні засоби для тренування патерну ходіння"
+                                  + code: `04_48_07`
+                                  + description: `Допоміжні засоби для тренування патерну ходіння`
                                   + is_active: true
                                   + child_values (array)
                               + (`TIL_ChildValues`)
-                                  + code: "04_48_15"
-                                  + description: "Вироби для тренування рук, вироби для тренування тулуба та вироби для тренування ніг"
+                                  + code: `04_48_15`
+                                  + description: `Вироби для тренування рук, вироби для тренування тулуба та вироби для тренування ніг`
                                   + is_active: true
                                   + child_values (array)
                      + (`TIL_ChildValues`)
-                         + code: "22_27"
-                         + description: "Допоміжні засоби для подавання сигналів тривоги, індикації, нагадування та сигналізації"
+                         + code: `22_27`
+                         + description: `Допоміжні засоби для подавання сигналів тривоги, індикації, нагадування та сигналізації`
                          + is_active: true
                          + child_values (array)
                               + (`TIL_ChildValues`)
-                                  + code: "22_27_04"
-                                  + description: "Вироби для сигналізації"
+                                  + code: `22_27_04`
+                                  + description: `Вироби для сигналізації`
                                   + is_active: true
                                   + child_values (array)
                               + (`TIL_ChildValues`)
-                                  + code: "22_27_12"
-                                  + description: "Годинники і хронометри"
+                                  + code: `22_27_12`
+                                  + description: `Годинники і хронометри`
                                   + is_active: true
                                   + child_values (array)
         + error (Response__Error)
-        
-        
+
 ## Medical Program [/api/medical_program]
 
 Key                | Value
