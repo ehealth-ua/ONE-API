@@ -4262,6 +4262,36 @@ http code| processing method | Client recommendations
             + code: 202 (number)
         + data (`Job`)
 
+### Dummy Cancel Care Plan [PATCH /api/patients/{patient_id}/care_plans/{id}/actions/cancel]
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Care Plan identifier.
+    
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        api-key: aFBLVTZ6Z2dON1V
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    + Attributes (`Care_Plan_Show`)
+        + `status_reason` (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/care_plan_cancel_reasons` (string)
+                    + code: `some code` (string)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Care_Plan_Show`)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
 ## Care Plan Activity [/me/care_plan_activity]
 
 Key                | Value
@@ -4326,6 +4356,388 @@ This method is used to pre-qualify care plan activity in order to define whether
         + error
             + type: unverified (string, required)
             + message: `Patient is not active` (string, required)
+
+### Create Care Plan Activity [POST /api/patients/{patient_id}/care_plans/{care_plan_id}/activities]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-006-0002
+Scope              | care_plan:write
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571643554/DRAFT+REST+API+Create+Care+Plan+Activity">Create Care Plan Activity</a>
+
+This method adds activity to an existing patient's Care Plan.
+Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key.
+All signature fields will be validated (including signer certificate authority).
+Service will store signed copy of Care Plan activity in Media Content Storage if all checks is passed.
+
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
+**Scopes required:** `care_plan:write`
+
+Look at [Dummy Create Care Plan activity](https://esoz.docs.apiary.io/#reference/medial-events/care-plan-activity/dummy-care-plan-activity) for more details.
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the person.
+    + `care_plan_id`: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Unique Care Plan identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer F3GF124Df565FDS234SDF34
+        api-key: aDGFDFGT46S5gFGD
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+        
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Care_plan_activity_show`)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Get Care Plan Activity by Id [GET /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-006-0003
+Scope              | care_plan:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571709053/DRAFT+REST+API+Get+Care+Plan+Activity+by+ID">Get Care Plan Activity by Id</a>
+
+Returns care plan's activity details by it's identifier within care plan and patient context.
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + care_plan_id: `9183a36b-4d45-4244-9339-63d81cd08d9c` (string, required) - Care Plan identifier. 
+    + id: `75a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        api-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Care_plan_activity_show`)
+            + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
+            + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
+            + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
+            + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
+### Get Care Plan Activities [GET /api/patients/{patient_id}/care_plans/{care_plan_id}/activities{?author,kind,status,page,page_size}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-006-0004
+Scope              | care_plan:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571610817/DRAFT+REST+API+Get+Care+Plan+activities">Get Care Plan Activities</a>
+
+Returns all the activities related to the care plan in patient context.
+
+**Scopes required:** `care_plan:read`
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + care_plan_id: `9183a36b-4d45-4244-9339-63d81cd08d9c` (string, required) - Care Plan identifier.
+    + author: `9183a36b-4d45-4244-9339-63d81cd08d9c` (string, optional) - author of the activity.
+    + kind: `service_request` (enum, optional) - kind of the activity.
+        - service_request
+        - medication_request
+        - device_request
+    + managing_organization_id: `80a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, optional) - legal entity id
+    + status: `scheduled` (string, optional) - Care plan activity status
+    + page: 2 (number, optional) - Page number
+    + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        api-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (array)
+            + (object)
+                + include `Care_plan_activity_show`
+                + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
+                + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
+                + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
+                + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
+### Cancel Care Plan Activity [PATCH /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}/actions/cancel]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-006-0005
+Scope              | care_plan:write
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571610817/DRAFT+REST+API+Get+Care+Plan+activities">Get Care Plan Activities</a>
+
+This method must be used to cancel of existing activity from patient's Care plan. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
+
+**Important**
+
+1. Signed content of activity must be equal to activity stored in DB. See *Get Care plan activity by ID*
+2. $.detail.status_reason must be changed in signed content
+
+Please see [Care plan status model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/2125038784/Care+plan+status+model+EN) and *Dummy Cancel Care plan activity* for more details
+
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
+**Scopes required:** `care_plan:write`
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + care_plan_id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Care Plan identifier.
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0404` (string, required) - activity identifier.
+    
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        api-key: aFBLVTZ6Z2dON1V
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Care_plan_activity_show`)
+            + `detail` (object, fixed-type)
+                + include `Care_Plan_activity_detail_base`
+                + status: cancelled (string, required)
+                + `status_reason` (Codeable_Concept, required, fixed-type)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `some code` (string)
+                            + system: `eHealth/care_plan_activity_cancel_reasons` (string, required)
+                + `remaining_quantity` (object)
+                    + value: 12 (number, required)
+                    + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. Same value as in quantity attribute
+                        - `MEDICATION_UNIT`
+                        - `SERVICE_UNIT`
+                        - `device_unit`
+                    + `code`: `MG` (string, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
+                    + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA. Sets automatically for corresponding code.
+                + `remaining_quantity_type`: `for_request` (string, required) - Type of remaining_quantity
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Complete Care Plan Activity [PATCH /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}/actions/complete]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-006-0006
+Scope              | care_plan:write
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571905639/DRAFT+REST+API+Complete+Care+Plan+Activity">Complete Care Plan Activity</a>
+
+This method must be used to complete of existing activity from patient's Care plan.
+
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + care_plan_id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Care Plan identifier.
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0404` (string, required) - activity identifier.
+    
++ Request (application/json)
+
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        api-key: aFBLVTZ6Z2dON1V
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    
+    + Attributes (object)
+        + `outcome_codeable_concept` (array, required, fixed-type)
+            + (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `some code` (string)
+                        + system: `eHealth/care_plan_activity_outcomes` (string, required)
+        + `detail` (object, required, fixed-type)
+            + `status_reason` (Codeable_Concept, required, fixed-type)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `some code` (string)
+                        + system: `eHealth/care_plan_activity_complete_reasons` (string, required)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Care_plan_activity_show`)
+            + `detail` (object, fixed-type)
+                + include `Care_Plan_activity_detail_base`
+                + status: completed (string, required)
+                + `status_reason` (Codeable_Concept, required, fixed-type)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `some code` (string)
+                            + system: `eHealth/care_plan_activity_complete_reasons` (string, required)
+                + `remaining_quantity` (object)
+                    + value: 12 (number, required)
+                    + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. Same value as in quantity attribute
+                        - `MEDICATION_UNIT`
+                        - `SERVICE_UNIT`
+                        - `device_unit`
+                    + `code`: `MG` (string, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
+                    + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA. Sets automatically for corresponding code.
+                + `remaining_quantity_type`: `for_request` (string, required) - Type of remaining_quantity
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Dummy Cancel Care Plan Activity [PATCH /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}/actions/cancel]
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + care_plan_id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Care Plan identifier.
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0404` (string, required) - activity identifier.
+    
++ Request (application/json)
+
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        api-key: aFBLVTZ6Z2dON1V
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    
+    + Attributes (`Care_plan_activity_show`)
+        + `detail` (object, fixed-type)
+            + include `Care_Plan_activity_detail_base`
+            + status: scheduled (enum, required)
+                - `in_progress`
+                - scheduled
+            + `status_reason` (Codeable_Concept, required, fixed-type)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `some code` (string)
+                        + system: `eHealth/care_plan_activity_cancel_reasons` (string, required)
+            + `remaining_quantity` (object)
+                + value: 12 (number, required)
+                + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. Same value as in quantity attribute
+                    - `MEDICATION_UNIT`
+                    - `SERVICE_UNIT`
+                    - `device_unit`
+                + `code`: `MG` (string, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
+                + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA. Sets automatically for corresponding code.
+            + `remaining_quantity_type`: `for_request` (string, required) - Type of remaining_quantity
+        + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
+        + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
+        + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
+        + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Care_plan_activity_show`)
+            + `detail` (object, fixed-type)
+                + include `Care_Plan_activity_detail_base`
+                + status: cancelled (string, required)
+                + `status_reason` (Codeable_Concept, required, fixed-type)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `some code` (string)
+                            + system: `eHealth/care_plan_activity_cancel_reasons` (string, required)
+                + `remaining_quantity` (object)
+                    + value: 12 (number, required)
+                    + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. Same value as in quantity attribute
+                        - `MEDICATION_UNIT`
+                        - `SERVICE_UNIT`
+                        - `device_unit`
+                    + `code`: `MG` (string, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
+                    + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA. Sets automatically for corresponding code.
+                + `remaining_quantity_type`: `for_request` (string, required) - Type of remaining_quantity
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Dummy Create Care Plan Activity [POST /api/patients/{patient_id}/care_plans/{care_plan_id}/activities]
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the person.
+    + `care_plan_id`: `9183a36b-4d45-4244-9339-63d81cd08d9c` (string, required) - Unique Care Plan identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer F3GF124Df565FDS234SDF34
+        api-key: aDGFDFGT46S5gFGD
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+        
+    + Attributes (`Care_Plan_activity_base`)
+        + `detail` (object, required)
+            + include `Care_Plan_activity_detail_base`
+            + `quantity` (object)
+                + value: 13 (number, required)
+                + `system`: `MEDICATION_UNIT` (enum, optional) - Can be absent in old version of CPA, is required if kind `medication_request`. `MEDICATION_UNIT` used in activities with kind `medication_request`, `SERVICE_UNIT` - with kind `service_request`
+                    - `MEDICATION_UNIT`
+                    - `SERVICE_UNIT`
+                    - `device_unit`
+                + `code`: `MG` (string, optional) - Can be absent in old version of CPA, is required if kind `medication_request`.
+            + `daily_amount` (object)
+                + value: 13.5 (number, required)
+                + `system`: `MEDICATION_UNIT` (enum, optional) - Can be absent in old version of CPA. 
+                    - `MEDICATION_UNIT`
+                    - `SERVICE_UNIT`
+                    - `device_unit`
+                + `code`: `MG` (string, optional) - Can be absent in old version of CPA.
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Care_plan_activity_show`)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
 
 ## Clinical Impression [/me/clinical_impression]
 
