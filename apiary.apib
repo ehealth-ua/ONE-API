@@ -3979,6 +3979,296 @@ Some routes in ESOZ are managed not only by scope-based  model and ABAC rules, b
 After successfull access with ABAC response will be filtered according
 to [Medical Events filtration by Forbidden groups](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/5056954517/Medical+Events+filtration+by+Forbidden+groups+EN).
 
+## Care Plan [/me/care_plan]
+
+Key                | Value
+-------------------|-----------
+ESOZ ENT ID        | ENT-005
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18831246372/Care+Plan+ENT-005">Care Plan</a>
+
+### Create Care Plan [POST /api/patients/{patient_id}/care_plans]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-005-0001
+Scope              | care_plan:write
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571905622/DRAFT+REST+API+Create+Care+Plan">Create Care Plan</a>
+
+This method allows to create Care Plan for a person in eHealth.
+Method receives signed message (pkcs7) that consists of signed content,
+digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
+Service will store signed copy of Care Plan in Media Content Storage if all checks is passed. 
+
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
+Look at [Dummy Care Plan](https://esoz.docs.apiary.io/#reference/medical-events/care-plan/dummy-care-plan) for more details.
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - MPI identifier of the person.
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        api-key: aFBLVTZ6Z2dON1V
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (`Care_Plan_Show`)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Get Care Plan by Id [GET /api/patients/{patient_id}/care_plans/{id}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-005-0002
+Scope              | care_plan:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571676282/DRAFT+REST+API+Get+Care+Plan+by+id">Get Care Plan by Id</a>
+
+Returns care plan details by it's identifier in patient context.
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Care Plan identifier. 
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        api-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Care_Plan_Show`)
+        + urgent (object, required)
+            + `informing_method_current` (object, required)
+                + type: `OTP` (enum, required)
+                    - OTP
+                    - OFFLINE
+                    - THIRD_PERSON
+                + phone_number: `+38093*****85` (string, optional)
+
+### Get Care Plans by Search Params [GET /api/patients/{patient_id}/care_plans{?legal_entity_id,period_date,encounter_id,requisition,based_on,part_of,managing_organization_id,status,page,page_size}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-005-0003
+Scope              | care_plan:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571709042/DRAFT+REST+API+Get+Care+Plans+by+search+params">Get Care Plans by Search Params </a>
+
+Returns care plan list filtered by submitted parameters withtin specified patient.
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + period_date: `2018-08-02` (date, optional) - date within Care plan's period incleuding start and end dates
+    + encounter_id: `7c3da506-804d-4550-8993-bf17f9ee0400` (string, optional) - identifier of the encounter in Care plan
+    + based_on: `7c3da506-804d-4550-8993-bf17f9ee0401` (string, optional) - Care Plan identifier on which returned Care plans are based on.
+    + part_of: `7c3da506-804d-4550-8993-bf17f9ee0401` (string, optional) - parent Care Plan identifier which includes returned Care plans.
+    + managing_organization_id: `80a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, optional)   
+    + status: `active` (string, optional) - Care plan's status
+    + page: 2 (number, optional) - Page number
+    + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        api-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (array[`Care_plan_summary`])
+
+
+### Get Care Plans by Requisition [GET /api/care_plans{?requisition,status,page,page_size}]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-005-0004
+Scope              | care_plan:read
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571643543/DRAFT+REST+API+Get+Care+Plans+by+requisition">Get Care Plans by Requisition</a>
+
+This service must be used to discover Care plans by requisition number. If nothing found by requisition number - it will return empty list.
+
++ Parameters
+    + requisition: `0123-4567-89AB-CEIK` (string, required) - requisition number
+    + status: `active` (string, optional) - Care plan's status
+    + page: 2 (number, optional) - Page number
+    + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        api-key: uXhEczJ56adsfh3Ri9SUkc4en
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (array, fixed-type)
+            + (`Care_plan_summary`)
+                + identity (`Person_identity`, required)
+
+### Cancel Care Plan [PATCH /api/patients/{patient_id}/care_plans/{id}/actions/cancel]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-005-0005
+Scope              | care_plan:write
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571676299/DRAFT+REST+API+Cancel+Care+Plan">Cancel Care Plan</a>
+
+This method must be used to cancel of existing patient's Care plan. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
+
+**Important**
+
+1. Signed content of care plan must be equal to care plan stored in DB. See *Get Care plan by ID*
+2. Activities should not be presented in signed content. 
+3. $.status_reason must be added to signed content
+
+Please see [Care plan status model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/2125038784/Care+plan+status+model+EN) and *Dummy Cancel Care plan* for more details
+
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Care Plan identifier.
+    
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        api-key: aFBLVTZ6Z2dON1V
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Care_Plan_Show`)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Complete Care Plan [PATCH /api/patients/{patient_id}/care_plans/{id}/actions/complete]
+
+Key                | Value
+-------------------|-----------
+ESOZ API ID        | API-007-005-0006
+Scope              | care_plan:write
+Auth               | yes
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17571872867/DRAFT+REST+API+Complete+Care+Plan">Complete Care Plan</a>
+
+This method must be used to complete of existing patient's Care plan.
+
+Please see [Care plan status model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/2125038784/Care+plan+status+model+EN)
+
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
+**Scopes required:** `care_plan:write`
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Care Plan identifier.
+    
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        api-key: aFBLVTZ6Z2dON1V
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    
+    + Attributes (object)
+        + `status_reason` (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/care_plan_complete_reasons` (string)
+                    + code: `some code` (string)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Care_Plan_Show`)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Dummy Care Plan [POST /api/patients/{patient_id}/care_plans]
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the person. 
+
++ Request (application/json)
+    + Headers
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    + Attributes (Care_Plan_Create)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Care_Plan_Show`)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+## Care Plan Activity [/me/care_plan_activity]
+
+Key                | Value
+-------------------|-----------
+ESOZ ENT ID        | ENT-006
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18831180694/Care+Plan+Activity+ENT-006">Care Plan Activity</a>
+
 ## Clinical Impression [/me/clinical_impression]
 
 Key                | Value
