@@ -36,19 +36,19 @@
 |------|------|
 | N/A | N/A |
 
-## Triggers (optional)
+## Triggers (private)
 
 | Name | Description |
 |------|-------------|
 | N/A | N/A |
 
-## Procedures (optional)
+## Procedures (private)
 
 | Name | Description |
 |------|-------------|
 | N/A | N/A |
 
-## Replications (optional)
+## Replications (private)
 
 | Database.Table | List of attributes (fields) |
 |----------------|----------------------------|
