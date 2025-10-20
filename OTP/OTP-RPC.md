@@ -48,7 +48,7 @@ The methods validate inputs, interact with the database, and render responses in
 | phone_number | Valid phone number with country code | Binary | The phone number to verify or send SMS to | "+380960000000" |
 | provider | Name of SMS provider (e.g., mouth_twilio, mouth_sms2ip, vodafone) | Binary | Optional provider for SMS sending or verification initialization | "mouth_twilio" |
 | sms_template | Template identifier for SMS content | Binary | Optional template for initializing verification SMS | "welcome_template" |
-| code | 6-digit OTP code | Integer | The OTP code to validate for verification completion | 123456 |
+| code | 4-digit OTP code | Integer | The OTP code to validate for verification completion | 1234 |
 | content_hash | Hash of content for verification | Binary | Optional hash to validate verification context | "hash123" |
 | body | SMS message content | Binary | The content of the SMS to be sent | "Your OTP is 123456" |
 | type | SMS type identifier | Binary | The type of SMS (e.g., undefined, verification) | "undefined" |
