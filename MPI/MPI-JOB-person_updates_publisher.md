@@ -1,34 +1,17 @@
 # Properties of a Job document
 
-## Document type
-Job
-
-## Document title
-DRAFT JOB Person Updates Publisher
-
-## Guideline ID
-GUI-0037
-
-## Author
-@Kateryna Yakovleva
-
-## Document version
-v010
-
-## Document status
-DRAFT
-
-## Date of creation
-21.01.2025
-
-## Date of update
-30.01.2025
-
-## Microservices (namespace)
-person_updates_producer
-
-## ID JOB
-JOB-010(person_updates_producer-010)
+| Property | Value |
+|----------|-------|
+| Document type | Job |
+| Document title | DRAFT JOB OTP Verification Scheduler |
+| Guideline ID | GUI-0037 |
+| Author | @Maksym Sokhatskyi |
+| Document version | v010 |
+| Document status | DRAFT |
+| Date of creation | 21.01.2025 |
+| Date of update | 30.01.2025 |
+| Microservices (namespace) | person_updates_producer |
+| ID JOB | JOB-011(person_updates_producer-011) |
 
 ## Purpose
 This job is designed to publish updates to person records in the MPI to a Kafka topic for synchronization and event-driven processing. It addresses the need for real-time notification of changes in person data, ensuring consistency across systems and enabling downstream services to react to updates.
@@ -61,3 +44,4 @@ A sequence diagram illustrating the job's workflow is available in SVG format at
 - The job handles optional preperson data in the event.
 - Configuration is fetched from the :person_updates_producer application environment.
 - Errors in publishing are handled by the Kafka producer.
+

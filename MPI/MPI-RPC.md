@@ -1,6 +1,20 @@
 # Properties of RPC method document
 
-## Document type
+| Property | Value |
+|----------|-------|
+| Document type | RPC Method |
+| Document name | DRAFT MPI Person Management |
+| Guideline ID | GUI-0023 |
+| Author | @Maksym Sokhatsky |
+| Document version | v010 |
+| Document status | DRAFT |
+| Date of creation | 21.01.2025 |
+| Date of update | 30.01.2025 |
+| API ID | RPC-MPI-001 |
+| Microservices (namespace) | mpi |
+| Resource | Person, Preperson, MergeCandidate, ManualMergeRequest |
+| Scope | create, search, update, merge, verification |
+
 RPC Method
 
 ## Document name
@@ -104,3 +118,4 @@ Core.Rpc.update_person("id", %{"status" => "inactive"})
 - `:unprocessable_entity` (422): Returned for validation failures, e.g., invalid tax ID or data format.
 - `:forbidden` (403): Returned for unauthorized operations.
 - `:internal_server_error` (500): For database or Kafka publication errors.
+
