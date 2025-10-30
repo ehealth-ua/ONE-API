@@ -15,41 +15,6 @@
 | Resource | Person, Preperson, MergeCandidate, ManualMergeRequest |
 | Scope | create, search, update, merge, verification |
 
-RPC Method
-
-## Document name
-DRAFT RPC MPI Person Management
-
-## Guideline ID
-GUI-0023
-
-## Author
-@Kateryna Yakovleva
-
-## Document version
-v010
-
-## Document status
-DRAFT
-
-## Date of creation
-21.01.2025
-
-## Date of update
-30.01.2025
-
-## API ID
-RPC-MPI-001
-
-## Microservices (namespace)
-mpi
-
-## Resource
-Person, Preperson, MergeCandidate, ManualMergeRequest
-
-## Scope
-Person creation, search, update, merge, and verification within the Master Patient Index.
-
 ## Purpose
 The RPC methods in the MPI service provide functionality for managing person records, including creation, retrieval, update, merge, and verification. These methods ensure data integrity in the Master Patient Index, supporting deduplication and synchronization across the eHealth system.
 
