@@ -75,7 +75,7 @@ You can also find request identifiers in the URLs of individual request logs in 
 If you need to contact us about a specific request, providing the request identifier will
 ensure the fastest possible resolution.
 
-All Request ID's are prefixed with a human-readable name of server that served your request.
+All Request Id's are prefixed with a human-readable name of server that served your request.
 
 ```
 X-Request-ID: flash-99spDSoim3i
@@ -1186,7 +1186,7 @@ This WS is designed to sign contract request from MSP side. Contract request's s
 EDRPOU in DS certeficate = contractor_owner_id.lega_entity.edrpou and suranme in DS=contractor_owner_id.party_id.last_name
 Method receives signed message (pkcs7) including signed content, digital signature of first signer, digital stamp of first signer, digital signature of second signer and signer public key in signed_content property.
 All signature fields will be validated (including signer certificate authority). This service will store signed copy of Contract Request in Media Content Storage (will update previous version of file),created contract records and linked employees_divisions if signature is all checks is passed.
-Object that need to be signed is returned by Get Contract request by ID, urgent, type='signed_content'. In response will be receive a link to download a file in pkcs7 format (signed by NHS side).
+Object that need to be signed is returned by Get Contract request by Id, urgent, type='signed_content'. In response will be receive a link to download a file in pkcs7 format (signed by NHS side).
 This data must be signed.
 
 In DS EDRPOU/DRFO must be equal to contractor_legal_entity.edrpou
@@ -1667,14 +1667,14 @@ All signature fields will be validated (including signer certificate authority).
 
 This service will store signed copy of Declaration Request in Media Content Storage, create declaration if signature is all checks is passed.
 
-Signed content MUST consists of JSON object with Declaration Request data from field `data_to_be_signed`. Object that need to be signed is returned by `Get Declaration request by ID` or `Approve declaration request` response, `JSON.Path: $.data.data_to_be_signed`.
+Signed content MUST consists of JSON object with Declaration Request data from field `data_to_be_signed`. Object that need to be signed is returned by `Get Declaration request by Id` or `Approve declaration request` response, `JSON.Path: $.data.data_to_be_signed`.
 Patient must re-read and sign declaration print form and after that `patient_signed` should be changed to TRUE.
 
 Declaration request can be signed either by doctor or admin (user with scope `declaration_request:sign`) from legal entity as in declaration request.
 
 **Important**
 
-Invoke Get Declaration Request by ID to obtain seed - Hash of previous block in declarations chain or other random component that should be signed with declaration.
+Invoke Get Declaration Request by Id to obtain seed - Hash of previous block in declarations chain or other random component that should be signed with declaration.
 
 There is a [**dummy method**](https://uaehealthapi.docs.apiary.io/#reference/dummy-methods/dummy-for-declaration-request/sign-declaration-request) that describes the signed date example.
 
@@ -2305,14 +2305,14 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
     + Attributes (`Response_Collection_V2`)
         + data (array[`Employee_Request_Short`])
 
-### Get Employee Request by ID [GET /api/employee_requests/{id}]
+### Get Employee Request by Id [GET /api/employee_requests/{id}]
 
 Key                | Value
 -------------------|-----------
 ESOZ API ID        | API-005-024-0003
 Scope              | employee_request:read
 Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570136347/DRAFT+REST+API+Get+Employee+Request+by+ID">Get Employee Request by ID</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570136347/DRAFT+REST+API+Get+Employee+Request+by+ID">Get Employee Request by Id</a>
 
 This service should be used with `access_token` authetification method.
 
@@ -2369,7 +2369,7 @@ Key                | Value
 ESOZ API ID        | API-005-024-0005
 Scope              | event:read
 Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570136347/DRAFT+REST+API+Get+Employee+Request+by+ID">Get Employee Request by ID</a>
+Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570136347/DRAFT+REST+API+Get+Employee+Request+by+ID">Get Employee Request by Id</a>
 
 This service should be used with mis `access_token` authetification method and used to get employee id and employee request status by employee request id.
 
@@ -4147,7 +4147,7 @@ This method must be used to cancel of existing patient's Care plan. Method recei
 
 **Important**
 
-1. Signed content of care plan must be equal to care plan stored in DB. See *Get Care plan by ID*
+1. Signed content of care plan must be equal to care plan stored in DB. See *Get Care plan by Id*
 2. Activities should not be presented in signed content. 
 3. $.status_reason must be added to signed content
 
@@ -4497,7 +4497,7 @@ This method must be used to cancel of existing activity from patient's Care plan
 
 **Important**
 
-1. Signed content of activity must be equal to activity stored in DB. See *Get Care plan activity by ID*
+1. Signed content of activity must be equal to activity stored in DB. See *Get Care plan activity by Id*
 2. $.detail.status_reason must be changed in signed content
 
 Please see [Care plan status model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/2125038784/Care+plan+status+model+EN) and *Dummy Cancel Care plan activity* for more details
@@ -5095,7 +5095,7 @@ Scope              | patient_summary:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572167687/DRAFT+REST+API+Get+Active+Diagnoses+Patient+Summary">Get Active Diagnoses (Summary)</a>
 
-This endpoint returns current diagnoses related only to active episodes. In order to get specific condition details, use [Get Condition by ID](https://esoz.docs.apiary.io/#reference/medical-events/condition/get-condition-by-id-(summary))
+This endpoint returns current diagnoses related only to active episodes. In order to get specific condition details, use [Get Condition by Id](https://esoz.docs.apiary.io/#reference/medical-events/condition/get-condition-by-id-(summary))
 
 + Parameters
     + `patient_id`: `7a489bbd-d8e2-48d9-92fd-fcf0102f7b08` (string, required) - Unique patient identifier
@@ -5223,7 +5223,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 Use this method to obtain list of Medication Requests. 
 Use [**Get medication requests details**](https://esoz.docs.apiary.io/#reference/medical-events/medication-request/get-medication-requests-details)
-to get Medication Request by ID.
+to get Medication Request by Id.
 
 + Parameters
     + `person_id`: `5e661b15-a39a-4713-b18e-ba03a4a48ecc` (string, required) - person_id of a patient.
@@ -5277,7 +5277,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 The method returns a list of medication requests in the context of a care plan. 
 User must have an approval on the care plan from url.
 
-Use [**Get medication requests details**](https://esoz.docs.apiary.io/#reference/medical-events/medication-request/get-medication-requests-details) to get Medication Request by ID.
+Use [**Get medication requests details**](https://esoz.docs.apiary.io/#reference/medical-events/medication-request/get-medication-requests-details) to get Medication Request by Id.
 
 + Parameters
     + `legal_entity_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - legal entity identifier.
@@ -5324,7 +5324,7 @@ Scope              | medication_request:details
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570103587/REST+API+Get+medication+requests+details">Get Medication Requests Details</a>
 
-Use this method to obtain Medication Request by ID.
+Use this method to obtain Medication Request by Id.
 
 + Parameters
     + `person_id`: `5e661b15-a39a-4713-b18e-ba03a4a48ecc` (string, required) - person_id of a patient.
@@ -5395,7 +5395,7 @@ Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/18757419067/REST+API+Reject+Medication+request+by+Pharmacy+User">Reject Medication Request by Pharmacy User</a>
 
 Use this method to reject existing active Medication request.
-Invoke Get Medication Request by ID by Pharmacy User to obtain previously created medication request.
+Invoke Get Medication Request by Id by Pharmacy User to obtain previously created medication request.
 In order to reject medication request `reject_reason_code` and `reject_reason` (`optional`) should be added.
 **Note!** that medication request with intent *plan* and *order* has different structure.
 
@@ -5487,7 +5487,7 @@ Scope              | medication_request:details_pharm
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570758890/REST+API+Get+Medication+Request+by+ID+by+Pharmacy+User">Get Medication Request by Id for Pharmacy User</a>
 
-Use this method by pharmacy user to obtain short Medication Request by ID or request_number.
+Use this method by pharmacy user to obtain short Medication Request by Id or request_number.
 
 + Parameters
     + id: `48416485-cc98-46c4-8bba-e321de9e1ecd` (string, required) - `Medication Request identifier OR request_number`
@@ -5515,7 +5515,7 @@ Scope              | medication_request:details
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570365627/DRAFT+REST+API+Get+Medication+request+by+ID">Get Medication Request by Id</a>
 
-Use this method to obtain Medication request by ID.
+Use this method to obtain Medication request by Id.
 
 + Parameters
     + id: `48416485-cc98-46c4-8bba-e321de9e1ecd` (string, required) - `Medication Request identifier OR request_number`
@@ -5952,7 +5952,7 @@ Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570103570/REST+API+Get+Medication+dispenses+by+search+params+by+Pharmacy+User">Get Medication dispenses by search params by Pharmacy User</a>
 
 This method intended to get all Medication dispenses for the PHARMACY users.
-Use [**Get Medication Dispense by Pharmacy User**](https://esoz.docs.apiary.io/#reference/medical-events/medication-dispense/get-medication-dispense-details-by-pharmacy-user) to get Medication Dispense by ID.
+Use [**Get Medication Dispense by Pharmacy User**](https://esoz.docs.apiary.io/#reference/medical-events/medication-dispense/get-medication-dispense-details-by-pharmacy-user) to get Medication Dispense by Id.
 
 + Parameters
     + id: `a89f6a26-4221-4597-a1d2-542d5e40b565` (string, optional) - Medication dispense ID
@@ -6278,7 +6278,7 @@ Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570365647/REST+API+Get+medication+request+requests+by+search+params">Get Medication Request Requests by Search Params</a>
 
 Use this method to obtain list of Medication request Requests. 
-Use [**Get Medication request requests details**](https://uaehealthapi.docs.apiary.io/#reference/public.-reimbursement/medication-request-requests/get-medication-request-requests-details) to get Medication request Request by ID.
+Use [**Get Medication request requests details**](https://uaehealthapi.docs.apiary.io/#reference/public.-reimbursement/medication-request-requests/get-medication-request-requests-details) to get Medication request Request by Id.
 
 + Parameters
     + `person_id`: `5e661b15-a39a-4713-b18e-ba03a4a48ecc` (string, required) - person_id of a patient.
@@ -6320,7 +6320,7 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 The method returns a list of medication request requests in the context of a care plan. 
 User must have an approval on the care plan from url.
 
-Use [**Get Medication Request Requests Details**](https://esoz.docs.apiary.io/#reference/medical-events/medication-request-requests/get-medication-request-requests-details) to get Medication request Request by ID.
+Use [**Get Medication Request Requests Details**](https://esoz.docs.apiary.io/#reference/medical-events/medication-request-requests/get-medication-request-requests-details) to get Medication request Request by Id.
 
 + Parameters
     + `employee_id`: `7124259c-eeb1-4cbb-acac-ada2162675d1` (string, optional) - user_id of a doctor.
@@ -6355,7 +6355,7 @@ Scope              | medication_request_request:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570529435/REST+API+Get+Medication+Request+Requests+in+care+plan+context">Get Medication Request Requests in Care Plan Context</a>
 
-Use this method to obtain Medication request request by ID.
+Use this method to obtain Medication request request by Id.
 
 + Parameters
     + `person_id`: `5e661b15-a39a-4713-b18e-ba03a4a48ecc` (string, required) - person_id of a patient.
@@ -6392,7 +6392,7 @@ Object that need to be signed is returned by [**Get Medication Request Requests 
 
 **Important**
 
-Invoke Get Medication request Request by ID to obtain seed - Hash of previous block in Medication
+Invoke Get Medication request Request by Id to obtain seed - Hash of previous block in Medication
 Request Request chain or other random component that should be signed with Medication Request Request.
 
 Look at [**Dummy Sign Medication Request Requests**](https://esoz.docs.apiary.io/#reference/medical-events/medication-request-requests/sign-medication-request-requests) for more details.
@@ -7078,7 +7078,7 @@ This method is used to sign Person Request. Method receives signed message (pkcs
 All signature fields will be validated (including signer certificate authority).
 
 This service will store signed copy of Person Request in Media Content Storage, created or update MPI records  if signature is all checks is passed.
-Signed content MUST consists of JSON object with Person Request data and printout template. Object that need to be signed is returned by `Get Person request by ID` or `Approve Person request` response, `JSON.Path: $.data`.
+Signed content MUST consists of JSON object with Person Request data and printout template. Object that need to be signed is returned by `Get Person request by Id` or `Approve Person request` response, `JSON.Path: $.data`.
 Person must re-read and sign person request print form and after that `patient_signed` should be changed to TRUE.
 Person request can be signed either by doctor or admin (user with scope `person_request:write`) from legal entity as in person request.
 
@@ -7106,7 +7106,7 @@ Look at [**Dummy Sign Person Request**](https://uaehealthapi.docs.apiary.io/#ref
         + data (`Patient_short`)
 
 
-### Get Person Request by ID [PATCH /api/person_requests/{{id}}/actions/sign]
+### Get Person Request by Id [PATCH /api/person_requests/{{id}}/actions/sign]
 
 Key                | Value
 -------------------|-----------
@@ -7115,7 +7115,7 @@ Scope              | person_request:write
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17570922526/DRAFT+REST+API+Sign+Person+Request+API-010-055-0004">Sign Person Request</a>
 
-This method will be depricated. Use **Get Person Request by ID v2** instead.
+This method will be depricated. Use **Get Person Request by Id v2** instead.
 
 + Parameters
     + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required) - request identifier
@@ -7315,7 +7315,7 @@ This method is used to sign Person Request. Method receives signed message (pkcs
 All signature fields will be validated (including signer certificate authority).
 
 This service will store signed copy of Person Request in Media Content Storage, created or update MPI records  if signature is all checks is passed.
-Signed content MUST consists of JSON object with Person Request data and printout template. Object that need to be signed is returned by `Get Person request by ID v2` or `Approve Person request v2` response, `JSON.Path: $.data`.
+Signed content MUST consists of JSON object with Person Request data and printout template. Object that need to be signed is returned by `Get Person request by Id v2` or `Approve Person request v2` response, `JSON.Path: $.data`.
 Person must re-read and sign person request print form and after that `patient_signed` should be changed to TRUE.
 Person request can be signed either by doctor or admin (user with scope `person_request:write`) from legal entity as in person request.
 
@@ -7341,9 +7341,9 @@ Look at [**Dummy Sign Person Request**](https://uaehealthapi.docs.apiary.io/#ref
         + data (`Patient_short`)
         
 
-### Get Person Request by ID [GET /api/person_requests/{id}]
+### Get Person Request by Id [GET /api/person_requests/{id}]
 
-This method will be depricated. Use **Get Person Request by ID v2** instead.
+This method will be depricated. Use **Get Person Request by Id v2** instead.
 
 + Parameters
     + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required) - request identifier
@@ -7382,7 +7382,7 @@ This method will be depricated. Use **Get Person Request by ID v2** instead.
             <!--+ `authentication_methods` (array [`Authentication_Methods_Patient_Response`], required)-->
             + documents (array[`media_content`], optional)
 
-### Get Person Request by ID v2 [GET /api/v2/person_requests/{id}]
+### Get Person Request by Id v2 [GET /api/v2/person_requests/{id}]
 
 Use this method to obtain Person Request details.
 
@@ -7429,7 +7429,7 @@ Use this method to obtain list of Person Requests.
 If you want to reduce amount of data that is going trough your application, use `status` filter and show only requests that Doctor or Admin is interested in current UI.
 Service returns only person request related to the same legal entity as the user.
 Method returns shortened details, to obtain full information - get Person Request by it's ID using appropriate version of endpoint based on `version` value in response.
-That is, for `version: 1` use [**Get Person Request by ID**](#reference/public.-medical-service-provider-integration-layer/person-requests/get-person-request-by-id) endpoint, for `version: 2` use [**Get Person Request by ID V2**](https://uaehealthapi.docs.apiary.io/#reference/public.-medical-service-provider-integration-layer/person-requests/get-person-request-by-id-v2) endpoint.
+That is, for `version: 1` use [**Get Person Request by Id**](#reference/public.-medical-service-provider-integration-layer/person-requests/get-person-request-by-id) endpoint, for `version: 2` use [**Get Person Request by Id V2**](https://uaehealthapi.docs.apiary.io/#reference/public.-medical-service-provider-integration-layer/person-requests/get-person-request-by-id-v2) endpoint.
 
 More detailed information - https://e-health-ua.atlassian.net/wiki/x/BADDIw
 
