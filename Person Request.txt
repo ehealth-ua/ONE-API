@@ -1,0 +1,18 @@
+REST API Create/Update Person Request [API-010-055-0001]
+REST API Approve Person Request [API-010-055-0002]
+REST API Reject Person Request [API-010-055-0003]
+REST API Sign Person Request [API-010-055-0004]
+REST API Create/Update Person Request v2 [API-010-055-0015]
+REST API Approve Person Request v2 [API-010-055-0017]
+REST API Sign Person Request v2 [API-010-055-0018]
+
+REST API Get Person Request by ID [API-010-055-0005]
+REST API Get Person Requests List [API-010-055-0006]
+REST API Resend Authorization OTP on Person Request [API-010-055-0007]
+REST API PIS. Initialize Update Person Details [API-010-055-0008]
+REST API PIS. Complete Update Person details [API-010-055-0009]
+REST API PIS. Get Person Requests List [API-010-055-0010]
+REST API PIS. Get Person Request Details [API-010-055-0011]
+REST API PIS. Reject Person Request [API-010-055-0012]
+REST API TRUSTED PIS. Initialize Update Person details [API-010-055-0014]
+
