@@ -1,0 +1,6 @@
+API Create Care Plan [API-007-005-0001]
+API Get Care Plan by id [API-007-005-0002]
+API Get Care Plans by search params [API-007-005-0003]
+API Get Care Plans by requisition [API-007-005-0004]
+API Cancel Care Plan [API-007-005-0005]
+API Complete Care Plan [API-007-005-0006]
