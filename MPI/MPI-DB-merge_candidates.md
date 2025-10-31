@@ -5,7 +5,7 @@
 | Document type | SQL Database Info |
 | Document title | DRAFT PostgreSQL DB: merge_candidates table / Таблиця бази даних PostgreSQL |
 | Guideline ID | GUI-0017 |
-| Author | @Kateryna Yakovleva |
+| Author | @Maksym Sokhatskyi |
 | Document version | v010 |
 | Document status | DRAFT |
 | Date of creation | 21.01.2025 |
