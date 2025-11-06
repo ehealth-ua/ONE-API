@@ -6916,7 +6916,7 @@ More detailed information - https://e-health-ua.atlassian.net/wiki/x/KoAfIw
             + type: unverified (string, required)
             + message: `Unverified phone number` (string, required)
 
-### Approve Person Request [PATCH /api/person_requests/{{id}}/actions/approve]
+### Approve Person Request [PATCH /api/person_requests/{id}/actions/approve]
 
 Key                | Value
 -------------------|-----------
@@ -6982,7 +6982,7 @@ Clients can use signed URL's to directly access [s3 storage](https://storage.ehe
             + type: forbidden (string, required)
             + message: `Invalid verification code` (string, required)
 
-### Reject Person Request [PATCH /api/person_requests/{{id}}/actions/reject]
+### Reject Person Request [PATCH /api/person_requests/{id}/actions/reject]
 
 Key                | Value
 -------------------|-----------
@@ -7063,7 +7063,7 @@ More detailed information - https://e-health-ua.atlassian.net/wiki/x/MYDAIw
             + channel: `MIS` (enum, required) - channel that invoke patient create service
             + authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of person's auth method
 
-### Sign Person Request [PATCH /api/person_requests/{{id}}/actions/sign]
+### Sign Person Request [PATCH /api/person_requests/{id}/actions/sign]
 
 Key                | Value
 -------------------|-----------
@@ -7106,7 +7106,7 @@ Look at [**Dummy Sign Person Request**](https://uaehealthapi.docs.apiary.io/#ref
         + data (`Patient_short`)
 
 
-### Get Person Request by Id [PATCH /api/person_requests/{{id}}/actions/sign]
+### Get Person Request by Id [PATCH /api/person_requests/{id}/actions/sign]
 
 Key                | Value
 -------------------|-----------
@@ -7302,7 +7302,7 @@ Clients can use signed URL's to directly access [s3 storage](https://storage.ehe
             + message: `Invalid verification code` (string, required)
 
 
-### Sign Person Request v2 [PATCH /api/v2/person_requests/{{id}}/actions/sign]
+### Sign Person Request v2 [PATCH /api/v2/person_requests/{id}/actions/sign]
 
 Key                | Value
 -------------------|-----------
