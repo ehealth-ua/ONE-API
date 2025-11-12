@@ -1,15 +1,3 @@
-# **MPI\_DB\_person\_updates\_table**
-
-* [Properties of document](#bookmark=id.yxjvez909gpd)  
-* [Table fields](#bookmark=id.yxjvez909gpd)  
-* [Indexes (optional)](#bookmark=id.yxjvez909gpd)  
-* [Foreign indexes (optional)](#bookmark=id.yxjvez909gpd)  
-* [Triggers (optional)](#bookmark=id.yxjvez909gpd)  
-* [Procedures (optional)](#bookmark=id.yxjvez909gpd)  
-* [Replications (optional)](#bookmark=id.yxjvez909gpd)  
-* [Related tables](#bookmark=id.yxjvez909gpd)  
-* [Links to documentation that can create or modify a database object](#bookmark=id.yxjvez909gpd)
-
 # **Properties of document**
 
 | Document type | SQL Database Info |

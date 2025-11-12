@@ -1,15 +1,3 @@
-# **MPI\_DB\_person\_settlement\_last\_names\_table**
-
-* [Properties of document](#bookmark=id.7jq2awsiprk3)  
-* [Table fields](#bookmark=id.7jq2awsiprk3)  
-* [Indexes (optional)](#bookmark=id.7jq2awsiprk3)  
-* [Foreign indexes (optional)](#bookmark=id.7jq2awsiprk3)  
-* [Triggers (optional)](#bookmark=id.7jq2awsiprk3)  
-* [Procedures (optional)](#bookmark=id.7jq2awsiprk3)  
-* [Replications (optional)](#bookmark=id.7jq2awsiprk3)  
-* [Related tables](#bookmark=id.7jq2awsiprk3)  
-* [Links to documentation that can create or modify a database object](#bookmark=id.7jq2awsiprk3)
-
 # **Properties of document**
 
 | Document type | SQL Database Info |

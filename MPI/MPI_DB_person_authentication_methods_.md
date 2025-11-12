@@ -1,15 +1,3 @@
-# **MPI\_DB\_person\_authentication\_methods\_table**
-
-* [Properties of document](#bookmark=id.y68smk9ww519)  
-* [Table fields](#bookmark=id.y68smk9ww519)  
-* [Indexes (optional)](#bookmark=id.y68smk9ww519)  
-* [Foreign indexes (optional)](#bookmark=id.y68smk9ww519)  
-* [Triggers (optional)](#bookmark=id.y68smk9ww519)  
-* [Procedures (optional)](#bookmark=id.y68smk9ww519)  
-* [Replications (optional)](#bookmark=id.y68smk9ww519)  
-* [Related tables](#bookmark=id.y68smk9ww519)  
-* [Links to documentation that can create or modify a database object](#bookmark=id.y68smk9ww519)
-
 # **Properties of document**
 
 | Document type | SQL Database Info |

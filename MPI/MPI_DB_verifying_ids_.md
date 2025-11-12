@@ -1,15 +1,3 @@
-# **MPI\_DB\_verifying\_ids\_table**
-
-* [Properties of document](#bookmark=id.ho5ogkbk7z90)  
-* [Table fields](#bookmark=id.ho5ogkbk7z90)  
-* [Indexes (optional)](#bookmark=id.ho5ogkbk7z90)  
-* [Foreign indexes (optional)](#bookmark=id.ho5ogkbk7z90)  
-* [Triggers (optional)](#bookmark=id.ho5ogkbk7z90)  
-* [Procedures (optional)](#bookmark=id.ho5ogkbk7z90)  
-* [Replications (optional)](#bookmark=id.ho5ogkbk7z90)  
-* [Related tables](#bookmark=id.ho5ogkbk7z90)  
-* [Links to documentation that can create or modify a database object](#bookmark=id.ho5ogkbk7z90)
-
 # **Properties of document**
 
 | Document type | SQL Database Info |

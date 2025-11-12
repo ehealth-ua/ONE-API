@@ -1,15 +1,3 @@
-# **MPI\_DB\_person\_addresses\_table**
-
-* [Properties of document](#bookmark=id.tups1oz0990z)  
-* [Table fields](#bookmark=id.tups1oz0990z)  
-* [Indexes (optional)](#bookmark=id.tups1oz0990z)  
-* [Foreign indexes (optional)](#bookmark=id.tups1oz0990z)  
-* [Triggers (optional)](#bookmark=id.tups1oz0990z)  
-* [Procedures (optional)](#bookmark=id.tups1oz0990z)  
-* [Replications (optional)](#bookmark=id.tups1oz0990z)  
-* [Related tables](#bookmark=id.tups1oz0990z)  
-* [Links to documentation that can create or modify a database object](#bookmark=id.tups1oz0990z)
-
 # **Properties of document**
 
 | Document type | SQL Database Info |

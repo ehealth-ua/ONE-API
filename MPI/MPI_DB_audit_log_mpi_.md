@@ -1,15 +1,3 @@
-# **MPI\_DB\_audit\_log\_mpi\_table**
-
-* [Properties of document](#bookmark=id.snhcz9pd3la)  
-* [Table fields](#bookmark=id.snhcz9pd3la)  
-* [Indexes (optional)](#bookmark=id.snhcz9pd3la)  
-* [Foreign indexes (optional)](#bookmark=id.snhcz9pd3la)  
-* [Triggers (optional)](#bookmark=id.snhcz9pd3la)  
-* [Procedures (optional)](#bookmark=id.snhcz9pd3la)  
-* [Replications (optional)](#bookmark=id.snhcz9pd3la)  
-* [Related tables](#bookmark=id.snhcz9pd3la)  
-* [Links to documentation that can create or modify a database object](#bookmark=id.snhcz9pd3la)
-
 # **Properties of document**
 
 | Document type | SQL Database Info |

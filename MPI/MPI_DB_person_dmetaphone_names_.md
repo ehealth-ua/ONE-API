@@ -1,15 +1,3 @@
-# **MPI\_DB\_person\_dmetaphone\_names\_table**
-
-* [Properties of document](#bookmark=id.gprr2c775te7)  
-* [Table fields](#bookmark=id.gprr2c775te7)  
-* [Indexes (optional)](#bookmark=id.gprr2c775te7)  
-* [Foreign indexes (optional)](#bookmark=id.gprr2c775te7)  
-* [Triggers (optional)](#bookmark=id.gprr2c775te7)  
-* [Procedures (optional)](#bookmark=id.gprr2c775te7)  
-* [Replications (optional)](#bookmark=id.gprr2c775te7)  
-* [Related tables](#bookmark=id.gprr2c775te7)  
-* [Links to documentation that can create or modify a database object](#bookmark=id.gprr2c775te7)
-
 # **Properties of document**
 
 | Document type | SQL Database Info |

@@ -1,15 +1,3 @@
-# **MPI\_DB\_person\_verification\_candidates\_table**
-
-* [Properties of document](#bookmark=id.wp4e93ig80yk)  
-* [Table fields](#bookmark=id.wp4e93ig80yk)  
-* [Indexes (optional)](#bookmark=id.wp4e93ig80yk)  
-* [Foreign indexes (optional)](#bookmark=id.wp4e93ig80yk)  
-* [Triggers (optional)](#bookmark=id.wp4e93ig80yk)  
-* [Procedures (optional)](#bookmark=id.wp4e93ig80yk)  
-* [Replications (optional)](#bookmark=id.wp4e93ig80yk)  
-* [Related tables](#bookmark=id.wp4e93ig80yk)  
-* [Links to documentation that can create or modify a database object](#bookmark=id.wp4e93ig80yk)
-
 # **Properties of document**
 
 | Document type | SQL Database Info |
