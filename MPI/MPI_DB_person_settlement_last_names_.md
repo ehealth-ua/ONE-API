@@ -1,3 +1,15 @@
+# **MPI\_DB\_person\_settlement\_last\_names\_table**
+
+* [Properties of document](#bookmark=id.dfpo25r5v42a)  
+* [Table fields](#bookmark=id.dfpo25r5v42a)  
+* [Indexes (optional)](#bookmark=id.dfpo25r5v42a)  
+* [Foreign indexes (optional)](#bookmark=id.dfpo25r5v42a)  
+* [Triggers (optional)](#bookmark=id.dfpo25r5v42a)  
+* [Procedures (optional)](#bookmark=id.dfpo25r5v42a)  
+* [Replications (optional)](#bookmark=id.dfpo25r5v42a)  
+* [Related tables](#bookmark=id.dfpo25r5v42a)  
+* [Links to documentation that can create or modify a database object](#bookmark=id.dfpo25r5v42a)
+
 # **Properties of document**
 
 | Document type | SQL Database Info |

@@ -1,7 +1,19 @@
+# **MPI\_DB\_audit\_log\_mpi\_table**
+
+* [Properties of document](#bookmark=id.nf9b7hsp12bv)  
+* [Table fields](#bookmark=id.nf9b7hsp12bv)  
+* [Indexes (optional)](#bookmark=id.nf9b7hsp12bv)  
+* [Foreign indexes (optional)](#bookmark=id.nf9b7hsp12bv)  
+* [Triggers (optional)](#bookmark=id.nf9b7hsp12bv)  
+* [Procedures (optional)](#bookmark=id.nf9b7hsp12bv)  
+* [Replications (optional)](#bookmark=id.nf9b7hsp12bv)  
+* [Related tables](#bookmark=id.nf9b7hsp12bv)  
+* [Links to documentation that can create or modify a database object](#bookmark=id.nf9b7hsp12bv)
+
 # **Properties of document**
 
 | Document type | SQL Database Info |
-| :---: | :---- |
+| ----- | :---- |
 | **Document title** | \[DRAFT\]\_PostgreSQL\_DB\_audit\_log\_mpi\_table |
 | **Guideline ID** | GUI-0017 |
 | **Author** |  |
@@ -30,14 +42,14 @@
 
 |  | Name | Index attributes |
 | :---- | ----- | ----- |
-| 1 | N/A | N/A |
+| 1 | audit\_log\_mpi\_person\_id\_idx | person\_id |
 | 2 | N/A | N/A |
 
 # **Foreign indexes (optional)**
 
 |  | Name | Type |
 | :---- | ----- | ----- |
-| 1 | N/A | N/A |
+| 1 | audit\_log\_mpi\_person\_id\_fkey | Foreign Key (references mpi.persons(id)) |
 | 2 | N/A | N/A |
 
 # **Triggers (optional)**

@@ -1,3 +1,15 @@
+# **MPI\_DB\_person\_verification\_candidates\_table**
+
+* [Properties of document](#bookmark=id.90tbvuqobf6u)  
+* [Table fields](#bookmark=id.90tbvuqobf6u)  
+* [Indexes (optional)](#bookmark=id.90tbvuqobf6u)  
+* [Foreign indexes (optional)](#bookmark=id.90tbvuqobf6u)  
+* [Triggers (optional)](#bookmark=id.90tbvuqobf6u)  
+* [Procedures (optional)](#bookmark=id.90tbvuqobf6u)  
+* [Replications (optional)](#bookmark=id.90tbvuqobf6u)  
+* [Related tables](#bookmark=id.90tbvuqobf6u)  
+* [Links to documentation that can create or modify a database object](#bookmark=id.90tbvuqobf6u)
+
 # **Properties of document**
 
 | Document type | SQL Database Info |
@@ -32,14 +44,14 @@
 
 |  | Name | Index attributes |
 | :---- | ----- | ----- |
-| 1 | N/A | N/A |
+| 1 | person\_verification\_candidates\_person\_id\_idx | person\_id |
 | 2 | N/A | N/A |
 
 # **Foreign indexes (optional)**
 
 |  | Name | Type |
 | :---- | ----- | ----- |
-| 1 | N/A | N/A |
+| 1 | person\_verification\_candidates\_person\_id\_fkey | Foreign Key (references mpi.persons(id)) |
 | 2 | N/A | N/A |
 
 # **Triggers (optional)**

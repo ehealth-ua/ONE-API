@@ -1,3 +1,15 @@
+# **MPI\_DB\_confidant\_person\_relationships\_table**
+
+* [Properties of document](#bookmark=id.wzzpi6nuxp0f)  
+* [Table fields](#bookmark=id.wzzpi6nuxp0f)  
+* [Indexes (optional)](#bookmark=id.wzzpi6nuxp0f)  
+* [Foreign indexes (optional)](#bookmark=id.wzzpi6nuxp0f)  
+* [Triggers (optional)](#bookmark=id.wzzpi6nuxp0f)  
+* [Procedures (optional)](#bookmark=id.wzzpi6nuxp0f)  
+* [Replications (optional)](#bookmark=id.wzzpi6nuxp0f)  
+* [Related tables](#bookmark=id.wzzpi6nuxp0f)  
+* [Links to documentation that can create or modify a database object](#bookmark=id.wzzpi6nuxp0f)
+
 # **Properties of document**
 
 | Document type | SQL Database Info |
@@ -32,15 +44,15 @@
 
 |  | Name | Index attributes |
 | :---- | ----- | ----- |
-| 1 | N/A | N/A |
-| 2 | N/A | N/A |
+| 1 | confidant\_person\_relationships\_person\_id\_idx | person\_id |
+| 2 | confidant\_person\_relationships\_confidant\_person\_id\_idx | confidant\_person\_id |
 
 # **Foreign indexes (optional)**
 
 |  | Name | Type |
 | :---- | ----- | ----- |
-| 1 | N/A | N/A |
-| 2 | N/A | N/A |
+| 1 | confidant\_person\_relationships\_person\_id\_fkey | Foreign Key (references mpi.persons(id)) |
+| 2 | confidant\_person\_relationships\_confidant\_person\_id\_fkey | Foreign Key (references mpi.persons(confidant\_person\_id)) |
 
 # **Triggers (optional)**
 

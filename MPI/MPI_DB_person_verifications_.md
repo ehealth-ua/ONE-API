@@ -1,3 +1,15 @@
+# **MPI\_DB\_person\_verifications\_table**
+
+* [Properties of document](#bookmark=id.ariux7fm0ibl)  
+* [Table fields](#bookmark=id.ariux7fm0ibl)  
+* [Indexes (optional)](#bookmark=id.ariux7fm0ibl)  
+* [Foreign indexes (optional)](#bookmark=id.ariux7fm0ibl)  
+* [Triggers (optional)](#bookmark=id.ariux7fm0ibl)  
+* [Procedures (optional)](#bookmark=id.ariux7fm0ibl)  
+* [Replications (optional)](#bookmark=id.ariux7fm0ibl)  
+* [Related tables](#bookmark=id.ariux7fm0ibl)  
+* [Links to documentation that can create or modify a database object](#bookmark=id.ariux7fm0ibl)
+
 # **Properties of document**
 
 | Document type | SQL Database Info |
@@ -43,14 +55,14 @@
 
 |  | Name | Index attributes |
 | :---- | ----- | ----- |
-| 1 | N/A | N/A |
+| 1 | person\_verifications\_person\_id\_idx | person\_id |
 | 2 | N/A | N/A |
 
 # **Foreign indexes (optional)**
 
 |  | Name | Type |
 | :---- | ----- | ----- |
-| 1 | N/A | N/A |
+| 1 | person\_verifications\_person\_id\_fkey | Foreign Key (references mpi.persons(id)) |
 | 2 | N/A | N/A |
 
 # **Triggers (optional)**

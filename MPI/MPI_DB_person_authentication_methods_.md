@@ -1,3 +1,15 @@
+# **MPI\_DB\_person\_authentication\_methods\_table**
+
+* [Properties of document](#bookmark=id.hoh74bay6f3p)  
+* [Table fields](#bookmark=id.hoh74bay6f3p)  
+* [Indexes (optional)](#bookmark=id.hoh74bay6f3p)  
+* [Foreign indexes (optional)](#bookmark=id.hoh74bay6f3p)  
+* [Triggers (optional)](#bookmark=id.hoh74bay6f3p)  
+* [Procedures (optional)](#bookmark=id.hoh74bay6f3p)  
+* [Replications (optional)](#bookmark=id.hoh74bay6f3p)  
+* [Related tables](#bookmark=id.hoh74bay6f3p)  
+* [Links to documentation that can create or modify a database object](#bookmark=id.hoh74bay6f3p)
+
 # **Properties of document**
 
 | Document type | SQL Database Info |
@@ -34,14 +46,14 @@
 
 |  | Name | Index attributes |
 | :---- | ----- | ----- |
-| 1 | N/A | N/A |
+| 1 | person\_authentication\_methods\_person\_id\_idx | person\_id |
 | 2 | N/A | N/A |
 
 # **Foreign indexes (optional)**
 
 |  | Name | Type |
 | :---- | ----- | ----- |
-| 1 | N/A | N/A |
+| 1 | person\_authentication\_methods\_person\_id\_fkey | Foreign Key (references mpi.persons(id)) |
 | 2 | N/A | N/A |
 
 # **Triggers (optional)**
