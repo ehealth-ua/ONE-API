@@ -1,15 +1,3 @@
-# **MPI\_DB\_confidant\_person\_relationship\_documents\_table**
-
-* [Properties of document](#bookmark=id.1lx0wecet61n)  
-* [Table fields](#bookmark=id.1lx0wecet61n)  
-* [Indexes (optional)](#bookmark=id.1lx0wecet61n)  
-* [Foreign indexes (optional)](#bookmark=id.1lx0wecet61n)  
-* [Triggers (optional)](#bookmark=id.1lx0wecet61n)  
-* [Procedures (optional)](#bookmark=id.1lx0wecet61n)  
-* [Replications (optional)](#bookmark=id.1lx0wecet61n)  
-* [Related tables](#bookmark=id.1lx0wecet61n)  
-* [Links to documentation that can create or modify a database object](#bookmark=id.1lx0wecet61n)
-
 # **Properties of document**
 
 | Document type | SQL Database Info |

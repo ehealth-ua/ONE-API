@@ -1,15 +1,3 @@
-# **MPI\_DB\_person\_phones\_table**
-
-* [Properties of document](#bookmark=id.yys5magvfwq8)  
-* [Table fields](#bookmark=id.yys5magvfwq8)  
-* [Indexes (optional)](#bookmark=id.yys5magvfwq8)  
-* [Foreign indexes (optional)](#bookmark=id.yys5magvfwq8)  
-* [Triggers (optional)](#bookmark=id.yys5magvfwq8)  
-* [Procedures (optional)](#bookmark=id.yys5magvfwq8)  
-* [Replications (optional)](#bookmark=id.yys5magvfwq8)  
-* [Related tables](#bookmark=id.yys5magvfwq8)  
-* [Links to documentation that can create or modify a database object](#bookmark=id.yys5magvfwq8)
-
 # **Properties of document**
 
 | Document type | SQL Database Info |

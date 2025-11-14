@@ -1,15 +1,3 @@
-# **MPI\_DB\_person\_dmetaphone\_names\_table**
-
-* [Properties of document](#bookmark=id.9l7ch4842icz)  
-* [Table fields](#bookmark=id.9l7ch4842icz)  
-* [Indexes (optional)](#bookmark=id.9l7ch4842icz)  
-* [Foreign indexes (optional)](#bookmark=id.9l7ch4842icz)  
-* [Triggers (optional)](#bookmark=id.9l7ch4842icz)  
-* [Procedures (optional)](#bookmark=id.9l7ch4842icz)  
-* [Replications (optional)](#bookmark=id.9l7ch4842icz)  
-* [Related tables](#bookmark=id.9l7ch4842icz)  
-* [Links to documentation that can create or modify a database object](#bookmark=id.9l7ch4842icz)
-
 # **Properties of document**
 
 | Document type | SQL Database Info |

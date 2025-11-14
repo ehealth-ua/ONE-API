@@ -1,15 +1,3 @@
-# **MPI\_DB\_person\_updates\_table**
-
-* [Properties of document](#bookmark=id.kamg2l941ety)  
-* [Table fields](#bookmark=id.kamg2l941ety)  
-* [Indexes (optional)](#bookmark=id.kamg2l941ety)  
-* [Foreign indexes (optional)](#bookmark=id.kamg2l941ety)  
-* [Triggers (optional)](#bookmark=id.kamg2l941ety)  
-* [Procedures (optional)](#bookmark=id.kamg2l941ety)  
-* [Replications (optional)](#bookmark=id.kamg2l941ety)  
-* [Related tables](#bookmark=id.kamg2l941ety)  
-* [Links to documentation that can create or modify a database object](#bookmark=id.kamg2l941ety)
-
 # **Properties of document**
 
 | Document type | SQL Database Info |

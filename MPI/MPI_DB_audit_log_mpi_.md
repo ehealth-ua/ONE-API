@@ -1,14 +1,3 @@
-# **MPI\_DB\_audit\_log\_mpi\_table**
-
-* [Properties of document](#bookmark=id.nf9b7hsp12bv)  
-* [Table fields](#bookmark=id.nf9b7hsp12bv)  
-* [Indexes (optional)](#bookmark=id.nf9b7hsp12bv)  
-* [Foreign indexes (optional)](#bookmark=id.nf9b7hsp12bv)  
-* [Triggers (optional)](#bookmark=id.nf9b7hsp12bv)  
-* [Procedures (optional)](#bookmark=id.nf9b7hsp12bv)  
-* [Replications (optional)](#bookmark=id.nf9b7hsp12bv)  
-* [Related tables](#bookmark=id.nf9b7hsp12bv)  
-* [Links to documentation that can create or modify a database object](#bookmark=id.nf9b7hsp12bv)
 
 # **Properties of document**
 

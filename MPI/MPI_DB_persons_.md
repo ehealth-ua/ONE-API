@@ -1,15 +1,3 @@
-# **MPI\_DB\_persons\_table**
-
-* [Properties of document](#bookmark=id.xpq79372csqw)  
-* [Table fields](#bookmark=id.xpq79372csqw)  
-* [Indexes (optional)](#bookmark=id.xpq79372csqw)  
-* [Foreign indexes (optional)](#bookmark=id.xpq79372csqw)  
-* [Triggers (optional)](#bookmark=id.xpq79372csqw)  
-* [Procedures (optional)](#bookmark=id.xpq79372csqw)  
-* [Replications (optional)](#bookmark=id.xpq79372csqw)  
-* [Related tables](#bookmark=id.xpq79372csqw)  
-* [Links to documentation that can create or modify a database object](#bookmark=id.xpq79372csqw)
-
 # **Properties of document**
 
 | Document type | SQL Database Info |

@@ -1,15 +1,3 @@
-# **MPI\_DB\_person\_verifications\_table**
-
-* [Properties of document](#bookmark=id.ariux7fm0ibl)  
-* [Table fields](#bookmark=id.ariux7fm0ibl)  
-* [Indexes (optional)](#bookmark=id.ariux7fm0ibl)  
-* [Foreign indexes (optional)](#bookmark=id.ariux7fm0ibl)  
-* [Triggers (optional)](#bookmark=id.ariux7fm0ibl)  
-* [Procedures (optional)](#bookmark=id.ariux7fm0ibl)  
-* [Replications (optional)](#bookmark=id.ariux7fm0ibl)  
-* [Related tables](#bookmark=id.ariux7fm0ibl)  
-* [Links to documentation that can create or modify a database object](#bookmark=id.ariux7fm0ibl)
-
 # **Properties of document**
 
 | Document type | SQL Database Info |

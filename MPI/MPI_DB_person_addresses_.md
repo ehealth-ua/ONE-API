@@ -1,15 +1,3 @@
-# **MPI\_DB\_person\_addresses\_table**
-
-* [Properties of document](#bookmark=id.hn4dm2qi50ew)  
-* [Table fields](#bookmark=id.hn4dm2qi50ew)  
-* [Indexes (optional)](#bookmark=id.hn4dm2qi50ew)  
-* [Foreign indexes (optional)](#bookmark=id.hn4dm2qi50ew)  
-* [Triggers (optional)](#bookmark=id.hn4dm2qi50ew)  
-* [Procedures (optional)](#bookmark=id.hn4dm2qi50ew)  
-* [Replications (optional)](#bookmark=id.hn4dm2qi50ew)  
-* [Related tables](#bookmark=id.hn4dm2qi50ew)  
-* [Links to documentation that can create or modify a database object](#bookmark=id.hn4dm2qi50ew)
-
 # **Properties of document**
 
 | Document type | SQL Database Info |

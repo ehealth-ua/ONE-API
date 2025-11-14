@@ -1,15 +1,3 @@
-# **MPI\_DB\_prepersons\_table**
-
-* [Properties of document](#bookmark=id.x1m4p2ytphs)  
-* [Table fields](#bookmark=id.x1m4p2ytphs)  
-* [Indexes (optional)](#bookmark=id.x1m4p2ytphs)  
-* [Foreign indexes (optional)](#bookmark=id.x1m4p2ytphs)  
-* [Triggers (optional)](#bookmark=id.x1m4p2ytphs)  
-* [Procedures (optional)](#bookmark=id.x1m4p2ytphs)  
-* [Replications (optional)](#bookmark=id.x1m4p2ytphs)  
-* [Related tables](#bookmark=id.x1m4p2ytphs)  
-* [Links to documentation that can create or modify a database object](#bookmark=id.x1m4p2ytphs)
-
 # **Properties of document**
 
 | Document type | SQL Database Info |
