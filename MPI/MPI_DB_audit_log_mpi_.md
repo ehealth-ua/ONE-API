@@ -1,3 +1,4 @@
+# **MPI\_DB\_audit\_log\_mpi\_table**
 
 # **Properties of document**
 
@@ -31,7 +32,7 @@
 
 |  | Name | Index attributes |
 | :---- | ----- | ----- |
-| 1 | audit\_log\_mpi\_person\_id\_idx | person\_id |
+| 1 | audit\_log\_mpi\_person\_id\_index | person\_id |
 | 2 | N/A | N/A |
 
 # **Foreign indexes (optional)**

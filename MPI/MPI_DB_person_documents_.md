@@ -1,3 +1,5 @@
+# **MPI\_DB\_person\_documents\_table**
+
 # **Properties of document**
 
 | Document type | SQL Database Info |
@@ -33,14 +35,19 @@
 |  | Name | Index attributes |
 | :---- | ----- | ----- |
 | 1 | person\_documents\_person\_id\_idx | person\_id |
-| 2 | N/A | N/A |
+| 2 | person\_documents\_updated\_at\_idx | updated\_at |
+| 3 | birth\_cert\_l\_number\_index | lower(number) (WHERE type \= 'BIRTH\_CERTIFICATE') |
+| 4 | temp\_passport\_l\_number\_index | lower(number) (WHERE type \= 'TEMPORARY\_PASSPORT') |
+| 5 | person\_documents\_number\_index | regexp\_replace(number, '\[^\[:digit:\]\]', '', 'g' ), person\_id |
 
 # **Foreign indexes (optional)**
 
 |  | Name | Type |
 | :---- | ----- | ----- |
 | 1 | person\_documents\_person\_id\_fkey | Foreign Key (references mpi.persons(id)) |
-| 2 | N/A | N/A |
+| 2 | person\_documents\_number\_index | regexp\_replace(number, '\[^\[:digit:\]\]', '', 'g' ), person\_id |
+| 3 | person\_documents\_type\_lower\_number\_index | type, lower(number) |
+| 4 | person\_documents\_inserted\_at\_index | inserted\_at |
 
 # **Triggers (optional)**
 

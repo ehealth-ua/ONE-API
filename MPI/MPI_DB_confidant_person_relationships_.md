@@ -1,3 +1,5 @@
+# **MPI\_DB\_confidant\_person\_relationships\_table**
+
 # **Properties of document**
 
 | Document type | SQL Database Info |

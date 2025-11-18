@@ -1,3 +1,5 @@
+# **MPI\_DB\_person\_settlement\_last\_names\_table**
+
 # **Properties of document**
 
 | Document type | SQL Database Info |
@@ -22,22 +24,26 @@
 | 1 | 1 | Id | unique global identifier (binary UUID), automatically generated when a new record is created | унікальний глобальний ідентифікатор (бінарний UUID), автоматично генерується при створенні нового запису | M | binary UUID, autogenerate | N/A |
 | 2 | 1 | settlement\_id |  |  | M | UUID | N/A |
 | 3 | 1 | person\_id |  |  | M | UUID | N/A |
-| 4 | 1 | last\_name |  |  | M | string | N/A |
+| 4 | 1 | last\_name |  |  | M | String | N/A |
 | 5 | 1 | dm\_last\_name |  |  | M | String | N/A |
 
 # **Indexes (optional)**
 
 |  | Name | Index attributes |
 | :---- | ----- | ----- |
-| 1 | N/A | N/A |
-| 2 | N/A | N/A |
+| 1 | person\_settlement\_last\_names\_updated\_at\_idx | updated\_at |
+| 2 | person\_settlement\_last\_names\_person\_id\_idx | person\_id |
+| 3 | person\_settlement\_last\_names\_dm\_last\_name\_settlement\_id\_idx | dm\_last\_name, settlement\_id |
+| 4 | person\_settlement\_dm\_last\_name\_settlement\_id\_person\_id\_indx | dm\_last\_name, settlement\_id, person\_id |
+| 5 | person\_settlement\_last\_names\_inserted\_at\_index | inserted\_at |
 
 # **Foreign indexes (optional)**
 
 |  | Name | Type |
 | :---- | ----- | ----- |
-| 1 | N/A | N/A |
-| 2 | N/A | N/A |
+| 1 | person\_settlement\_last\_names\_id\_fkey | Foreign Key (references person\_addresses) |
+| 2 | person\_settlement\_last\_names\_person\_id\_fkey | Foreign Key (references persons) |
+| 3 |  |  |
 
 # **Triggers (optional)**
 

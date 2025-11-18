@@ -1,3 +1,5 @@
+# **MPI\_DB\_confidant\_person\_relationship\_documents\_table**
+
 # **Properties of document**
 
 | Document type | SQL Database Info |
@@ -32,14 +34,14 @@
 |  | Name | Index attributes |
 | :---- | ----- | ----- |
 | 1 | confidant\_person\_relationship\_documents\_ confidant\_person\_relationship\_id\_idx | confidant\_person\_relationship\_id |
-| 2 | N/A | N/A |
+| 2 |  |  |
 
 # **Foreign indexes (optional)**
 
 |  | Name | Type |
 | :---- | ----- | ----- |
 | 1 | confidant\_person\_relationship\_documents\_ confidant\_person\_relationship\_id\_fkey | Foreign Key (references mpi. confidant\_person\_relationships (confidant\_person\_relationship\_id)) |
-| 2 | N/A | N/A |
+| 2 |  |  |
 
 # **Triggers (optional)**
 

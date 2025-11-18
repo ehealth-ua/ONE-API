@@ -1,3 +1,5 @@
+# **MPI\_DB\_verifying\_ids\_table**
+
 # **Properties of document**
 
 | Document type | SQL Database Info |
@@ -28,8 +30,8 @@
 
 |  | Name | Index attributes |
 | :---- | ----- | ----- |
-| 1 | N/A | N/A |
-| 2 | N/A | N/A |
+| 1 | verifying\_ids\_is\_complete\_locked\_until\_index | is\_complete, locked\_until |
+| 2 |  |  |
 
 # **Foreign indexes (optional)**
 

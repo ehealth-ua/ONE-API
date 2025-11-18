@@ -1,3 +1,5 @@
+# **MPI\_DB\_persons\_table**
+
 # **Properties of document**
 
 | Document type | SQL Database Info |
@@ -52,8 +54,21 @@
 
 |  | Name | Index attributes |
 | :---- | ----- | ----- |
-| 1 | N/A | N/A |
-| 2 | N/A | N/A |
+| 1 | persons\_first\_name\_last\_name\_second\_name\_tax\_id\_birth\_date\_key | first\_name, last\_name, second\_name, tax\_id, birth\_date(UNIQUE, WHERE: status='active') |
+| 2 | auth\_method\_search\_index | is\_active, birth\_date, status, lower(first\_name), lower(last\_name), lower(second\_name) |
+| 3 | persons\_is\_active\_status\_birth\_date\_tax\_id\_idx | is\_active, status, birth\_date, tax\_id |
+| 4 | persons\_documents\_idx | documents (using GIN) |
+| 5 | persons\_updated\_at\_idx | updated\_at |
+| 6 | persons\_unzr\_idx | Unzr |
+| 7 | persons\_authentication\_methods\_idx | authentication\_methods (using GIN) |
+| 8 | persons\_tax\_id\_index | tax\_id |
+| 9 | persons\_birth\_date\_index | birth\_date |
+| 10 | persons\_uniq\_index | tax\_id, birth\_date, last\_name, first\_name, second\_name (UNIQUE, WHERE: status='active') |
+| 11 | auth\_method\_search\_idx | birth\_date, lower(last\_name), lower(first\_name), lower(second\_name) |
+| 12 | persons\_verification\_status\_index | verification\_status |
+| 13 | persons\_verification\_reason\_index | verification\_reason |
+| 14 | persons\_synchronization\_idx1 | id, birth\_date (с условием: status \= 'active' AND tax\_id IS NULL) |
+| 15 | persons\_synchronization\_idx2 | id (с условием: status \= 'active' AND tax\_id IS NOT NULL) |
 
 # **Foreign indexes (optional)**
 

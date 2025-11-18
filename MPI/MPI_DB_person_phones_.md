@@ -1,3 +1,5 @@
+# **MPI\_DB\_person\_phones\_table**
+
 # **Properties of document**
 
 | Document type | SQL Database Info |
@@ -29,8 +31,8 @@
 
 |  | Name | Index attributes |
 | :---- | ----- | ----- |
-| 1 | person\_phones\_person\_id\_idx | person\_id |
-| 2 | N/A | N/A |
+| 1 | person\_phones\_person\_id\_in | person\_id |
+| 2 | person\_phones\_number\_index | number |
 
 # **Foreign indexes (optional)**
 

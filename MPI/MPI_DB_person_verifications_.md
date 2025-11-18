@@ -1,3 +1,5 @@
+# **MPI\_DB\_person\_verifications\_table**
+
 # **Properties of document**
 
 | Document type | SQL Database Info |
@@ -44,14 +46,17 @@
 |  | Name | Index attributes |
 | :---- | ----- | ----- |
 | 1 | person\_verifications\_person\_id\_idx | person\_id |
-| 2 | N/A | N/A |
+| 2 | person\_verifications\_dracs\_death\_verificat\_status\_dracs\_death\_verificat\_reason\_index | dracs\_death\_verification\_status, dracs\_death\_verification\_reason  |
+| 3 | person\_verifications\_nhs\_verification\_status\_nhs\_verification\_reason\_index | nhs\_verification\_status, nhs\_verification\_reason  |
+| 4 | person\_verifications\_drfo\_data\_id\_index | drfo\_data\_id |
+| 5 | person\_verifications\_synchronization\_idx | (drfo\_verification\_status \= 'VERIFICATION\_NEEDED' AND drfo\_verification\_reason \= 'ONLINE\_TRIGGERED') DESC, id, drfo\_synced\_at |
 
 # **Foreign indexes (optional)**
 
 |  | Name | Type |
 | :---- | ----- | ----- |
 | 1 | person\_verifications\_person\_id\_fkey | Foreign Key (references mpi.persons(id)) |
-| 2 | N/A | N/A |
+| 2 |  |  |
 
 # **Triggers (optional)**
 

@@ -1,3 +1,5 @@
+# **MPI\_DB\_person\_dmetaphone\_names\_table**
+
 # **Properties of document**
 
 | Document type | SQL Database Info |
@@ -30,15 +32,18 @@
 
 |  | Name | Index attributes |
 | :---- | ----- | ----- |
-| 1 | N/A | N/A |
-| 2 | N/A | N/A |
+| 1 | person\_dmetaphone\_names\_updated\_at\_idx | updated\_at |
+| 2 | person\_dmetaphone\_names\_dm\_last\_name\_birth\_date\_idx | dm\_last\_name, birth\_date |
+| 3 | person\_dmetaphone\_names\_dm\_last\_name\_cn\_first\_name\_idx | dm\_last\_name, cn\_first\_name |
+| 4 | person\_dmetaphone\_names\_dm\_last\_name\_cn\_first\_name\_id\_indx | dm\_last\_name, cn\_first\_name, id |
+| 5 | person\_dmetaphone\_names\_inserted\_at\_index | inserted\_at |
 
 # **Foreign indexes (optional)**
 
 |  | Name | Type |
 | :---- | ----- | ----- |
-| 1 | N/A | N/A |
-| 2 | N/A | N/A |
+| 1 | person\_dmetaphone\_names\_id\_fkey | Foreign Key (references persons) |
+| 2 |  |  |
 
 # **Triggers (optional)**
 

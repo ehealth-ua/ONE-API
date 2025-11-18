@@ -1,3 +1,5 @@
+# **MPI\_DB\_person\_authentication\_methods\_table**
+
 # **Properties of document**
 
 | Document type | SQL Database Info |
@@ -35,7 +37,12 @@
 |  | Name | Index attributes |
 | :---- | ----- | ----- |
 | 1 | person\_authentication\_methods\_person\_id\_idx | person\_id |
-| 2 | N/A | N/A |
+| 2 | authentication\_methods\_uniq\_index | person\_id, type (UNIQUE) |
+| 3 | authentication\_methods\_updated\_at\_idx | updated\_at (DESC) |
+| 4 | phone\_number\_idx | phone\_number |
+| 5 | authentication\_methods\_value\_idx | value |
+| 6 | person\_authentication\_methods\_inserted\_by\_idx | inserted\_by (WHERE inserted\_by IS NULL) |
+| 7 | person\_authentication\_methods\_is\_active\_idx | is\_active (WHERE is\_active IS NULL) |
 
 # **Foreign indexes (optional)**
 
