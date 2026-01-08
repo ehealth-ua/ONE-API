@@ -7893,6 +7893,19 @@ Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ
 
 This service must be used to discover service requests by requisition number. If nothing found by requisition number - it will return empty list.
 
++ Parameters
+    + requisition: `AX654-654T` (string, required) - A shared identifier common to all service requests that were authorized more or less simultaneously by a single author, representing the composite or group identifier
+    + status: active (string, optional) - The status of the service request. Default: active
+    + page: 2 (number, optional) - Page number
+    + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+    + Headers
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection)
+        + data (array[`Service_Request_List`]
+
 ### Qualify Service Request by Id [POST /api/service_requests/{service_request_id}/actions/qualify]
 
 Key                | Value
