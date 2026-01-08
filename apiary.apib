@@ -7964,25 +7964,6 @@ Scope              | service_request:read_impersonal
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/19740229647/REST+API+Get+Service+requests+in+Specimen+context">Get Service Requests in Specimen Context</a>
 
-+ Parameters
-    + `specimen_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique Specimen identifier
-    + status: active (string, optional) - The status of the service request.
-    + page: 2 (number, optional) - Page number
-    + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-
-+ Request (application/json)
-    + Headers
-
-+ Response 200 (application/json)
-    + Attributes (Response_Collection)
-        + data (array)
-            + (`Service_Request_List`)
-                + identity (object, required)
-                    + gender: MALE (enum, required) - gender of the patient, value from the dictionary GENDER
-                        - MALE
-                        - FEMALE
-                    + age: 35 (number, required) - full years between current date and birth date
-
 ## Episode of Care [/me/episode]
 
 Key                | Value
