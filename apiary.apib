@@ -7895,9 +7895,9 @@ This service must be used to discover service requests by requisition number. If
 
 + Parameters
     + requisition: `AX654-654T` (string, required) - A shared identifier common to all service requests that were authorized more or less simultaneously by a single author, representing the composite or group identifier
-    + status: active (string, optional) - The status of the service request. Default: active
+    + status: `active` (string, optional) - The status of the service request. Default: active
     + page: 2 (number, optional) - Page number
-    + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
 + Request (application/json)
     + Headers
@@ -7954,6 +7954,31 @@ ESOZ API ID        | API-007-062-0015
 Scope              | service_request:complete
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572134964/REST+API+Complete+Service+request">Complete Service Request</a>
+
++ Parameters
+    + service_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique service request identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
+    + Attributes (Complete_Service_Request)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (`Service_Request_Show`)
+            
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
 
 ### Get Service Requests in Specimen Context [GET /api/specimens/{specimen_id}/service_requests]
 
