@@ -189,7 +189,7 @@ Example error response:
                     ]
                 }
             ],
-            "message": "Validation failed. You can find validators description at our API Manifest: http://docs.apimanifest.apiary.io/#introduction/interacting-with-api/errors.",
+            "message": "Validation failed. You can find validators description at our API Manifest: http://esoz.docs.apiary.io/#introduction/interacting-with-api/errors.",
             "type": "validation_failed"
         },
         "eta": "2019-04-23T09:13:02.415",
@@ -247,7 +247,7 @@ Rule | Params | Description
 `email` | `[patterns]` | The field value must be a valid email address respectively to `patterns`.
 `phone_number` | `[patterns]` | The field value must be a valid phone number respectively to `patterns`. *Usually it means that is should be in international format (with `+3`).*
 `card_number` | `[]` | The field value should be a valid Visa or MasterCard card number. (By luhn algoryghm.)
-`metadata` | `[]` | The field must be a [valid metadata object](http://docs.apimanifest.apiary.io/#introduction/optional-features/metadata).
+`metadata` | `[]` | The field must be a [valid metadata object](http://esoz.docs.apiary.io/#introduction/optional-features/metadata).
 `unique` | `[]` | The field must be a list with all it's items unique.
 `schemata` | `[]` | JSON Schema specific error core.
 `schema` | `[]` | JSON Schema specific error core.
@@ -9624,13 +9624,13 @@ http code| processing method | Client recommendations
     + `entry_type`: `json_data_proprty` (string) - Type of error.
     + entry: $.cvv (string) - JSON Path to an invalid property.
     + rules (array)
-        + rule: required (string) - String constant that represents validation rule type. List of all types can be found in [API Manifest](https://docs.apimanifest.apiary.io/#introduction/interacting-with-api/errors).
+        + rule: required (string) - String constant that represents validation rule type. List of all types can be found in [API Manifest](https://esoz.docs.apiary.io/#introduction/interacting-with-api/errors).
         + params (array) - Validation Parameters.
         
 ### `Response__Error_ValidationFailed_Extended`
 + `error` (object)
     + type: validation_failed (string) - type of an error.
-    + message: Validation failed. You can find validators description at our API Manifest: https://docs.apimanifest.apiary.io/#introduction/interacting-with-api/errors. (string)
+    + message: Validation failed. You can find validators description at our API Manifest: https://esoz.docs.apiary.io/#introduction/interacting-with-api/errors. (string)
     + invalid (array)
         + (object)
             + `entry`: `$.cvv` (string, required) - JSON Path to an invalid property.
@@ -9641,7 +9641,7 @@ http code| processing method | Client recommendations
                     + params (object) - Validation Parameters.
                         + `values` (array)
                     + `raw_description`: `value is not allowed in enum` (string, required) - value of error might be different
-                    + `rule`: required (string) - String constant that represents validation rule type. List of all types can be found in [API Manifest](https://docs.apimanifest.apiary.io/#introduction/interacting-with-api/errors).
+                    + `rule`: required (string) - String constant that represents validation rule type. List of all types can be found in [API Manifest](https://esoz.docs.apiary.io/#introduction/interacting-with-api/errors).
                             - required
                             - inclusion
 
@@ -18468,7 +18468,7 @@ status: `APPROVED` (string, required)
 + type (enum) - Type of data that is located in `data` attribute.
     - object (string) - `data` attribute is a JSON object.
     - list (string) - `data` attribute is a list.
-+ `request_id`: `6617aeec-15e2-4d6f-b9bd-53559c358f97#17810` (string) - [Request ID](https://docs.apimanifest.apiary.io/#introduction/interacting-with-api/request-id). Send it with `X-Request-ID` header.
++ `request_id`: `6617aeec-15e2-4d6f-b9bd-53559c358f97#17810` (string) - [Request ID](https://esoz.docs.apiary.io/#introduction/interacting-with-api/request-id). Send it with `X-Request-ID` header.
 + date: `2023-04-20T00:00:00.000Z` (string, required) - The date the limit and declarations count valid for
 
 ### `Employee_Response`
