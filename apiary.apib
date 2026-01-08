@@ -3,7 +3,7 @@ HOST: https://api.ehealth.gov.ua
 
 # ESOZ
 
-**Version: 9.11 V3** 2026-01-07
+**Version: 9.11 V3** 2025-07-31
 
 ## General Information
 
@@ -7537,12 +7537,12 @@ Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572266019/REST+API+Get+Risk+Assessments+by+search+params+Summary">Get Risk Assessments by Search Params (Summary)</a>
 
 + Parameters
-    + `page`: 2 (number, optional) - Page number.
+    + `page`: 2 (number, optional) - Page number.    
     + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-    + `code`: `R80` (string, optional)
-    + `asserted_date_from`: `1990-01-01` (string, optional)
-    + `asserted_date_to`: `2000-01-01` (string, optional)
-
+    + `code`: `R80` (string, optional) 
+    + `asserted_date_from`: `1990-01-01` (string, optional) 
+    + `asserted_date_to`: `2000-01-01` (string, optional) 
+    
 + Request (application/json)
     + Headers
         Authorization: Bearer mF_9.B5f-4.1JqM
@@ -7568,52 +7568,6 @@ Scope              | service_request:write
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572102185/REST+API+PreQualify+Service+Request">PreQualify Service Request</a>
 
-This method is used to pre-qualify service request in order to define whether the medical program could be applied in this particular case or not.
-
-+ Parameters
-    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer mF_9.B5f-4.1JqM
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-    + Attributes (object)
-        + `service_request` (object, required)
-            + include `Service_Request_PreQualify`
-                + `context` (Reference_request, optional)
-                    + identifier (Identifier)
-                        + type (Codeable_Concept)
-                            + coding (array, fixed-type)
-                                + (Coding)
-                                    + code: `encounter` (string)
-        + `programs` (array, required) - Medical programs list for qualify
-            + (Reference_request)
-                + identifier (Identifier)
-                    + type (Codeable_Concept)
-                        + coding (array, fixed-type)
-                            + (Coding)
-                                + code: medical_program (string)
-
-+ Response 200 (application/json)
-    + Attributes (Response__Process_OK)
-        + urgent (object, required)
-            + `authentication_method_current` (object, required)
-                + type: `OTP` (enum, required)
-                    - OTP
-                    - OFFLINE
-                    - THIRD_PERSON
-                + number: `+38093*****85` (string, optional)
-        + meta (Response__Meta)
-        + data (array[`Qualify_Service_Request_Responce`]))
-
-+ Response 422 (application/json)
-    + Attributes (Response_Error)
-        + meta (Response__Meta)
-            + code: 422
-        + error
-            + type: unverified (string, required)
-            + message: `Patient is not active` (string, required)
-
 ### Create Service Request [POST /api/patients/{patient_id}/service_requests/prequalify]
 
 Key                | Value
@@ -7622,36 +7576,6 @@ ESOZ API ID        | API-007-062-0002
 Scope              | service_request:write
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572102196/REST+API+Create+Service+Request">Create Service Request</a>
-
-This method must be used to register new Service Request in the eHealth. 
-Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
-Service will store signed copy of Service Request in Media Content Storage if all checks is passed. 
-
-Signed content consists of JSON object with Service Request data.
-
-It can be processed in both sync and async methods depends on Server decision.
-Depends on processing method Server might answer with:
-http code| processing method | Client recommendations
---|--|--
-201 | sync | use payload from response
-202 | async: **default** method | use `Get Job Details` to get processing result. Response payload will be returned in the job details
-
-+ Parameters
-    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer mF_9.B5f-4.1JqM
-        api-key: aFBLVTZ6Z2dON1V
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-    + Attributes (object)
-        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
-
-+ Response 202 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 202 (number)
-        + data (`Job`)
 
 ### Get Service Requests by Search Params in Episode Context [GET /api/patients/{patient_id}/episodes/{episode_id}/service_requests]
 
@@ -7662,31 +7586,6 @@ Scope              | service_request:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572134953/REST+API+Get+Service+Requests+by+Search+Params+in+Episode+Context">Get Service Requests by Search Params in Episode Context</a>
 
-This method returns all service requests related to specified episode of care.
-
-+ Parameters
-    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
-    + episode_id: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, required) - Unique episode identifier
-    + status: active (string, optional) - The status of the service request. Default: active
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer mF_9.B5f-4.1JqM
-        api-key: aFBLVTZ6Z2dON1V
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (Response_Collection)
-        + data (array[`Service_Request_Show`])
-
-+ Response 404 (application/json)
-    + Attributes (Response_Error)
-        + meta (Response__Meta)
-            + code: 404 (number)
-        + error (Response__Error)
-            + type: NOT_FOUND (string)
-            + message: `Episode or patient not found` (string)
-
 ### Get Service Requests by Search Params [GET /api/patients/{patient_id}/service_requests]
 
 Key                | Value
@@ -7695,35 +7594,6 @@ ESOZ API ID        | API-007-062-0004
 Scope              | service_request:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572036671/REST+API+Get+Service+requests+by+search+params">Get Service Requests by Search Params in Episode Context</a>
-
-This method returns all service requests related to the person filtered by submitted parameters.
-
-+ Parameters
-    + `patient_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
-    + `episode_id`: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - Unique episode identifier
-    + `status`: active (string, optional) 
-    + `requester_legal_entity`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
-    + `used_by_legal_entity`: `8075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional)
-    + `code`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional)
-    + `care_plan_id`: `8075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) - Unique care plan identifier
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer mF_9.B5f-4.1JqM
-        api-key: aFBLVTZ6Z2dON1V
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (Response_Collection)
-        + data (array[`Service_Request_Base`])
-
-+ Response 404 (application/json)
-    + Attributes (Response_Error)
-        + meta (Response__Meta)
-            + code: 404 (number)
-        + error (Response__Error)
-            + type: NOT_FOUND (string)
-            + message: `Patient not found` (string)
 
 ### Get Service Request Details in Episode Context [GET /api/patients/{patient_id}/episodes/{episode_id}/service_requests/{service_request_id}]
 
@@ -7734,29 +7604,6 @@ Scope              | service_request:get
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572200534/DRAFT+REST+API+Get+Service+Request+details+in+episode+context">Get Service Request Details in Episode Context</a>
 
-+ Parameters
-    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
-    + episode_id: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, required) - Unique episode identifier
-    + service_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique service request identifier
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer mF_9.B5f-4.1JqM
-        api-key: aFBLVTZ6Z2dON1V
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (Response_OK)
-        + data (`Service_Request_Show`)
-
-+ Response 404 (application/json)
-    + Attributes (Response_Error)
-        + meta (Response__Meta)
-            + code: 404 (number)
-        + error (Response__Error)
-            + type: NOT_FOUND (string)
-            + message: `Service request not found` (string)
-
 ### Get Service Request Details [GET /api/patients/{patient_id}/service_requests/{service_request_id}]
 
 Key                | Value
@@ -7765,28 +7612,6 @@ ESOZ API ID        | API-007-062-0006
 Scope              | service_request:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572167722/REST+API+Get+Service+request+details">Get Service Request Details</a>
-
-+ Parameters
-    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
-    + service_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique service request identifier
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer mF_9.B5f-4.1JqM
-        api-key: aFBLVTZ6Z2dON1V
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (Response_OK)
-        + data (`Service_Request_Show`)
-
-+ Response 404 (application/json)
-    + Attributes (Response_Error)
-        + meta (Response__Meta)
-            + code: 404 (number)
-        + error (Response__Error)
-            + type: NOT_FOUND (string)
-            + message: `Service request not found` (string)
 
 ### Cancel Service Request [PATCH /api/patients/{patient_id}/service_requests/{service_request_id}/actions/cancel]
 
@@ -7797,41 +7622,6 @@ Scope              | service_request:cancel
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572266059/REST+API+Cancel+Service+request">Cancel Service Request</a>
 
-This method must be used to cancel existing Service Request. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
-
-* Signed content of service request must be equal to service request stored in DB. See Get Service Request details.
-* status_reason and explanatory_letter (optional) must be added to signed content.
-
-Please see Service request Referral State Mdel and Dummy Cancel Service Request for more details.
-
-It can be processed in both sync and async methods depends on Server decision.
-Depends on processing method Server might answer with:
-
-http code| processing method | Client recommendations
---|--|--
-201 | sync | use payload from response
-202 | async: **default** method | use `Get Job Details` to get processing result. Response payload will be returned in the job details
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer mF_9.B5f-4.1JqM
-        api-key: aFBLVTZ6Z2dON1V
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-    + Attributes (object)
-        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
-
-+ Response 201 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 201 (number)
-        + data (`Service_Request_Show`)
-
-+ Response 202 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 202 (number)
-        + data (`Job`)
-
 ### Recall Service Request [PATCH /api/patients/{patient_id}/service_requests/{service_request_id}/actions/recall]
 
 Key                | Value
@@ -7840,27 +7630,6 @@ ESOZ API ID        | API-007-062-0008
 Scope              | service_request:recall
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572200551/REST+API+Recall+Service+request">Recall Service Request</a>
-
-This method must be used to recall existing Service Request. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
-
-* Signed content of service request must be equal to service request stored in DB. See Get Service Request details.
-* status_reason and explanatory_letter (optional) must be added to signed content
-
-Please see Service request Referral State Mdel and Dummy Cancel Service Request for more details.
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer mF_9.B5f-4.1JqM
-        api-key: aFBLVTZ6Z2dON1V
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-    + Attributes (object)
-        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
-
-+ Response 202 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 202 (number)
-        + data (`Job`)
 
 ### Resend SMS on Service Request [PATCH /api/patients/{patient_id}/service_requests/{service_request_id}/actions/resend]
 
@@ -7871,38 +7640,6 @@ Scope              | service_request:use
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572069444/REST+API+Resend+SMS+on+Service+request+API-007-062-0009">Resend SMS on Service Request</a>
 
-Method to resend sms on service request.
-It can be processed in both sync and async methods depends on Server decision.
-Depends on processing method Server might answer with:
-
-http code| processing method | Client recommendations
---|--|--
-201 | sync | use payload from response
-202 | async: **default** method | use `Get Job Details` to get processing result. Response payload will be returned in the job details
-
-+ Parameters
-    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
-    + service_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique service request identifier
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer d368a4b0-4a0e-457a-b267-32359fa6288f
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-
-+ Response 201 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 201 (number)
-        + data (`Service_Request_Show`)
-
-+ Response 202 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 202 (number)
-        + data (`Job`)
-
 ### Search for a Service Requests [GET /api/service_requests]
 
 Key                | Value
@@ -7911,24 +7648,6 @@ ESOZ API ID        | API-007-062-0010
 Scope              | service_request:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572233252/REST+API+Search+for+a+Service+requests">Search for a Service Requests</a>
-
-This service must be used to discover service requests by requisition number. If nothing found by requisition number - it will return empty list.
-
-+ Parameters
-    + requisition: `AX654-654T` (string, required) - A shared identifier common to all service requests that were authorized more or less simultaneously by a single author, representing the composite or group identifier
-    + status: active (string, optional) - The status of the service request. Default: active
-    + page: 2 (number, optional) - Page number
-    + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer mF_9.B5f-4.1JqM
-        api-key: aFBLVTZ6Z2dON1V
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (Response_Collection)
-        + data (array[`Service_Request_List`])
 
 ### Qualify Service Request by Id [POST /api/service_requests/{service_request_id}/actions/qualify]
 
@@ -7939,29 +7658,6 @@ Scope              | service_request:use
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572069455/REST+API+Qualify+Service+request+by+ID+API-007-062-0011">Qualify Service Request by Id</a>
 
-+ Parameters
-    + service_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique service request identifier
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer mF_9.B5f-4.1JqM
-        api-key: aFBLVTZ6Z2dON1V
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-    + Attributes
-        + `programs` (array, required) - Medical programs list for qualify
-            + (Reference_request)
-                + identifier (Identifier)
-                    + type (Codeable_Concept)
-                        + coding (array, fixed-type)
-                            + (Coding)
-                                + code: medical_program (string)
-
-+ Response 200 (application/json)
-    + Attributes (Response__Process_OK)
-        + meta (Response__Meta)
-        +  data (array[`Qualify_Service_Request_Responce`]))
-
 ### Use Service Request [PATCH /api/service_requests/{service_request_id}/actions/use]
 
 Key                | Value
@@ -7971,24 +7667,7 @@ Scope              | service_request:use
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572167739/REST+API+Use+Service+request">Use Service Request</a>
 
-+ Parameters
-    + service_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique service request identifier
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer mF_9.B5f-4.1JqM
-        api-key: aFBLVTZ6Z2dON1V
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-    + Attributes (Use_Service_Request_Request)
-
-+ Response 202 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 202 (number)
-        + data (`Job`)
-
-### Deprecated Change Service Request Status to In Progress [PATCH /api/service_requests/{service_request_id}/actions/process]
+### Change Service Request Status to In Progress [PATCH /api/service_requests/{service_request_id}/actions/process]
 
 Key                | Value
 -------------------|-----------
@@ -7997,22 +7676,7 @@ Scope              | service_request:makeinprogress
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572200568/DRAFT+REST+API+Change+Service+request+status+to+In+progress">Change Service Request Status to In Progress</a>
 
-+ Parameters
-    + service_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique service request identifier
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer mF_9.B5f-4.1JqM
-        api-key: aFBLVTZ6Z2dON1V
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 202 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 202 (number)
-        + data (`Job`)
-
-### Deprecated Release Service Request [PATCH /api/service_requests/{service_request_id}/actions/release]
+### Release Service Request [PATCH /api/service_requests/{service_request_id}/actions/release]
 
 Key                | Value
 -------------------|-----------
@@ -8020,21 +7684,6 @@ ESOZ API ID        | API-007-062-0014
 Scope              | service_request:use
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572036688/DRAFT+REST+API+Release+Service+request">Release Service Request</a>
-
-+ Parameters
-    + service_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique service request identifier
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer mF_9.B5f-4.1JqM
-        api-key: aFBLVTZ6Z2dON1V
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 202 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 202 (number)
-        + data (`Job`)
 
 ### Complete Service Request [PATCH /api/service_requests/{service_request_id}/actions/complete]
 
@@ -8045,35 +7694,6 @@ Scope              | service_request:complete
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572134964/REST+API+Complete+Service+request">Complete Service Request</a>
 
-This method is designed to use Service request after providing services. Depends on processing method Server might answer with:
-
-http code| processing method | Client recommendations
---|--|--
-201 | sync | use payload from response
-202 | async: **default** method | use `Get Job Details` to get processing result. Response payload will be returned in the job details
-
-+ Parameters
-    + service_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique service request identifier
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer mF_9.B5f-4.1JqM
-        api-key: aFBLVTZ6Z2dON1V
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-    + Attributes (Complete_Service_Request)
-
-+ Response 201 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 201 (number)
-        + data (`Service_Request_Show`)
-
-+ Response 202 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 202 (number)
-        + data (`Job`)
-
 ### Get Service Requests in Specimen Context [GET /api/specimens/{specimen_id}/service_requests]
 
 Key                | Value
@@ -8082,87 +7702,6 @@ ESOZ API ID        | API-007-062-0016
 Scope              | service_request:read_impersonal
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/19740229647/REST+API+Get+Service+requests+in+Specimen+context">Get Service Requests in Specimen Context</a>
-
-This service must be used to discover service requests relaated to specified Specimen. If nothing found - it will return empty list.
-
-+ Parameters
-    + `specimen_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique Specimen identifier
-    + status: active (string, optional) - The status of the service request.
-    + page: 2 (number, optional) - Page number
-    + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer mF_9.B5f-4.1JqM
-        api-key: aFBLVTZ6Z2dON1V
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (Response_Collection)
-        + data (array)
-            + (`Service_Request_List`)
-                + identity (object, required)
-                    + gender: MALE (enum, required) - gender of the patient, value from the dictionary GENDER
-                        - MALE
-                        - FEMALE
-                    + age: 35 (number, required) - full years between current date and birth date
-
-### Dummy Service Request [POST /dummy/patients/{id}/service_requests]
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer mF_9.B5f-4.1JqM
-        api-key: aFBLVTZ6Z2dON1V
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-    + Attributes (Service_Request_Create)
-
-+ Response 202 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 202 (number)
-        + data (`Job`)
-
-### Dummy Cancel Service Request [PATCH /dummy/patients/{id}/service_requests/{id}/actions/cancel/dummy]
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer mF_9.B5f-4.1JqM
-        api-key: aFBLVTZ6Z2dON1V
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-    + Attributes (Service_Request_Base)
-        + `status_reason` (Codeable_Concept, required)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + system: `eHealth/service_request_cancel_reasons` (string)
-                    + code: `default` (string)
-        + `explanatory_letter`: `Направлення було відмінене у зв'язку з помилкою при виборі пацієнта ` (string, optional)
-
-+ Response 202 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 202 (number)
-        + data (`Job`)
-
-### Dummy Recall Service Request [PATCH /dummy/patients/{id}/service_requests/{id}/actions/recall/dummy]
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer mF_9.B5f-4.1JqM
-        api-key: aFBLVTZ6Z2dON1V
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-    + Attributes (Service_Request_Base)
-        + `status_reason` (Codeable_Concept, required)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + system: `eHealth/service_request_recall_reasons` (string)
-                    + code: `default` (string)
-        + `explanatory_letter`: `Направлення було відкликане у зв'язку з помилкою при виборі пацієнта ` (string, optional)
-
-+ Response 202 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 202 (number)
-        + data (`Job`)
 
 ## Episode of Care [/me/episode]
 
@@ -14649,6 +14188,220 @@ http code| processing method | Client recommendations
                 + display: `Information Withheld` (string)
 + section: (array[Section], optional) - Nested Section
 
+## Service Request
+
+### `Service_Request_Base`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ requisition: `AX654654T` (string, required)
++ `status`: `active` (string, required)
++ `program` (Reference_response, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `medical_program` (string)
++ `program_processing_status`: new (string, optional)
++ `status_history`  (array, required, fixed-type)
+    + (object)
+        + status: `closed` (string, required)
+        + `status_reason` (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/service_request_recall_reasons` (string)
+                    + code: `cured` (string)
+        + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
+        
++ `program_processing_status_history`  (array, optional, fixed-type)
+    + (object)
+        + program_processing_status: `new` (string, required)
+        + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
+        + `inserted_by`: `f7bdce4c-9d6e-4b08-913c-97c4b972f9be` (string, required)
+        
++ `program_service` (Reference_response, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `program_service` (string) 
++ intent: `order` (string, required)
++ priority: `routine` (string, optional)
++ based_on (array,optional, fixed-type)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `care_plan` (string, required)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `activity` (string, required)
++ category (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/SNOMED/service_request_categories` (string)
+            + code: `409063005` (string)
++ code (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service` (string)
++ `subject` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
++ `context` (Reference_response, optional) - encounter on which the service request is based on, optional if focus is set
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
+- One of
+    - `occurrence_period` (object)
+        + start : `2018-08-02T10:45:16.000Z`(string, required) - Starting time with inclusive boundary
+        + end : `2018-08-02T11:00:00.000Z`(string, optional) - End time with inclusive boundary, if not ongoing
+    - `occurrence_date_time`: `2018-08-02T10:45:16.000Z` (string, optional)
++ `requester_employee` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ `requester_legal_entity` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+        + value: `75a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
++ `reason_reference` (array, required)
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (string)
++ `supporting_info` (array, optional, fixed-type)
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `episode_of_care` (string)
++ note: `Some notes` (string, required)
++ patient_instruction: `Some patient instructions` (string, required)
++ expiration_date: `2018-08-02T10:45:16.000Z` (string, required)
++ `permitted_resources` (array, optional)
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `episode_of_care` (string)
++ `used_by_employee` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ `inserted_at`: `2018-08-02T10:45:16.000Z` (string, optional)
++ `updated_at`: `2018-08-02T10:45:16.000Z` (string, optional)
++ `completed_with` (Reference_response, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `diagnostic_report` (string) - or encounter
++ `used_by_legal_entity` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
++ `performer` (Reference_response, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+    + display_value: `Опанасенко Олексій Володимирович` (string, required) - This field is filled on creating and never updated after
++ `location_reference` (Reference_response, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
++ `performer_type` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `SPECIALITY_TYPE` (string)
+            + code: `DIETETICS` (string)
++ quantity (object)
+    + value: 10 (number, required)
+    + system: `SERVICE_UNIT` (string, required)
+    + code: PIECE (string, required)
+    + unit: шт (string)
++ `remaining_quantity` (object)
+    + value: 10 (number, required)
+    + system: `SERVICE_UNIT` (string, required)
+    + code: PIECE (string, required)
+    + unit: шт (string)
++ `used_by_legal_entity_history`  (array, optional, fixed-type)
+    + (object)
+        + `used_by_legal_entity`: (Reference_response, required)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `legal_entity` (string)
+                + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+        + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
+        + `inserted_by`: `f7bdce4c-9d6e-4b08-913c-97c4b972f9be` (string, required)
++ `used_by_employee_history`  (array, optional, fixed-type)
+    + (object)
+        + `used_by_employee`: (Reference_response, required)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `employee` (string)
+                + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
+        + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
+        + `inserted_by`: `f7bdce4c-9d6e-4b08-913c-97c4b972f9be` (string, required)
++ `status_reason` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/service_request_recall_reasons` (string)
+            + code: `cured` (string)
++ specimens (array, optional)
+    + (Reference_response)
+        + identifier (Identifier, optional, fixed-type)
+            + type (Codeable_Concept, required)
+                + coding (array, required,fixed-type)
+                    + (Coding)
+                        + code: `specimen` (string)
++ focus (array, optional) - what the service request is about, when it is not about the subject of record
+    + (Reference_response)
+        + identifier (Identifier, optional, fixed-type)
+            + type (Codeable_Concept, required)
+                + coding (array, required,fixed-type)
+                    + (Coding)
+                        + code: `specimen` (string)
+
+### `Service_Request_Show`
++ include `Service_Request_Base`
+
+### `Service_Request_List`
++ include `Service_Request_Base`
++ identity (`Person_identity`, required) - parametres - last name, first name, second name - can have value NULL
+
 ## `Person_details`
 ### `Person_identity`
 + last_name: Іванов (string, required) - full surname of the patient
@@ -19053,531 +18806,4 @@ status: `APPROVED` (string, required)
 + content: `Declaration content` (string, required) - HTML document
 + `data_to_be_signed` (`Declaration_request_data_to_be_signed`, required)
 + channel: `PIS` (enum, required) - channel that invoke declaration create service
-
-
-
-## Service Request
-
-### `Service_Request_Base`
-+ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
-+ requisition: `AX654654T` (string, required)
-+ `status`: `active` (string, required)
-+ `program` (Reference_response, optional)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `medical_program` (string)
-+ `program_processing_status`: new (string, optional)
-+ `status_history`  (array, required, fixed-type)
-    + (object)
-        + status: `closed` (string, required)
-        + `status_reason` (Codeable_Concept, optional)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + system: `eHealth/service_request_recall_reasons` (string)
-                    + code: `cured` (string)
-        + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
-        
-+ `program_processing_status_history`  (array, optional, fixed-type)
-    + (object)
-        + program_processing_status: `new` (string, required)
-        + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
-        + `inserted_by`: `f7bdce4c-9d6e-4b08-913c-97c4b972f9be` (string, required)
-        
-+ `program_service` (Reference_response, optional)
-    + identifier (Identifier, required)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `program_service` (string) 
-+ intent: `order` (string, required)
-+ priority: `routine` (string, optional)
-+ based_on (array,optional, fixed-type)
-    + (Reference_request)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `care_plan` (string, required)
-    + (Reference_request)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `activity` (string, required)
-+ category (Codeable_Concept, required)
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `eHealth/SNOMED/service_request_categories` (string)
-            + code: `409063005` (string)
-+ code (Reference_response, required)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `service` (string)
-+ `subject` (Reference_response, required)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-+ `context` (Reference_response, optional) - encounter on which the service request is based on, optional if focus is set
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `encounter` (string)
-- One of
-    - `occurrence_period` (object)
-        + start : `2018-08-02T10:45:16.000Z`(string, required) - Starting time with inclusive boundary
-        + end : `2018-08-02T11:00:00.000Z`(string, optional) - End time with inclusive boundary, if not ongoing
-    - `occurrence_date_time`: `2018-08-02T10:45:16.000Z` (string, optional)
-+ `requester_employee` (Reference_response, required)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `employee` (string)
-+ `requester_legal_entity` (Reference_response, required)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `legal_entity` (string)
-        + value: `75a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
-+ `reason_reference` (array, required)
-    + (Reference_response)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `condition` (string)
-+ `supporting_info` (array, optional, fixed-type)
-    + (Reference_response)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `episode_of_care` (string)
-+ note: `Some notes` (string, required)
-+ patient_instruction: `Some patient instructions` (string, required)
-+ expiration_date: `2018-08-02T10:45:16.000Z` (string, required)
-+ `permitted_resources` (array, optional)
-    + (Reference_response)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `episode_of_care` (string)
-+ `used_by_employee` (Reference_response, required)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `employee` (string)
-+ `inserted_at`: `2018-08-02T10:45:16.000Z` (string, optional)
-+ `updated_at`: `2018-08-02T10:45:16.000Z` (string, optional)
-+ `completed_with` (Reference_response, optional)
-    + identifier (Identifier, required)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `diagnostic_report` (string) - or encounter
-+ `used_by_legal_entity` (Reference_response, required)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `legal_entity` (string)
-        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
-+ `performer` (Reference_response, optional)
-    + identifier (Identifier, required)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `legal_entity` (string)
-        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
-    + display_value: `Опанасенко Олексій Володимирович` (string, required) - This field is filled on creating and never updated after
-+ `location_reference` (Reference_response, optional)
-    + identifier (Identifier, required)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `division` (string)
-        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
-+ `performer_type` (Codeable_Concept, optional)
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `SPECIALITY_TYPE` (string)
-            + code: `DIETETICS` (string)
-+ quantity (object)
-    + value: 10 (number, required)
-    + system: `SERVICE_UNIT` (string, required)
-    + code: PIECE (string, required)
-    + unit: шт (string)
-+ `remaining_quantity` (object)
-    + value: 10 (number, required)
-    + system: `SERVICE_UNIT` (string, required)
-    + code: PIECE (string, required)
-    + unit: шт (string)
-+ `used_by_legal_entity_history`  (array, optional, fixed-type)
-    + (object)
-        + `used_by_legal_entity`: (Reference_response, required)
-            + identifier (Identifier)
-                + type (Codeable_Concept)
-                    + coding (array, fixed-type)
-                        + (Coding)
-                            + code: `legal_entity` (string)
-                + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
-        + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
-        + `inserted_by`: `f7bdce4c-9d6e-4b08-913c-97c4b972f9be` (string, required)
-+ `used_by_employee_history`  (array, optional, fixed-type)
-    + (object)
-        + `used_by_employee`: (Reference_response, required)
-            + identifier (Identifier)
-                + type (Codeable_Concept)
-                    + coding (array, fixed-type)
-                        + (Coding)
-                            + code: `employee` (string)
-                + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
-        + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
-        + `inserted_by`: `f7bdce4c-9d6e-4b08-913c-97c4b972f9be` (string, required)
-+ `status_reason` (Codeable_Concept, optional)
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `eHealth/service_request_recall_reasons` (string)
-            + code: `cured` (string)
-+ specimens (array, optional)
-    + (Reference_response)
-        + identifier (Identifier, optional, fixed-type)
-            + type (Codeable_Concept, required)
-                + coding (array, required,fixed-type)
-                    + (Coding)
-                        + code: `specimen` (string)
-+ focus (array, optional) - what the service request is about, when it is not about the subject of record
-    + (Reference_response)
-        + identifier (Identifier, optional, fixed-type)
-            + type (Codeable_Concept, required)
-                + coding (array, required,fixed-type)
-                    + (Coding)
-                        + code: `specimen` (string)
-+ inform_with (object, optional)
-    + `auth_method_id`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method
-
-### `Service_Request_Show`
-+ include `Service_Request_Base`
-
-### `Service_Request_List`
-+ include `Service_Request_Base`
-+ identity (`Person_identity`, required) - parametres - last name, first name, second name - can have value NULL
-
-### `Qualify_Service_Request_Responce`
-+ `program_id`: `59781de0-2e64-4359-b716-bcc05a32c10f` (string, required) - `Medical program Identifier`
-+ `program_name` : `Fee-For-Service`(string, required)
-+ `status` : `INVALID` (enum, required) - Status for ability use program for this Service Request
-    - VALID
-    - INVALID
-+ `rejection_reason` : `Service is not included in the program` (string) - Reason to fetch invalid status
-
-### `Service_Request_PreQualify`
-
-+ status: `active` (string, required)
-+ intent: `order` (string, required)
-+ priority: `routine` (string, required)
-+ based_on (array,optional, fixed-type)
-    + (Reference_request)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `care_plan` (string, required)
-    + (Reference_request)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `activity` (string, required)
-+ category (Codeable_Concept, required)
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `eHealth/SNOMED/service_request_categories` (string)
-            + code: `409063005` (string)
-+ code (Reference_request, required)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `service` (string)
-+ `context` (Reference_request, optional) - encounter on which the service request is based on, optional if focus is set
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `encounter` (string)
-- One of
-    - `occurrence_period` (object)
-        + start : `2018-08-02T10:45:16.000Z`(string, required) - Starting time with inclusive boundary
-        + end : `2018-08-02T11:00:00.000Z`(string, optional) - End time with inclusive boundary, if not ongoing
-    - `occurrence_date_time`: `2018-08-02T10:45:16.000Z` (string, optional)
-+ `requester_employee` (Reference_request, required)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `employee` (string)
-+ `requester_legal_entity` (Reference_request, required)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `legal_entity` (string)
-        + value: `75a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
-+ `reason_reference` (array, optional)
-    + (Reference_request)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `condition` (string)
-+ `supporting_info` (array, optional, fixed-type)
-    + (Reference_request)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `episode_of_care` (enum)
-                            - episode_of_care
-                            - condition
-                            - observation
-                            - diagnostic report
-                            - device request
-+ note: `Some notes` (string, optional)
-+ patient_instruction: `Some patient instructions` (string, optional)
-+ `permitted_resources` (array, optional)
-    + (Reference_request)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `episode_of_care` (string)
-+ `performer` (Reference_request, optional)
-    + identifier (Identifier, required)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `legal_entity` (string)
-        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
-+ `location_reference` (Reference_request, optional)
-    + identifier (Identifier, required)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `division` (string)
-        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
-+ `performer_type` (Codeable_Concept, optional)
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `SPECIALITY_TYPE` (string)
-            + code: `DIETETICS` (string)
-+ quantity (object)
-    + value: 10 (number, required)
-    + `system`: `SERVICE_UNIT` (string, required)
-    + `code`: `PIECE` (string, required)
-+ specimens (array, optional)
-    + (Reference_request)
-        + identifier (Identifier, optional, fixed-type)
-            + type (Codeable_Concept, required)
-                + coding (array, required,fixed-type)
-                    + (Coding)
-                        + code: `specimen` (string)
-+ focus (array, optional) - what the service request is about, when it is not about the subject of record
-    + (Reference_request)
-        + identifier (Identifier, optional, fixed-type)
-            + type (Codeable_Concept, required)
-                + coding (array, required,fixed-type)
-                    + (Coding)
-                        + code: `specimen` (string)
-+ inform_with (object, optional)
-    + `auth_method_id`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method
-
-### `Service_Request_Create`
-+ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
-+ status: `active` (string, required)
-+ intent: `order` (string, required)
-+ priority: `routine` (string, required)
-+ based_on (array,optional, fixed-type)
-    + (Reference_request)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `care_plan` (string, required)
-    + (Reference_request)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `activity` (string, required)
-+ category (Codeable_Concept, required)
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `eHealth/SNOMED/service_request_categories` (string)
-            + code: `409063005` (string)
-+ code (Reference_request, required)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `service` (string)
-+ `program` (Reference_request, optional)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `medical_program` (string)
-+ `context` (Reference_request, optional) - encounter on which service request is based on, optional if focus is set 
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `encounter` (string)
-- One of
-    - `occurrence_period` (object)
-        + start : `2018-08-02T10:45:16.000Z`(string, required) - Starting time with inclusive boundary
-        + end : `2018-08-02T11:00:00.000Z`(string, optional) - End time with inclusive boundary, if not ongoing
-    - `occurrence_date_time`: `2018-08-02T10:45:16.000Z` (string, optional)
-+ `requester_employee` (Reference_request, required)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `employee` (string)
-+ `requester_legal_entity` (Reference_request, required)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `legal_entity` (string)
-        + value: `75a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
-+ `reason_reference` (array, optional)
-    + (Reference_request)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `condition` (string)
-+ `supporting_info` (array, optional, fixed-type)
-    + (Reference_request)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `episode_of_care` (enum)
-                            - episode_of_care
-                            - condition
-                            - observation
-                            - diagnostic report
-                            - device request
-+ note: `Some notes` (string, optional)
-+ patient_instruction: `Some patient instructions` (string, optional)
-+ `permitted_resources` (array, optional)
-    + (Reference_request)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `episode_of_care` (string)
-+ `performer` (Reference_request, optional)
-    + identifier (Identifier, required)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `legal_entity` (string)
-        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
-+ `location_reference` (Reference_request, optional)
-    + identifier (Identifier, required)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `division` (string)
-        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
-+ `performer_type` (Codeable_Concept, optional)
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `SPECIALITY_TYPE` (string)
-            + code: `DIETETICS` (string)
-+ quantity (object)
-    + value: 10 (number, required)
-    + system: `SERVICE_UNIT` (string, required)
-    + code: PIECE (string, required)
-+ specimens (array, optional)
-    + (Reference_request)
-        + identifier (Identifier, optional, fixed-type)
-            + type (Codeable_Concept, required)
-                + coding (array, required,fixed-type)
-                    + (Coding)
-                        + code: `specimen` (string)
-+ focus (array, optional) - what the service request is about, when it is not about the subject of record
-    + (Reference_request)
-        + identifier (Identifier, optional, fixed-type)
-            + type (Codeable_Concept, required)
-                + coding (array, required,fixed-type)
-                    + (Coding)
-                        + code: `specimen` (string)
-+ inform_with (object, optional)
-    + `auth_method_id`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method 
-
-### `Use_Service_Request_Request`
-+ `used_by_employee` (Reference_request, optional)
-    + identifier (Identifier, required)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `employee` (string)
-        + value: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
-+ `used_by_division` (Reference_request, optional)
-    + identifier (Identifier, required)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `division` (string)
-        + value: `d3a1d990-0bf7-556f-b3cf-bec88f123b8e` (string, required)
-+ `used_by_legal_entity` (Reference_request, required)
-    + identifier (Identifier, required)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `legal_entity` (string)
-        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
-+ `program` (Reference_request, required)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `medical_program` (string)
-
-        
-
-### `Complete_Service_Request`
-+ `completed_with` (Reference_request, optional)
-    + identifier (Identifier, required)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `diagnostic_report` (string) 
-                    
-+ `program_service` (Reference_request, optional)
-    + identifier (Identifier, required)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `program_service` (string) 
-
-+ `status_reason` (Codeable_Concept, optional)
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `eHealth/service_request_complete_reasons` (string)
-            + code: `default` (string)
-                
 
