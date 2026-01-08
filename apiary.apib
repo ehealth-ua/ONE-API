@@ -7963,31 +7963,6 @@ Scope              | service_request:complete
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572134964/REST+API+Complete+Service+request">Complete Service Request</a>
 
-+ Parameters
-    + service_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique service request identifier
-
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer mF_9.B5f-4.1JqM
-            api-key: aFBLVTZ6Z2dON1V
-            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-    + Attributes (Complete_Service_Request)
-
-+ Response 201 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 201 (number)
-        + data (`Service_Request_Show`)
-            
-+ Response 202 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 202 (number)
-        + data (`Job`)
-
 
 ### Get Service Requests in Specimen Context [GET /api/specimens/{specimen_id}/service_requests?status=active&page=2&page_size=50]
 
