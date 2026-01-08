@@ -7628,6 +7628,7 @@ Method receives signed message (pkcs7) that consists of signed content, digital 
 Service will store signed copy of Service Request in Media Content Storage if all checks is passed. 
 
 Signed content consists of JSON object with Service Request data.
+It can be processed in both sync and async methods depends on Server decision.
 
 + Parameters
     + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
@@ -7656,29 +7657,6 @@ Scope              | service_request:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572134953/REST+API+Get+Service+Requests+by+Search+Params+in+Episode+Context">Get Service Requests by Search Params in Episode Context</a>
 
-+ Parameters
-    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
-    + episode_id: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, required) - Unique episode identifier
-    + status: active (string, optional) - The status of the service request. Default: active
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer mF_9.B5f-4.1JqM
-        api-key: aFBLVTZ6Z2dON1V
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (Response_Collection)
-        + data (array[`Service_Request_Show`])
-        
-+ Response 404 (application/json)
-    + Attributes (Response_Error)
-        + meta (Response__Meta)
-            + code: 404 (number)
-        + error (Response__Error)
-            + type: NOT_FOUND (string)
-            + message: `Episode or patient not found` (string)
-
 ### Get Service Requests by Search Params [GET /api/patients/{patient_id}/service_requests]
 
 Key                | Value
@@ -7687,35 +7665,6 @@ ESOZ API ID        | API-007-062-0004
 Scope              | service_request:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572036671/REST+API+Get+Service+requests+by+search+params">Get Service Requests by Search Params in Episode Context</a>
-
-This method returns all service requests related to the person filtered by submitted parameters.
-
-+ Parameters
-    + `patient_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
-    + `episode_id`: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - Unique episode identifier
-    + `status`: active (string, optional) 
-    + `requester_legal_entity`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
-    + `used_by_legal_entity`: `8075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional)
-    + `code`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional)
-    + `care_plan_id`: `8075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) - Unique care plan identifier
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer mF_9.B5f-4.1JqM
-        api-key: aFBLVTZ6Z2dON1V
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (Response_Collection)
-        + data (array[`Service_Request_Base`])
-
-+ Response 404 (application/json)
-    + Attributes (Response_Error)
-        + meta (Response__Meta)
-            + code: 404 (number)
-        + error (Response__Error)
-            + type: NOT_FOUND (string)
-            + message: `Patient not found` (string)
 
 ### Get Service Request Details in Episode Context [GET /api/patients/{patient_id}/episodes/{episode_id}/service_requests/{service_request_id}]
 
@@ -7726,32 +7675,6 @@ Scope              | service_request:get
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572200534/DRAFT+REST+API+Get+Service+Request+details+in+episode+context">Get Service Request Details in Episode Context</a>
 
-+ Parameters
-    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
-    + episode_id: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, required) - Unique episode identifier
-    + service_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique service request identifier
-  
-
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer mF_9.B5f-4.1JqM
-            api-key: aFBLVTZ6Z2dON1V
-            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (Response_OK)
-        + data (`Service_Request_Show`)
-
-+ Response 404 (application/json)
-    + Attributes (Response_Error)
-        + meta (Response__Meta)
-            + code: 404 (number)
-        + error (Response__Error)
-            + type: NOT_FOUND (string)
-            + message: `Service request not found` (string)
-
 ### Get Service Request Details [GET /api/patients/{patient_id}/service_requests/{service_request_id}]
 
 Key                | Value
@@ -7760,32 +7683,6 @@ ESOZ API ID        | API-007-062-0006
 Scope              | service_request:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572167722/REST+API+Get+Service+request+details">Get Service Request Details</a>
-
-+ Parameters
-    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
-    + service_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique service request identifier
-  
-
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer mF_9.B5f-4.1JqM
-            api-key: aFBLVTZ6Z2dON1V
-            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (Response_OK)
-        + data (`Service_Request_Show`)
-
-+ Response 404 (application/json)
-    + Attributes (Response_Error)
-        + meta (Response__Meta)
-            + code: 404 (number)
-        + error (Response__Error)
-            + type: NOT_FOUND (string)
-            + message: `Service request not found` (string)
-
 
 ### Cancel Service Request [PATCH /api/patients/{patient_id}/service_requests/{service_request_id}/actions/cancel]
 
@@ -7796,32 +7693,6 @@ Scope              | service_request:cancel
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572266059/REST+API+Cancel+Service+request">Cancel Service Request</a>
 
-This method must be used to cancel existing Service Request. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
-
-* Signed content of service request must be equal to service request stored in DB. See Get Service Request details.
-* status_reason and explanatory_letter (optional) must be added to signed content.
-
-Please see Service request Referral State Mdel and Dummy Cancel Service Request for more details.
-
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer mF_9.B5f-4.1JqM
-        api-key: aFBLVTZ6Z2dON1V
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-    + Attributes (object)
-        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
-+ Response 201 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 201 (number)
-        + data (`Service_Request_Show`)
-+ Response 202 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 202 (number)
-        + data (`Job`)
-
 ### Recall Service Request [PATCH /api/patients/{patient_id}/service_requests/{service_request_id}/actions/recall]
 
 Key                | Value
@@ -7830,36 +7701,6 @@ ESOZ API ID        | API-007-062-0008
 Scope              | service_request:recall
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572200551/REST+API+Recall+Service+request">Recall Service Request</a>
-
-Key                | Value
--------------------|-----------
-ESOZ API ID        | API-007-062-0008
-Scope              | service_request:recall
-Auth               | yes
-Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572200551/REST+API+Recall+Service+request">Recall Service Request</a>
-
-This method must be used to recall existing Service Request. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
-
-* Signed content of service request must be equal to service request stored in DB. See Get Service Request details.
-* status_reason and explanatory_letter (optional) must be added to signed content
-
-Please see Service request Referral State Mdel and Dummy Cancel Service Request for more details.
-
-+ Request (application/json)
-    + Headers
-
-            Authorization: Bearer mF_9.B5f-4.1JqM
-            api-key: aFBLVTZ6Z2dON1V
-            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-    
-    + Attributes (object)
-        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
-
-+ Response 202 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 202 (number)
-        + data (`Job`)
 
 ### Resend SMS on Service Request [PATCH /api/patients/{patient_id}/service_requests/{service_request_id}/actions/resend]
 
@@ -7870,27 +7711,6 @@ Scope              | service_request:use
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572069444/REST+API+Resend+SMS+on+Service+request+API-007-062-0009">Resend SMS on Service Request</a>
 
-Method to resend sms on service request.
-
-+ Parameters
-    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
-    + service_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique service request identifier
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer d368a4b0-4a0e-457a-b267-32359fa6288f
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-+ Response 200 (application/json)
-+ Response 201 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 201 (number)
-        + data (`Service_Request_Show`)
-+ Response 202 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 202 (number)
-        + data (`Job`)
-
 ### Search for a Service Requests [GET /api/service_requests]
 
 Key                | Value
@@ -7899,23 +7719,6 @@ ESOZ API ID        | API-007-062-0010
 Scope              | service_request:read
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572233252/REST+API+Search+for+a+Service+requests">Search for a Service Requests</a>
-
-This service must be used to discover service requests by requisition number. If nothing found by requisition number - it will return empty list.
-
-+ Parameters
-    + requisition: `AX654-654T` (string, required) - A shared identifier common to all service requests that were authorized more or less simultaneously by a single author, representing the composite or group identifier
-    + status: active (string, optional) - The status of the service request. Default: active
-    + page: 2 (number, optional) - Page number
-    + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer mF_9.B5f-4.1JqM
-        api-key: aFBLVTZ6Z2dON1V
-        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (Response_Collection)
-        + data (array[`Service_Request_List`])
 
 ### Qualify Service Request by Id [POST /api/service_requests/{service_request_id}/actions/qualify]
 
@@ -7926,31 +7729,6 @@ Scope              | service_request:use
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572069455/REST+API+Qualify+Service+request+by+ID+API-007-062-0011">Qualify Service Request by Id</a>
 
-+ Parameters
-    + service_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique service request identifier
-
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer mF_9.B5f-4.1JqM
-            api-key: aFBLVTZ6Z2dON1V
-            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-    + Attributes
-        + `programs` (array, required) - Medical programs list for qualify
-            + (Reference_request)
-                + identifier (Identifier)
-                    + type (Codeable_Concept)
-                        + coding (array, fixed-type)
-                            + (Coding)
-                                + code: medical_program (string)
-
-+ Response 200 (application/json)
-    + Attributes (Response__Process_OK)
-        + meta (Response__Meta)
-        +  data (array[`Qualify_Service_Request_Responce`]))
-
 ### Use Service Request [PATCH /api/service_requests/{service_request_id}/actions/use]
 
 Key                | Value
@@ -7960,26 +7738,7 @@ Scope              | service_request:use
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572167739/REST+API+Use+Service+request">Use Service Request</a>
 
-+ Parameters
-    + service_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique service request identifier
-
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer mF_9.B5f-4.1JqM
-            api-key: aFBLVTZ6Z2dON1V
-            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-    + Attributes (Use_Service_Request_Request)
-
-+ Response 202 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 202 (number)
-        + data (`Job`)
-
-### Deprecated Change Service Request Status to In Progress [PATCH /api/service_requests/{service_request_id}/actions/process]
+### Change Service Request Status to In Progress [PATCH /api/service_requests/{service_request_id}/actions/process]
 
 Key                | Value
 -------------------|-----------
@@ -7988,25 +7747,7 @@ Scope              | service_request:makeinprogress
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572200568/DRAFT+REST+API+Change+Service+request+status+to+In+progress">Change Service Request Status to In Progress</a>
 
-+ Parameters
-    + service_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique service request identifier
-
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer mF_9.B5f-4.1JqM
-            api-key: aFBLVTZ6Z2dON1V
-            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-
-+ Response 202 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 202 (number)
-        + data (`Job`)
-
-### Deprecated Release Service Request [PATCH /api/service_requests/{service_request_id}/actions/release]
+### Release Service Request [PATCH /api/service_requests/{service_request_id}/actions/release]
 
 Key                | Value
 -------------------|-----------
@@ -8014,24 +7755,6 @@ ESOZ API ID        | API-007-062-0014
 Scope              | service_request:use
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572036688/DRAFT+REST+API+Release+Service+request">Release Service Request</a>
-
-+ Parameters
-    + service_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique service request identifier
-
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer mF_9.B5f-4.1JqM
-            api-key: aFBLVTZ6Z2dON1V
-            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 202 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 202 (number)
-        + data (`Job`)
-
 
 ### Complete Service Request [PATCH /api/service_requests/{service_request_id}/actions/complete]
 
@@ -8042,35 +7765,6 @@ Scope              | service_request:complete
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572134964/REST+API+Complete+Service+request">Complete Service Request</a>
 
-This method is designed to use Service request after providing services.
-
-**Scopes required:** `service_request:complete`
-
-+ Parameters
-    + service_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique service request identifier
-
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer mF_9.B5f-4.1JqM
-            api-key: aFBLVTZ6Z2dON1V
-            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-    + Attributes (Complete_Service_Request)
-
-+ Response 201 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 201 (number)
-        + data (`Service_Request_Show`)
-            
-+ Response 202 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 202 (number)
-        + data (`Job`)
-
 ### Get Service Requests in Specimen Context [GET /api/specimens/{specimen_id}/service_requests]
 
 Key                | Value
@@ -8079,32 +7773,6 @@ ESOZ API ID        | API-007-062-0016
 Scope              | service_request:read_impersonal
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/19740229647/REST+API+Get+Service+requests+in+Specimen+context">Get Service Requests in Specimen Context</a>
-
-This service must be used to discover service requests relaated to specified Specimen. If nothing found - it will return empty list.
-
-+ Parameters
-    + `specimen_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique Specimen identifier
-    + status: active (string, optional) - The status of the service request.
-    + page: 2 (number, optional) - Page number
-    + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer mF_9.B5f-4.1JqM
-            api-key: aFBLVTZ6Z2dON1V
-            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (Response_Collection)
-        + data (array)
-            + (`Service_Request_List`)
-                + identity (object, required)
-                    + gender: MALE (enum, required) - gender of the patient, value from the dictionary GENDER
-                        - MALE
-                        - FEMALE
-                    + age: 35 (number, required) - full years between current date and birth date
 
 ## Episode of Care [/me/episode]
 
