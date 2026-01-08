@@ -7826,6 +7826,28 @@ Scope              | service_request:recall
 Auth               | yes
 Link to Confluence | <a href="https://e-health-ua.atlassian.net/wiki/spaces/ESOZ/pages/17572200551/REST+API+Recall+Service+request">Recall Service Request</a>
 
+This method must be used to recall existing Service Request. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
+
+* Signed content of service request must be equal to service request stored in DB. See Get Service Request details.
+* status_reason and explanatory_letter (optional) must be added to signed content
+
+Please see Service request Referral State Mdel and Dummy Cancel Service Request for more details.
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer mF_9.B5f-4.1JqM
+        api-key: aFBLVTZ6Z2dON1V
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
 ### Resend SMS on Service Request [PATCH /api/patients/{patient_id}/service_requests/{service_request_id}/actions/resend]
 
 Key                | Value
