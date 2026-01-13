@@ -1,0 +1,678 @@
+Скидую аналіз структури сервісу MIMIR
+
+1. Акти про народження. Таблиця баз даних.
+
+```
+  @primary_key {:id, :binary_id, autogenerate: true}
+  schema "dracs_birth_acts" do
+    field(:ar_reg_date, :utc_datetime)
+    field(:ar_reg_number, :string)
+    field(:op_date, :utc_datetime)
+    field(:ar_op_name, :string)
+    field(:reg_numb, :string)
+    field(:compose_date, :string)
+    field(:compose_org, :string)
+    field(:is_restore, :integer)
+    field(:father_parent_rights, :integer)
+    field(:mother_parent_rights, :integer)
+    field(:child_surname, :string)
+    field(:child_name, :string)
+    field(:child_patronymic, :string)
+    field(:child_sex, :string)
+    field(:child_date_birth, :date)
+    field(:child_birth_state, :string)
+    field(:child_birth_region, :string)
+    field(:child_birth_district, :string)
+    field(:child_birth_locality_type, :string)
+    field(:child_birth_locality, :string)
+    field(:father_surname, :string)
+    field(:father_name, :string)
+    field(:father_patronymic, :string)
+    field(:father_numident, :string)
+    field(:father_date_birth, :date)
+    field(:father_citizenship, :integer)
+    field(:father_citizenship_another, :string)
+    field(:father_state, :string)
+    field(:father_region, :string)
+    field(:father_district, :string)
+    field(:father_locality_type, :string)
+    field(:father_locality, :string)
+    field(:father_street, :string)
+    field(:father_house, :string)
+    field(:father_building_part, :string)
+    field(:father_building_part_type, :integer)
+    field(:father_apartment, :string)
+    field(:mother_surname, :string)
+    field(:mother_name, :string)
+    field(:mother_patronymic, :string)
+    field(:mother_numident, :string)
+    field(:mother_date_birth, :date)
+    field(:mother_citizenship, :integer)
+    field(:mother_citizenship_another, :string)
+    field(:mother_state, :string)
+    field(:mother_region, :string)
+    field(:mother_district, :string)
+    field(:mother_locality_type, :string)
+    field(:mother_locality, :string)
+    field(:mother_street, :string)
+    field(:mother_house, :string)
+    field(:mother_building_part, :string)
+    field(:mother_building_part_type, :integer)
+    field(:mother_apartment, :string)
+    field(:certificates, {:array, :map})
+    has_many(:history, BirthActHistory, foreign_key: :dracs_birth_act_id)
+    field(:just_changed?, :boolean, default: false, virtual: true)
+    timestamps(type: :utc_datetime_usec)
+  end
+```
+
+2. Підлегла таблиця Актів про народження (історична). Таблиця баз даних.
+
+```
+  schema "dracs_birth_acts_hstr" do
+    field(:dracs_birth_act_data, :map)
+
+    belongs_to(:dracs_birth_act, BirthAct, type: UUID, foreign_key: :dracs_birth_act_id)
+
+    timestamps(updated_at: false, type: :utc_datetime_usec)
+  end
+```
+
+3. Сервіси Актів про смерть. Локальні.
+
+* CREATE BIRTH ACT
+* GET BIRTH ACT
+* GET BIRTH ACT BY
+* LIST BIRTH ACTS
+* UPDATE BIRTH ACTS
+
+4. Акти про смерть. Таблиця баз даних.
+
+```
+  @derive {Jason.Encoder, except: [:__meta__, :id, :history, :inserted_at, :updated_at]}
+  @primary_key {:id, :binary_id, autogenerate: true}
+  schema "dracs_death_acts" do
+    field(:ar_reg_date, :utc_datetime)
+    field(:ar_reg_number, :string)
+    field(:op_date, :utc_datetime)
+    field(:ar_op_name, :string)
+    field(:reg_numb, :string)
+    field(:compose_date, :string)
+    field(:compose_org, :string)
+    field(:is_restore, :integer)
+    field(:name, :string)
+    field(:surname, :string)
+    field(:patronymic, :string)
+    field(:date_birth, :string)
+    field(:birth_state, :string)
+    field(:birth_region, :string)
+    field(:birth_district, :string)
+    field(:birth_locality, :string)
+    field(:birth_locality_type, :string)
+    field(:sex, :string)
+    field(:numident, :string)
+    field(:date_death, :string)
+    field(:state, :string)
+    field(:region, :string)
+    field(:district, :string)
+    field(:locality_type, :string)
+    field(:locality, :string)
+    field(:street, :string)
+    field(:house, :string)
+    field(:apartment, :string)
+    field(:doc_seizes, {:array, :map})
+    field(:persons_compare_status, :string, default: @compare_status_ready)
+    field(:parties_compare_status, :string, default: @compare_status_ready)
+    field(:settlement_id, Ecto.UUID)
+    has_many(:history, DeathActHistory, foreign_key: :dracs_death_act_id)
+    timestamps(type: :utc_datetime_usec)
+  end
+```
+
+5. Підлегла історична таблиця Актів про смерть. Таблиця баз даних.
+
+```
+  schema "dracs_death_acts_hstr" do
+    field(:dracs_death_act_data, :map)
+    belongs_to(:dracs_death_act, DeathAct, type: Ecto.UUID, foreign_key: :dracs_death_act_id)
+    timestamps(updated_at: false, type: :utc_datetime_usec)
+  end
+```
+
+6. Підлегла таблиця Дати змін. Таблиця баз даних.
+
+```
+  schema "dracs_death_acts_period_updates" do
+    field(:ar_reg_date, :date)
+
+    timestamps(inserted_at: false, type: :utc_datetime_usec)
+  end
+```
+
+7. RPC сервіси Актів про смерть. Локальний.
+
+* CREATE DEATH ACT
+* CREATE DEATH ACT PERIOD UPDATE
+* GET DEATH ACT
+* GET DEATH ACT BY
+* GET DEATH ACT PERIOD UPDATE
+* LIST DEATH ACT PERIOD UPDATE
+* LIST DEATH ACTS
+* UPDATE DEATH ACT
+
+4. RPC сервіс Декларацій. RPC сервіси BERT over TCP (Blackwater).
+
+* DEDUPLICATION OF DEATH ACT OR PERSON OR PARTY OR DEDUPLICATION CANDIDATE
+
+```
+    @rpc_worker.run("deduplication", Deduplication.Rpc, :match, [candidates, main_candidate, score])
+```
+
+5. RPC сервіс Декларацій. RPC сервіси BERT over TCP (Blackwater).
+
+```
+    @blackwater_worker.run("ops", OPS.Rpc, :terminate_declarations, [params])
+```
+
+6. Акти про розлучення. Таблиця баз даних.
+
+```
+  @primary_key {:id, :binary_id, autogenerate: true}
+  schema "dracs_divorce_acts" do
+    field(:ar_reg_date, :utc_datetime)
+    field(:ar_reg_number, :string)
+    field(:op_date, :utc_datetime)
+    field(:ar_op_name, :string)
+    field(:reg_numb, :string)
+    field(:compose_date, :string)
+    field(:compose_org, :string)
+    field(:is_restore, :integer)
+    field(:mn_old_surname, :string)
+    field(:mn_surname, :string)
+    field(:mn_name, :string)
+    field(:mn_patronymic, :string)
+    field(:mn_numident, :string)
+    field(:mn_date_birth, :string)
+    field(:mn_citizenship, :integer)
+    field(:mn_citizenship_another, :string)
+    field(:mn_doc_type, :string)
+    field(:mn_doc_name, :string)
+    field(:mn_series_numb, :string)
+    field(:mn_doc_date, :string)
+    field(:mn_doc_org_name, :string)
+    field(:mn_birth_state, :string)
+    field(:mn_birth_region, :string)
+    field(:mn_birth_district, :string)
+    field(:mn_birth_locality_type, :string)
+    field(:mn_birth_locality, :string)
+    field(:mn_state, :string)
+    field(:mn_region, :string)
+    field(:mn_district, :string)
+    field(:mn_locality_type, :string)
+    field(:mn_locality, :string)
+    field(:mn_street, :string)
+    field(:mn_house, :string)
+    field(:mn_building_part, :string)
+    field(:mn_building_part_type, :string)
+    field(:mn_apartment, :string)
+    field(:wmn_old_surname, :string)
+    field(:wmn_surname, :string)
+    field(:wmn_name, :string)
+    field(:wmn_patronymic, :string)
+    field(:wmn_numident, :string)
+    field(:wmn_date_birth, :string)
+    field(:wmn_citizenship, :integer)
+    field(:wmn_citizenship_another, :string)
+    field(:wmn_doc_type, :string)
+    field(:wmn_doc_name, :string)
+    field(:wmn_series_numb, :string)
+    field(:wmn_doc_date, :string)
+    field(:wmn_doc_org_name, :string)
+    field(:wmn_birth_state, :string)
+    field(:wmn_birth_region, :string)
+    field(:wmn_birth_district, :string)
+    field(:wmn_birth_locality_type, :string)
+    field(:wmn_birth_locality, :string)
+    field(:wmn_state, :string)
+    field(:wmn_region, :string)
+    field(:wmn_district, :string)
+    field(:wmn_locality_type, :string)
+    field(:wmn_locality, :string)
+    field(:wmn_street, :string)
+    field(:wmn_house, :string)
+    field(:wmn_building_part, :string)
+    field(:wmn_building_part_type, :string)
+    field(:wmn_apartment, :string)
+    field(:mn_settlement_id, :binary_id)
+    field(:wmn_settlement_id, :binary_id)
+    field(:persons_compare_status, :string)
+    field(:parties_compare_status, :string)
+    has_many(:history, DivorceActHstr, foreign_key: :dracs_divorce_act_id)
+    timestamps(type: :utc_datetime_usec)
+  end
+```
+
+7. Історична таблиці Актів про розлучення. Таблиця баз даних.
+
+```
+  schema "dracs_divorce_acts_hstr" do
+    field(:dracs_divorce_act_data, :map)
+
+    belongs_to(:dracs_divorce_act, DivorceAct, type: Ecto.UUID, foreign_key: :dracs_divorce_act_id)
+
+    timestamps(updated_at: false, type: :utc_datetime_usec)
+  end
+```
+
+8. Таблиця змін до Актів про розлучення. Таблиця баз даних.
+
+```
+  schema "dracs_divorce_acts_period_updates" do
+    field(:ar_reg_date, :date)
+
+    timestamps(inserted_at: false, type: :utc_datetime_usec)
+  end
+```
+
+9. Локальні сервіси Актів про розлучення
+
+* CREATE DIVORSE ACT
+* CREATE DIVORSE ACT PERIOD UPDATE
+* GET DIVORSE ACT
+* GET DIVORSE ACT BY
+* GET DIVORSE ACT PERIOD UPDATE
+* LIST DIVORSE ACT PERIOD UPDATES
+* LIST DIVORSE ACTS
+* UPDATE DIVORSE ACT
+
+10. Сертифікати про розлучення. Таблиця баз даних.
+
+```
+ @primary_key {:id, :binary_id, autogenerate: true}
+  schema "dracs_divorce_certs" do
+    field(:cert_status, :integer)
+    field(:cert_repeat, :integer)
+    field(:cert_serial, :string)
+    field(:cert_number, :string)
+    field(:cert_serial_number, :string)
+    field(:cert_org, :string)
+    field(:cert_date, :string)
+    field(:receiver, :string)
+    field(:ar_org, :string)
+    field(:ar_numb, :string)
+    field(:ar_composedate, :string)
+    field(:husband_old_surname, :string)
+    field(:husband_surname, :string)
+    field(:husband_name, :string)
+    field(:husband_patronymic, :string)
+    field(:wife_old_surname, :string)
+    field(:wife_surname, :string)
+    field(:wife_name, :string)
+    field(:wife_patronymic, :string)
+    timestamps(type: :utc_datetime_usec)
+  end
+
+```
+
+11. Локальні сервіси Сертифікатів про розлученя.
+
+* CREATE DIVORSE CERT
+* GET DIVORSE CERT BY
+
+12. ДМС Паспортні Дані. Таблиця баз даних.
+
+```
+ @primary_key {:id, :binary_id, autogenerate: true}
+  schema "dms_passport_data" do
+    field(:pass_type, :string)
+    field(:pas_serial, :string)
+    field(:pas_number, :string)
+    field(:pas_status, :integer)
+
+    timestamps(type: :utc_datetime_usec)
+  end
+```
+
+13. Локальні сервіси ДМС.
+
+* CREATE DMS PASSORT DATA
+* GET DMS PASSPORT DATA
+* UPDATE PASSPORT DATA
+
+14. ДРФО пакет для Трембіти. Таблиця баз даних.
+
+```
+  @primary_key {:id, :binary_id, autogenerate: true}
+  schema "drfo_data" do
+    field(:rnokpp, :string)
+    field(:last_name, :string)
+    field(:first_name, :string)
+    field(:middle_name, :string)
+    field(:date_birth, :date)
+    field(:info_result, :integer)
+    field(:info_error_message, :string)
+    field(:find_result, :integer)
+    field(:inserted_by, Ecto.UUID)
+    field(:updated_by, Ecto.UUID)
+    embeds_many(:applications, Application, on_replace: :delete)
+    timestamps(type: :utc_datetime_usec)
+  end
+```
+
+15. ДРФО сервіс локальний.
+
+* GET DRFO DATA
+* GET DRFO DATA BY
+* UPSERT DRFO DATA
+
+16. ДРФО сервіс (IL). RPC сервіс BERT over TCP (Blackwater)
+
+```
+    @blackwater_worker.run("ehealth", EHealth.Rpc, :transaction, [actions, opts])
+```
+
+16. ДРФО сервіс Трімбіти. SOAP over HTTP.
+
+```
+    def action, do: "http://tempuri.org/IArDeathService/GetDeathArByFullNameAndBirthDate"
+    def action, do: "http://tempuri.org/IArDeathService/GetDeathArByRegDatePeriod"
+    def action, do: "http://www.talend.org/service/InfoRNOKPPDRFO"
+    def action, do: "http://www.talend.org/service/FindRegistrationDRFOAnswer"
+    def action, do: "http://www.talend.org/service/FindRegistrationDRFOQuery"
+```
+
+17. Акти про шлюб. Таблиця баз даних.
+
+```
+  @primary_key {:id, :binary_id, autogenerate: true}
+  schema "dracs_marriage_acts" do
+    field(:ar_reg_date, :utc_datetime)
+    field(:ar_reg_number, :string)
+    field(:op_date, :utc_datetime)
+    field(:ar_op_name, :string)
+    field(:reg_numb, :string)
+    field(:compose_date, :string)
+    field(:compose_org, :string)
+    field(:is_restore, :integer)
+    field(:husband_old_surname, :string)
+    field(:husband_surname, :string)
+    field(:husband_name, :string)
+    field(:husband_patronymic, :string)
+    field(:husband_numident, :string)
+    field(:husband_date_birth, :string)
+    field(:husband_citizenship, :integer)
+    field(:husband_citizenship_another, :string)
+    field(:husband_doc_type, :string)
+    field(:husband_doc_name, :string)
+    field(:husband_series_numb, :string)
+    field(:husband_doc_date, :string)
+    field(:husband_doc_org_name, :string)
+    field(:husband_birth_state, :string)
+    field(:husband_birth_region, :string)
+    field(:husband_birth_district, :string)
+    field(:husband_birth_locality_type, :string)
+    field(:husband_birth_locality, :string)
+    field(:husband_state, :string)
+    field(:husband_region, :string)
+    field(:husband_district, :string)
+    field(:husband_locality_type, :string)
+    field(:husband_locality, :string)
+    field(:husband_street, :string)
+    field(:husband_house, :string)
+    field(:husband_building_part, :string)
+    field(:husband_building_part_type, :string)
+    field(:husband_apartment, :string)
+    field(:wife_old_surname, :string)
+    field(:wife_surname, :string)
+    field(:wife_name, :string)
+    field(:wife_patronymic, :string)
+    field(:wife_numident, :string)
+    field(:wife_date_birth, :string)
+    field(:wife_citizenship, :integer)
+    field(:wife_citizenship_another, :string)
+    field(:wife_doc_type, :string)
+    field(:wife_doc_name, :string)
+    field(:wife_series_numb, :string)
+    field(:wife_doc_date, :string)
+    field(:wife_doc_org_name, :string)
+    field(:wife_birth_state, :string)
+    field(:wife_birth_region, :string)
+    field(:wife_birth_district, :string)
+    field(:wife_birth_locality_type, :string)
+    field(:wife_birth_locality, :string)
+    field(:wife_state, :string)
+    field(:wife_region, :string)
+    field(:wife_district, :string)
+    field(:wife_locality_type, :string)
+    field(:wife_locality, :string)
+    field(:wife_street, :string)
+    field(:wife_house, :string)
+    field(:wife_building_part, :string)
+    field(:wife_building_part_type, :string)
+    field(:wife_apartment, :string)
+    field(:husband_settlement_id, :string)
+    field(:wife_settlement_id, :string)
+    field(:persons_compare_status, :string)
+    field(:parties_compare_status, :string)
+
+    timestamps(type: :utc_datetime_usec)
+  end
+```
+
+18. Історична таблиця Актів про шлюб. Таблиця баз даних.
+
+```
+ @primary_key {:id, :binary_id, autogenerate: true}
+  schema "dracs_marriage_acts_hstr" do
+    field(:dracs_marriage_act_data, :map)
+    field(:inserted_at, :utc_datetime)
+
+    belongs_to(:dracs_marriage_act, MarriageAct, type: :binary_id)
+  end
+```
+
+19. Дати змін Актів про шлюб. Таблиця баз даних.
+
+```
+ @primary_key {:id, :binary_id, autogenerate: true}
+  schema "dracs_marriage_acts_period_updates" do
+    field(:ar_reg_date, :date)
+    field(:updated_at, :utc_datetime)
+  end
+```
+
+20. Локальні сервіси Актів про шлюб.
+
+* GET MARRIAGE ACT
+* LIST MARRIAGE ACT
+* UPDATE MARRIAGE ACT
+
+21. Сертифікати про одруження. Таблиця баз даних.
+
+```
+ @primary_key {:id, :binary_id, autogenerate: true}
+  schema "dracs_marriage_certs" do
+    field(:cert_status, :integer)
+    field(:cert_repeat, :integer)
+    field(:cert_serial, :string)
+    field(:cert_number, :string)
+    field(:cert_serial_number, :string)
+    field(:cert_org, :string)
+    field(:cert_date, :string)
+    field(:ar_org, :string)
+    field(:ar_numb, :string)
+    field(:ar_composedate, :string)
+    field(:husband_old_surname, :string)
+    field(:husband_surname, :string)
+    field(:husband_name, :string)
+    field(:husband_patronymic, :string)
+    field(:husband_citizenship, :integer)
+    field(:husband_citizenship_another, :string)
+    field(:husband_birthdate, :string)
+    field(:husband_place_of_birth, :string)
+    field(:wife_old_surname, :string)
+    field(:wife_surname, :string)
+    field(:wife_name, :string)
+    field(:wife_patronymic, :string)
+    field(:wife_citizenship, :integer)
+    field(:wife_citizenship_another, :string)
+    field(:wife_birthdate, :string)
+    field(:wife_place_of_birth, :string)
+
+    timestamps(type: :utc_datetime_usec)
+  end
+```
+
+22. Локальні сервіси Сертифікатів про одруження.
+
+* CREATE MARRIAGE CERT
+* GET MARRIAGE CERT BY
+
+23. MPI сервіс транзакцій. RPC сервіс BERT over TCP (Blackwater)
+
+```
+    @rpc_worker.run("mpi", Core.Rpc, :transaction, [actions])
+    @rpc_worker.run("mpi", MPI.Rpc, :normalize, [params, type])
+    @rpc_worker.run("mpi", MPI.Rpc, :run_transaction, [actions])
+```
+
+24. Паспортні дані МВС. Таблиця баз даних.
+
+```
+  @primary_key {:id, :binary_id, autogenerate: true}
+  schema "mvs_passport_data" do
+    field(:pass_type, :string)
+    field(:pas_serial, :string)
+    field(:pas_number, :string)
+    field(:pas_status, :integer)
+    timestamps(type: :utc_datetime_usec)
+  end`
+```
+
+25. Локальні сервіси паспортних даних МВС.
+
+* CREATE MIA Passport Data
+* GET MIA Passport Data
+* UPDATE MIA Passport Data
+
+26. Parties сервіс. RPC сервіс BERT over TCP (Blackwater)
+
+```
+    @blackwater_worker.run("ehealth", EHealth.Rpc, :create_party_verification_candidate, [params])
+    @blackwater_worker.run("ehealth", EHealth.Rpc, :get_party_verification_by, [params, opts])
+    @blackwater_worker.run("ehealth", EHealth.Rpc, :get_party, [party_id, opts])
+    @blackwater_worker.run("ehealth", EHealth.Rpc, :list_parties_ready_to_dms, [opts])
+    @blackwater_worker.run("ehealth", EHealth.Rpc, :list_parties_ready_to_drfo, [opts])
+    @blackwater_worker.run("ehealth", EHealth.Rpc, :list_parties_ready_to_mvs, [opts])
+    @blackwater_worker.run("ehealth", EHealth.Rpc, :list_parties, [params, opts])
+    @blackwater_worker.run("ehealth", EHealth.Rpc, :list_party_verification_candidates, [params])
+    @blackwater_worker.run("ehealth", EHealth.Rpc, :update_party_verification_candidate, [candidate_id, params])
+    @blackwater_worker.run("ehealth", EHealth.Rpc, :update_party_verification_status, [party_id, params, user_id])
+    @blackwater_worker.run("ehealth", EHealth.Rpc, :update_party_verification, [party_id, params])
+```
+
+27. Person сервіс. RPC сервіс BERT over TCP (Blackwater)
+
+```
+    @blackwater_worker.run("ehealth", EHealth.Rpc, :cancel_pending_confidant_person_relationship_requests, [
+    @blackwater_worker.run("ehealth", EHealth.Rpc, :get_confidant_person_relationship_active_to, [
+    @blackwater_worker.run("ehealth", EHealth.Rpc, :get_third_person_auth_method_ended_at, [birth_date])
+    @blackwater_worker.run("ehealth", EHealth.Rpc, :validate_confidant_person, [confidant_person_id, person_id])
+
+    @rpc_worker.run("mpi", MPI.Rpc, :cancel_person_auth_methods, [person_id, user_id])
+    @rpc_worker.run("mpi", Core.Rpc, :update_person_verification, [person_verification_id, params])
+    @rpc_worker.run("mpi", MPI.Rpc, :create_person_verification_candidate, [params])
+    @rpc_worker.run("mpi", MPI.Rpc, :get_person_verification_by, [params])
+    @rpc_worker.run("mpi", MPI.Rpc, :get_person, [person_id, opts])
+    @rpc_worker.run("mpi", MPI.Rpc, :get_similar_person, [params])
+    @rpc_worker.run("mpi", MPI.Rpc, :list_confidant_person_relationship_verification_candidates, [params])
+    @rpc_worker.run("mpi", MPI.Rpc, :list_confidant_person_relationships_require_birth_verify, [person_id])
+    @rpc_worker.run("mpi", MPI.Rpc, :list_person_verification_candidates, [params])
+    @rpc_worker.run("mpi", MPI.Rpc, :list_persons_ready_to_birth_synchronization_by_relationships, [opts], 16_000)
+    @rpc_worker.run("mpi", MPI.Rpc, :list_persons_ready_to_birth_synchronization, [opts], 16_000)
+    @rpc_worker.run("mpi", MPI.Rpc, :list_persons_ready_to_check_unzr, [opts], 16_000)
+    @rpc_worker.run("mpi", MPI.Rpc, :list_persons_ready_to_death_online_verification, [opts], 16_000)
+    @rpc_worker.run("mpi", MPI.Rpc, :list_persons_ready_to_dms_synchronization, [opts], 16_000)
+    @rpc_worker.run("mpi", MPI.Rpc, :list_persons_ready_to_drfo, [opts], 16_000)
+    @rpc_worker.run("mpi", MPI.Rpc, :list_persons_ready_to_lcc_synchronization, [opts], 16_000)
+    @rpc_worker.run("mpi", MPI.Rpc, :list_persons_ready_to_mvs_synchronization, [opts], 16_000)
+    @rpc_worker.run("mpi", MPI.Rpc, :list_persons, [params, opts])
+    @rpc_worker.run("mpi", MPI.Rpc, :person_require_birth_verification?, [person_id])
+    @rpc_worker.run("mpi", MPI.Rpc, :update_confidant_person_relationship, [id, params])
+    @rpc_worker.run("mpi", MPI.Rpc, :update_person_verification_candidate, [candidate_id, params])
+    @rpc_worker.run("mpi", MPI.Rpc, :update_person_verification_status, [person_id, params, user_id])
+    @rpc_worker.run("mpi", MPI.Rpc, :update_person_verification, [person_id, params])
+    @rpc_worker.run("mpi", MPI.Rpc, :update_person, [person_id, params, user_id])
+```
+
+28. Adresses сервіс. RPC сервіс BERT over TCP (Blackwater)
+
+* UADDRESSES GET SETTLMENT BY ID
+
+```
+    @blackwater_worker.run("uaddresses_api", Uaddresses.Rpc, :get_settlement_by, [params])
+```
+
+29. УНЗР. Таблиця баз даних.
+
+```
+  @primary_key {:id, :binary_id, autogenerate: true}
+  schema "unzr_data" do
+    field(:unzr, :string)
+    field(:family_name, :string)
+    field(:given_name, :string)
+    field(:patronymic_name, :string)
+    field(:date_birth, :date)
+    field(:status, :integer)
+    field(:description, :string)
+    timestamps()
+  end
+```
+
+30. УНЗР для статусів. Таблиця баз даних.
+
+```
+  @primary_key {:id, :binary_id, autogenerate: true}
+  schema "unzr_info" do
+    field(:unzr, :string)
+    field(:job_status, :string)
+    field(:info, :map)
+    field(:synced_at, :utc_datetime)
+    field(:inserted_by, Ecto.UUID)
+    field(:updated_by, Ecto.UUID)
+    timestamps(type: :utc_datetime_usec)
+  end
+```
+
+31. УНЗР локальні сервіси.
+
+* CREATE UNZR
+* CREATE UNZR INFO JOB @rpc_worker.run("mimir_jobs", Jobs.Rpc, :create_unzr_info_job, [params]) do
+* GET UNZR DATA
+* GET UNZR DATA BY
+* GET UNZR INFO
+* GET UNZR INFO BY
+* UPDATE UNZR INFO
+* UPSERT UNZR DATA
+
+32. Jobs
+
+1. Birth Acts Person Sync
+2. Death Acts Dayly Sync
+3. Death Acts Full Sync
+4. Death Acts Parties Online Verification
+5. Death Acts Persons Online Verification
+6. Divorse Acts Dayly Sync
+7. Divorse Acts Full Sync
+8. DMS Passport Parties Sync
+9. DMS Passport Full Sync
+10. DRACS Persons Sync
+11. DRFO Persons Sync
+12. DRFO Get Registration of Answer
+13. DRFO Parties Sync
+14. MVS Get UNZR Info
+15. MVS Persons Check UNZR
+16. MVS Passport Parties Sync
+17. MVS Passport Persons Sync
+
+Максим Сохацький
