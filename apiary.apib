@@ -7739,7 +7739,7 @@ This method is used to pre-qualify service request in order to define whether th
             + type: unverified (string, required)
             + message: `Patient is not active` (string, required)
             
-### Create Service Request [POST /api/patients/patient_id/service_requests]
+### Create Service Request [POST /api/patients/{patient_id}/service_requests]
 
 Key                | Value
 -------------------|-----------
@@ -8228,7 +8228,7 @@ This service must be used to discover service requests relaated to specified Spe
                         - FEMALE
                     + age: 35 (number, required) - full years between current date and birth date
 
-### Dummy Service Request [POST /dummy/patients/{id}/service_requests]
+### Dummy Service Request [POST /dummy/patients/{parent_id}/service_requests]
 
 + Request (application/json)
 
@@ -8246,7 +8246,7 @@ This service must be used to discover service requests relaated to specified Spe
             + code: 202 (number)
         + data (`Job`)
 
-### Dummy Cancel Service Request [PATCH /api/patients/{id}/service_requests/{id}/actions/cancel/dummy]
+### Dummy Cancel Service Request [PATCH /api/patients/{patient_id}/service_requests/{service_request_id}/actions/cancel/dummy]
 
 + Request (application/json)
 
@@ -8271,7 +8271,7 @@ This service must be used to discover service requests relaated to specified Spe
             + code: 202 (number)
         + data (`Job`)
 
-### Dummy Recall Service Request [PATCH /api/patients/{id}/service_requests/{id}/actions/recall/dummy]
+### Dummy Recall Service Request [PATCH /api/patients/{parent_id}/service_requests/{service_request_id}/actions/recall/dummy]
 
 + Request (application/json)
 
